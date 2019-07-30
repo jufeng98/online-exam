@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
 import javax.sql.DataSource;
 
@@ -41,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(loginHandler::onAuthenticationFailure)
                 .and()
                 .rememberMe()
+                .tokenRepository(jdbcTokenRepositoryImpl(dataSource))
                 .rememberMeCookieName("CORE_REMEMBER_ME")
                 .rememberMeParameter("coreRememberMe")
                 .key("coreKey")
@@ -69,6 +71,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean("userDetailsService")
     public UserDetailsService detailsService(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
+    }
+
+    @Bean
+    public JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl(DataSource dataSource) {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
     }
 
     @Bean

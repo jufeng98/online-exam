@@ -66,7 +66,6 @@ update menus set has_sub_menu=true where name='培训统计';
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '用户管理'),(select '/#/usersManage');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '角色管理'),(select '/#/authoritiesManage');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '菜单管理'),(select '/#/menusManage');
-insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '样例'),(select '/#/demo');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '环境变量(env)'),(select '/#/env');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '路径映射(mappings)'),(select '/#/mappings');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '配置信息(configprops)'),(select '/#/configprops');

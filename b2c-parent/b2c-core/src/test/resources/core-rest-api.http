@@ -3,8 +3,8 @@ POST {{url}}/onlineExam/core/login
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 
-username=1050106266&password=123456&submit=Login
-#username=1050106266&password=123456&submit=Login&coreRememberMe=true
+#username=1050106266&password=123456&submit=Login
+username=1050106266&password=123456&submit=Login&coreRememberMe=true
 
 > {%
     var headers = response.headers;

@@ -13,6 +13,9 @@
           <i slot="prefix"><img src="../../assets/img/icon-password.png"/></i>
         </el-input>
       </el-form-item>
+      <el-form-item prop="coreRememberMe" style="height:20px;text-align:left;">
+        <el-checkbox v-model="usersForm.coreRememberMe">7天内免登录</el-checkbox>
+      </el-form-item>
       <el-form-item>
         <el-button style="background-color: #40D4A6;width: 300px;" type="success" @click="login">
           登录
@@ -34,6 +37,7 @@
         usersForm: {
           username: '',
           password: '',
+          coreRememberMe: false,
         },
         usersFormRules: {
           username: [
