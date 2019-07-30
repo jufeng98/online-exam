@@ -8,6 +8,7 @@ import org.javamaster.b2c.core.model.vo.GetMenusListResVo;
 import org.javamaster.b2c.core.service.MenusService;
 import org.javamaster.b2c.core.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class MenusServiceImpl implements MenusService {
     private MenusMapperExt menusMapperExt;
 
     @Override
-    public GetMenusListResVo getMenusList(GetMenusListReqVo reqVo) {
+    public GetMenusListResVo getMenusList(GetMenusListReqVo reqVo, UserDetails userDetails) {
         List<Menus> topMenus = menusMapperExt.findTopMenus();
         List<MenusEntity> topMenusEntities = ListUtils.copyList(topMenus, MenusEntity.class);
         for (MenusEntity menusEntity : topMenusEntities) {

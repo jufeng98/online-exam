@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -31,14 +31,12 @@ public class FilesController {
     @Autowired
     private FilesService filesService;
 
-    @PreAuthorize("hasAuthority(T(org.javamaster.b2c.core.consts.AppConsts).ROLE_ADMIN) or (#reqVo.username == #userDetails.username)")
     @PostMapping("/uploadFile")
-    public Result<List<String>> uploadFile(@RequestPart("file") MultipartFile[] multipartFiles) {
+    public Result<List<String>> uploadFile(@NotNull @RequestPart("file") MultipartFile[] multipartFiles) {
         List<String> urls = filesService.uploadFile(multipartFiles);
         return new Result<>(urls);
     }
 
-    @PreAuthorize("hasAuthority(T(org.javamaster.b2c.core.consts.AppConsts).ROLE_ADMIN) or (#reqVo.username == #userDetails.username)")
     @GetMapping("/downloadFile")
     public ResponseEntity<byte[]> downloadFile(@NotBlank String completePath) {
         byte[] bytes = filesService.downloadFile(completePath);

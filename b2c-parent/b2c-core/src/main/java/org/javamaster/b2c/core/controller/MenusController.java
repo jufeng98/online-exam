@@ -5,6 +5,8 @@ import org.javamaster.b2c.core.model.vo.GetMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.GetMenusListResVo;
 import org.javamaster.b2c.core.service.MenusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +27,9 @@ public class MenusController {
     private MenusService menusService;
 
     @PostMapping("/getMenusList")
-    public Result<GetMenusListResVo> getMenusList(@Validated @RequestBody GetMenusListReqVo reqVo) {
-        GetMenusListResVo resVo = menusService.getMenusList(reqVo);
+    public Result<GetMenusListResVo> getMenusList(@Validated @RequestBody GetMenusListReqVo reqVo,
+                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        GetMenusListResVo resVo = menusService.getMenusList(reqVo, userDetails);
         Result<GetMenusListResVo> result = new Result(resVo);
         return result;
     }

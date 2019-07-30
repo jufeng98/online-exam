@@ -137,7 +137,7 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
             public String getFormattedContent(int indentLevel) {
                 StringBuilder sb = new StringBuilder();
                 OutputUtilities.xmlIndent(sb, indentLevel);
-                sb.append("<!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator").append(" -->");
+                sb.append("<!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->");
                 return sb.toString();
             }
         };

@@ -1,7 +1,6 @@
 package org.javamaster.b2c.core.helper;
 
 import lombok.SneakyThrows;
-import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.net.ftp.FTP;
@@ -45,7 +44,6 @@ public class FtpHelper {
 
 
     @SneakyThrows
-    @Synchronized
     public String uploadFile(String remotePath, String filename, byte[] fileBytes) {
         FTPClient ftpClient = initFtpClient();
         try (ByteArrayInputStream inputStream = new ByteArrayInputStream(fileBytes)) {
@@ -65,7 +63,6 @@ public class FtpHelper {
     }
 
     @SneakyThrows
-    @Synchronized
     public byte[] downloadFile(String completePath) {
         int index = completePath.lastIndexOf("/");
         String remotePath = completePath.substring(0, index);

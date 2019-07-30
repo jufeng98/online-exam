@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core.config;
 
+import org.javamaster.b2c.core.consts.AppConsts;
 import org.javamaster.b2c.core.handler.LoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,9 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/actuator/**").hasAuthority("ROLE_ACTUATOR")
-                .antMatchers("/core/**/*").authenticated()
-                .antMatchers("/admin/**/*").authenticated()
+                .antMatchers("/public/**/*").permitAll()
+                .antMatchers("/actuator/**").hasAuthority(AppConsts.ROLE_ACTUATOR)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
