@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: b2c-core
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/online_exam?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    url: redis://127.0.0.1:6379
+    password: 123456
+  servlet:
+    multipart:
+      max-file-size: 3MB
+ftp:
+  home-dir: D:\ftp-home\upload
+  host-name: 127.0.0.1
+  port: 21
+  username: admin
+  password: admin
+server:
+  port: 9888
+  servlet:
+    context-path: /onlineExam
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+info:
+  service-name: ${spring.application.name}

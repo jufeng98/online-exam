@@ -1,0 +1,126 @@
+### 请先调用此接口登录
+POST {{url}}/onlineExam/core/login
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+username=1050106266&password=123456&submit=Login
+#username=1050106266&password=123456&submit=Login&coreRememberMe=true
+
+> {%
+    var headers = response.headers;
+    var headerStr = headers.toString();
+    var headerArr = headerStr.split(/[\r\n]/m);
+    var HEADERS = [];
+    for (var i = 0; i < headerArr.length; i++) {
+        var tmpArr = headerArr[i].split(':');
+        if (!HEADERS[tmpArr[0]]) {
+            HEADERS[tmpArr[0]] = [];
+        }
+        HEADERS[tmpArr[0]] = HEADERS[tmpArr[0]].concat(tmpArr[1]);
+    }
+    function getCookieValue(HEADERS, cookieName) {
+        var setCookies = HEADERS['Set-Cookie'];
+        for (var i = 0; i < setCookies.length; i++) {
+            var cookies = setCookies[i].split(';')[0].split('=');
+            var name = cookies[0];
+            var value = cookies[1];
+            if (cookieName === name.trim()) {
+                return value;
+            }
+        }
+    }
+    client.global.set("CORE_REMEMBER_ME", getCookieValue(HEADERS,"CORE_REMEMBER_ME")); //关闭IDEA后才会失效
+    print(client.global.get("CORE_REMEMBER_ME"));
+
+    client.global.set("SESSION", getCookieValue(HEADERS,"SESSION")); //关闭IDEA后才会失效
+    print(client.global.get("SESSION"));
+%}
+
+###
+POST {{url}}/onlineExam/admin/users/createUsers
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{
+  "createOrEditUsersForm": {
+    "username": "15324564614",
+    "password": "123456",
+    "picUrl": "http://localhost:9999/onlineExam/core/files/downloadFile?completePath=%2Fonline-exam%2Fimage%2FONLINE_EXAM_CUY0XR8M_default-male.jpg"
+  }
+}
+
+###
+POST {{url}}/onlineExam/admin/users/changeUsersEnabled
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{
+  "username": "1050106158",
+  "enabled": false
+}
+
+###
+POST {{url}}/onlineExam/admin/users/findUsers
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{
+  "usersForm": {
+    "username": "",
+    "enabled": true
+  },
+  "page": {
+    "pageNum": 1,
+    "pageSize": 5
+  }
+}
+
+###
+POST {{url}}/onlineExam/admin/users/updateUsersPassword
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{
+  "username": "1050106158",
+  "newPassword": "654321"
+}
+
+###
+POST {{url}}/onlineExam/admin/users/deleteUsers
+Content-Type:application/x-www-form-urlencoded
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+username=1050106158
+
+###
+POST {{url}}/onlineExam/core/menus/getMenusList
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{}
+
+###
+POST {{url}}/onlineExam/admin/authorities/findUsersAuthorities
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{}
+
+###
+POST {{url}}/onlineExam/admin/authorities/findAuthorities
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+{
+  "username": "1050106266"
+}
+
+###

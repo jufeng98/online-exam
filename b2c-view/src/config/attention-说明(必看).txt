@@ -1,0 +1,6 @@
+本目录存放不同环境的配置
+base.config.js 存放所有环境共用的配置,优先级最低
+dev.config.js 开发环境配置
+mock.config.js mock环境配置
+test.config.js 测试环境配置
+prod.config.js 生产环境配置

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.core.mapper.MenusMapperExt">
+    <select id="findTopMenus" resultMap="org.javamaster.b2c.core.mapper.MenusMapper.BaseResultMap">
+        select *
+        from menus
+        where parent_id = 0
+    </select>
+    <select id="findSubMenus" resultMap="org.javamaster.b2c.core.mapper.MenusMapper.BaseResultMap">
+        select *
+        from menus
+        where parent_id = #{parentId}
+    </select>
+</mapper>
