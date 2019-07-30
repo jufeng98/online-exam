@@ -1,6 +1,5 @@
 package org.javamaster.b2c.core.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,9 +9,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 用户表,请勿手工改动此文件,请使用 mybatis generator
  * 
  * @author mybatis generator
- * @date 2019/07/29 15:40:48
  */
-public class Users implements Serializable {
+public class Users {
     /**
      * 用户名
      */
@@ -97,8 +95,6 @@ public class Users implements Serializable {
      * 最后操作时间
      */
     private Date lastOpTime;
-
-    private static final long serialVersionUID = 2126022833212219392L;
 
     /**
      * 获取用户名

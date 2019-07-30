@@ -1,6 +1,5 @@
 package org.javamaster.b2c.core.entity;
 
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -9,9 +8,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 权限表,请勿手工改动此文件,请使用 mybatis generator
  * 
  * @author mybatis generator
- * @date 2019/07/29 15:40:48
  */
-public class UsersAuthorities implements Serializable {
+public class UsersAuthorities {
     /**
      * 权限
      */
@@ -21,8 +19,6 @@ public class UsersAuthorities implements Serializable {
      * 权限名称
      */
     private String authorityName;
-
-    private static final long serialVersionUID = 8803983937793042432L;
 
     /**
      * 获取权限

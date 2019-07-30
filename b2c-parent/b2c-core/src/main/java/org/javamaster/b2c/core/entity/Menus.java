@@ -1,6 +1,5 @@
 package org.javamaster.b2c.core.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,9 +9,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 菜单表,请勿手工改动此文件,请使用 mybatis generator
  * 
  * @author mybatis generator
- * @date 2019/07/29 15:40:48
  */
-public class Menus implements Serializable {
+public class Menus {
     /**
      * 主键id
      */
@@ -36,7 +34,7 @@ public class Menus implements Serializable {
     /**
      * 权限
      */
-    private String permission;
+    private String authority;
 
     /**
      * path
@@ -62,8 +60,6 @@ public class Menus implements Serializable {
      * 最后操作时间
      */
     private Date opTime;
-
-    private static final long serialVersionUID = 991396859346875392L;
 
     /**
      * 获取主键id
@@ -124,15 +120,15 @@ public class Menus implements Serializable {
     /**
      * 获取权限
      */
-    public String getPermission() {
-        return permission;
+    public String getAuthority() {
+        return authority;
     }
 
     /**
      * 设置权限
      */
-    public void setPermission(String permission) {
-        this.permission = permission;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     /**

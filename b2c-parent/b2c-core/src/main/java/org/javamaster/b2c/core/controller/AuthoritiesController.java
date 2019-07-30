@@ -30,7 +30,7 @@ public class AuthoritiesController {
     @Autowired
     private AuthoritiesService authoritiesService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @Secured(AppConsts. ROLE_ACTUATOR)
     @PostMapping("/findAuthorities")
     public Result<FindAuthoritiesResVo> findAuthorities(@Validated @RequestBody FindAuthoritiesReqVo reqVo) {
         FindAuthoritiesResVo resVo = authoritiesService.findAuthorities(reqVo);
@@ -38,7 +38,7 @@ public class AuthoritiesController {
         return result;
     }
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @Secured(AppConsts. ROLE_ACTUATOR)
     @PostMapping("/findUsersAuthorities")
     public Result<FindUsersAuthoritiesResVo> findUsersAuthorities(@Validated @RequestBody FindUsersAuthoritiesReqVo reqVo) {
         FindUsersAuthoritiesResVo resVo = authoritiesService.findUsersAuthorities(reqVo);
@@ -46,7 +46,7 @@ public class AuthoritiesController {
         return result;
     }
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @Secured(AppConsts. ROLE_ACTUATOR)
     @PostMapping("/authUsers")
     public Result<AuthOrUnAuthUsersResVo> authUsers(@Validated @RequestBody AuthOrUnAuthUsersReqVo reqVo) {
         AuthOrUnAuthUsersResVo resVo = authoritiesService.authUsers(reqVo);
@@ -54,7 +54,7 @@ public class AuthoritiesController {
         return result;
     }
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @Secured(AppConsts. ROLE_ACTUATOR)
     @PostMapping("/unAuthUsers")
     public Result<AuthOrUnAuthUsersResVo> unAuthUsers(@Validated @RequestBody AuthOrUnAuthUsersReqVo reqVo) {
         AuthOrUnAuthUsersResVo resVo = authoritiesService.unAuthUsers(reqVo);

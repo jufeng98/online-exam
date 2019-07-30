@@ -1,7 +1,5 @@
 package org.javamaster.b2c.mybatis.generator.plugin;
 
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -20,7 +18,6 @@ import org.mybatis.generator.api.dom.xml.Element;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.Context;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +26,6 @@ import java.util.List;
  */
 public class MybatisGeneratorPlugin extends PluginAdapter {
 
-    private static final String PATTERN = "yyyy/MM/dd HH:mm:ss";
 
     @Override
     public void setContext(Context context) {
@@ -47,25 +43,13 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
                 " * %s,请勿手工改动此文件,请使用 mybatis generator\n" +
                 " * \n" +
                 " * @author mybatis generator\n" +
-                " * @date %s\n" +
                 " */";
-        String dateStr = DateFormatUtils.format(new Date(), PATTERN);
-        docLine = String.format(docLine, introspectedTable.getRemarks(), dateStr);
+        docLine = String.format(docLine, introspectedTable.getRemarks());
         topLevelClass.addJavaDocLine(docLine);
 
-        topLevelClass.addImportedType("java.io.Serializable");
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.EqualsBuilder");
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.ToStringBuilder");
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.ToStringStyle");
-        FullyQualifiedJavaType javaType = new FullyQualifiedJavaType("Serializable");
-        topLevelClass.addSuperInterface(javaType);
-
-        Field field = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
-        field.setVisibility(JavaVisibility.PRIVATE);
-        field.setStatic(true);
-        field.setFinal(true);
-        field.setInitializationString(RandomUtils.nextLong() + "L");
-        topLevelClass.addField(field);
 
         Method toStringMethod = new Method();
         toStringMethod.addAnnotation("@Override");
@@ -127,10 +111,8 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
                 " * 请勿手工改动此文件,请使用 mybatis generator\n" +
                 " * \n" +
                 " * @author mybatis generator\n" +
-                " * @date %s\n" +
                 " */";
-        String dateStr = DateFormatUtils.format(new Date(), PATTERN);
-        topLevelClass.addJavaDocLine(String.format(docLine, dateStr));
+        topLevelClass.addJavaDocLine(docLine);
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
     }
 
@@ -141,10 +123,8 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
                 " * 操纵%s,请勿手工改动此文件,请使用 mybatis generator\n" +
                 " * \n" +
                 " * @author mybatis generator\n" +
-                " * @date %s\n" +
                 " */";
-        String dateStr = DateFormatUtils.format(new Date(), PATTERN);
-        docLine = String.format(docLine, introspectedTable.getRemarks(), dateStr);
+        docLine = String.format(docLine, introspectedTable.getRemarks());
         interfaze.addJavaDocLine(docLine);
         return super.clientGenerated(interfaze, topLevelClass, introspectedTable);
     }
@@ -157,10 +137,7 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
             public String getFormattedContent(int indentLevel) {
                 StringBuilder sb = new StringBuilder();
                 OutputUtilities.xmlIndent(sb, indentLevel);
-                String dateStr = DateFormatUtils.format(new Date(), PATTERN);
-                sb.append("<!-- 此文件由 mybatis generator 生成, 生成时间: ").append(dateStr).append(" -->");
-                sb.append("\r\n");
-                sb.append("  <!-- 注意: 请勿手工改动此文件, 请使用 mybatis generator").append(" -->");
+                sb.append("<!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator").append(" -->");
                 return sb.toString();
             }
         };

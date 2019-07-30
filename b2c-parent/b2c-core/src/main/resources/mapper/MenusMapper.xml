@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.javamaster.b2c.core.mapper.MenusMapper">
-  <!-- 此文件由 mybatis generator 生成, 生成时间: 2019/07/29 15:40:48 -->
-  <!-- 注意: 请勿手工改动此文件, 请使用 mybatis generator -->
+  <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
   <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.Menus">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="has_sub_menu" jdbcType="BIT" property="hasSubMenu" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="authority" jdbcType="VARCHAR" property="authority" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="should_show" jdbcType="BIT" property="shouldShow" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
@@ -74,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, has_sub_menu, name, permission, path, should_show, icon, create_time, 
+    id, parent_id, has_sub_menu, name, authority, path, should_show, icon, create_time, 
     op_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.MenusExample" resultMap="BaseResultMap">
@@ -109,11 +108,11 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Menus" useGeneratedKeys="true">
     insert into menus (id, parent_id, has_sub_menu, 
-      name, permission, path, 
+      name, authority, path, 
       should_show, icon, create_time, 
       op_time)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{hasSubMenu,jdbcType=BIT}, 
-      #{name,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
       #{shouldShow,jdbcType=BIT}, #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{opTime,jdbcType=TIMESTAMP})
   </insert>
@@ -132,8 +131,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="permission != null">
-        permission,
+      <if test="authority != null">
+        authority,
       </if>
       <if test="path != null">
         path,
@@ -164,8 +163,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="permission != null">
-        #{permission,jdbcType=VARCHAR},
+      <if test="authority != null">
+        #{authority,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
@@ -205,8 +204,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.permission != null">
-        permission = #{record.permission,jdbcType=VARCHAR},
+      <if test="record.authority != null">
+        authority = #{record.authority,jdbcType=VARCHAR},
       </if>
       <if test="record.path != null">
         path = #{record.path,jdbcType=VARCHAR},
@@ -234,7 +233,7 @@
       parent_id = #{record.parentId,jdbcType=INTEGER},
       has_sub_menu = #{record.hasSubMenu,jdbcType=BIT},
       name = #{record.name,jdbcType=VARCHAR},
-      permission = #{record.permission,jdbcType=VARCHAR},
+      authority = #{record.authority,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
       should_show = #{record.shouldShow,jdbcType=BIT},
       icon = #{record.icon,jdbcType=VARCHAR},
@@ -256,8 +255,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="permission != null">
-        permission = #{permission,jdbcType=VARCHAR},
+      <if test="authority != null">
+        authority = #{authority,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
@@ -282,7 +281,7 @@
     set parent_id = #{parentId,jdbcType=INTEGER},
       has_sub_menu = #{hasSubMenu,jdbcType=BIT},
       name = #{name,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=VARCHAR},
+      authority = #{authority,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       should_show = #{shouldShow,jdbcType=BIT},
       icon = #{icon,jdbcType=VARCHAR},

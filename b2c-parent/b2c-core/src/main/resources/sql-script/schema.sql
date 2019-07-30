@@ -112,7 +112,7 @@ create table menus(
   parent_id int not null default 0 comment '父id',
   has_sub_menu tinyint(1) not null default false comment '是否有子菜单',
   name varchar(20) not null unique comment '名称',
-  permission varchar(20) not null default '' comment '权限',
+  authority varchar(20) not null default '' comment '权限',
   path varchar(128) not null default '' comment 'path',
   should_show boolean not null default true comment '是否应显示',
   icon varchar(30) not null default '' comment '图标类名',

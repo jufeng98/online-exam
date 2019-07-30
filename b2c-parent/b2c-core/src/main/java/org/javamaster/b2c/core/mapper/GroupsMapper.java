@@ -9,7 +9,6 @@ import org.javamaster.b2c.core.entity.GroupsExample;
  * 操纵权限组表,请勿手工改动此文件,请使用 mybatis generator
  * 
  * @author mybatis generator
- * @date 2019/07/29 15:40:48
  */
 public interface GroupsMapper {
     long countByExample(GroupsExample example);
