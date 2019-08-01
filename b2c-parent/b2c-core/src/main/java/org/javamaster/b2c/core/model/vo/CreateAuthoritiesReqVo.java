@@ -3,17 +3,19 @@ package org.javamaster.b2c.core.model.vo;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.javamaster.b2c.core.entity.MenusEntity;
 
-import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author yudong
- * @date 2019/7/22
+ * @date 2019/7/31
  */
 @Data
-public class GetMenusListResVo {
-    List<MenusEntity> menusEntities;
+public class CreateAuthoritiesReqVo {
+    @NotNull
+    @Valid
+    private CreateOrEditAuthoritiesVo createOrEditAuthoritiesForm;
 
     @Override
     public String toString() {

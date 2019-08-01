@@ -15,6 +15,7 @@ import beans from '@/pages/actuator/beans'
 import loggers from '@/pages/actuator/loggers'
 import metrics from '@/pages/actuator/metrics'
 import threads from '@/pages/actuator/threads'
+import authoritiesManage from '@/pages/users/authorities-manage'
 
 Vue.use(Router)
 
@@ -32,5 +33,6 @@ export default new Router({
     {path: '/loggers', name: 'loggers', component: loggers},
     {path: '/metrics', name: 'metrics', component: metrics},
     {path: '/threads', name: 'threads', component: threads},
+    {path: '/authoritiesManage', name: 'authoritiesManage', component: authoritiesManage},
   ]
 })

@@ -15,13 +15,21 @@ public interface GroupAuthoritiesMapper {
 
     int deleteByExample(GroupAuthoritiesExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(GroupAuthorities record);
 
     int insertSelective(GroupAuthorities record);
 
     List<GroupAuthorities> selectByExample(GroupAuthoritiesExample example);
 
+    GroupAuthorities selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") GroupAuthorities record, @Param("example") GroupAuthoritiesExample example);
 
     int updateByExample(@Param("record") GroupAuthorities record, @Param("example") GroupAuthoritiesExample example);
+
+    int updateByPrimaryKeySelective(GroupAuthorities record);
+
+    int updateByPrimaryKey(GroupAuthorities record);
 }

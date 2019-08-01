@@ -32,11 +32,6 @@ public class Menus {
     private String name;
 
     /**
-     * 权限
-     */
-    private String authority;
-
-    /**
      * path
      */
     private String path;
@@ -115,20 +110,6 @@ public class Menus {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * 获取权限
-     */
-    public String getAuthority() {
-        return authority;
-    }
-
-    /**
-     * 设置权限
-     */
-    public void setAuthority(String authority) {
-        this.authority = authority;
     }
 
     /**

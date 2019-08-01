@@ -3,6 +3,7 @@
 <mapper namespace="org.javamaster.b2c.core.mapper.GroupMembersMapper">
   <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
   <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.GroupMembers">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="group_id" jdbcType="INTEGER" property="groupId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    group_id, username
+    id, group_id, username
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.GroupMembersExample" resultMap="BaseResultMap">
     select
@@ -81,19 +82,34 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from group_members
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from group_members
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.GroupMembersExample">
     delete from group_members
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.javamaster.b2c.core.entity.GroupMembers">
-    insert into group_members (group_id, username)
-    values (#{groupId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR})
+  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.GroupMembers" useGeneratedKeys="true">
+    insert into group_members (id, group_id, username
+      )
+    values (#{id,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.GroupMembers">
     insert into group_members
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="groupId != null">
         group_id,
       </if>
@@ -102,6 +118,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="groupId != null">
         #{groupId,jdbcType=INTEGER},
       </if>
@@ -119,6 +138,9 @@
   <update id="updateByExampleSelective" parameterType="map">
     update group_members
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.groupId != null">
         group_id = #{record.groupId,jdbcType=INTEGER},
       </if>
@@ -132,10 +154,29 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update group_members
-    set group_id = #{record.groupId,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.GroupMembers">
+    update group_members
+    <set>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.GroupMembers">
+    update group_members
+    set group_id = #{groupId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -8,14 +8,14 @@ import java.util.List;
  * 
  * @author mybatis generator
  */
-public class GroupMembersExample {
+public class AuthoritiesMenusExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public GroupMembersExample() {
+    public AuthoritiesMenusExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -169,133 +169,133 @@ public class GroupMembersExample {
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdIsNull() {
-            addCriterion("group_id is null");
+        public Criteria andAuthorityIsNull() {
+            addCriterion("authority is null");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdIsNotNull() {
-            addCriterion("group_id is not null");
+        public Criteria andAuthorityIsNotNull() {
+            addCriterion("authority is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdEqualTo(Integer value) {
-            addCriterion("group_id =", value, "groupId");
+        public Criteria andAuthorityEqualTo(String value) {
+            addCriterion("authority =", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotEqualTo(Integer value) {
-            addCriterion("group_id <>", value, "groupId");
+        public Criteria andAuthorityNotEqualTo(String value) {
+            addCriterion("authority <>", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdGreaterThan(Integer value) {
-            addCriterion("group_id >", value, "groupId");
+        public Criteria andAuthorityGreaterThan(String value) {
+            addCriterion("authority >", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("group_id >=", value, "groupId");
+        public Criteria andAuthorityGreaterThanOrEqualTo(String value) {
+            addCriterion("authority >=", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdLessThan(Integer value) {
-            addCriterion("group_id <", value, "groupId");
+        public Criteria andAuthorityLessThan(String value) {
+            addCriterion("authority <", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdLessThanOrEqualTo(Integer value) {
-            addCriterion("group_id <=", value, "groupId");
+        public Criteria andAuthorityLessThanOrEqualTo(String value) {
+            addCriterion("authority <=", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdIn(List<Integer> values) {
-            addCriterion("group_id in", values, "groupId");
+        public Criteria andAuthorityLike(String value) {
+            addCriterion("authority like", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotIn(List<Integer> values) {
-            addCriterion("group_id not in", values, "groupId");
+        public Criteria andAuthorityNotLike(String value) {
+            addCriterion("authority not like", value, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdBetween(Integer value1, Integer value2) {
-            addCriterion("group_id between", value1, value2, "groupId");
+        public Criteria andAuthorityIn(List<String> values) {
+            addCriterion("authority in", values, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("group_id not between", value1, value2, "groupId");
+        public Criteria andAuthorityNotIn(List<String> values) {
+            addCriterion("authority not in", values, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNull() {
-            addCriterion("username is null");
+        public Criteria andAuthorityBetween(String value1, String value2) {
+            addCriterion("authority between", value1, value2, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIsNotNull() {
-            addCriterion("username is not null");
+        public Criteria andAuthorityNotBetween(String value1, String value2) {
+            addCriterion("authority not between", value1, value2, "authority");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameEqualTo(String value) {
-            addCriterion("username =", value, "username");
+        public Criteria andMenusIdIsNull() {
+            addCriterion("menus_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotEqualTo(String value) {
-            addCriterion("username <>", value, "username");
+        public Criteria andMenusIdIsNotNull() {
+            addCriterion("menus_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThan(String value) {
-            addCriterion("username >", value, "username");
+        public Criteria andMenusIdEqualTo(Integer value) {
+            addCriterion("menus_id =", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameGreaterThanOrEqualTo(String value) {
-            addCriterion("username >=", value, "username");
+        public Criteria andMenusIdNotEqualTo(Integer value) {
+            addCriterion("menus_id <>", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThan(String value) {
-            addCriterion("username <", value, "username");
+        public Criteria andMenusIdGreaterThan(Integer value) {
+            addCriterion("menus_id >", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLessThanOrEqualTo(String value) {
-            addCriterion("username <=", value, "username");
+        public Criteria andMenusIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("menus_id >=", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameLike(String value) {
-            addCriterion("username like", value, "username");
+        public Criteria andMenusIdLessThan(Integer value) {
+            addCriterion("menus_id <", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotLike(String value) {
-            addCriterion("username not like", value, "username");
+        public Criteria andMenusIdLessThanOrEqualTo(Integer value) {
+            addCriterion("menus_id <=", value, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameIn(List<String> values) {
-            addCriterion("username in", values, "username");
+        public Criteria andMenusIdIn(List<Integer> values) {
+            addCriterion("menus_id in", values, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotIn(List<String> values) {
-            addCriterion("username not in", values, "username");
+        public Criteria andMenusIdNotIn(List<Integer> values) {
+            addCriterion("menus_id not in", values, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameBetween(String value1, String value2) {
-            addCriterion("username between", value1, value2, "username");
+        public Criteria andMenusIdBetween(Integer value1, Integer value2) {
+            addCriterion("menus_id between", value1, value2, "menusId");
             return (Criteria) this;
         }
 
-        public Criteria andUsernameNotBetween(String value1, String value2) {
-            addCriterion("username not between", value1, value2, "username");
+        public Criteria andMenusIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("menus_id not between", value1, value2, "menusId");
             return (Criteria) this;
         }
     }

@@ -25,13 +25,13 @@
             </el-form-item>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="search" v-on:click="findUsers(1)">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" v-on:click="findUsers(1)">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="fa-repeat" v-on:click="resetForm('usersFormRef')">重置</el-button>
+            <el-button type="primary" icon="el-icon-warning" v-on:click="resetForm('usersFormRef')">重置</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="plus" v-on:click="createUsers">新增</el-button>
+            <el-button type="primary" icon="el-icon-plus" v-on:click="showCreateUsersDialog">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -55,7 +55,9 @@
                 <el-button type="primary" size="mini" @click="showAuthoritiesDialog(scope.$index, scope.row)">
                   授权
                 </el-button>
-                <el-button type="primary" size="mini" @click="editUsers(scope.$index, scope.row)">编辑</el-button>
+                <el-button type="primary" size="mini" @click="showEditUsersDialog(scope.$index, scope.row)">
+                  编辑
+                </el-button>
                 <el-button type="primary" size="mini" :disabled="shouldDisabledButton(scope.$index, scope.row)"
                            @click="delUsers(scope.$index, scope.row)">
                   删除
@@ -91,7 +93,7 @@
                ref="createOrEditUsersFormRef">
         <el-row>
           <el-col>
-            <el-form-item label="用户名" prop="username">
+            <el-form-item label="用户名" prop="username" auto-complete="off">
               <el-input v-model="createOrEditUsersForm.username" placeholder="请填写用户名，5-20个字符"
                         :disabled="!showPasswordFormItem"></el-input>
             </el-form-item>
@@ -109,7 +111,7 @@
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="密码" prop="password" v-if="showPasswordFormItem">
+            <el-form-item label="密码" prop="password" v-if="showPasswordFormItem" auto-complete="off">
               <el-input type="password" v-model="createOrEditUsersForm.password" placeholder="请填写密码，5-20个字符"></el-input>
             </el-form-item>
           </el-col>
@@ -279,7 +281,7 @@
         this.currentChooseUsers = row.username
         baseAxios.all([this.getUsersAuthorities(), this.getAuthorities(row.username)])
           .then(baseAxios.spread((resJson1, resJson2) => {
-            this.usersAuthorities = resJson1.data.usersAuthorities.map((item) => {
+            this.usersAuthorities = resJson1.data.map((item) => {
               return {key: item.authority, label: item.authorityName}
             })
             this.authorities = resJson2.data.authorities.map((item) => {
@@ -294,7 +296,10 @@
           }))
       },
       getUsersAuthorities() {
-        return baseAxios.post(config.FIND_USERS_AUTHORITIES)
+        return baseAxios.post(config.FIND_USERS_AUTHORITIES, {
+          page: {pageNum: 1, pageSize: 99999},
+          authoritiesForm: {}
+        })
       },
       getAuthorities(username) {
         return baseAxios.post(config.FIND_AUTHORITIES, {username: username})
@@ -320,7 +325,7 @@
           this.listLoading = false
         })
       },
-      createUsers() {
+      showCreateUsersDialog() {
         this.title = '新增用户'
         this.showPasswordFormItem = true
         this.createOrEditUsersForm = {}
@@ -330,7 +335,7 @@
       resetForm(formName) {
         this.$refs[formName].resetFields()
       },
-      editUsers(index, row) {
+      showEditUsersDialog(index, row) {
         this.title = '编辑用户'
         this.showPasswordFormItem = false
         this.uploadShowImageUrl = row.picUrl
@@ -373,16 +378,13 @@
         this.updatePasswordDialogVisible = true
       },
       delUsers(index, row) {
-        this.$confirm('是否确认删除选中的用户?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          baseAxios.post(config.DELETE_USERS, {username: row.username}, {contentType: 'form'}).then(() => {
-            this.$message({message: '操作成功', type: 'success'})
-            this.findUsers(this.pageNum)
-          })
-        }).catch(() => {
+        this.$confirm('是否确认删除选中的用户?', '提示', {confirmButtonText: '确定', cancelButtonText: '取消', type: 'warning'})
+          .then(() => {
+            baseAxios.post(config.DELETE_USERS, {username: row.username}, {contentType: 'form'}).then(() => {
+              this.$message({message: '操作成功', type: 'success'})
+              this.findUsers(this.pageNum)
+            })
+          }).catch(() => {
         })
       },
       shouldDisabledButton(index, row) {

@@ -17,10 +17,10 @@
             <el-input v-model="loggersForm.name" placeholder="支持模糊搜索"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="search" @click="searchLoggers">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchLoggers">搜索</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="resetForm('loggersFormRef')">重置</el-button>
+            <el-button type="primary" icon="el-icon-warning" @click="resetForm('loggersFormRef')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>

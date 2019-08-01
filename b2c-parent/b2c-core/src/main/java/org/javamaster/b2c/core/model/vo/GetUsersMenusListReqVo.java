@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author yudong
  * @date 2019/7/22
  */
-public class GetMenusListReqVo {
+public class GetUsersMenusListReqVo {
 
     @Override
     public String toString() {

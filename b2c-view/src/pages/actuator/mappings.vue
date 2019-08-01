@@ -10,18 +10,18 @@
             <el-input v-model="mappingForm.handler" placeholder="支持模糊搜索"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="searchMapping">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchMapping">搜索</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="resetForm('mappingCondiRef')">重置</el-button>
+            <el-button type="primary" icon="el-icon-warning" @click="resetForm('mappingCondiRef')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
     </el-row>
     <el-row style="margin-bottom: 20px;text-align: left">
       <el-col>
-        <el-button type="primary" icon="search" @click="showServletFilters">查看Servlet Filters</el-button>
-        <el-button type="primary" icon="search" @click="showServlets">查看Servlets</el-button>
+        <el-button type="primary" @click="showServletFilters">查看Servlet Filters</el-button>
+        <el-button type="primary" @click="showServlets">查看Servlets</el-button>
       </el-col>
     </el-row>
     <el-row>

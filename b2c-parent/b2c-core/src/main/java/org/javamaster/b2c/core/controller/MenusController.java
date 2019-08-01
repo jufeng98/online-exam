@@ -1,8 +1,9 @@
 package org.javamaster.b2c.core.controller;
 
 import org.javamaster.b2c.core.model.Result;
-import org.javamaster.b2c.core.model.vo.GetMenusListReqVo;
-import org.javamaster.b2c.core.model.vo.GetMenusListResVo;
+import org.javamaster.b2c.core.model.vo.GetAuthoritiesMenusListReqVo;
+import org.javamaster.b2c.core.model.vo.GetUsersMenusListReqVo;
+import org.javamaster.b2c.core.model.vo.MenusListResVo;
 import org.javamaster.b2c.core.service.MenusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,11 +27,25 @@ public class MenusController {
     @Autowired
     private MenusService menusService;
 
+    @PostMapping("/getUsersMenusList")
+    public Result<MenusListResVo> getUsersMenusList(@Validated @RequestBody GetUsersMenusListReqVo reqVo,
+                                                    @AuthenticationPrincipal UserDetails userDetails) {
+        MenusListResVo resVo = menusService.getMenusList(reqVo, userDetails);
+        Result<MenusListResVo> result = new Result(resVo);
+        return result;
+    }
+
     @PostMapping("/getMenusList")
-    public Result<GetMenusListResVo> getMenusList(@Validated @RequestBody GetMenusListReqVo reqVo,
-                                                  @AuthenticationPrincipal UserDetails userDetails) {
-        GetMenusListResVo resVo = menusService.getMenusList(reqVo, userDetails);
-        Result<GetMenusListResVo> result = new Result(resVo);
+    public Result<MenusListResVo> getMenusList(@Validated @RequestBody GetUsersMenusListReqVo reqVo) {
+        MenusListResVo resVo = menusService.getMenusList(reqVo, null);
+        Result<MenusListResVo> result = new Result(resVo);
+        return result;
+    }
+
+    @PostMapping("/getAuthoritiesMenusList")
+    public Result<MenusListResVo> getAuthoritiesMenusList(@Validated @RequestBody GetAuthoritiesMenusListReqVo reqVo) {
+        MenusListResVo resVo = menusService.getAuthoritiesMenusList(reqVo);
+        Result<MenusListResVo> result = new Result(resVo);
         return result;
     }
 

@@ -1,27 +1,27 @@
--- 密码是123456
-insert into users values ('admin','','', '$2a$10$fyglVJ8Flczap1mIUiSMp.b5VFYEW8F3Fn72qrnpoDlase2Mkhq9O','', true, true, true, true, false,'','','','admin',now(),'admin',now());
-insert into users values ('1050106266','','', '$2a$10$fyglVJ8Flczap1mIUiSMp.b5VFYEW8F3Fn72qrnpoDlase2Mkhq9O','', true, true, true, true, false,'','','','admin',now(),'admin',now());
-insert into users values ('1050106158','','', '$2a$10$oCMqtWAAol2CFgFY7.Dg8OpV/LSOsIL5VF/GgEuNhYcDGDWHl8Hc6','',true, true, true, true, false,'','','','admin',now(),'admin',now());
-insert into users_authorities values ('ROLE_ADMIN','超级管理员');
-insert into users_authorities values ('ROLE_ACTUATOR','ACTUATOR用户');
-insert into users_authorities values ('ROLE_ORDINARY','一般用户');
-insert into users_authorities values ('ROLE_VIP','VIP用户');
-insert into users_authorities values ('ROLE_SVIP','超级VIP用户');
-insert into users_authorities values ('ROLE_TOURIST','游客');
-insert into authorities values ('admin', 'ROLE_ADMIN');
-insert into authorities values ('admin', 'ROLE_ACTUATOR');
-insert into authorities values ('1050106158', 'ROLE_ORDINARY');
-insert into groups(group_name) values ('超级用户组');
-insert into groups(group_name) values ('VIP用户组');
-insert into groups(group_name) values ('一般用户组');
-insert into group_authorities values ((select id from groups where group_name='超级用户组'), 'ROLE_ADMIN');
-insert into group_authorities values ((select id from groups where group_name='超级用户组'), 'ROLE_ACTUATOR');
-insert into group_authorities values ((select id from groups where group_name='VIP用户组'), 'ROLE_VIP');
-insert into group_authorities values ((select id from groups where group_name='VIP用户组'), 'ROLE_SVIP');
-insert into group_authorities values ((select id from groups where group_name='一般用户组'), 'ROLE_ORDINARY');
-insert into group_authorities values ((select id from groups where group_name='一般用户组'), 'ROLE_TOURIST');
-insert into group_members values ((select id from groups where group_name='超级用户组'), '1050106266');
-insert into group_members values ((select id from groups where group_name='一般用户'), '1050106158');
+-- 密码是admin
+insert into users values ('admin','','', '$2a$10$1RM.67XqaUuauX7WQf5wHu0P94wD.nECptugg1HaHQZEVLpyyPy42','', true, true, true, true, false,'','','','admin',now(),'admin',now());
+insert into users values ('1050106266','','', '$2a$10$1RM.67XqaUuauX7WQf5wHu0P94wD.nECptugg1HaHQZEVLpyyPy42','', true, true, true, true, false,'','','','admin',now(),'admin',now());
+insert into users values ('1050106158','','', '$2a$10$1RM.67XqaUuauX7WQf5wHu0P94wD.nECptugg1HaHQZEVLpyyPy42','',true, true, true, true, false,'','','','admin',now(),'admin',now());
+insert into users_authorities values ('ROLE_ADMIN','超级管理员','',now());
+insert into users_authorities values ('ROLE_ACTUATOR','ACTUATOR用户','',now());
+insert into users_authorities values ('ROLE_ORDINARY','一般用户','',now());
+insert into users_authorities values ('ROLE_VIP','VIP用户','',now());
+insert into users_authorities values ('ROLE_SVIP','超级VIP用户','',now());
+insert into users_authorities values ('ROLE_TOURIST','游客','',now());
+insert into authorities values (null,'admin', 'ROLE_ADMIN');
+insert into authorities values (null,'admin', 'ROLE_ACTUATOR');
+insert into authorities values (null,'1050106158', 'ROLE_ORDINARY');
+insert into groups values (null,'超级用户组');
+insert into groups values (null,'VIP用户组');
+insert into groups values (null,'一般用户组');
+insert into group_authorities values ((select null),(select id from groups where group_name='超级用户组'), 'ROLE_ADMIN');
+insert into group_authorities values ((select null),(select id from groups where group_name='超级用户组'), 'ROLE_ACTUATOR');
+insert into group_authorities values ((select null),(select id from groups where group_name='VIP用户组'), 'ROLE_VIP');
+insert into group_authorities values ((select null),(select id from groups where group_name='VIP用户组'), 'ROLE_SVIP');
+insert into group_authorities values ((select null),(select id from groups where group_name='一般用户组'), 'ROLE_ORDINARY');
+insert into group_authorities values ((select null),(select id from groups where group_name='一般用户组'), 'ROLE_TOURIST');
+insert into group_members values ((select null),(select id from groups where group_name='超级用户组'), '1050106266');
+insert into group_members values ((select null),(select id from groups where group_name='一般用户组'), '1050106158');
 insert into menus(name,icon) values ('培训实施','el-icon-message');
 insert into menus(name,icon) values ('统计监控','el-icon-menu');
 insert into menus(name,icon) values ('系统管理','el-icon-setting');
@@ -54,3 +54,4 @@ insert into menus(parent_id,name,path)select (select id from menus where name='�
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '度量信息(metrics)'),(select '/#/metrics');
 insert into menus(parent_id,name,path)select (select id from menus where name='系统管理'),(select '线程信息(threads)'),(select '/#/threads');
 update menus set has_sub_menu=true where name='系统管理';
+insert into authorities_menus (select null,'ROLE_ADMIN',id from menus where parent_id!=0)

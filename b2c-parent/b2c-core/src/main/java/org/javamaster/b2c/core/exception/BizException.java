@@ -14,6 +14,11 @@ public class BizException extends RuntimeException {
         this.bizExceptionEnum = bizExceptionEnum;
     }
 
+    @Override
+    public String toString() {
+        return bizExceptionEnum.getErrorCode() + " " + bizExceptionEnum.getErrorMsg();
+    }
+
     public BizExceptionEnum getBizExceptionEnum() {
         return bizExceptionEnum;
     }

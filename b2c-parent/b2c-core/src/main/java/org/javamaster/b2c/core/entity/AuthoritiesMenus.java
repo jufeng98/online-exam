@@ -5,25 +5,25 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * 用户权限表,请勿手工改动此文件,请使用 mybatis generator
+ * 权限菜单表,请勿手工改动此文件,请使用 mybatis generator
  * 
  * @author mybatis generator
  */
-public class Authorities {
+public class AuthoritiesMenus {
     /**
      * 主键id
      */
     private Integer id;
 
     /**
-     * 关联users表的username
-     */
-    private String username;
-
-    /**
-     * 关联权限表的authority
+     * 关联users_authorities表的authority
      */
     private String authority;
+
+    /**
+     * 关联menus表的id
+     */
+    private Integer menusId;
 
     /**
      * 获取主键id
@@ -40,31 +40,31 @@ public class Authorities {
     }
 
     /**
-     * 获取关联users表的username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * 设置关联users表的username
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * 获取关联权限表的authority
+     * 获取关联users_authorities表的authority
      */
     public String getAuthority() {
         return authority;
     }
 
     /**
-     * 设置关联权限表的authority
+     * 设置关联users_authorities表的authority
      */
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    /**
+     * 获取关联menus表的id
+     */
+    public Integer getMenusId() {
+        return menusId;
+    }
+
+    /**
+     * 设置关联menus表的id
+     */
+    public void setMenusId(Integer menusId) {
+        this.menusId = menusId;
     }
 
     @Override

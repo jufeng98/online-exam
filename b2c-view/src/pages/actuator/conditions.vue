@@ -17,10 +17,10 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="search" @click="searchConditions">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchConditions">搜索</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="resetForm('conditionsFormRef')">重置</el-button>
+            <el-button type="primary" icon="el-icon-warning" @click="resetForm('conditionsFormRef')">重置</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="dialogTableVisible = true">匹配条件说明</el-button>

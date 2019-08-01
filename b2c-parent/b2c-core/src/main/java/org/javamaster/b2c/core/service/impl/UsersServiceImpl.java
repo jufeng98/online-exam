@@ -116,12 +116,12 @@ public class UsersServiceImpl implements UsersService {
             if (reqVo.getUsername().equals(userDetails.getUsername())) {
                 needRebuildContext = true;
                 // 管理员修改自己的密码,需要验证原密码
-                verifyOriginalPassword(reqVo.getPassword(), userDetails);
+                verifyOriginalPassword(reqVo.getPassword(), userDetails.getUsername());
             }
         } else {
             // 非管理员修改自己的密码,需要验证原密码
             needRebuildContext = true;
-            verifyOriginalPassword(reqVo.getPassword(), userDetails);
+            verifyOriginalPassword(reqVo.getPassword(), userDetails.getUsername());
         }
         dbUsers.setPassword(passwordEncoder.encode(reqVo.getNewPassword()));
         dbUsers.setLastOpUsername(userDetails.getUsername());
@@ -153,10 +153,11 @@ public class UsersServiceImpl implements UsersService {
         return editUsersResVo;
     }
 
-    private void verifyOriginalPassword(String originalPassword, UserDetails userDetails) {
+    private void verifyOriginalPassword(String originalPassword, String username) {
         if (StringUtils.isBlank(originalPassword)) {
             throw new BizException(BizExceptionEnum.INVALID_REQ_PARAM);
         }
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         if (!passwordEncoder.matches(originalPassword, userDetails.getPassword())) {
             throw new BizException(BizExceptionEnum.PASSWORD_INCORRECT);
         }

@@ -10,10 +10,10 @@
             <el-input v-model="beanForm.prefix" placeholder="支持模糊搜索"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="search" @click="searchConditions">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchConditions">搜索</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="resetForm('beanFormRef')">重置</el-button>
+            <el-button type="primary" icon="el-icon-warning" @click="resetForm('beanFormRef')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>

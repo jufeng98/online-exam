@@ -5,10 +5,12 @@
         select *
         from menus
         where parent_id = 0
+        order by id
     </select>
     <select id="findSubMenus" resultMap="org.javamaster.b2c.core.mapper.MenusMapper.BaseResultMap">
         select *
         from menus
         where parent_id = #{parentId}
+        order by id
     </select>
 </mapper>

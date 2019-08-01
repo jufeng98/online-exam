@@ -17,15 +17,15 @@
             <el-input v-model="propertySourceForm.propertyName" placeholder="支持模糊搜索"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="search" @click="searchPropertySource()">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="searchPropertySource()">搜索</el-button>
           </el-form-item>
         </el-form>
       </el-col>
     </el-row>
     <el-row style="margin-bottom: 20px;text-align: left">
       <el-col>
-        <el-button type="primary" icon="search" @click="showProfiles">查看激活的profiles</el-button>
-        <el-button type="primary" icon="search" :loading="exportHeadLoading" @click="exportHeapDump">
+        <el-button type="primary" @click="showProfiles">查看激活的profiles</el-button>
+        <el-button type="primary" :loading="exportHeadLoading" @click="exportHeapDump">
           {{exportHeadTip}}
         </el-button>
         <el-tooltip placement="top">
@@ -43,19 +43,19 @@
             * jps -v
             </pre>
           </div>
-          <el-button type="primary" icon="search" @click="showJvms">查看系统所有运行中JVM(jps)</el-button>
+          <el-button type="primary" @click="showJvms">查看系统所有运行中JVM(jps)</el-button>
         </el-tooltip>
         <el-tooltip placement="top">
           <div slot="content">
             jinfo -flags pid
           </div>
-          <el-button type="primary" icon="search" @click="showJvmProperties">查看JVM参数(jinfo)</el-button>
+          <el-button type="primary" @click="showJvmProperties">查看JVM参数(jinfo)</el-button>
         </el-tooltip>
         <el-tooltip placement="top">
           <div slot="content">
             java -XX:+PrintFlagsFinal
           </div>
-          <el-button type="primary" icon="search" @click="showJvmPropertiesDefault">查看JVM所有参数默认值</el-button>
+          <el-button type="primary" @click="showJvmPropertiesDefault">查看JVM所有参数默认值</el-button>
         </el-tooltip>
       </el-col>
     </el-row>

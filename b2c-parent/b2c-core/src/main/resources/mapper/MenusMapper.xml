@@ -7,7 +7,6 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="has_sub_menu" jdbcType="BIT" property="hasSubMenu" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="authority" jdbcType="VARCHAR" property="authority" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="should_show" jdbcType="BIT" property="shouldShow" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
@@ -73,8 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, parent_id, has_sub_menu, name, authority, path, should_show, icon, create_time, 
-    op_time
+    id, parent_id, has_sub_menu, name, path, should_show, icon, create_time, op_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.MenusExample" resultMap="BaseResultMap">
     select
@@ -108,13 +106,13 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Menus" useGeneratedKeys="true">
     insert into menus (id, parent_id, has_sub_menu, 
-      name, authority, path, 
-      should_show, icon, create_time, 
-      op_time)
+      name, path, should_show, 
+      icon, create_time, op_time
+      )
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{hasSubMenu,jdbcType=BIT}, 
-      #{name,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
-      #{shouldShow,jdbcType=BIT}, #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{opTime,jdbcType=TIMESTAMP})
+      #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{shouldShow,jdbcType=BIT}, 
+      #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{opTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Menus">
     insert into menus
@@ -130,9 +128,6 @@
       </if>
       <if test="name != null">
         name,
-      </if>
-      <if test="authority != null">
-        authority,
       </if>
       <if test="path != null">
         path,
@@ -162,9 +157,6 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="authority != null">
-        #{authority,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         #{path,jdbcType=VARCHAR},
@@ -204,9 +196,6 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.authority != null">
-        authority = #{record.authority,jdbcType=VARCHAR},
-      </if>
       <if test="record.path != null">
         path = #{record.path,jdbcType=VARCHAR},
       </if>
@@ -233,7 +222,6 @@
       parent_id = #{record.parentId,jdbcType=INTEGER},
       has_sub_menu = #{record.hasSubMenu,jdbcType=BIT},
       name = #{record.name,jdbcType=VARCHAR},
-      authority = #{record.authority,jdbcType=VARCHAR},
       path = #{record.path,jdbcType=VARCHAR},
       should_show = #{record.shouldShow,jdbcType=BIT},
       icon = #{record.icon,jdbcType=VARCHAR},
@@ -254,9 +242,6 @@
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="authority != null">
-        authority = #{authority,jdbcType=VARCHAR},
       </if>
       <if test="path != null">
         path = #{path,jdbcType=VARCHAR},
@@ -281,7 +266,6 @@
     set parent_id = #{parentId,jdbcType=INTEGER},
       has_sub_menu = #{hasSubMenu,jdbcType=BIT},
       name = #{name,jdbcType=VARCHAR},
-      authority = #{authority,jdbcType=VARCHAR},
       path = #{path,jdbcType=VARCHAR},
       should_show = #{shouldShow,jdbcType=BIT},
       icon = #{icon,jdbcType=VARCHAR},

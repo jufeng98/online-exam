@@ -63,5 +63,6 @@
         <table tableName="group_authorities" schema="online_exam"></table>
         <table tableName="group_members" schema="online_exam"></table>
         <table tableName="menus" schema="online_exam"></table>
+        <table tableName="authorities_menus" schema="online_exam"></table>
     </context>
 </generatorConfiguration>

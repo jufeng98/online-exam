@@ -13,6 +13,9 @@ public enum BizExceptionEnum {
     USER_EXISTS(1005, "用户已存在"),
     OPERATION_TOO_FREQUENT(1006, "操作过于频繁，请稍后再试"),
     ACCESS_DENIED(1007, "不允许访问"),
+    AUTHORITIES_EXISTS(1008, "角色已存在"),
+    AUTHORITIES_NOT_EXISTS(1009, "角色不存在"),
+    AUTHORITIES_ASSOCIATE_USER(1010, "角色已授权用户,请先解除授权"),
     ;
 
     BizExceptionEnum(Integer errorCode, String errorMsg) {

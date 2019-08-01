@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.javamaster.b2c.core.mapper.AuthoritiesMapper">
+<mapper namespace="org.javamaster.b2c.core.mapper.AuthoritiesMenusMapper">
   <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
-  <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.Authorities">
+  <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.AuthoritiesMenus">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="authority" jdbcType="VARCHAR" property="authority" />
+    <result column="menus_id" jdbcType="INTEGER" property="menusId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, authority
+    id, authority, menus_id
   </sql>
-  <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenusExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from authorities
+    from authorities_menus
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,67 +85,67 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from authorities
+    from authorities_menus
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from authorities
+    delete from authorities_menus
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesExample">
-    delete from authorities
+  <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenusExample">
+    delete from authorities_menus
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Authorities" useGeneratedKeys="true">
-    insert into authorities (id, username, authority
+  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenus" useGeneratedKeys="true">
+    insert into authorities_menus (id, authority, menus_id
       )
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{authority,jdbcType=VARCHAR}, #{menusId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Authorities">
-    insert into authorities
+  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenus">
+    insert into authorities_menus
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="username != null">
-        username,
-      </if>
       <if test="authority != null">
         authority,
+      </if>
+      <if test="menusId != null">
+        menus_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
       <if test="authority != null">
         #{authority,jdbcType=VARCHAR},
       </if>
+      <if test="menusId != null">
+        #{menusId,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesExample" resultType="java.lang.Long">
-    select count(*) from authorities
+  <select id="countByExample" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenusExample" resultType="java.lang.Long">
+    select count(*) from authorities_menus
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update authorities
+    update authorities_menus
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
-      </if>
       <if test="record.authority != null">
         authority = #{record.authority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menusId != null">
+        menus_id = #{record.menusId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -153,30 +153,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update authorities
+    update authorities_menus
     set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      authority = #{record.authority,jdbcType=VARCHAR}
+      authority = #{record.authority,jdbcType=VARCHAR},
+      menus_id = #{record.menusId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.Authorities">
-    update authorities
+  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenus">
+    update authorities_menus
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
       <if test="authority != null">
         authority = #{authority,jdbcType=VARCHAR},
+      </if>
+      <if test="menusId != null">
+        menus_id = #{menusId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.Authorities">
-    update authorities
-    set username = #{username,jdbcType=VARCHAR},
-      authority = #{authority,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.AuthoritiesMenus">
+    update authorities_menus
+    set authority = #{authority,jdbcType=VARCHAR},
+      menus_id = #{menusId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,7 +1,8 @@
 package org.javamaster.b2c.core.service;
 
-import org.javamaster.b2c.core.model.vo.GetMenusListReqVo;
-import org.javamaster.b2c.core.model.vo.GetMenusListResVo;
+import org.javamaster.b2c.core.model.vo.GetAuthoritiesMenusListReqVo;
+import org.javamaster.b2c.core.model.vo.GetUsersMenusListReqVo;
+import org.javamaster.b2c.core.model.vo.MenusListResVo;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -19,6 +20,14 @@ public interface MenusService {
      * @param userDetails
      * @return
      */
-    GetMenusListResVo getMenusList(GetMenusListReqVo reqVo, UserDetails userDetails);
+    MenusListResVo getMenusList(GetUsersMenusListReqVo reqVo, UserDetails userDetails);
+
+    /**
+     * 获取角色菜单信息
+     *
+     * @param reqVo
+     * @return
+     */
+    MenusListResVo getAuthoritiesMenusList(GetAuthoritiesMenusListReqVo reqVo);
 
 }

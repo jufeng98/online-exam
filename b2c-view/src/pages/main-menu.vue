@@ -12,7 +12,8 @@
       </div>
       <div class="home-user-info-container">
         <span>
-          <img style="width:30px;height:30px;vertical-align: middle" :src="loginUserPicUrl"/>
+          <img v-if="loginUserPicUrl" style="width:30px;height:30px;vertical-align: middle" :src="loginUserPicUrl"/>
+          <img v-else style="width:30px;height:30px;vertical-align: middle" src="../assets/logo.png"/>
         </span>
         <el-dropdown @command="handleCommand">
           <span class="el-dropdown-link home-user-info">

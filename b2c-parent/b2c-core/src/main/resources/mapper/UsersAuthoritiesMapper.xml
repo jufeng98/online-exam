@@ -5,6 +5,8 @@
   <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.UsersAuthorities">
     <id column="authority" jdbcType="VARCHAR" property="authority" />
     <result column="authority_name" jdbcType="VARCHAR" property="authorityName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    authority, authority_name
+    authority, authority_name, remark, create_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.UsersAuthoritiesExample" resultMap="BaseResultMap">
     select
@@ -98,8 +100,10 @@
     </if>
   </delete>
   <insert id="insert" keyProperty="authority" parameterType="org.javamaster.b2c.core.entity.UsersAuthorities" useGeneratedKeys="true">
-    insert into users_authorities (authority, authority_name)
-    values (#{authority,jdbcType=VARCHAR}, #{authorityName,jdbcType=VARCHAR})
+    insert into users_authorities (authority, authority_name, remark, 
+      create_time)
+    values (#{authority,jdbcType=VARCHAR}, #{authorityName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.UsersAuthorities">
     insert into users_authorities
@@ -110,6 +114,12 @@
       <if test="authorityName != null">
         authority_name,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="authority != null">
@@ -117,6 +127,12 @@
       </if>
       <if test="authorityName != null">
         #{authorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -135,6 +151,12 @@
       <if test="record.authorityName != null">
         authority_name = #{record.authorityName,jdbcType=VARCHAR},
       </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -143,7 +165,9 @@
   <update id="updateByExample" parameterType="map">
     update users_authorities
     set authority = #{record.authority,jdbcType=VARCHAR},
-      authority_name = #{record.authorityName,jdbcType=VARCHAR}
+      authority_name = #{record.authorityName,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -154,12 +178,20 @@
       <if test="authorityName != null">
         authority_name = #{authorityName,jdbcType=VARCHAR},
       </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where authority = #{authority,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.UsersAuthorities">
     update users_authorities
-    set authority_name = #{authorityName,jdbcType=VARCHAR}
+    set authority_name = #{authorityName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where authority = #{authority,jdbcType=VARCHAR}
   </update>
 </mapper>

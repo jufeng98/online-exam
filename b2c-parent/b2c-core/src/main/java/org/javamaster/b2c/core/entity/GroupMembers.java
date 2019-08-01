@@ -11,6 +11,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class GroupMembers {
     /**
+     * 主键id
+     */
+    private Integer id;
+
+    /**
      * 关联groups表id
      */
     private Integer groupId;
@@ -19,6 +24,20 @@ public class GroupMembers {
      * 关联users表username
      */
     private String username;
+
+    /**
+     * 获取主键id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * 设置主键id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      * 获取关联groups表id
