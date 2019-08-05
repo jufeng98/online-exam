@@ -28,3 +28,5 @@ hs_err_pid*
 
 node_modules/
 node_modules/*.package_versions.json
+b2c-parent/b2c-core/target
+b2c-mybatis-generator/target
