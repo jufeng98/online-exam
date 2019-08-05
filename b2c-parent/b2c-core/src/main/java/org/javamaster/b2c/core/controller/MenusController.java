@@ -1,6 +1,12 @@
 package org.javamaster.b2c.core.controller;
 
 import org.javamaster.b2c.core.model.Result;
+import org.javamaster.b2c.core.model.vo.CreateMenusReqVo;
+import org.javamaster.b2c.core.model.vo.CreateMenusResVo;
+import org.javamaster.b2c.core.model.vo.DelMenusReqVo;
+import org.javamaster.b2c.core.model.vo.DelMenusResVo;
+import org.javamaster.b2c.core.model.vo.EditMenusReqVo;
+import org.javamaster.b2c.core.model.vo.EditMenusResVo;
 import org.javamaster.b2c.core.model.vo.GetAuthoritiesMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.GetUsersMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.MenusListResVo;
@@ -46,6 +52,27 @@ public class MenusController {
     public Result<MenusListResVo> getAuthoritiesMenusList(@Validated @RequestBody GetAuthoritiesMenusListReqVo reqVo) {
         MenusListResVo resVo = menusService.getAuthoritiesMenusList(reqVo);
         Result<MenusListResVo> result = new Result(resVo);
+        return result;
+    }
+
+    @PostMapping("/createMenus")
+    public Result<CreateMenusResVo> createMenus(@Validated @RequestBody CreateMenusReqVo reqVo) {
+        CreateMenusResVo resVo = menusService.createMenus(reqVo);
+        Result<CreateMenusResVo> result = new Result(resVo);
+        return result;
+    }
+
+    @PostMapping("/delMenus")
+    public Result<DelMenusResVo> delMenus(@Validated @RequestBody DelMenusReqVo reqVo) {
+        DelMenusResVo resVo = menusService.delMenus(reqVo);
+        Result<DelMenusResVo> result = new Result(resVo);
+        return result;
+    }
+
+    @PostMapping("/editMenus")
+    public Result<EditMenusResVo> editMenus(@Validated @RequestBody EditMenusReqVo reqVo) {
+        EditMenusResVo resVo = menusService.editMenus(reqVo);
+        Result<EditMenusResVo> result = new Result(resVo);
         return result;
     }
 

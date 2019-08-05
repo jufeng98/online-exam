@@ -1,5 +1,11 @@
 package org.javamaster.b2c.core.service;
 
+import org.javamaster.b2c.core.model.vo.CreateMenusReqVo;
+import org.javamaster.b2c.core.model.vo.CreateMenusResVo;
+import org.javamaster.b2c.core.model.vo.DelMenusReqVo;
+import org.javamaster.b2c.core.model.vo.DelMenusResVo;
+import org.javamaster.b2c.core.model.vo.EditMenusReqVo;
+import org.javamaster.b2c.core.model.vo.EditMenusResVo;
 import org.javamaster.b2c.core.model.vo.GetAuthoritiesMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.GetUsersMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.MenusListResVo;
@@ -29,5 +35,29 @@ public interface MenusService {
      * @return
      */
     MenusListResVo getAuthoritiesMenusList(GetAuthoritiesMenusListReqVo reqVo);
+
+    /**
+     * 创建菜单
+     *
+     * @param reqVo
+     * @return
+     */
+    CreateMenusResVo createMenus(CreateMenusReqVo reqVo);
+
+    /**
+     * 删除菜单
+     *
+     * @param reqVo
+     * @return
+     */
+    DelMenusResVo delMenus(DelMenusReqVo reqVo);
+
+    /**
+     * 编辑菜单
+     *
+     * @param reqVo
+     * @return
+     */
+    EditMenusResVo editMenus(EditMenusReqVo reqVo);
 
 }

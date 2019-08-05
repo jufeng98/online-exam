@@ -6,12 +6,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * @author yudong
- * @date 2019/7/22
+ * @date 2019/8/02
  */
 @Data
-public class GetUsersMenusListReqVo {
-
-    private Boolean shouldFilterNullSubMenus;
+public class DelMenusResVo {
+    private Integer affectRow;
 
     @Override
     public String toString() {

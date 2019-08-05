@@ -171,13 +171,17 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="更新密码" :visible.sync="updatePasswordDialogVisible" width="30%">
-      <div>
-        <el-input type="password" v-model="newPassword" placeholder="请输入新密码，5-20个字符" :maxlength="20"
-                  style="margin-bottom: 10px;"></el-input>
-        <el-input type="password" v-if="showPasswordInput" v-model="password" placeholder="请输入原密码"
-                  :maxlength="20"></el-input>
-      </div>
+    <el-dialog title="更新密码" :visible.sync="updatePasswordDialogVisible" width="25%">
+      <el-form :inline="true" style="margin-top:10%">
+        <el-form-item v-if="showPasswordInput" label="请输入原密码:">
+          <el-input type="password" v-model="password" placeholder="请输入原密码"
+                    :maxlength="20"></el-input>
+        </el-form-item>
+        <el-form-item label="请输入新密码:">
+          <el-input type="password" v-model="newPassword" placeholder="请输入新密码，5-20个字符" :maxlength="20"
+                    style="margin-bottom: 10px;"></el-input>
+        </el-form-item>
+      </el-form>
       <div slot="footer">
         <el-button @click="cancelUpdateUsersPassword">取消</el-button>
         <el-button type="primary" @click="submitUpdateUsersPassword" :loading="editLoading">确定</el-button>
@@ -404,7 +408,7 @@
           let reqJsonParams = {createOrEditUsersForm: this.createOrEditUsersForm}
           let url = this.showPasswordFormItem ? config.CREATE_USERS : config.EDIT_USERS
           baseAxios.post(url, reqJsonParams).then(() => {
-            this.$message({message: '操作成功', type: 'success'});
+            this.$message({message: '操作成功', type: 'success'})
             this.createOrEditUsersDialogVisible = false
             this.findUsers(this.pageNum)
           }).finally(() => {
@@ -425,21 +429,21 @@
           return
         }
         this.$refs['createOrEditUsersFormRef'].clearValidate('picUrl')
-        this.uploadShowImageUrl = URL.createObjectURL(file.raw);
+        this.uploadShowImageUrl = URL.createObjectURL(file.raw)
         this.createOrEditUsersForm.picUrl = top.location.protocol + config.BASE_PATH + config.APP_CONTEXT +
           config.DOWNLOAD_FILE + '?completePath=' + encodeURIComponent(res.data[0])
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt3M = file.size / 1024 / 1024 < 3;
+        const isJPG = file.type === 'image/jpeg'
+        const isLt3M = file.size / 1024 / 1024 < 3
 
         if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+          this.$message.error('上传头像图片只能是 JPG 格式!')
         }
         if (!isLt3M) {
-          this.$message.error('上传头像图片大小不能超过 3MB!');
+          this.$message.error('上传头像图片大小不能超过 3MB!')
         }
-        return isJPG && isLt3M;
+        return isJPG && isLt3M
       },
       clearUploadShowImageUrlAndValidate() {
         this.uploadShowImageUrl = ''

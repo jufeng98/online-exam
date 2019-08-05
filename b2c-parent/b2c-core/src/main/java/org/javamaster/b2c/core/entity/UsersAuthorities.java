@@ -27,7 +27,7 @@ public class UsersAuthorities {
     private String remark;
 
     /**
-     * 
+     * 创建时间
      */
     private Date createTime;
 
@@ -74,14 +74,14 @@ public class UsersAuthorities {
     }
 
     /**
-     * 获取
+     * 获取创建时间
      */
     public Date getCreateTime() {
         return createTime;
     }
 
     /**
-     * 设置
+     * 设置创建时间
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;

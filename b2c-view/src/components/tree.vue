@@ -5,7 +5,9 @@
                :sub-index="subSubIndex+1" :key="Math.random()">
     </tree-menu>
   </el-submenu>
-  <el-menu-item v-else :index="subMenu.name+'-'+subMenu.path">{{subMenu.name}}</el-menu-item>
+  <el-menu-item v-else :index="subMenu.name+'-'+subMenu.path">
+    <template slot="title"><i :class="subMenu.icon"></i>{{subMenu.name}}</template>
+  </el-menu-item>
 </template>
 <script>
   export default {

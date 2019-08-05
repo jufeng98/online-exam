@@ -17,7 +17,7 @@ public class Menus {
     private Integer id;
 
     /**
-     * 父id
+     * 父id,0:顶级菜单
      */
     private Integer parentId;
 
@@ -71,14 +71,14 @@ public class Menus {
     }
 
     /**
-     * 获取父id
+     * 获取父id,0:顶级菜单
      */
     public Integer getParentId() {
         return parentId;
     }
 
     /**
-     * 设置父id
+     * 设置父id,0:顶级菜单
      */
     public void setParentId(Integer parentId) {
         this.parentId = parentId;

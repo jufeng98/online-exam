@@ -4,13 +4,24 @@ import org.javamaster.b2c.core.entity.AuthoritiesMenus;
 import org.javamaster.b2c.core.entity.AuthoritiesMenusExample;
 import org.javamaster.b2c.core.entity.Menus;
 import org.javamaster.b2c.core.entity.MenusEntity;
+import org.javamaster.b2c.core.entity.MenusExample;
+import org.javamaster.b2c.core.enums.BizExceptionEnum;
+import org.javamaster.b2c.core.exception.BizException;
 import org.javamaster.b2c.core.mapper.AuthoritiesMenusMapper;
+import org.javamaster.b2c.core.mapper.MenusMapper;
 import org.javamaster.b2c.core.mapper.MenusMapperExt;
+import org.javamaster.b2c.core.model.vo.CreateMenusReqVo;
+import org.javamaster.b2c.core.model.vo.CreateMenusResVo;
+import org.javamaster.b2c.core.model.vo.DelMenusReqVo;
+import org.javamaster.b2c.core.model.vo.DelMenusResVo;
+import org.javamaster.b2c.core.model.vo.EditMenusReqVo;
+import org.javamaster.b2c.core.model.vo.EditMenusResVo;
 import org.javamaster.b2c.core.model.vo.GetAuthoritiesMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.GetUsersMenusListReqVo;
 import org.javamaster.b2c.core.model.vo.MenusListResVo;
 import org.javamaster.b2c.core.service.MenusService;
 import org.javamaster.b2c.core.utils.ListUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -30,6 +41,8 @@ import java.util.stream.Collectors;
 public class MenusServiceImpl implements MenusService {
 
     @Autowired
+    private MenusMapper menusMapper;
+    @Autowired
     private MenusMapperExt menusMapperExt;
     @Autowired
     private AuthoritiesMenusMapper authoritiesMenusMapper;
@@ -42,10 +55,13 @@ public class MenusServiceImpl implements MenusService {
                     .map(authority -> authority.getAuthority())
                     .collect(Collectors.toList());
         }
-        return getMenusList(authorities);
+        if (reqVo.getShouldFilterNullSubMenus() == null) {
+            reqVo.setShouldFilterNullSubMenus(true);
+        }
+        return getMenusList(authorities, reqVo.getShouldFilterNullSubMenus());
     }
 
-    private MenusListResVo getMenusList(List<String> authorities) {
+    private MenusListResVo getMenusList(List<String> authorities, boolean shouldFilterNullSubMenus) {
         List<Menus> topMenus = menusMapperExt.findTopMenus();
         List<MenusEntity> topMenusEntities = ListUtils.copyList(topMenus, MenusEntity.class);
 
@@ -61,8 +77,10 @@ public class MenusServiceImpl implements MenusService {
         while (iterator.hasNext()) {
             MenusEntity menusEntity = iterator.next();
             fillSubMenus(menusEntity, menusIds);
-            if (CollectionUtils.isEmpty(menusEntity.getSubMenus())) {
-                iterator.remove();
+            if (shouldFilterNullSubMenus) {
+                if (CollectionUtils.isEmpty(menusEntity.getSubMenus())) {
+                    iterator.remove();
+                }
             }
         }
         MenusListResVo menusListResVo = new MenusListResVo();
@@ -103,4 +121,62 @@ public class MenusServiceImpl implements MenusService {
         menusListResVo.setMenusEntities(menusEntities);
         return menusListResVo;
     }
+
+    @Override
+    public CreateMenusResVo createMenus(CreateMenusReqVo reqVo) {
+        Menus menus = new Menus();
+        BeanUtils.copyProperties(reqVo.getCreateOrEditMenusForm(), menus);
+        menusMapper.insertSelective(menus);
+        Integer parentId = reqVo.getCreateOrEditMenusForm().getParentId();
+        if (parentId != null && parentId != 0) {
+            Menus menus1 = new Menus();
+            menus1.setId(parentId);
+            menus1.setHasSubMenu(true);
+            menusMapper.updateByPrimaryKeySelective(menus1);
+        }
+        MenusExample menusExample = new MenusExample();
+        MenusExample.Criteria criteria = menusExample.createCriteria();
+        criteria.andNameEqualTo(reqVo.getCreateOrEditMenusForm().getName());
+        CreateMenusResVo createMenusResVo = new CreateMenusResVo();
+        createMenusResVo.setMenus(menusMapper.selectByExample(menusExample).get(0));
+        return createMenusResVo;
+    }
+
+    @Override
+    public DelMenusResVo delMenus(DelMenusReqVo reqVo) {
+        MenusExample menusExample = new MenusExample();
+        MenusExample.Criteria criteria = menusExample.createCriteria();
+        criteria.andIdEqualTo(reqVo.getId());
+        List<Menus> menus = menusMapper.selectByExample(menusExample);
+        if (menus.isEmpty()) {
+            throw new BizException(BizExceptionEnum.INVALID_REQ_PARAM);
+        }
+        Integer parentId = menus.get(0).getParentId();
+        menusExample.clear();
+        criteria = menusExample.createCriteria();
+        criteria.andParentIdEqualTo(parentId);
+        menus = menusMapper.selectByExample(menusExample);
+        if (menus.size() <= 1) {
+            Menus menus1 = new Menus();
+            menus1.setId(parentId);
+            menus1.setHasSubMenu(false);
+            menusMapper.updateByPrimaryKeySelective(menus1);
+        }
+
+        int affectRow = menusMapper.deleteByPrimaryKey(reqVo.getId());
+        DelMenusResVo delMenusResVo = new DelMenusResVo();
+        delMenusResVo.setAffectRow(affectRow);
+        return delMenusResVo;
+    }
+
+    @Override
+    public EditMenusResVo editMenus(EditMenusReqVo reqVo) {
+        Menus menus = new Menus();
+        BeanUtils.copyProperties(reqVo.getCreateOrEditMenusForm(), menus);
+        int affectRow = menusMapper.updateByPrimaryKeySelective(menus);
+        EditMenusResVo editMenusResVo = new EditMenusResVo();
+        editMenusResVo.setAffectRow(affectRow);
+        return editMenusResVo;
+    }
+
 }
