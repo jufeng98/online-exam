@@ -2,7 +2,7 @@
   <el-container class="home-container" style="overflow: hidden">
     <el-header class="el-header">
       <div class="home-title">
-        在线考试管理系统
+        在线学习考试管理系统
         <el-switch
           v-model="expanded"
           @change="changeMenusAside"
@@ -28,8 +28,9 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside style="overflowX:hidden;backgroundColor:#545c64" :width="asideWidth + '%'">
-        <el-menu :default-openeds="defaultOpeneds" class="el-menu-vertical-class"
+      <el-aside style="overflow-x:hidden;backgroundColor:#545c64;text-align: left" class="el-menu-aside"
+                :width="asideWidth + '%'">
+        <el-menu :default-openeds="defaultOpeneds" class="el-menu-vertical-demo"
                  :collapse="!expanded" background-color="#545c64" text-color="#ffffff" @select="addTab">
           <el-submenu v-for="(menu, index) in menus" :index="menu.name+'-'+menu.path" :key="Math.random()">
             <template slot="title"><i :class="menu.icon"></i>{{menu.name}}</template>
@@ -71,7 +72,7 @@
       return {
         loginUserPicUrl: localStorage.getItem(appConsts.LOGIN_USER_PIC_URL),
         iframeHeight: '',
-        defaultOpeneds: ['系统管理-'],
+        defaultOpeneds: ['系统监控-'],
         expanded: true,
         username: localStorage.getItem(appConsts.LOGIN_USERNAME),
         menus: [],
@@ -188,8 +189,9 @@
   }
 </script>
 <style scoped>
-  .el-menu-vertical-class:not(.el-menu--collapse) {
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
+    min-height: 400px;
   }
 
   .home-container {

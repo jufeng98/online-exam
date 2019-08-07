@@ -15,6 +15,16 @@ export const GET_AUTHORITIES_MENUS_LIST = '/core/menus/getAuthoritiesMenusList'
 export const UPLOAD_FILE = '/core/files/uploadFile'
 export const DOWNLOAD_FILE = '/core/files/downloadFile'
 
+export const FIND_TOPICS_LIST = '/core/topics/findTopicsList'
+export const CREATE_TOPICS = '/core/topics/createTopics'
+export const EDIT_TOPICS = '/core/topics/editTopics'
+export const DEL_TOPICS = '/core/topics/delTopics'
+
+export const FIND_SECTIONS_LIST = '/core/sections/findSectionsList'
+export const CREATE_SECTIONS = '/core/sections/createSections'
+export const EDIT_SECTIONS = '/core/sections/editSections'
+export const DEL_SECTIONS = '/core/sections/delSections'
+
 export const GET_PROPERTY_SOURCE_NAMES = '/actuator/env'
 export const GET_MAPPINGS = '/actuator/mappings'
 export const GET_CONFIGPROPS = '/actuator/configprops'

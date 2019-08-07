@@ -3,8 +3,8 @@ POST {{url}}/onlineExam/core/login
 Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 
-#username=1050106266&password=123456&submit=Login
-username=1050106266&password=123456&submit=Login&coreRememberMe=true
+#username=admin&password=admin&submit=Login
+username=admin&password=admin&submit=Login&coreRememberMe=true
 
 > {%
     var headers = response.headers;
@@ -45,7 +45,7 @@ Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
 {
   "createOrEditUsersForm": {
     "username": "15324564614",
-    "password": "123456",
+    "password": "admin",
     "picUrl": "http://localhost:9999/onlineExam/core/files/downloadFile?completePath=%2Fonline-exam%2Fimage%2FONLINE_EXAM_CUY0XR8M_default-male.jpg"
   }
 }
@@ -120,7 +120,7 @@ Accept: application/json
 Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
 
 {
-  "username": "1050106266"
+  "username": "admin"
 }
 
 ###

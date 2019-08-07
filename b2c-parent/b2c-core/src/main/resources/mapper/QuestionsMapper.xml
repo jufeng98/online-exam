@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.core.mapper.QuestionsMapper">
+  <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
+  <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.Questions">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="questions_code" jdbcType="VARCHAR" property="questionsCode" />
+    <result column="questions_title" jdbcType="VARCHAR" property="questionsTitle" />
+    <result column="questions_type" jdbcType="TINYINT" property="questionsType" />
+    <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+    <result column="create_usename" jdbcType="VARCHAR" property="createUsename" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, questions_code, questions_title, questions_type, sort_order, create_usename, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.QuestionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from questions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from questions
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from questions
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.QuestionsExample">
+    delete from questions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Questions" useGeneratedKeys="true">
+    insert into questions (id, questions_code, questions_title, 
+      questions_type, sort_order, create_usename, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{questionsCode,jdbcType=VARCHAR}, #{questionsTitle,jdbcType=VARCHAR}, 
+      #{questionsType,jdbcType=TINYINT}, #{sortOrder,jdbcType=INTEGER}, #{createUsename,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Questions">
+    insert into questions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="questionsCode != null">
+        questions_code,
+      </if>
+      <if test="questionsTitle != null">
+        questions_title,
+      </if>
+      <if test="questionsType != null">
+        questions_type,
+      </if>
+      <if test="sortOrder != null">
+        sort_order,
+      </if>
+      <if test="createUsename != null">
+        create_usename,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="questionsCode != null">
+        #{questionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsTitle != null">
+        #{questionsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsType != null">
+        #{questionsType,jdbcType=TINYINT},
+      </if>
+      <if test="sortOrder != null">
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createUsename != null">
+        #{createUsename,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.javamaster.b2c.core.entity.QuestionsExample" resultType="java.lang.Long">
+    select count(*) from questions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update questions
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionsCode != null">
+        questions_code = #{record.questionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionsTitle != null">
+        questions_title = #{record.questionsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionsType != null">
+        questions_type = #{record.questionsType,jdbcType=TINYINT},
+      </if>
+      <if test="record.sortOrder != null">
+        sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUsename != null">
+        create_usename = #{record.createUsename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update questions
+    set id = #{record.id,jdbcType=INTEGER},
+      questions_code = #{record.questionsCode,jdbcType=VARCHAR},
+      questions_title = #{record.questionsTitle,jdbcType=VARCHAR},
+      questions_type = #{record.questionsType,jdbcType=TINYINT},
+      sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      create_usename = #{record.createUsename,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.Questions">
+    update questions
+    <set>
+      <if test="questionsCode != null">
+        questions_code = #{questionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsTitle != null">
+        questions_title = #{questionsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsType != null">
+        questions_type = #{questionsType,jdbcType=TINYINT},
+      </if>
+      <if test="sortOrder != null">
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createUsename != null">
+        create_usename = #{createUsename,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.Questions">
+    update questions
+    set questions_code = #{questionsCode,jdbcType=VARCHAR},
+      questions_title = #{questionsTitle,jdbcType=VARCHAR},
+      questions_type = #{questionsType,jdbcType=TINYINT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      create_usename = #{createUsename,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

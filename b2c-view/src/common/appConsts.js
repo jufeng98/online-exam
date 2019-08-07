@@ -2,6 +2,7 @@ const appConsts = {}
 appConsts.LOGIN_USER_PIC_URL = 'loginUserPicUrl'
 appConsts.LOGIN_USERNAME = 'loginUsername'
 appConsts.LOGIN_USER_AUTHORITIES = 'loginUserAuthorities'
+appConsts.BASE64_JPG_PREFIX = 'data:image/jpeg;base64,'
 appConsts.ENABLED = [
   {name: '启用', value: true},
   {name: '禁用', value: false},

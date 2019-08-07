@@ -1,7 +1,7 @@
 <template>
   <div style="width:300px;margin:200px auto;">
     <el-form :model="usersForm" ref="usersFormRef" :rules="usersFormRules">
-      <h2 style="color: #40D4A6">在线考试管理系统</h2>
+      <h2 style="color: #40D4A6">在线学习考试管理系统</h2>
       <el-form-item prop="username">
         <el-input placeholder="用户名" v-model="usersForm.username">
           <i slot="prefix"><img src="../../assets/img/icon-user.png"/></i>

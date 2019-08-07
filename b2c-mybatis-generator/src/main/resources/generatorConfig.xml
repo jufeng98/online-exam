@@ -33,7 +33,7 @@
             <!--支持mybatis获取注释-->
             <property name="useInformationSchema" value="true"/>
             <!--解决多个数据库表同名导致的问题-->
-            <property name="nullCatalogMeansCurrent" value="true" />
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -64,5 +64,12 @@
         <table tableName="group_members" schema="online_exam"></table>
         <table tableName="menus" schema="online_exam"></table>
         <table tableName="authorities_menus" schema="online_exam"></table>
+        <table tableName="topics" schema="online_exam"></table>
+        <table tableName="sections" schema="online_exam"></table>
+        <table tableName="knowledges" schema="online_exam"></table>
+        <table tableName="knowledge_points" schema="online_exam"></table>
+        <table tableName="questions" schema="online_exam"></table>
+        <table tableName="options" schema="online_exam"></table>
+        <table tableName="knowledge_points_questions" schema="online_exam"></table>
     </context>
 </generatorConfiguration>

@@ -12,17 +12,15 @@
           <el-form-item label="邮箱:" prop="email">
             <el-input v-model="usersForm.email" placeholder="支持模糊搜索"></el-input>
           </el-form-item>
-          <el-form-item>
-            <el-form-item label="状态" prop="enabled">
-              <el-select v-model="usersForm.enabled" clearable>
-                <el-option
-                  v-for="item in ENABLED"
-                  :key="item.value"
-                  :label="item.name"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
+          <el-form-item label="状态" prop="enabled">
+            <el-select v-model="usersForm.enabled" clearable>
+              <el-option
+                v-for="item in ENABLED"
+                :key="item.value"
+                :label="item.name"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" v-on:click="findUsers(1)">查询</el-button>

@@ -41,6 +41,7 @@
           <el-col style="text-align: left">
             <el-pagination
               @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
               :current-page="pageNum"
               :page-sizes="[10, 20, 30, 40]"
               :page-size="pageSize"
@@ -131,7 +132,11 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.findUsersAuthorities(this.pageSize)
+        this.findUsersAuthorities(this.pageNum)
+      },
+      handleCurrentChange(val) {
+        this.pageNum = val
+        this.findUsersAuthorities(this.pageNum)
       },
       findUsersAuthorities(pageNum) {
         let reqJsonParams = {

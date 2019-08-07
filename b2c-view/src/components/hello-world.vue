@@ -78,7 +78,7 @@
   export default {
     data() {
       return {
-        msg: '欢迎来到在线考试系统'
+        msg: '欢迎来到在线学习考试系统'
       }
     }
   }

@@ -17,6 +17,8 @@ import metrics from '@/pages/actuator/metrics'
 import threads from '@/pages/actuator/threads'
 import authoritiesManage from '@/pages/system/authorities-manage'
 import menusManage from '@/pages/system/menus-manage'
+import topicsManage from '@/pages/learntrain/topics-manage'
+import sectionsManage from '@/pages/learntrain/sections-manage'
 
 Vue.use(Router)
 
@@ -36,5 +38,7 @@ export default new Router({
     {path: '/threads', name: 'threads', component: threads},
     {path: '/authoritiesManage', name: 'authoritiesManage', component: authoritiesManage},
     {path: '/menusManage', name: 'menusManage', component: menusManage},
+    {path: '/topicsManage', name: 'topicsManage', component: topicsManage},
+    {path: '/sectionsManage', name: 'sectionsManage', component: sectionsManage},
   ]
 })
