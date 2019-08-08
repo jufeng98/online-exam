@@ -123,7 +123,8 @@
       return {
         base64Prefix: appConsts.BASE64_JPG_PREFIX,
         sectionsForm: {
-          sectionsName: ''
+          sectionsName: '',
+          topicsCode: ''
         },
         sectionsList: [],
         title: '',

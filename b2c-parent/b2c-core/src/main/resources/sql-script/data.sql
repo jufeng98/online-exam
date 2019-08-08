@@ -33,6 +33,7 @@ update menus set has_sub_menu=true where name='培训实施';
 insert into menus(parent_id,name,path) select (select id from menus where name='学习培训'),(select '主题管理'),(select '/#/topicsManage');
 insert into menus(parent_id,name,path) select (select id from menus where name='学习培训'),(select '章节管理'),(select '/#/sectionsManage');
 insert into menus(parent_id,name,path) select (select id from menus where name='学习培训'),(select '知识管理'),(select '/#/knowledgesManage');
+insert into menus(parent_id,name,path) select (select id from menus where name='学习培训'),(select '知识点管理'),(select '/#/knowledgePointsManage');
 insert into menus(parent_id,name,path) select (select id from menus where name='考试测评'),(select '试题管理'),(select '/#/questionsManage');
 insert into menus(parent_id,name,path) select (select id from menus where name='日常管理'),(select '证书管理'),(select '/#/certsManage');
 update menus set has_sub_menu=true where name='学习培训';

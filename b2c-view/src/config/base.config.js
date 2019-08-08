@@ -25,6 +25,16 @@ export const CREATE_SECTIONS = '/core/sections/createSections'
 export const EDIT_SECTIONS = '/core/sections/editSections'
 export const DEL_SECTIONS = '/core/sections/delSections'
 
+export const FIND_KNOWLEDGES_LIST = '/core/knowledges/findKnowledgesList'
+export const CREATE_KNOWLEDGES = '/core/knowledges/createKnowledges'
+export const EDIT_KNOWLEDGES = '/core/knowledges/editKnowledges'
+export const DEL_KNOWLEDGES = '/core/knowledges/delKnowledges'
+
+export const FIND_KNOWLEDGE_POINTS_LIST = '/core/knowledgePoints/findKnowledgePointsList'
+export const CREATE_KNOWLEDGE_POINTS = '/core/knowledgePoints/createKnowledgePoints'
+export const EDIT_KNOWLEDGE_POINTS = '/core/knowledgePoints/editKnowledgePoints'
+export const DEL_KNOWLEDGE_POINTS = '/core/knowledgePoints/delKnowledgePoints'
+
 export const GET_PROPERTY_SOURCE_NAMES = '/actuator/env'
 export const GET_MAPPINGS = '/actuator/mappings'
 export const GET_CONFIGPROPS = '/actuator/configprops'

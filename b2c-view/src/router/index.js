@@ -3,7 +3,6 @@ import Router from 'vue-router'
 /*
  * @符号表示是在本地文件系统引入文件,@代表源代码目录,一般是src,引入@的目的是避免../../此类丑陋的语法
  */
-import login from '@/pages/users/login'
 import usersManage from '@/pages/users/users-manage'
 import helloWorld from '@/components/hello-world'
 import mainMenu from '@/pages/main-menu'
@@ -19,15 +18,17 @@ import authoritiesManage from '@/pages/system/authorities-manage'
 import menusManage from '@/pages/system/menus-manage'
 import topicsManage from '@/pages/learntrain/topics-manage'
 import sectionsManage from '@/pages/learntrain/sections-manage'
+import knowledgesManage from '@/pages/learntrain/knowledges-manage'
+import knowledgePointsManage from '@/pages/learntrain/knowledge-points-manage'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path: '/', name: 'login', component: login},
+    {path: '/', name: 'index', component: mainMenu},
     {path: '/usersManage', name: 'usersManage', component: usersManage},
     {path: '/helloWorld', name: 'helloWorld', component: helloWorld},
-    {path: '/mainMenu', name: 'mainIndex', component: mainMenu},
+    {path: '/mainMenu', name: 'mainMenu', component: mainMenu},
     {path: '/env', name: 'env', component: env},
     {path: '/mappings', name: 'mappings', component: mappings},
     {path: '/configprops', name: 'configprops', component: configprops},
@@ -40,5 +41,7 @@ export default new Router({
     {path: '/menusManage', name: 'menusManage', component: menusManage},
     {path: '/topicsManage', name: 'topicsManage', component: topicsManage},
     {path: '/sectionsManage', name: 'sectionsManage', component: sectionsManage},
+    {path: '/knowledgesManage', name: 'knowledgesManage', component: knowledgesManage},
+    {path: '/knowledgePointsManage', name: 'knowledgePointsManage', component: knowledgePointsManage},
   ]
 })

@@ -184,6 +184,7 @@
       window.onresize = function windowResize() {
         that.iframeHeight = that.getHeight() - 150 + 'px'
       }
+      localStorage.setItem("baseUrl", config.BASE_PATH + config.APP_CONTEXT)
       window.vue = this
     }
   }
