@@ -428,8 +428,7 @@
         }
         this.$refs['createOrEditUsersFormRef'].clearValidate('picUrl')
         this.uploadShowImageUrl = URL.createObjectURL(file.raw)
-        this.createOrEditUsersForm.picUrl = top.location.protocol + config.BASE_PATH + config.APP_CONTEXT +
-          config.DOWNLOAD_FILE + '?completePath=' + encodeURIComponent(res.data[0])
+        this.createOrEditUsersForm.picUrl = res.data[0]
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

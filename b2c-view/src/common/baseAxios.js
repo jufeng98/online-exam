@@ -37,7 +37,7 @@ baseAxios.interceptors.response.use(response => {
   if (response.data.errorCode === 1007) {
     // 未授权,跳回登录页面
     localStorage.clear();
-    top.location.replace('/#/');
+    top.location.replace('/#/login');
     return Promise.reject(response.data.errorMsg);
   }
   if (response.data.success === undefined) {
@@ -54,7 +54,7 @@ baseAxios.interceptors.response.use(response => {
   if (error.response.status === 401 || error.response.status === 403) {
     // 未授权,跳回登录页面
     localStorage.clear()
-    top.location.replace('/#/')
+    top.location.replace('/#/login')
   } else {
     Message.error(error.response.statusText)
   }

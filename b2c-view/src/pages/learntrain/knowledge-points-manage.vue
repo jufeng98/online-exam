@@ -122,7 +122,6 @@
           initialFrameWidth: null,
           initialFrameHeight: 450,
           BaseUrl: '',
-          UEDITOR_HOME_URL: 'onlineExam/b2cView/static/ueditor/'
         },
         knowledgePointsForm: {
           knowledgesCode: ''

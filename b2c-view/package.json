@@ -20,7 +20,8 @@
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "element-ui": "^2.4.1",
-    "echarts": "^4.2.1"
+    "echarts": "^4.2.1",
+    "jquery": "^3.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

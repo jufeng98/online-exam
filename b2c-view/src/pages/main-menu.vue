@@ -121,7 +121,7 @@
           }).then(() => {
             baseAxios.post(config.LOGOUT_URL).then(() => {
               localStorage.clear()
-              this.$router.replace('/')
+              this.$router.replace('/login')
             })
           })
         }

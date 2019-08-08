@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -32,8 +33,9 @@ public class FilesController {
     private FilesService filesService;
 
     @PostMapping("/uploadFile")
-    public Result<List<String>> uploadFile(@NotNull @RequestPart("file") MultipartFile[] multipartFiles) {
-        List<String> urls = filesService.uploadFile(multipartFiles);
+    public Result<List<String>> uploadFile(@NotNull @RequestPart("file") MultipartFile[] multipartFiles,
+                                           UriComponentsBuilder uriComponentsBuilder) {
+        List<String> urls = filesService.uploadFile(multipartFiles, uriComponentsBuilder);
         return new Result<>(urls);
     }
 

@@ -28,10 +28,10 @@
   window.UEDITOR_CONFIG = {
 
     //为编辑器实例添加一个路径，这个不能被注释
-    UEDITOR_HOME_URL: URL
+    UEDITOR_HOME_URL: URL + '/b2cView/static/ueditor/'
 
     // 服务器统一请求接口路径
-    , serverUrl: URL + "/core/ueditor/getConfig"
+    , serverUrl: URL + "/core/ueditor/getConfigOrUpload"
 
     //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
     , toolbars: [[
@@ -428,7 +428,6 @@
       video: ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style']
     }
   };
-  console.log(window.UEDITOR_CONFIG);
 
   function getUEBasePath(docUrl, confUrl) {
 
