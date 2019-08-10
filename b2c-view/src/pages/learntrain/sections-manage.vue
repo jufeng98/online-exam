@@ -160,7 +160,7 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.findSectionsList(this.pageSize)
+        this.findSectionsList(this.pageNum)
       },
       handleCurrentChange(val) {
         this.pageNum = val

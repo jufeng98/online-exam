@@ -127,7 +127,7 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.findTopicsList(this.pageSize)
+        this.findTopicsList(this.pageNum)
       },
       handleCurrentChange(val) {
         this.pageNum = val

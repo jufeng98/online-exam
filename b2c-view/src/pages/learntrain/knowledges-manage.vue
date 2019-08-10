@@ -130,7 +130,7 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.findKnowledgesList(this.pageSize)
+        this.findKnowledgesList(this.pageNum)
       },
       handleCurrentChange(val) {
         this.pageNum = val

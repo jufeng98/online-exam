@@ -155,7 +155,7 @@
     methods: {
       handleSizeChange(val) {
         this.pageSize = val
-        this.findKnowledgePointsList(this.pageSize)
+        this.findKnowledgePointsList(this.pageNum)
       },
       handleCurrentChange(val) {
         this.pageNum = val

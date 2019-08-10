@@ -287,7 +287,7 @@
       },
       handleSizeChange(val) {
         this.pageSize = val
-        this.findQuestionsList(this.pageSize)
+        this.findQuestionsList(this.pageNum)
       },
       handleCurrentChange(val) {
         this.pageNum = val
