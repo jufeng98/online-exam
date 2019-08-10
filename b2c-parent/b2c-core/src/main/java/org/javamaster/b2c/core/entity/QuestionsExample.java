@@ -430,6 +430,76 @@ public class QuestionsExample {
             return (Criteria) this;
         }
 
+        public Criteria andAnswerAnalysisIsNull() {
+            addCriterion("answer_analysis is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisIsNotNull() {
+            addCriterion("answer_analysis is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisEqualTo(String value) {
+            addCriterion("answer_analysis =", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisNotEqualTo(String value) {
+            addCriterion("answer_analysis <>", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisGreaterThan(String value) {
+            addCriterion("answer_analysis >", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisGreaterThanOrEqualTo(String value) {
+            addCriterion("answer_analysis >=", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisLessThan(String value) {
+            addCriterion("answer_analysis <", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisLessThanOrEqualTo(String value) {
+            addCriterion("answer_analysis <=", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisLike(String value) {
+            addCriterion("answer_analysis like", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisNotLike(String value) {
+            addCriterion("answer_analysis not like", value, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisIn(List<String> values) {
+            addCriterion("answer_analysis in", values, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisNotIn(List<String> values) {
+            addCriterion("answer_analysis not in", values, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisBetween(String value1, String value2) {
+            addCriterion("answer_analysis between", value1, value2, "answerAnalysis");
+            return (Criteria) this;
+        }
+
+        public Criteria andAnswerAnalysisNotBetween(String value1, String value2) {
+            addCriterion("answer_analysis not between", value1, value2, "answerAnalysis");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateUsenameIsNull() {
             addCriterion("create_usename is null");
             return (Criteria) this;

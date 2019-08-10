@@ -21,6 +21,8 @@ import topicsManage from '@/pages/learntrain/topics-manage'
 import sectionsManage from '@/pages/learntrain/sections-manage'
 import knowledgesManage from '@/pages/learntrain/knowledges-manage'
 import knowledgePointsManage from '@/pages/learntrain/knowledge-points-manage'
+import questionsManage from '@/pages/exam/questions-manage'
+import questionsCreateEdit from '@/pages/exam/questions-create-edit'
 
 Vue.use(Router)
 
@@ -45,5 +47,7 @@ export default new Router({
     {path: '/sectionsManage', name: 'sectionsManage', component: sectionsManage},
     {path: '/knowledgesManage', name: 'knowledgesManage', component: knowledgesManage},
     {path: '/knowledgePointsManage', name: 'knowledgePointsManage', component: knowledgePointsManage},
+    {path: '/questionsManage', name: 'questionsManage', component: questionsManage},
+    {path: '/questionsCreateEdit', name: 'questionsCreateEdit', component: questionsCreateEdit},
   ]
 })

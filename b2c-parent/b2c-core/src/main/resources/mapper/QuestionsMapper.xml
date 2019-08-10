@@ -8,6 +8,7 @@
     <result column="questions_title" jdbcType="VARCHAR" property="questionsTitle" />
     <result column="questions_type" jdbcType="TINYINT" property="questionsType" />
     <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+    <result column="answer_analysis" jdbcType="VARCHAR" property="answerAnalysis" />
     <result column="create_usename" jdbcType="VARCHAR" property="createUsename" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -70,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, questions_code, questions_title, questions_type, sort_order, create_usename, 
-    create_time
+    id, questions_code, questions_title, questions_type, sort_order, answer_analysis, 
+    create_usename, create_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.QuestionsExample" resultMap="BaseResultMap">
     select
@@ -105,11 +106,11 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Questions" useGeneratedKeys="true">
     insert into questions (id, questions_code, questions_title, 
-      questions_type, sort_order, create_usename, 
-      create_time)
+      questions_type, sort_order, answer_analysis, 
+      create_usename, create_time)
     values (#{id,jdbcType=INTEGER}, #{questionsCode,jdbcType=VARCHAR}, #{questionsTitle,jdbcType=VARCHAR}, 
-      #{questionsType,jdbcType=TINYINT}, #{sortOrder,jdbcType=INTEGER}, #{createUsename,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{questionsType,jdbcType=TINYINT}, #{sortOrder,jdbcType=INTEGER}, #{answerAnalysis,jdbcType=VARCHAR}, 
+      #{createUsename,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Questions">
     insert into questions
@@ -128,6 +129,9 @@
       </if>
       <if test="sortOrder != null">
         sort_order,
+      </if>
+      <if test="answerAnalysis != null">
+        answer_analysis,
       </if>
       <if test="createUsename != null">
         create_usename,
@@ -151,6 +155,9 @@
       </if>
       <if test="sortOrder != null">
         #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="answerAnalysis != null">
+        #{answerAnalysis,jdbcType=VARCHAR},
       </if>
       <if test="createUsename != null">
         #{createUsename,jdbcType=VARCHAR},
@@ -184,6 +191,9 @@
       <if test="record.sortOrder != null">
         sort_order = #{record.sortOrder,jdbcType=INTEGER},
       </if>
+      <if test="record.answerAnalysis != null">
+        answer_analysis = #{record.answerAnalysis,jdbcType=VARCHAR},
+      </if>
       <if test="record.createUsename != null">
         create_usename = #{record.createUsename,jdbcType=VARCHAR},
       </if>
@@ -202,6 +212,7 @@
       questions_title = #{record.questionsTitle,jdbcType=VARCHAR},
       questions_type = #{record.questionsType,jdbcType=TINYINT},
       sort_order = #{record.sortOrder,jdbcType=INTEGER},
+      answer_analysis = #{record.answerAnalysis,jdbcType=VARCHAR},
       create_usename = #{record.createUsename,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -223,6 +234,9 @@
       <if test="sortOrder != null">
         sort_order = #{sortOrder,jdbcType=INTEGER},
       </if>
+      <if test="answerAnalysis != null">
+        answer_analysis = #{answerAnalysis,jdbcType=VARCHAR},
+      </if>
       <if test="createUsename != null">
         create_usename = #{createUsename,jdbcType=VARCHAR},
       </if>
@@ -238,6 +252,7 @@
       questions_title = #{questionsTitle,jdbcType=VARCHAR},
       questions_type = #{questionsType,jdbcType=TINYINT},
       sort_order = #{sortOrder,jdbcType=INTEGER},
+      answer_analysis = #{answerAnalysis,jdbcType=VARCHAR},
       create_usename = #{createUsename,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

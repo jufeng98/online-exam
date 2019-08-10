@@ -159,7 +159,7 @@
       },
       handleCurrentChange(val) {
         this.pageNum = val
-        this.findUsers(this.pageNum)
+        this.findKnowledgePointsList(this.pageNum)
       },
       formatData(row, column) {
         if (column.property === 'knowledgesCode') {

@@ -131,7 +131,7 @@
       },
       handleCurrentChange(val) {
         this.pageNum = val
-        this.findUsers(this.pageNum)
+        this.findTopicsList(this.pageNum)
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'

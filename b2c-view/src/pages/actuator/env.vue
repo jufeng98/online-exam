@@ -4,7 +4,7 @@
       <el-col>
         <el-form :inline="true" style="text-align: left;margin: 0;">
           <el-form-item label="属性源:" prop="propertySource">
-            <el-select v-model="propertySourceForm.name">
+            <el-select v-model="propertySourceForm.name" @change="searchPropertySource()">
               <el-option
                 v-for="item in propertySources"
                 :key="item.name"

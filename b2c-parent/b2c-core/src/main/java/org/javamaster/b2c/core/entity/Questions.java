@@ -37,6 +37,11 @@ public class Questions {
     private Integer sortOrder;
 
     /**
+     * 答案解析
+     */
+    private String answerAnalysis;
+
+    /**
      * 创建人编号
      */
     private String createUsename;
@@ -114,6 +119,20 @@ public class Questions {
      */
     public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
+    }
+
+    /**
+     * 获取答案解析
+     */
+    public String getAnswerAnalysis() {
+        return answerAnalysis;
+    }
+
+    /**
+     * 设置答案解析
+     */
+    public void setAnswerAnalysis(String answerAnalysis) {
+        this.answerAnalysis = answerAnalysis;
     }
 
     /**

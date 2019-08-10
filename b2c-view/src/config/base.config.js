@@ -35,6 +35,14 @@ export const CREATE_KNOWLEDGE_POINTS = '/core/knowledgePoints/createKnowledgePoi
 export const EDIT_KNOWLEDGE_POINTS = '/core/knowledgePoints/editKnowledgePoints'
 export const DEL_KNOWLEDGE_POINTS = '/core/knowledgePoints/delKnowledgePoints'
 
+export const FIND_QUESTIONS_LIST = '/core/questions/findQuestionsList'
+export const CREATE_QUESTIONS = '/core/questions/createQuestions'
+export const EDIT_QUESTIONS = '/core/questions/editQuestions'
+export const DEL_QUESTIONS = '/core/questions/delQuestions'
+export const DOWNLOAD_QUESTIONS_TEMPLATE = '/core/questions/downloadQuestionsTemplate'
+export const BATCH_IMPORT_QUESTIONS = '/core/questions/batchImportQuestions'
+export const FIND_OPTIONS_LIST = '/core/questions/findOptionsList'
+
 export const GET_PROPERTY_SOURCE_NAMES = '/actuator/env'
 export const GET_MAPPINGS = '/actuator/mappings'
 export const GET_CONFIGPROPS = '/actuator/configprops'

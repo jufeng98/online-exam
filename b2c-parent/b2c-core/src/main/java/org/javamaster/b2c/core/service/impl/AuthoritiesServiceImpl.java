@@ -32,6 +32,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,6 +81,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthOrUnAuthUsersResVo authUsers(AuthOrUnAuthUsersReqVo reqVo) {
         List<Integer> affectRows = reqVo.getAuthorities().stream().map(authority -> {
             Authorities authorities = new Authorities();
@@ -94,6 +96,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AuthOrUnAuthUsersResVo unAuthUsers(AuthOrUnAuthUsersReqVo reqVo) {
         List<Integer> affectRows = reqVo.getAuthorities().stream().map(authority -> {
             AuthoritiesExample authoritiesExample = new AuthoritiesExample();
@@ -131,6 +134,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ChangeAuthoritiesMenusResVo changeAuthoritiesMenus(ChangeAuthoritiesMenusReqVo reqVo) {
         AuthoritiesMenusExample authoritiesMenusExample = new AuthoritiesMenusExample();
         AuthoritiesMenusExample.Criteria criteria = authoritiesMenusExample.createCriteria();
@@ -165,6 +169,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public DelAuthoritiesResVo delAuthorities(DelAuthoritiesReqVo reqVo) {
         AuthoritiesExample authoritiesExample = new AuthoritiesExample();
         AuthoritiesExample.Criteria authoritiesExampleCriteria = authoritiesExample.createCriteria();

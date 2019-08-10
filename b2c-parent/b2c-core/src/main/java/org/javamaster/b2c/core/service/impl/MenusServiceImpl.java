@@ -25,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
@@ -123,6 +124,7 @@ public class MenusServiceImpl implements MenusService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public CreateMenusResVo createMenus(CreateMenusReqVo reqVo) {
         Menus menus = new Menus();
         BeanUtils.copyProperties(reqVo.getCreateOrEditMenusForm(), menus);
@@ -143,6 +145,7 @@ public class MenusServiceImpl implements MenusService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public DelMenusResVo delMenus(DelMenusReqVo reqVo) {
         MenusExample menusExample = new MenusExample();
         MenusExample.Criteria criteria = menusExample.createCriteria();

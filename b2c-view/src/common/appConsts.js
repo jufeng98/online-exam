@@ -15,4 +15,10 @@ appConsts.GENDER = [
   {name: '男', value: 'M'},
   {name: '女', value: 'F'},
 ]
+appConsts.QUESTIONS_TYPE = [
+  {name: '单选题', value: 1},
+  {name: '多选题', value: 2},
+  {name: '判断题', value: 3},
+  {name: '排序题', value: 4},
+]
 export default appConsts

@@ -164,7 +164,7 @@
       },
       handleCurrentChange(val) {
         this.pageNum = val
-        this.findUsers(this.pageNum)
+        this.findSectionsList(this.pageNum)
       },
       formatData(row, column) {
         if (column.property === 'topicsCode') {

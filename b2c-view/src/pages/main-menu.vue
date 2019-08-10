@@ -72,7 +72,7 @@
       return {
         loginUserPicUrl: localStorage.getItem(appConsts.LOGIN_USER_PIC_URL),
         iframeHeight: '',
-        defaultOpeneds: ['系统监控-'],
+        defaultOpeneds: ['培训实施-','考试测评-'],
         expanded: true,
         username: localStorage.getItem(appConsts.LOGIN_USERNAME),
         menus: [],

@@ -28,8 +28,12 @@
       }
     },
     methods: {
-      destory() {
-        this.editor.destory()
+      initUeditor(){
+        this.editor = window.UE.delEditor(this.id)
+        this.editor = window.UE.getEditor(this.id, this.config)
+      },
+      destroy() {
+        this.editor.destroy()
       },
       getContentTxt() {
         return this.editor.getContentTxt()
@@ -47,8 +51,7 @@
       }
     },
     mounted() {
-      this.editor = window.UE.delEditor(this.id)
-      this.editor = window.UE.getEditor(this.id, this.config)
+      this.initUeditor()
     },
   }
 </script>

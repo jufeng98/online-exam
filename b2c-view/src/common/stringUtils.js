@@ -13,13 +13,12 @@ stringUtils.checkAlphabetNumber = (rule, value, callback) => {
   check(rule, value, callback, pattern)
 }
 stringUtils.formatTableRowData = (rowValue, array) => {
-  if (rowValue === array[0].value) {
-    return array[0].name
-  } else if (rowValue === array[1].value) {
-    return array[1].name;
-  } else {
-    return ''
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].value === rowValue) {
+      return array[i].name
+    }
   }
+  return ''
 }
 
 function check(rule, value, callback, pattern) {

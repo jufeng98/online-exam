@@ -29,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -87,6 +88,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Users createUsers(CreateUsersReqVo reqVo, UserDetails userDetails) {
         if (findUsersByUsername(reqVo.getCreateOrEditUsersForm().getUsername()) != null) {
             throw new BizException(BizExceptionEnum.USER_EXISTS);
