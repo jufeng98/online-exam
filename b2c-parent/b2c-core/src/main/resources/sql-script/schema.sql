@@ -282,7 +282,6 @@ CREATE TABLE `options` (
   DEFAULT CHARSET = utf8mb4
   COMMENT = '选项表';
 
-
 drop table if exists knowledge_points_questions;
 CREATE TABLE `knowledge_points_questions` (
   `id`                    int PRIMARY KEY AUTO_INCREMENT
@@ -295,3 +294,23 @@ CREATE TABLE `knowledge_points_questions` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COMMENT = '知识点题目表';
+
+drop table if exists certs;
+CREATE TABLE `certs` (
+  `id`              int primary key AUTO_INCREMENT
+  COMMENT '主键id',
+  `certs_name`      varchar(32) default ''  not null
+  COMMENT '证书名称',
+  `certs_desc`      varchar(100) default '' not null
+  COMMENT '证书说明',
+  `pic_url`         varchar(128) default '' not null
+  COMMENT '证书样图url',
+  `create_username` varchar(200) default ''  not null
+  COMMENT '创建人名称',
+  `create_time`     datetime default now()  not null
+  COMMENT '创建时间'
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '证书表';
+

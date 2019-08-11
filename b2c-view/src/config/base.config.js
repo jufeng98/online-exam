@@ -43,6 +43,12 @@ export const DOWNLOAD_QUESTIONS_TEMPLATE = '/core/questions/downloadQuestionsTem
 export const BATCH_IMPORT_QUESTIONS = '/core/questions/batchImportQuestions'
 export const FIND_OPTIONS_LIST = '/core/questions/findOptionsList'
 
+export const FIND_CERTS_EXAMPLE_PDF = '/core/certs/findCertsExamplePdf'
+export const FIND_CERTS_LIST = '/core/certs/findCertsList'
+export const CREATE_CERTS = '/core/certs/createCerts'
+export const EDIT_CERTS = '/core/certs/editCerts'
+export const DEL_CERTS = '/core/certs/delCerts'
+
 export const GET_PROPERTY_SOURCE_NAMES = '/actuator/env'
 export const GET_MAPPINGS = '/actuator/mappings'
 export const GET_CONFIGPROPS = '/actuator/configprops'

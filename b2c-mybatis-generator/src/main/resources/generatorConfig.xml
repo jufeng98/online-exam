@@ -71,5 +71,6 @@
         <table tableName="questions" schema="online_exam"></table>
         <table tableName="options" schema="online_exam"></table>
         <table tableName="knowledge_points_questions" schema="online_exam"></table>
+        <table tableName="certs" schema="online_exam"></table>
     </context>
 </generatorConfiguration>
