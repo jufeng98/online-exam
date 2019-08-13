@@ -138,7 +138,7 @@
     </el-dialog>
 
     <questionsCreateEdit @successCreateOrEditQuestions="successCreateOrEditQuestions"
-                         @cancelCreateOrEditQuestions="cancelCreateOrEditQuestions"
+                         :showCreateOrEditQuestionsDialog.sync="showCreateOrEditQuestionsDialog"
                          ref="createOrEditQuestionsRef"
                          v-if="showCreateOrEditQuestionsDialog"
                          :questionsCode="questionsCode"
@@ -249,11 +249,9 @@
         this.showCreateOrEditQuestionsDialog = true
       },
       successCreateOrEditQuestions() {
+        this.$message.success('操作成功')
         this.showCreateOrEditQuestionsDialog = false
         this.findQuestionsList(1)
-      },
-      cancelCreateOrEditQuestions() {
-        this.showCreateOrEditQuestionsDialog = false
       },
       findQuestionsList(pageNum) {
         let reqJsonParams = {

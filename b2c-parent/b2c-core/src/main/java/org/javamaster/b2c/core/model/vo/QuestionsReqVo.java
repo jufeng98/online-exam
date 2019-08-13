@@ -19,6 +19,7 @@ public class QuestionsReqVo {
     private QuestionsTypeEnum questionsType;
     private String questionsTitle;
     private String answerAnalysis;
+    private Integer questionsScore;
     private Integer sortOrder;
     private Integer radio;
     private List<Boolean> selects;

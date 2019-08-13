@@ -370,6 +370,66 @@ public class QuestionsExample {
             return (Criteria) this;
         }
 
+        public Criteria andQuestionsScoreIsNull() {
+            addCriterion("questions_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreIsNotNull() {
+            addCriterion("questions_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreEqualTo(Byte value) {
+            addCriterion("questions_score =", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreNotEqualTo(Byte value) {
+            addCriterion("questions_score <>", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreGreaterThan(Byte value) {
+            addCriterion("questions_score >", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreGreaterThanOrEqualTo(Byte value) {
+            addCriterion("questions_score >=", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreLessThan(Byte value) {
+            addCriterion("questions_score <", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreLessThanOrEqualTo(Byte value) {
+            addCriterion("questions_score <=", value, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreIn(List<Byte> values) {
+            addCriterion("questions_score in", values, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreNotIn(List<Byte> values) {
+            addCriterion("questions_score not in", values, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreBetween(Byte value1, Byte value2) {
+            addCriterion("questions_score between", value1, value2, "questionsScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuestionsScoreNotBetween(Byte value1, Byte value2) {
+            addCriterion("questions_score not between", value1, value2, "questionsScore");
+            return (Criteria) this;
+        }
+
         public Criteria andSortOrderIsNull() {
             addCriterion("sort_order is null");
             return (Criteria) this;

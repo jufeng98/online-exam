@@ -32,6 +32,11 @@ public class Questions {
     private Byte questionsType;
 
     /**
+     * 题目分数
+     */
+    private Byte questionsScore;
+
+    /**
      * 顺序
      */
     private Integer sortOrder;
@@ -105,6 +110,20 @@ public class Questions {
      */
     public void setQuestionsType(Byte questionsType) {
         this.questionsType = questionsType;
+    }
+
+    /**
+     * 获取题目分数
+     */
+    public Byte getQuestionsScore() {
+        return questionsScore;
+    }
+
+    /**
+     * 设置题目分数
+     */
+    public void setQuestionsScore(Byte questionsScore) {
+        this.questionsScore = questionsScore;
     }
 
     /**

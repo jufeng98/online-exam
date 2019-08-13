@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog :title="title" v-loading="editLoading" :visible.sync="createOrEditQuestionsFormVisible"
-               :close-on-click-modal="false" :fullscreen="true" :before-close="cancelCreateOrEditQuestions">
+               :close-on-click-modal="false" :fullscreen="true">
       <el-form :model="createOrEditQuestionsForm" :rules="createOrEditQuestionsFormRules"
                ref="createOrEditQuestionsFormRef" label-width="120px"
                class="demo-ruleForm">
@@ -21,6 +21,14 @@
             <el-form-item label="题目" prop="questionsTitle" :required="true">
               <ueditor id="questionsTitleUeditor" :config="config" ref="questionsTitleUeditorRef"></ueditor>
               <el-input v-model="createOrEditQuestionsForm.questionsTitle" type="hidden"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col>
+            <el-form-item label="分数" prop="questionsScore" style="text-align: left">
+              <el-input-number controls-position="right"
+                               v-model.number="createOrEditQuestionsForm.questionsScore"></el-input-number>
             </el-form-item>
           </el-col>
         </el-row>
@@ -141,29 +149,23 @@
           questionsType: this.questionsType,
           questionsTitle: '',
           answerAnalysis: '',
-          sortOrder: '',
+          questionsScore: 0,
+          sortOrder: 0,
           radio: -1,
           selects: [],
           options: [],
-          options0: '',
-          options1: '',
-          options2: '',
-          options3: '',
-          options4: '',
-          options5: '',
-          options6: '',
-          options7: '',
         },
         createOrEditQuestionsFormRules: {
           questionsTitle: [
             {required: true, max: 100, message: '请填写题目，字数不超过100个字', trigger: 'blur'}
           ],
+          questionsScore: [
+            {min: 1, message: '分数不能小于1', type: 'number', trigger: 'change'}
+          ],
           answerAnalysis: [
             {required: true, max: 100, message: '请填写答案解析，字数不超过100个字', trigger: 'blur'}
           ],
         },
-        optionsValidateRadio: '1',
-        optionsValidateSelect: [],
         optionsValidateForm: {
           options: [],
         },
@@ -187,11 +189,11 @@
       },
       cancelCreateOrEditQuestions() {
         this.$confirm('确定取消？', '提示', {}).then(() => {
-          this.$emit("cancelCreateOrEditQuestions")
+          this.$emit("update:showCreateOrEditQuestionsDialog", false)
         }).catch(() => {
         })
       },
-      async getQuestionsInfo() {
+      async findQuestionsInfo() {
         let reqJsonParams = {
           page: {pageNum: 1, pageSize: 9999},
           questionsForm: {questionsCode: this.questionsCode}
@@ -249,7 +251,7 @@
         })
       },
       setOptionValue(index) {
-        this.createOrEditQuestionsForm['options' + index] = this.createOrEditQuestionsForm.options[index]
+        this.$set(this.createOrEditQuestionsForm, 'options' + index, this.createOrEditQuestionsForm.options[index])
       },
       initOptions(optionNum) {
         if (this.questionsType === this.JUDGE_QUESTION_TYPE) {
@@ -258,13 +260,15 @@
           this.shouldDisabledOption = true
         }
         this.optionsValidateForm.options = []
+        this.createOrEditQuestionsForm.selects = []
         for (let i = 0; i < optionNum; i++) {
           this.optionsValidateForm.options.push({
             value: '',
             radio: '',
             key: Math.random(),
           })
-          this.createOrEditQuestionsFormRules['options' + i] = [
+          this.$set(this.createOrEditQuestionsForm.selects, i, false)
+          this.$set(this.createOrEditQuestionsFormRules, 'options' + i, [
             {
               validator: (rule, value, callback) => {
                 if (!value) {
@@ -277,13 +281,14 @@
               },
               trigger: 'blur'
             }
-          ]
+          ])
+          this.$set(this.createOrEditQuestionsForm, 'options' + i, '')
         }
         if (this.questionsType === this.JUDGE_QUESTION_TYPE) {
-          this.createOrEditQuestionsForm.options[0] = '对'
-          this.createOrEditQuestionsForm['options0'] = '对'
-          this.createOrEditQuestionsForm.options[1] = '错'
-          this.createOrEditQuestionsForm['options1'] = '错'
+          this.$set(this.createOrEditQuestionsForm.options, 0, '对')
+          this.$set(this.createOrEditQuestionsForm.options, 1, '错')
+          this.$set(this.createOrEditQuestionsForm, 'options0', '对')
+          this.$set(this.createOrEditQuestionsForm, 'options1', '错')
         }
       }
     },
@@ -295,14 +300,9 @@
         this.initOptions(optionNum)
       } else if (this.operationsType === "edit") {
         this.title = "编辑试题"
-        let resPromise = this.getQuestionsInfo()
+        let resPromise = this.findQuestionsInfo()
         resPromise.then((resJson) => {
-          this.createOrEditQuestionsForm.id = resJson.data[0].id
-          this.createOrEditQuestionsForm.questionsType = resJson.data[0].questionsType
-          this.createOrEditQuestionsForm.questionsTitle = resJson.data[0].questionsTitle
-          this.createOrEditQuestionsForm.questionsCode = resJson.data[0].questionsCode
-          this.createOrEditQuestionsForm.answerAnalysis = resJson.data[0].answerAnalysis
-          this.createOrEditQuestionsForm.sortOrder = resJson.data[0].sortOrder
+          this.createOrEditQuestionsForm = Object.assign({}, resJson.data[0])
           setTimeout(() => {
             this.$refs.questionsTitleUeditorRef.setContent(this.createOrEditQuestionsForm.questionsTitle)
             this.$refs.answerAnalysisUeditorRef.setContent(this.createOrEditQuestionsForm.answerAnalysis)
@@ -315,7 +315,7 @@
           this.createOrEditQuestionsForm.options = resJson.data.options
           let optionNum = resJson.data.options.length
           for (let i = 0; i < resJson.data.options.length; i++) {
-            this.createOrEditQuestionsForm['options' + i] = resJson.data.options[i]
+            this.$set(this.createOrEditQuestionsForm, 'options' + i, resJson.data.options[i])
           }
           this.initOptions(optionNum)
         })
