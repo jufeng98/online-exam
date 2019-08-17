@@ -380,52 +380,52 @@ public class QuestionsExample {
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreEqualTo(Byte value) {
+        public Criteria andQuestionsScoreEqualTo(Integer value) {
             addCriterion("questions_score =", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreNotEqualTo(Byte value) {
+        public Criteria andQuestionsScoreNotEqualTo(Integer value) {
             addCriterion("questions_score <>", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreGreaterThan(Byte value) {
+        public Criteria andQuestionsScoreGreaterThan(Integer value) {
             addCriterion("questions_score >", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreGreaterThanOrEqualTo(Byte value) {
+        public Criteria andQuestionsScoreGreaterThanOrEqualTo(Integer value) {
             addCriterion("questions_score >=", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreLessThan(Byte value) {
+        public Criteria andQuestionsScoreLessThan(Integer value) {
             addCriterion("questions_score <", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreLessThanOrEqualTo(Byte value) {
+        public Criteria andQuestionsScoreLessThanOrEqualTo(Integer value) {
             addCriterion("questions_score <=", value, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreIn(List<Byte> values) {
+        public Criteria andQuestionsScoreIn(List<Integer> values) {
             addCriterion("questions_score in", values, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreNotIn(List<Byte> values) {
+        public Criteria andQuestionsScoreNotIn(List<Integer> values) {
             addCriterion("questions_score not in", values, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreBetween(Byte value1, Byte value2) {
+        public Criteria andQuestionsScoreBetween(Integer value1, Integer value2) {
             addCriterion("questions_score between", value1, value2, "questionsScore");
             return (Criteria) this;
         }
 
-        public Criteria andQuestionsScoreNotBetween(Byte value1, Byte value2) {
+        public Criteria andQuestionsScoreNotBetween(Integer value1, Integer value2) {
             addCriterion("questions_score not between", value1, value2, "questionsScore");
             return (Criteria) this;
         }

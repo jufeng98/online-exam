@@ -163,6 +163,8 @@ create table `topics` (
   comment '主题名称',
   `topics_cover_image` mediumblob             not null
   comment '主题封面',
+  `exams_code`         varchar(6) default ''  not null
+  comment '关联考试表exams_code',
   `create_usename`     varchar(20) default '' not null
   comment '创建人编号',
   `create_time`        datetime default now() not null

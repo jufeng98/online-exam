@@ -7,7 +7,7 @@
     <result column="questions_code" jdbcType="VARCHAR" property="questionsCode" />
     <result column="questions_title" jdbcType="VARCHAR" property="questionsTitle" />
     <result column="questions_type" jdbcType="TINYINT" property="questionsType" />
-    <result column="questions_score" jdbcType="TINYINT" property="questionsScore" />
+    <result column="questions_score" jdbcType="INTEGER" property="questionsScore" />
     <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
     <result column="answer_analysis" jdbcType="VARCHAR" property="answerAnalysis" />
     <result column="create_usename" jdbcType="VARCHAR" property="createUsename" />
@@ -111,7 +111,7 @@
       answer_analysis, create_usename, create_time
       )
     values (#{id,jdbcType=INTEGER}, #{questionsCode,jdbcType=VARCHAR}, #{questionsTitle,jdbcType=VARCHAR}, 
-      #{questionsType,jdbcType=TINYINT}, #{questionsScore,jdbcType=TINYINT}, #{sortOrder,jdbcType=INTEGER}, 
+      #{questionsType,jdbcType=TINYINT}, #{questionsScore,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, 
       #{answerAnalysis,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -160,7 +160,7 @@
         #{questionsType,jdbcType=TINYINT},
       </if>
       <if test="questionsScore != null">
-        #{questionsScore,jdbcType=TINYINT},
+        #{questionsScore,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null">
         #{sortOrder,jdbcType=INTEGER},
@@ -198,7 +198,7 @@
         questions_type = #{record.questionsType,jdbcType=TINYINT},
       </if>
       <if test="record.questionsScore != null">
-        questions_score = #{record.questionsScore,jdbcType=TINYINT},
+        questions_score = #{record.questionsScore,jdbcType=INTEGER},
       </if>
       <if test="record.sortOrder != null">
         sort_order = #{record.sortOrder,jdbcType=INTEGER},
@@ -223,7 +223,7 @@
       questions_code = #{record.questionsCode,jdbcType=VARCHAR},
       questions_title = #{record.questionsTitle,jdbcType=VARCHAR},
       questions_type = #{record.questionsType,jdbcType=TINYINT},
-      questions_score = #{record.questionsScore,jdbcType=TINYINT},
+      questions_score = #{record.questionsScore,jdbcType=INTEGER},
       sort_order = #{record.sortOrder,jdbcType=INTEGER},
       answer_analysis = #{record.answerAnalysis,jdbcType=VARCHAR},
       create_usename = #{record.createUsename,jdbcType=VARCHAR},
@@ -245,7 +245,7 @@
         questions_type = #{questionsType,jdbcType=TINYINT},
       </if>
       <if test="questionsScore != null">
-        questions_score = #{questionsScore,jdbcType=TINYINT},
+        questions_score = #{questionsScore,jdbcType=INTEGER},
       </if>
       <if test="sortOrder != null">
         sort_order = #{sortOrder,jdbcType=INTEGER},
@@ -267,7 +267,7 @@
     set questions_code = #{questionsCode,jdbcType=VARCHAR},
       questions_title = #{questionsTitle,jdbcType=VARCHAR},
       questions_type = #{questionsType,jdbcType=TINYINT},
-      questions_score = #{questionsScore,jdbcType=TINYINT},
+      questions_score = #{questionsScore,jdbcType=INTEGER},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       answer_analysis = #{answerAnalysis,jdbcType=VARCHAR},
       create_usename = #{createUsename,jdbcType=VARCHAR},

@@ -30,6 +30,7 @@
                 <img style="width:100px;height:100px" :src="`${base64Prefix}${scope.row.topicsCoverImage}`"/>
               </template>
             </el-table-column>
+            <el-table-column prop="examsCode" :formatter="formatData" label="关联考试"></el-table-column>
             <el-table-column label="操作" width="180">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="showEditTopicsDialog(scope.$index, scope.row)">
@@ -55,7 +56,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditTopicsDialogVisible">
-      <el-form :model="createOrEditTopicsForm" label-width="80px" :rules="createOrEditTopicsFormRules"
+      <el-form :model="createOrEditTopicsForm" label-width="90px" :rules="createOrEditTopicsFormRules"
                ref="createOrEditTopicsFormRef">
         <el-form-item label="主题名称" prop="topicsName">
           <el-input v-model="createOrEditTopicsForm.topicsName" auto-complete="off"
@@ -78,6 +79,16 @@
           <el-input type="hidden" style="width:0px;height:0px;"
                     v-model="createOrEditTopicsForm.topicsCoverImage">
           </el-input>
+        </el-form-item>
+        <el-form-item label="关联考试" prop="examsCode" style="text-align: left">
+          <el-select v-model="createOrEditTopicsForm.examsCode">
+            <el-option
+              v-for="item in examsList"
+              :key="item.examsCode"
+              :label="item.examsName"
+              :value="item.examsCode">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div>
@@ -109,6 +120,7 @@
         createOrEditTopicsForm: {
           topicsName: '',
           topicsCoverImage: null,
+          examsCode: '',
         },
         uploadShowImageUrl: '',
         createTopics: true,
@@ -122,9 +134,16 @@
             {required: true, message: '请选择主题封面', trigger: 'blur'}
           ],
         },
+        examsList: [],
+        examsMap: new Map(),
       }
     },
     methods: {
+      formatData(row, column) {
+        if (column.property === 'examsCode') {
+          return this.examsMap.get(row.examsCode)
+        }
+      },
       handleSizeChange(val) {
         this.pageSize = val
         this.findTopicsList(this.pageNum)
@@ -183,6 +202,19 @@
         this.createOrEditTopicsForm.topicsCoverImage = this.base64Prefix + this.createOrEditTopicsForm.topicsCoverImage
         this.uploadShowImageUrl = this.createOrEditTopicsForm.topicsCoverImage
       },
+      findExamsList() {
+        let reqJsonParams = {
+          page: {pageNum: 1, pageSize: 99999},
+          examsForm: {}
+        }
+        baseAxios.post(config.FIND_EXAMS_LIST, reqJsonParams).then((resJson) => {
+          this.examsList = resJson.data
+          for (let i = 0; i < this.examsList.length; i++) {
+            this.examsMap.set(this.examsList[i].examsCode, this.examsList[i].examsName)
+          }
+          this.findTopicsList(1)
+        })
+      },
       submitCreateOrEditTopics() {
         this.$refs.createOrEditTopicsFormRef.validate((valid) => {
           if (!valid) {
@@ -194,7 +226,8 @@
             topicsForm: this.createOrEditTopicsForm,
           }
           let url = this.createTopics ? config.CREATE_TOPICS : config.EDIT_TOPICS
-          baseAxios.post(url, reqJsonParams).then((resJson) => {
+          baseAxios.post(url, reqJsonParams).then(() => {
+            this.$message({message: '操作成功', type: 'success'})
           }).finally(() => {
             this.addLoading = false
             this.createOrEditTopicsDialogVisible = false
@@ -221,7 +254,7 @@
       },
     },
     mounted() {
-      this.findTopicsList(1)
+      this.findExamsList()
       window.vue = this
     }
   }

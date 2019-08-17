@@ -32,9 +32,9 @@ public class Questions {
     private Byte questionsType;
 
     /**
-     * 题目分数
+     * 分数
      */
-    private Byte questionsScore;
+    private Integer questionsScore;
 
     /**
      * 顺序
@@ -113,16 +113,16 @@ public class Questions {
     }
 
     /**
-     * 获取题目分数
+     * 获取分数
      */
-    public Byte getQuestionsScore() {
+    public Integer getQuestionsScore() {
         return questionsScore;
     }
 
     /**
-     * 设置题目分数
+     * 设置分数
      */
-    public void setQuestionsScore(Byte questionsScore) {
+    public void setQuestionsScore(Integer questionsScore) {
         this.questionsScore = questionsScore;
     }
 

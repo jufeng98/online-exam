@@ -72,6 +72,7 @@ public class ExamsController {
         return result;
     }
 
+    @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/addOrEditAssociateQuestions")
     public Result<AddOrEditAssociateQuestionsResVo> addOrEditAssociateQuestions(
             @Validated @RequestBody AddOrEditAssociateQuestionsReqVo reqVo) {
@@ -80,6 +81,7 @@ public class ExamsController {
         return result;
     }
 
+    @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/findAssociateQuestions")
     public Result<FindAssociateQuestionsResVo> findAssociateQuestions(@Validated @RequestBody FindAssociateQuestionsReqVo reqVo) {
         FindAssociateQuestionsResVo resVo = examsService.findAssociateQuestions(reqVo);

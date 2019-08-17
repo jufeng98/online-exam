@@ -14,4 +14,5 @@ public class TopicsVo {
     private String topicsName;
     @JsonDeserialize(using = Base64Deserializer.class)
     private byte[] topicsCoverImage;
+    private String examsCode;
 }

@@ -27,6 +27,11 @@ public class Topics {
     private String topicsName;
 
     /**
+     * 关联考试表exams_code
+     */
+    private String examsCode;
+
+    /**
      * 创建人编号
      */
     private String createUsename;
@@ -81,6 +86,20 @@ public class Topics {
      */
     public void setTopicsName(String topicsName) {
         this.topicsName = topicsName;
+    }
+
+    /**
+     * 获取关联考试表exams_code
+     */
+    public String getExamsCode() {
+        return examsCode;
+    }
+
+    /**
+     * 设置关联考试表exams_code
+     */
+    public void setExamsCode(String examsCode) {
+        this.examsCode = examsCode;
     }
 
     /**

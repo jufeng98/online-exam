@@ -310,6 +310,76 @@ public class TopicsExample {
             return (Criteria) this;
         }
 
+        public Criteria andExamsCodeIsNull() {
+            addCriterion("exams_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeIsNotNull() {
+            addCriterion("exams_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeEqualTo(String value) {
+            addCriterion("exams_code =", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeNotEqualTo(String value) {
+            addCriterion("exams_code <>", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeGreaterThan(String value) {
+            addCriterion("exams_code >", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("exams_code >=", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeLessThan(String value) {
+            addCriterion("exams_code <", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeLessThanOrEqualTo(String value) {
+            addCriterion("exams_code <=", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeLike(String value) {
+            addCriterion("exams_code like", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeNotLike(String value) {
+            addCriterion("exams_code not like", value, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeIn(List<String> values) {
+            addCriterion("exams_code in", values, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeNotIn(List<String> values) {
+            addCriterion("exams_code not in", values, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeBetween(String value1, String value2) {
+            addCriterion("exams_code between", value1, value2, "examsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamsCodeNotBetween(String value1, String value2) {
+            addCriterion("exams_code not between", value1, value2, "examsCode");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateUsenameIsNull() {
             addCriterion("create_usename is null");
             return (Criteria) this;

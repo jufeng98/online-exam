@@ -53,6 +53,7 @@ public class TopicsServiceImpl implements TopicsService {
         String code = codeHelper.generateCode("topics_code", "topics", "T");
         topics.setTopicsCode(code);
         topics.setCreateUsename(userDetails.getUsername());
+        topics.setExamsCode(reqVo.getTopicsForm().getExamsCode());
         topicsMapper.insertSelective(topics);
         CreateTopicsResVo createTopicsResVo = new CreateTopicsResVo();
         createTopicsResVo.setTopics(topics);
@@ -65,6 +66,7 @@ public class TopicsServiceImpl implements TopicsService {
         topics.setId(reqVo.getTopicsForm().getId());
         topics.setTopicsCoverImage(reqVo.getTopicsForm().getTopicsCoverImage());
         topics.setTopicsName(reqVo.getTopicsForm().getTopicsName());
+        topics.setExamsCode(reqVo.getTopicsForm().getExamsCode());
         return topicsMapper.updateByPrimaryKeySelective(topics);
     }
 

@@ -112,7 +112,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         questions.setCreateUsename(userDetails.getUsername());
         questions.setQuestionsTitle(reqVo.getQuestionsForm().getQuestionsTitle());
         questions.setQuestionsType((byte) reqVo.getQuestionsForm().getQuestionsType().getCode());
-        questions.setQuestionsScore(reqVo.getQuestionsForm().getQuestionsScore().byteValue());
+        questions.setQuestionsScore(reqVo.getQuestionsForm().getQuestionsScore());
         questions.setSortOrder(reqVo.getQuestionsForm().getSortOrder());
         questions.setAnswerAnalysis(reqVo.getQuestionsForm().getAnswerAnalysis());
         questionsMapper.insertSelective(questions);
@@ -139,7 +139,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         Questions questions = new Questions();
         questions.setId(reqVo.getQuestionsForm().getId());
         questions.setQuestionsTitle(reqVo.getQuestionsForm().getQuestionsTitle());
-        questions.setQuestionsScore(reqVo.getQuestionsForm().getQuestionsScore().byteValue());
+        questions.setQuestionsScore(reqVo.getQuestionsForm().getQuestionsScore());
         questions.setSortOrder(reqVo.getQuestionsForm().getSortOrder());
         questions.setAnswerAnalysis(reqVo.getQuestionsForm().getAnswerAnalysis());
         return questionsMapper.updateByPrimaryKeySelective(questions);
