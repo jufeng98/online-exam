@@ -194,9 +194,7 @@
       },
       resetUeditorAndClearValidate() {
         this.$refs.createOrEditKnowledgePointsFormRef.clearValidate()
-        if (!this.createKnowledgePoints) {
-          this.$refs.knowledgePointsUeditorRef.setContent('')
-        }
+        this.$refs.knowledgePointsUeditorRef.setContent('')
       },
       showCreateKnowledgePointsDialog() {
         this.title = '新增知识点'

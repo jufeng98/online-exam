@@ -247,6 +247,8 @@ CREATE TABLE `questions` (
   COMMENT '题目标题',
   `questions_type`  tinyint                             not null
   COMMENT '题目类型,1:单选;2:多选;3:判断:4:排序',
+  `questions_score`      int                            not null
+  comment '分数',
   `sort_order`      int default 0                       not null
   comment '顺序',
   `answer_analysis` varchar(200) default ''             not null

@@ -73,10 +73,10 @@ public class CertsServiceImpl implements CertsService {
         String topics;
         String acquireTime;
         acquireMan = "jufeng98";
-        topics = "java tutorial";
+        topics = certs.getCertsName();
         acquireTime = "获得时间: " + DateFormatUtils.format(new Date(), "yyyy-MM-dd");
         appendTextToDoc(writer, acquireMan, 250, 720);
-        appendTextToDoc(writer, topics, 260, 600);
+        appendTextToDoc(writer, topics, 300, 600);
         appendTextToDoc(writer, acquireTime, 1000, 1030);
         document.close();
         byte[] bytes = outputStream.toByteArray();

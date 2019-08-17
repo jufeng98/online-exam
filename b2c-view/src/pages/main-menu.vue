@@ -29,8 +29,8 @@
     </el-header>
     <el-container>
       <el-aside style="overflow-x:hidden;backgroundColor:#545c64;text-align: left" class="el-menu-aside"
-                :width="asideWidth + '%'">
-        <el-menu :default-openeds="defaultOpeneds" class="el-menu-vertical-demo"
+                :width="asideWidth + 'px'">
+        <el-menu :default-openeds="defaultOpeneds" class="el-menu-vertical-demo" :unique-opened="true"
                  :collapse="!expanded" background-color="#545c64" text-color="#ffffff" @select="addTab">
           <el-submenu v-for="(menu, index) in menus" :index="menu.name+'-'+menu.path" :key="Math.random()">
             <template slot="title"><i :class="menu.icon"></i>{{menu.name}}</template>
@@ -72,7 +72,7 @@
       return {
         loginUserPicUrl: localStorage.getItem(appConsts.LOGIN_USER_PIC_URL),
         iframeHeight: '',
-        defaultOpeneds: ['培训实施-','考试测评-'],
+        defaultOpeneds: ['学习考试-', '考试测评-'],
         expanded: true,
         username: localStorage.getItem(appConsts.LOGIN_USERNAME),
         menus: [],
@@ -82,7 +82,7 @@
           name: '欢迎页',
           path: '/#/helloWorld'
         }],
-        asideWidth: 10.2,
+        asideWidth: 200,
         clearTimeout: null,
       }
     },
@@ -95,21 +95,25 @@
         }
       },
       expandAsideWidth() {
-        this.asideWidth += 1
-        if (this.asideWidth < 10.2) {
+        this.asideWidth += 5
+        if (this.asideWidth < 200) {
           if (this.clearTimeout !== null) {
             clearTimeout(this.clearTimeout)
           }
-          this.clearTimeout = setTimeout(this.expandAsideWidth, 35);
+          this.clearTimeout = setTimeout(this.expandAsideWidth, 10);
+        } else {
+          this.asideWidth = this.asideWidth > 200 ? 200 : this.asideWidth
         }
       },
       collapseAsideWidth() {
-        this.asideWidth -= 1
-        if (this.asideWidth > 2.2) {
+        this.asideWidth -= 5
+        if (this.asideWidth > 42) {
           if (this.clearTimeout !== null) {
             clearTimeout(this.clearTimeout)
           }
-          this.clearTimeout = setTimeout(this.collapseAsideWidth, 25)
+          this.clearTimeout = setTimeout(this.collapseAsideWidth, 5);
+        } else {
+          this.asideWidth = this.asideWidth < 42 ? 42 : this.asideWidth
         }
       },
       handleCommand(command) {

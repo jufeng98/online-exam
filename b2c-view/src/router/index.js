@@ -24,6 +24,7 @@ import knowledgePointsManage from '@/pages/learntrain/knowledge-points-manage'
 import questionsManage from '@/pages/exam/questions-manage'
 import questionsCreateEdit from '@/pages/exam/questions-create-edit'
 import certsManage from '@/pages/learntrain/certs-manage'
+import examsManage from '@/pages/exam/exams-manage'
 
 Vue.use(Router)
 
@@ -51,5 +52,6 @@ export default new Router({
     {path: '/questionsManage', name: 'questionsManage', component: questionsManage},
     {path: '/questionsCreateEdit', name: 'questionsCreateEdit', component: questionsCreateEdit},
     {path: '/certsManage', name: 'certsManage', component: certsManage},
+    {path: '/examsManage', name: 'examsManage', component: examsManage},
   ]
 })

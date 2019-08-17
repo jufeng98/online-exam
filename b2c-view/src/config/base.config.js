@@ -49,6 +49,13 @@ export const CREATE_CERTS = '/core/certs/createCerts'
 export const EDIT_CERTS = '/core/certs/editCerts'
 export const DEL_CERTS = '/core/certs/delCerts'
 
+export const FIND_EXAMS_LIST = '/core/exams/findExamsList'
+export const CREATE_EXAMS = '/core/exams/createExams'
+export const EDIT_EXAMS = '/core/exams/editExams'
+export const DEL_EXAMS = '/core/exams/delExams'
+export const ADD_OR_EDIT_ASSOCIATE_QUESTIONS = '/core/exams/addOrEditAssociateQuestions'
+export const FIND_ASSOCIATE_QUESTIONS = '/core/exams/findAssociateQuestions'
+
 export const GET_PROPERTY_SOURCE_NAMES = '/actuator/env'
 export const GET_MAPPINGS = '/actuator/mappings'
 export const GET_CONFIGPROPS = '/actuator/configprops'

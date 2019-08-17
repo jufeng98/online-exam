@@ -282,7 +282,7 @@
               trigger: 'blur'
             }
           ])
-          this.$set(this.createOrEditQuestionsForm, 'options' + i, '')
+          this.$set(this.createOrEditQuestionsForm, 'options' + i, this.createOrEditQuestionsForm.options[i])
         }
         if (this.questionsType === this.JUDGE_QUESTION_TYPE) {
           this.$set(this.createOrEditQuestionsForm.options, 0, '对')

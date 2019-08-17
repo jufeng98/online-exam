@@ -48,7 +48,7 @@
             <el-table-column prop="email" label="邮箱" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="createTime" label="创建时间" :formatter="formatData"
                              :show-overflow-tooltip="true"></el-table-column>
-            <el-table-column label="操作" width="400px">
+            <el-table-column label="操作" width="450px">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="showAuthoritiesDialog(scope.$index, scope.row)">
                   授权
