@@ -1,31 +1,33 @@
 package org.javamaster.fragmentlearning.ui.login
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.util.Patterns
-import org.javamaster.fragmentlearning.data.LoginRepository
-import org.javamaster.fragmentlearning.data.Result
-
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.data.LoginFormState
+import org.javamaster.fragmentlearning.data.LoginService
+import org.javamaster.fragmentlearning.data.model.Result
+import org.javamaster.fragmentlearning.data.model.User
+import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+/**
+ * @author yudong
+ * @date 2019/8/18
+ */
+class LoginViewModel @Inject constructor(private val LoginService: LoginService) : ViewModel() {
 
+    private val usernamePattern = Pattern.compile("^[0-9a-zA-Z]+\$")
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
+    private val _loginResult = MutableLiveData<Result<User>>()
+    val loginResult: LiveData<Result<User>> = _loginResult
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value = LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
+        var result: Result<User> = LoginService.login(username, password)
+        _loginResult.value = result
     }
 
     fun loginDataChanged(username: String, password: String) {
@@ -38,17 +40,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
     }
 
-    // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
+        return usernamePattern.matcher(username).matches()
     }
 
-    // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5;
+        return password.length in 5..20
     }
 }

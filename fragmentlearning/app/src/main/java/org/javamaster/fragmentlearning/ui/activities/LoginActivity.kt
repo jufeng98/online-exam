@@ -1,67 +1,70 @@
-package org.javamaster.fragmentlearning.ui.login
+package org.javamaster.fragmentlearning.ui.activities
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.app.AppCompatActivity
+import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-
+import androidx.lifecycle.Observer
+import butterknife.ButterKnife
+import butterknife.OnClick
+import kotlinx.android.synthetic.main.activity_login.*
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.data.model.User
+import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
+import org.javamaster.fragmentlearning.ui.login.LoginViewModel
+import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity() {
+/**
+ * @author yudong
+ * @date 2019/8/18
+ */
+class LoginActivity : BaseAppActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    @Inject
+    lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
+//      这一行一定要在setContentView后面,否则绑定会失败
+        ButterKnife.bind(this)
+        DaggerAppComponent.create().inject(this)
 
-        val username = findViewById<EditText>(R.id.username)
-        val password = findViewById<EditText>(R.id.password)
-        val login = findViewById<Button>(R.id.login)
-        val loading = findViewById<ProgressBar>(R.id.loading)
-
-        loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-            val loginState = it ?: return@Observer
+            val state = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            login.isEnabled = state.isDataValid
 
-            if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+            if (state.usernameError != null) {
+                username.error = getString(state.usernameError)
             }
-            if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+            if (state.passwordError != null) {
+                password.error = getString(state.passwordError)
             }
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
+            val result = it ?: return@Observer
 
             loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
+            if (!result.success) {
+                showLoginFailed(result.errorMsg!!)
+                return@Observer
             }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
+            updateUiWithUser(result.data!!)
             setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
+//            TODO
+//            finish()
         })
 
         username.afterTextChanged {
@@ -89,26 +92,26 @@ class LoginActivity : AppCompatActivity() {
                 }
                 false
             }
-
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
+    @OnClick(R.id.login)
+    fun login() {
+        loading.visibility = View.VISIBLE
+        loginViewModel.login(username.text.toString(), password.text.toString())
+    }
+
+    private fun updateUiWithUser(model: User) {
         val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
+        val username = model.username
         Toast.makeText(
             applicationContext,
-            "$welcome $displayName",
+            "$welcome $username",
             Toast.LENGTH_LONG
         ).show()
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    private fun showLoginFailed(errorString: String) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
