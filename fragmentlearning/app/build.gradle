@@ -17,8 +17,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility '1.8'
+        targetCompatibility '1.8'
     }
     packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
@@ -34,6 +34,13 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://${getIP()}:9888\"")
         }
     }
+    buildToolsVersion = '28.0.3'
+}
+
+ext {
+    dagger_version = "2.24"
+    butterknife_version = "10.1.0"
+    jackson_version = "2.9.9"
 }
 
 dependencies {
@@ -49,15 +56,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.google.dagger:dagger:2.24'
-    kapt 'com.google.dagger:dagger-compiler:2.24'
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
+    implementation "com.fasterxml.jackson.core:jackson-core:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
 
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
 }
