@@ -2,7 +2,6 @@ package org.javamaster.fragmentlearning.data.impl
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.util.Log
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.FormBody
@@ -29,16 +28,17 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         var request = Request.Builder().url(AppConsts.LOGIN_URL).post(formBody).build()
         var call = client.newCall(request)
         var response = call.execute()
-        var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
-        var cookieStr: String = response.headers("Set-Cookie").joinToString(";")
-        Log.i(this.javaClass.name, cookieStr)
-        preferences.putStringAndCommit(
-            AppConsts.REMEMBER_ME_COOKIE_KEY,
-            cookieStr
-        )
         var resJsonStr: String = response.body!!.string()
-        Log.i(this.javaClass.name, resJsonStr)
-        return objectMapper.readValue(resJsonStr, object : TypeReference<Result<User>>() {})
+        var result: Result<User> = objectMapper.readValue(resJsonStr, object : TypeReference<Result<User>>() {})
+        if (result.success) {
+            var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
+            var cookieStr: String = response.headers("Set-Cookie").joinToString(";")
+            preferences.putStringAndCommit(
+                AppConsts.REMEMBER_ME_COOKIE_KEY,
+                cookieStr
+            )
+        }
+        return result
     }
 
     fun SharedPreferences.putStringAndCommit(key: String, value: String) {

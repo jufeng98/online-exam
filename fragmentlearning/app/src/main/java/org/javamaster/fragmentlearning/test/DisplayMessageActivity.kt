@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_display_message.*
 import org.javamaster.fragmentlearning.R
 
+/**
+ * @author yudong
+ * @date 2019/8/20
+ */
 class DisplayMessageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

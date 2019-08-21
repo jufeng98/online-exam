@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 abstract class BaseAppActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 
 }

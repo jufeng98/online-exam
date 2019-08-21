@@ -67,6 +67,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
 
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
 }
 
 def getIP() {
