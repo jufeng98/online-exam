@@ -33,6 +33,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".test.MenuActivity">
+        </activity>
+        <activity android:name=".test.AnimationActivity">
+        </activity>
         <activity android:name=".test.DisplayMessageActivity">
             <!--声明逻辑父界面，系统会自动添加返回父界面的箭头-->
             <meta-data

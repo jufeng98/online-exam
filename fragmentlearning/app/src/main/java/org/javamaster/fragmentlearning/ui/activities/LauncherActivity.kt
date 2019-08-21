@@ -7,7 +7,7 @@ import android.preference.PreferenceManager
 import android.webkit.WebView
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
-import org.javamaster.fragmentlearning.test.SendActivity
+import org.javamaster.fragmentlearning.test.MenuActivity
 
 /**
  * @author yudong
@@ -24,7 +24,7 @@ class LauncherActivity : BaseAppActivity() {
         var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
         var rememberMeCookie = preferences.getString(AppConsts.REMEMBER_ME_COOKIE_KEY, "")
 //        if (rememberMeCookie == "") {
-        var intent = Intent(applicationContext, SendActivity::class.java)
+        var intent = Intent(applicationContext, MenuActivity::class.java)
         startActivity(intent)
 //        } else {
 //
