@@ -12,5 +12,7 @@ import java.util.List;
 public interface FilesService {
     List<String> uploadFile(MultipartFile[] multipartFiles, UriComponentsBuilder uriComponentsBuilder);
 
+    String writeFile(String fileName, String encodeBase64Str);
+
     byte[] downloadFile(String completePath);
 }

@@ -1,17 +1,14 @@
 package org.javamaster.fragmentlearning.ioc
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
 import dagger.Module
 import dagger.Provides
 import org.javamaster.fragmentlearning.data.LoginService
 import org.javamaster.fragmentlearning.data.impl.LoginServiceImpl
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
-import javax.inject.Singleton
 
 /**
+ * 单例对象只能在同一个Activity中有效,不同的Activity注入的不是同一个对象.所以这里提供的对象仅仅是Activity范围内单例
  * @author yudong
  * @date 2019/8/18
  */
@@ -19,24 +16,14 @@ import javax.inject.Singleton
 class AppModule {
 
     @Provides
-    @Singleton
-    fun objectMapper(): ObjectMapper {
-        val objectMapper = ObjectMapper()
-        objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS)
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false)
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-        return objectMapper
-    }
-
-    @Provides
-    @Singleton
+    @ActivityScope
     fun loginService(objectMapper: ObjectMapper): LoginService {
         return LoginServiceImpl(objectMapper)
     }
 
+    //  @Named("dev")
     @Provides
-    @Singleton
+    @ActivityScope
     fun loginViewModel(loginService: LoginService): LoginViewModel {
         return LoginViewModel(loginService)
     }

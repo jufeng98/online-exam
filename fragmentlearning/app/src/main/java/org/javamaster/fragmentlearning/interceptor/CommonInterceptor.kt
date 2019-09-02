@@ -1,11 +1,14 @@
 package org.javamaster.fragmentlearning.interceptor
 
+import android.content.Intent
 import android.preference.PreferenceManager
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.javamaster.fragmentlearning.common.App
+import org.javamaster.fragmentlearning.consts.ActionConsts
 import org.javamaster.fragmentlearning.consts.AppConsts
+import org.javamaster.fragmentlearning.exception.BizException
 import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
@@ -27,8 +30,10 @@ class CommonInterceptor : Interceptor {
             .build()
         val response = chain.proceed(request)
         when (response.code) {
-            302, 401, 403 -> {
-//          TODO 登录失效
+            301, 302, 304, 401, 403 -> {
+                var intent = Intent(ActionConsts.FORCE_OFFLINE)
+                App.context.sendBroadcast(intent)
+                throw BizException(-1, "登录失效,请重新登录")
             }
         }
         val responseBody = response.body!!
@@ -42,7 +47,9 @@ class CommonInterceptor : Interceptor {
         if (!jsonNode.get("success").asBoolean()) {
             val errorCode = jsonNode.get("errorCode").asInt(-1)
             if (1007 == errorCode) {
-//                TODO 登录失效
+                var intent = Intent(ActionConsts.FORCE_OFFLINE)
+                App.context.sendBroadcast(intent)
+                throw BizException(-1, "登录失效,请重新登录")
             }
         }
         return response

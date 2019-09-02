@@ -15,4 +15,8 @@ class Result<T> constructor(
     val total: Long?
 ) {
     constructor() : this(false, null, null, null, null)
+    constructor(
+        errorCode: Int?,
+        errorMsg: String?
+    ) : this(false, errorCode, errorMsg, null, null)
 }

@@ -26,8 +26,11 @@ class LoginViewModel @Inject constructor(private val LoginService: LoginService)
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        var result: Result<User> = LoginService.login(username, password)
-        _loginResult.value = result
+        var result: Result<User>
+        Thread {
+            result = LoginService.login(username, password)
+            _loginResult.postValue(result)
+        }.start()
     }
 
     fun loginDataChanged(username: String, password: String) {

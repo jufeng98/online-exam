@@ -17,7 +17,9 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.Element;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.Context;
+import org.springframework.util.ReflectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,16 +50,18 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
         topLevelClass.addJavaDocLine(docLine);
 
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.EqualsBuilder");
+        topLevelClass.addImportedType("org.apache.commons.lang3.builder.HashCodeBuilder");
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.ToStringBuilder");
         topLevelClass.addImportedType("org.apache.commons.lang3.builder.ToStringStyle");
 
+        List<Method> newMethods = new ArrayList<Method>();
         Method toStringMethod = new Method();
         toStringMethod.addAnnotation("@Override");
         toStringMethod.setVisibility(JavaVisibility.PUBLIC);
         toStringMethod.setReturnType(FullyQualifiedJavaType.getStringInstance());
         toStringMethod.setName("toString");
         toStringMethod.addBodyLine("return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);");
-        topLevelClass.addMethod(toStringMethod);
+        newMethods.add(toStringMethod);
 
         Method equalsMethod = new Method();
         equalsMethod.addAnnotation("@Override");
@@ -66,7 +70,25 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
         equalsMethod.setName("equals");
         equalsMethod.addParameter(0, new Parameter(FullyQualifiedJavaType.getObjectInstance(), "obj"));
         equalsMethod.addBodyLine("return EqualsBuilder.reflectionEquals(this, obj);");
-        topLevelClass.addMethod(equalsMethod);
+        newMethods.add(equalsMethod);
+
+        Method hashMethod = new Method();
+        hashMethod.addAnnotation("@Override");
+        hashMethod.setVisibility(JavaVisibility.PUBLIC);
+        hashMethod.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        hashMethod.setName("hashCode");
+        hashMethod.addBodyLine("return HashCodeBuilder.reflectionHashCode(this);");
+        newMethods.add(hashMethod);
+
+        newMethods.addAll(topLevelClass.getMethods());
+
+        try {
+            java.lang.reflect.Field field = ReflectionUtils.findField(topLevelClass.getClass(), "methods");
+            field.setAccessible(true);
+            field.set(topLevelClass, newMethods);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
     }
@@ -147,6 +169,16 @@ public class MybatisGeneratorPlugin extends PluginAdapter {
 
     @Override
     public boolean sqlMapInsertElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        List<IntrospectedColumn> columns = introspectedTable.getPrimaryKeyColumns();
+        if (columns.size() == 1) {
+            element.addAttribute(new Attribute("useGeneratedKeys", "true"));
+            element.addAttribute(new Attribute("keyProperty", columns.get(0).getJavaProperty()));
+        }
+        return super.sqlMapInsertElementGenerated(element, introspectedTable);
+    }
+
+    @Override
+    public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
         List<IntrospectedColumn> columns = introspectedTable.getPrimaryKeyColumns();
         if (columns.size() == 1) {
             element.addAttribute(new Attribute("useGeneratedKeys", "true"));

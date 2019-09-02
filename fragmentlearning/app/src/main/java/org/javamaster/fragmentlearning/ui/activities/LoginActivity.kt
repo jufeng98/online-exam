@@ -1,6 +1,8 @@
 package org.javamaster.fragmentlearning.ui.activities
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.text.Editable
@@ -10,12 +12,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import butterknife.ButterKnife
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_login.*
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
+import org.javamaster.fragmentlearning.testActivity.OfflineActivity
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import javax.inject.Inject
 
@@ -25,19 +28,27 @@ import javax.inject.Inject
  */
 class LoginActivity : BaseAppActivity() {
 
+    override fun initContentView(): Int {
+        return R.layout.activity_login
+    }
+
+    //  @Named("dev")
     @Inject
     lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-//      这一行一定要在setContentView后面,否则绑定会失败
-        ButterKnife.bind(this)
-        DaggerAppComponent.create().inject(this)
-
+        DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+
+        var pre = getPreferences(Context.MODE_PRIVATE)
+        username.setText(pre.getString("username", ""))
+        password.setText(pre.getString("password", ""))
+        if (username.text.toString() != "" && password.text.toString() != "") {
+            login.isEnabled = true
+        }
+        checkBox.isChecked = pre.getBoolean("rememberPwd", false)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val state = it ?: return@Observer
@@ -64,7 +75,8 @@ class LoginActivity : BaseAppActivity() {
             updateUiWithUser(result.data!!)
             setResult(Activity.RESULT_OK)
 //            TODO
-//            finish()
+            OfflineActivity.actionStart(this)
+            finish()
         })
 
         username.afterTextChanged {
@@ -112,7 +124,27 @@ class LoginActivity : BaseAppActivity() {
     }
 
     private fun showLoginFailed(errorString: String) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, errorString, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        var edit = getPreferences(Context.MODE_PRIVATE).edit()
+        edit.putString("username", username.text.toString())
+        edit.putBoolean("rememberPwd", checkBox.isChecked)
+        if (checkBox.isChecked) {
+            edit.putString("password", password.text.toString())
+        } else {
+            edit.putString("password", "")
+        }
+        edit.apply()
+    }
+
+    companion object {
+        fun actionStart(context: Activity) {
+            var intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
 

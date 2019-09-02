@@ -2,6 +2,7 @@
     <string name="app_name">碎片学习</string>
     <string name="prompt_email">用户名</string>
     <string name="prompt_password">密码</string>
+    <string name="action_register">创建新的账户</string>
     <string name="action_sign_in">登录</string>
     <string name="action_sign_in_short">登录</string>
     <string name="welcome">"欢迎 ！"</string>
@@ -10,4 +11,46 @@
     <string name="login_failed">"用户名或密码错误"</string>
     <string name="edit_message">请输入消息</string>
     <string name="button_send">发送</string>
+    <string name="onboarding_learn">学习</string>
+    <string name="onboarding_learn_msg">编程基础就在你的指尖之间</string>
+    <string name="onboarding_play">竞赛</string>
+    <string name="onboarding_play_msg">挑战同行并参与互动代码竞赛</string>
+    <string name="onboarding_code">编码</string>
+    <string name="onboarding_code_msg">使用我们的Code Playground直接在您的手机上编写和运行代码</string>
+    <string name="onboarding_discuss">讨论</string>
+    <string name="onboarding_discuss_msg">在我们的Q＆A论坛中提出问题并给出答案</string>
+    <string name="onboarding_profile">配置</string>
+    <string name="onboarding_profile_msg">在碎片学习上构建并展示您独特的编码器配置！</string>
+    <string-array name="fruits">
+        <item>apple</item>
+        <item>orange</item>
+        <item>banana</item>
+        <item>watermelon</item>
+        <item>pear</item>
+        <item>grape</item>
+        <item>pineapple</item>
+        <item>strawberry</item>
+        <item>cherry</item>
+        <item>mango</item>
+        <item>apple</item>
+        <item>orange</item>
+        <item>banana</item>
+        <item>watermelon</item>
+        <item>pear</item>
+        <item>apple</item>
+        <item>orange</item>
+        <item>banana</item>
+        <item>watermelon</item>
+        <item>pear</item>
+    </string-array>
+
+    <string name="htmlWelcome">This is an <b>HTML</b> message!</string>
+    <string name="title_activity_onboarding">OnboardingActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="chat_send">发送</string>
+    <string name="chat_input_hint">输入聊天内容</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_broadcast_msg">自定义的广播消息</string>
 </resources>

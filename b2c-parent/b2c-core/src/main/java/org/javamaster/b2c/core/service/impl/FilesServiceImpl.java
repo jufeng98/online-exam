@@ -5,6 +5,7 @@ import org.javamaster.b2c.core.helper.FtpHelper;
 import org.javamaster.b2c.core.service.FilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -37,6 +38,14 @@ public class FilesServiceImpl implements FilesService {
         }
         return urls;
     }
+
+    @Override
+    public String writeFile(String fileName, String encodeBase64Str) {
+        byte[] bytes = Base64Utils.decodeFromUrlSafeString(encodeBase64Str);
+        String url = ftpHelper.uploadFile("/online-exam/logs", fileName, bytes);
+        return url;
+    }
+
 
     @Override
     @SneakyThrows

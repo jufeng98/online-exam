@@ -5,6 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import android.util.Log
+import com.google.android.gms.common.util.Base64Utils
+import org.javamaster.fragmentlearning.consts.AppConsts
+import org.javamaster.fragmentlearning.utils.NetUtils
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
@@ -17,7 +21,7 @@ import java.util.*
  * @date 2019/8/18
  */
 class GlobalHandler : Thread.UncaughtExceptionHandler {
-    private var context: Context? = null
+    private lateinit var context: Context
     private lateinit var exceptionHandler: Thread.UncaughtExceptionHandler
 
     companion object {
@@ -26,7 +30,7 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
         }
     }
 
-    fun init(context: Context?) {
+    fun init(context: Context) {
         this.context = context
         exceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(this)
@@ -34,21 +38,36 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread?, e: Throwable?) {
         try {
+            Log.e(GlobalHandler.javaClass.name, "occur error", e)
             logExceptionToSdCard(e)
-            uploadToServer()
+            Thread {
+                uploadToServer(e)
+            }.start()
+        } catch (e: Exception) {
+            Log.e(this.javaClass.name, t.toString(), e)
+        } finally {
             if (exceptionHandler != null) {
                 exceptionHandler.uncaughtException(t, e)
             } else {
                 android.os.Process.killProcess(android.os.Process.myPid())
                 System.exit(-1)
             }
-        } catch (e: Exception) {
-            Log.e(this.javaClass.name, t.toString(), e)
         }
     }
 
-    private fun uploadToServer() {
-        // TODO
+    private fun uploadToServer(e: Throwable?) {
+        var outputStream = ByteArrayOutputStream()
+        val printWriter = PrintWriter(outputStream)
+        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Date())
+        printWriter.println(time)
+        e?.printStackTrace(printWriter)
+        dumpDeviceInfo(printWriter)
+        printWriter.close()
+        var bytes = outputStream.toByteArray()
+        outputStream.close()
+        var str = Base64Utils.encodeUrlSafe(bytes)
+        var map = mapOf("fileName" to "fragmentlearning.log", "encodeBase64Str" to str)
+        NetUtils.postForResponse(AppConsts.UPLOAD_EXCEPTIONS, map)
     }
 
     private fun logExceptionToSdCard(e: Throwable?) {
@@ -56,7 +75,7 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
             Log.w(GlobalHandler.javaClass.name, "sdcard unmounted,skip dump exception to sdcard")
             return
         }
-        var path = Environment.getExternalStorageDirectory().path + "/fragmentlearning/crashlog/"
+        var path = context.getExternalFilesDir("").path.replace(".", "/") + "/fragmentlearning/crashlog/"
         var dir = File(path)
         if (!dir.exists()) {
             dir.mkdirs()
@@ -64,6 +83,9 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
         var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Date())
         var fileName = "$path$time-crash.log"
         var file = File(fileName)
+        if (!file.exists()) {
+            file.createNewFile()
+        }
         val printWriter = PrintWriter(FileWriter(file))
         printWriter.println(time)
         e?.printStackTrace(printWriter)
@@ -72,13 +94,13 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
     }
 
     private fun dumpDeviceInfo(printWriter: PrintWriter) {
-        var packageManager = context!!.packageManager
-        var packageInfo = packageManager.getPackageInfo(context!!.packageName, PackageManager.GET_ACTIVITIES)
+        var packageManager = context.packageManager
+        var packageInfo = packageManager.getPackageInfo(context.packageName, PackageManager.GET_ACTIVITIES)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             printWriter.println("App Version: " + packageInfo.versionName + "_" + packageInfo.longVersionCode)
         }
         printWriter.println("Android OS Version: " + Build.VERSION.RELEASE + "_" + Build.VERSION.SDK_INT)
-        printWriter.println("Vender: " + Build.MANUFACTURER)
+        printWriter.println("Manufacturer: " + Build.MANUFACTURER)
         printWriter.println("Mode: " + Build.MODEL)
         printWriter.println("CPU API: " + Arrays.toString(Build.SUPPORTED_ABIS))
     }

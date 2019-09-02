@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.javamaster.fragmentlearning">
 
+    <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
@@ -9,6 +10,20 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.IMAGE_CAPTURE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <uses-feature
             android:name="android.hardware.location"
@@ -33,19 +48,193 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".test.MenuActivity">
+        <receiver
+                android:name=".testBroadcastReceiver.ScheduledReceiver"
+                android:enabled="true"
+                android:exported="true">
+        </receiver>
+
+        <service
+                android:name=".testService.ScheduledIntentService"
+                android:exported="false">
+        </service>
+
+        <activity android:name=".testActivity.ScheduledActivity">
         </activity>
-        <activity android:name=".test.AnimationActivity">
+        <activity android:name=".testActivity.SmsActivity">
         </activity>
-        <activity android:name=".test.DisplayMessageActivity">
-            <!--声明逻辑父界面，系统会自动添加返回父界面的箭头-->
+        <activity android:name=".testActivity.BaiduMapActivity">
+        </activity>
+        <activity android:name=".testActivity.LBSActivity">
+        </activity>
+
+        <meta-data
+                android:name="com.baidu.lbsapi.API_KEY"
+                android:value="ZbFHbohk0QHGI9IxKafz9sQK9rDDFwq3"/>
+
+        <service
+                android:name="com.baidu.location.f"
+                android:enabled="true"
+                android:process=":remote"/>
+        <service
+                android:name=".testCompleteDown.DownloadService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
+        <activity android:name=".testCompleteDown.DownloadActivity">
+        </activity>
+
+        <service
+                android:name=".testService.MyIntentService"
+                android:exported="false">
+        </service>
+        <service
+                android:name=".testService.MyService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
+
+        <activity android:name=".testActivity.ServiceActivity">
+        </activity>
+        <activity android:name=".testActivity.MessageHandlerActivity">
+        </activity>
+        <activity android:name=".testActivity.HttpConnectionActivity">
+        </activity>
+        <activity android:name=".testActivity.WebViewActivity">
+        </activity>
+        <activity android:name=".testActivity.VideoPlayerActivity">
+        </activity>
+        <activity android:name=".testActivity.MediaPlayerActivity">
+        </activity>
+        <activity android:name=".testActivity.TakeAndPickPhotoActivity">
+        </activity>
+        <activity android:name=".testActivity.MakeCallActivity">
+        </activity>
+
+        <receiver
+                android:name=".testBroadcastReceiver.MessageReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".testActivity.NotificationActivity">
+        </activity>
+
+        <provider
+                android:name=".testProvider.MyContentProvider"
+                android:authorities="org.javamaster.fragmentlearning.provider"
+                android:enabled="true"
+                android:exported="true">
+        </provider>
+
+        <activity android:name=".testActivity.ContentResolverActivity">
+        </activity>
+        <activity android:name=".testActivity.LitePalActivity">
+        </activity>
+        <activity android:name=".testActivity.SQLiteActivity">
+        </activity>
+        <activity android:name=".testActivity.SaveAndLoadActivity">
+        </activity>
+        <activity android:name=".ui.activities.SignUpActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".test.SendActivity"/>
+                    android:value=".ui.activities.OnboardingActivity"/>
         </activity>
-        <!--android:label指定用作 Activity 的用户可见标签的字符串-->
+        <activity android:name=".ui.activities.MainActivity">
+        </activity>
+
+        <receiver
+                android:name=".testBroadcastReceiver.ForceOfflineReceiver"
+                android:enabled="true"
+                android:exported="false">
+        </receiver>
+
+        <activity android:name=".testActivity.OfflineActivity">
+        </activity>
+
+        <receiver
+                android:name=".testBroadcastReceiver.MyLocalReceiver"
+                android:enabled="true"
+                android:exported="false">
+        </receiver>
+
+        <activity android:name=".testActivity.LocalBroadcastActivity">
+        </activity>
+        <activity android:name=".testActivity.MyBroadcastActivity">
+        </activity>
+
+        <receiver
+                android:name=".testBroadcastReceiver.MyBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="org.javamaster.fragmentlearning.MY_BROADCAST_MSG"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+                android:name=".testBroadcastReceiver.BootCompleteReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".testActivity.NetWorkChangeReceiverActivity">
+        </activity>
+        <activity android:name=".testActivity.NewsContentActivity">
+        </activity>
+        <activity android:name=".testActivity.NewsTitleActivity">
+        </activity>
+        <activity android:name=".testActivity.FragmentActivity">
+        </activity>
+        <activity android:name=".testActivity.ChatActivity">
+        </activity>
+        <activity android:name=".testActivity.StaggeredViewActivity">
+        </activity>
+        <activity android:name=".testActivity.RecyclerViewActivity">
+        </activity>
+        <activity android:name=".testActivity.ProgressDialogActivity">
+        </activity>
+        <activity android:name=".testActivity.AlertDialogActivity">
+        </activity>
+        <activity android:name=".testActivity.ListViewCustomerActivity">
+        </activity>
+        <activity android:name=".testActivity.ListViewActivity">
+        </activity>
+        <activity android:name=".testActivity.CustomerTitleActivity">
+        </activity>
         <activity
-                android:name=".test.SendActivity"
+                android:name=".testActivity.LoginInvalidActivity"
+                android:theme="@style/Theme.AppCompat.Dialog.Alert">
+        </activity>
+        <activity android:name=".ui.activities.OnboardingActivity">
+        </activity>
+        <activity android:name=".testActivity.MenuActivity">
+        </activity>
+        <activity android:name=".testActivity.AnimationActivity">
+        </activity>
+        <activity android:name=".testActivity.DisplayMessageActivity">
+
+            <!-- 声明逻辑父界面，系统会自动添加返回父界面的箭头 -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".testActivity.SendActivity"/>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity> <!-- android:label指定用作 Activity 的用户可见标签的字符串 -->
+        <activity
+                android:name=".testActivity.SendActivity"
                 android:label="@string/button_send">
         </activity>
         <activity android:name=".ui.activities.LauncherActivity">
@@ -59,14 +248,6 @@
                 android:name=".ui.activities.LoginActivity"
                 android:label="@string/app_name">
         </activity>
-        <!--声明一个 Intent 过滤器来响应“send” Intent（以发送新电子邮件）-->
-        <!--<activity android:name="com.example.project.ComposeEmailActivity">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.SEND" />-->
-        <!--<data android:type="*/*" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
     </application>
 
 </manifest>

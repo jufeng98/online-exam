@@ -2,10 +2,10 @@ package org.javamaster.fragmentlearning.data.impl
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import okhttp3.FormBody
-import okhttp3.Request
+import okhttp3.Response
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.LoginService
@@ -18,16 +18,16 @@ import org.javamaster.fragmentlearning.utils.NetUtils
  * @date 2019/8/18
  */
 class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : LoginService {
+
     override fun login(username: String, password: String): Result<User> {
-        var client = NetUtils.getClient()
-        var formBody = FormBody.Builder()
-            .add("username", username)
-            .add("password", password)
-            .add("coreRememberMe", "true")
-            .build()
-        var request = Request.Builder().url(AppConsts.LOGIN_URL).post(formBody).build()
-        var call = client.newCall(request)
-        var response = call.execute()
+        var map = mapOf("username" to username, "password" to password, "coreRememberMe" to "true")
+        var response: Response
+        try {
+            response = NetUtils.postForResponse(AppConsts.LOGIN_URL, map)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, map.toString(), e)
+            return Result(-1, AppConsts.ERROR_MSG)
+        }
         var resJsonStr: String = response.body!!.string()
         var result: Result<User> = objectMapper.readValue(resJsonStr, object : TypeReference<Result<User>>() {})
         if (result.success) {
@@ -41,7 +41,7 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         return result
     }
 
-    fun SharedPreferences.putStringAndCommit(key: String, value: String) {
+    private fun SharedPreferences.putStringAndCommit(key: String, value: String) {
         var editor = this.edit()
         editor.putString(key, value)
         editor.commit()
