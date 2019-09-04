@@ -250,6 +250,7 @@
             {validator: stringUtils.checkMobile, message: '手机号码格式不正确', trigger: 'blur'}
           ],
           email: [
+            {required: true, message: '请填写Email', trigger: 'blur'},
             {validator: stringUtils.checkEmail, message: 'Email格式不正确', trigger: 'blur'}
           ],
           picUrl: [

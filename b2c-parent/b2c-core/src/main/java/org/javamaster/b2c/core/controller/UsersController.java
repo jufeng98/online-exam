@@ -46,9 +46,8 @@ public class UsersController {
      * @param reqVo
      * @return
      */
-    @Secured(AppConsts.ROLE_ADMIN)
-    @PostMapping("/createUsers")
     @AopLock
+    @PostMapping("/createUsers")
     public Result<Users> createUsers(@Validated @RequestBody CreateUsersReqVo reqVo, @AuthenticationPrincipal UserDetails userDetails) {
         return new Result<>(usersService.createUsers(reqVo, userDetails));
     }

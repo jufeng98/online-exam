@@ -2,6 +2,7 @@ package org.javamaster.b2c.core.model.vo;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -17,6 +18,8 @@ public class CreateOrEditUsersForm {
     private String gender;
     private String nickname;
     private String mobile;
+    @NotBlank
+    @Email(regexp = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$")
     private String email;
     private String remark;
     private String picUrl;

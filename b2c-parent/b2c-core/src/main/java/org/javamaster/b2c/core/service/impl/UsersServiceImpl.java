@@ -93,11 +93,21 @@ public class UsersServiceImpl implements UsersService {
         if (findUsersByUsername(reqVo.getCreateOrEditUsersForm().getUsername()) != null) {
             throw new BizException(BizExceptionEnum.USER_EXISTS);
         }
+        UsersExample usersExample = new UsersExample();
+        usersExample.createCriteria().andEmailEqualTo(reqVo.getCreateOrEditUsersForm().getEmail());
+        if (!usersMapper.selectByExample(usersExample).isEmpty()) {
+            throw new BizException(BizExceptionEnum.EMAIL_EXISTS);
+        }
         Users user = new Users();
         BeanUtils.copyProperties(reqVo.getCreateOrEditUsersForm(), user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setCreateUsername(userDetails.getUsername());
-        user.setLastOpUsername(userDetails.getUsername());
+        if (userDetails != null) {
+            user.setCreateUsername(userDetails.getUsername());
+            user.setLastOpUsername(userDetails.getUsername());
+        } else {
+            user.setCreateUsername("");
+            user.setLastOpUsername("");
+        }
         usersMapper.insertSelective(user);
         Authorities authorities = new Authorities();
         authorities.setUsername(reqVo.getCreateOrEditUsersForm().getUsername());
