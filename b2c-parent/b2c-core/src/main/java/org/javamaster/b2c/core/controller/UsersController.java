@@ -1,9 +1,10 @@
 package org.javamaster.b2c.core.controller;
 
 import com.github.pagehelper.PageInfo;
-import org.javamaster.b2c.core.annos.AopLock;
 import org.javamaster.b2c.core.consts.AppConsts;
 import org.javamaster.b2c.core.entity.Users;
+import org.javamaster.b2c.core.enums.BizExceptionEnum;
+import org.javamaster.b2c.core.exception.BizException;
 import org.javamaster.b2c.core.model.Result;
 import org.javamaster.b2c.core.model.vo.ChangeUsersEnabledReqVo;
 import org.javamaster.b2c.core.model.vo.CreateUsersReqVo;
@@ -12,6 +13,8 @@ import org.javamaster.b2c.core.model.vo.EditUsersResVo;
 import org.javamaster.b2c.core.model.vo.FindUsersReqVo;
 import org.javamaster.b2c.core.model.vo.UpdateUsersPasswordReqVo;
 import org.javamaster.b2c.core.service.UsersService;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 管理用户信息
@@ -39,6 +43,8 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private RedissonClient redisson;
 
     /**
      * 创建用户
@@ -46,10 +52,19 @@ public class UsersController {
      * @param reqVo
      * @return
      */
-    @AopLock
     @PostMapping("/createUsers")
-    public Result<Users> createUsers(@Validated @RequestBody CreateUsersReqVo reqVo, @AuthenticationPrincipal UserDetails userDetails) {
-        return new Result<>(usersService.createUsers(reqVo, userDetails));
+    public Result<Users> createUsers(@Validated @RequestBody CreateUsersReqVo reqVo,
+                                     @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        RLock lock = redisson.getLock(reqVo.getCreateOrEditUsersForm().getUsername());
+        try {
+            boolean locked = lock.tryLock(3, TimeUnit.SECONDS);
+            if (!locked) {
+                throw new BizException(BizExceptionEnum.OPERATION_TOO_FREQUENT);
+            }
+            return new Result<>(usersService.createUsers(reqVo, userDetails));
+        } finally {
+            lock.unlock();
+        }
     }
 
     /**

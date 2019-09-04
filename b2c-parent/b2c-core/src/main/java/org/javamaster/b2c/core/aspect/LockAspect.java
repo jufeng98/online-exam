@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core.aspect;
 
+import static java.util.stream.Collectors.toList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,10 +10,12 @@ import org.javamaster.b2c.core.exception.BizException;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 
@@ -34,15 +37,22 @@ public class LockAspect {
     @Around("lockPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Object resObject;
-        Object[] args = joinPoint.getArgs();
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        RLock lock = redisson.getLock(userDetails.getUsername());
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String cookieValue = Arrays.stream(requestAttributes.getRequest().getCookies()).filter(cookie -> {
+            String sessionKey = "SESSION";
+            if (sessionKey.equals(cookie.getName())) {
+                return true;
+            } else {
+                return false;
+            }
+        }).map(Cookie::getValue).collect(toList()).get(0);
+        RLock lock = redisson.getLock(cookieValue);
         try {
             boolean locked = lock.tryLock(3, TimeUnit.SECONDS);
             if (!locked) {
                 throw new BizException(BizExceptionEnum.OPERATION_TOO_FREQUENT);
             }
-            resObject = joinPoint.proceed(args);
+            resObject = joinPoint.proceed(joinPoint.getArgs());
         } finally {
             lock.unlock();
         }
