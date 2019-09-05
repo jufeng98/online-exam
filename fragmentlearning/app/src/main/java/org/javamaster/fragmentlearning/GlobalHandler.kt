@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
+import android.os.Process
 import android.util.Log
 import com.google.android.gms.common.util.Base64Utils
 import org.javamaster.fragmentlearning.consts.AppConsts
@@ -49,7 +50,7 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
             if (exceptionHandler != null) {
                 exceptionHandler.uncaughtException(t, e)
             } else {
-                android.os.Process.killProcess(android.os.Process.myPid())
+                Process.killProcess(Process.myPid())
                 System.exit(-1)
             }
         }
@@ -75,7 +76,7 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
             Log.w(GlobalHandler.javaClass.name, "sdcard unmounted,skip dump exception to sdcard")
             return
         }
-        var path = context.getExternalFilesDir("").path.replace(".", "/") + "/fragmentlearning/crashlog/"
+        var path = context.getExternalFilesDir("").path + "/crashlog/"
         var dir = File(path)
         if (!dir.exists()) {
             dir.mkdirs()

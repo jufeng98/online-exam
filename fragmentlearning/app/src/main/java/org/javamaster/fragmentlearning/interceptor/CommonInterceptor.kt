@@ -7,7 +7,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.ActionConsts
-import org.javamaster.fragmentlearning.consts.AppConsts
+import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.exception.BizException
 import java.io.IOException
 import java.nio.charset.Charset
@@ -23,7 +23,7 @@ class CommonInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
-        val value = preferences.getString(AppConsts.REMEMBER_ME_COOKIE_KEY, "")
+        val value = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         val request = chain.request()
             .newBuilder()
             .addHeader("cookie", value)

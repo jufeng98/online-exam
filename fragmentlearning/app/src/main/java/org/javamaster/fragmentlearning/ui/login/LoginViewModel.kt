@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.LoginFormState
 import org.javamaster.fragmentlearning.data.LoginService
-import org.javamaster.fragmentlearning.data.model.Result
+import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -17,37 +17,39 @@ import javax.inject.Inject
  */
 class LoginViewModel @Inject constructor(private val LoginService: LoginService) : ViewModel() {
 
-    private val usernamePattern = Pattern.compile("^[0-9a-zA-Z]+\$")
-    private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
+    private val _loginFormState = MutableLiveData<LoginFormState>()
+    val loginFormState: LiveData<LoginFormState> = _loginFormState
 
-    private val _loginResult = MutableLiveData<Result<User>>()
-    val loginResult: LiveData<Result<User>> = _loginResult
+    private val _loginResult = MutableLiveData<ResultVo<User>>()
+    val loginResultVo: LiveData<ResultVo<User>> = _loginResult
 
     fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        var result: Result<User>
+        var resultVo: ResultVo<User>
         Thread {
-            result = LoginService.login(username, password)
-            _loginResult.postValue(result)
+            resultVo = LoginService.login(username, password)
+            _loginResult.postValue(resultVo)
         }.start()
     }
 
     fun loginDataChanged(username: String, password: String) {
         if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
+            _loginFormState.value = LoginFormState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
+            _loginFormState.value = LoginFormState(passwordError = R.string.invalid_password)
         } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+            _loginFormState.value = LoginFormState(isDataValid = true)
         }
     }
 
-    private fun isUserNameValid(username: String): Boolean {
-        return usernamePattern.matcher(username).matches()
+    companion object {
+        private val usernamePattern = Pattern.compile("^[0-9a-zA-Z]+\$")
+        fun isUserNameValid(username: String): Boolean {
+            return usernamePattern.matcher(username).matches()
+        }
+
+        fun isPasswordValid(password: String): Boolean {
+            return password.length in 5..20
+        }
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length in 5..20
-    }
 }

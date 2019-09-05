@@ -1,18 +1,15 @@
 package org.javamaster.fragmentlearning.data.model
 
 /**
- * Data class that captures user information for logged in users retrieved from LoginRepository
  * @author yudong
  * @date 2019/8/18
  */
 data class User(
-    var username: String,
-    var picUrl: String,
-    var accountNonExpired: Boolean,
-    var accountNonLocked: Boolean,
-    var credentialsNonExpired: Boolean,
-    var enabled: Boolean,
-    var authorities: Set<SimpleGrantedAuthority>
-) {
-    constructor() : this("", "", false, false, false, true, mutableSetOf())
-}
+    var username: String = "",
+    var picUrl: String = "",
+    var accountNonExpired: Boolean = false,
+    var accountNonLocked: Boolean = false,
+    var credentialsNonExpired: Boolean = false,
+    var enabled: Boolean = true,
+    var authorities: Set<SimpleGrantedAuthority> = mutableSetOf()
+)

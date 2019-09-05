@@ -50,7 +50,27 @@
     <string name="chat_send">发送</string>
     <string name="chat_input_hint">输入聊天内容</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_broadcast_msg">自定义的广播消息</string>
+    <string name="dialog_title_warm_tip">温馨提示</string>
+    <string name="login_invalided">登录失效,请重新登录</string>
+    <string name="dialog_confirm">确定</string>
+    <string name="sign_up_email_hint">邮箱</string>
+    <string name="sign_up_name_hint">名称</string>
+    <string name="sign_up_password_hint">密码</string>
+    <string name="sign_up">注册</string>
+    <string name="sign_up_tip">注册之前您同意我们的</string>
+    <string name="sign_up_term_tip">使用条款</string>
+    <string name="sign_up_wechat">微信授权登录</string>
+    <string name="sign_up_qq">QQ授权登录</string>
+    <string name="sign_up_email_error">邮箱格式不正确</string>
+    <string name="hint_twice_quit">再按一次退出程序</string>
+    <string name="network_error">网络繁忙,请稍后再试</string>
+    <string name="app_completing">功能完善中,敬请期待......</string>
+    <string name="remember_pwd">记住密码</string>
+    <string name="forget_pwd">忘记密码?</string>
+    <string name="reset_pwd">重置密码</string>
+    <string name="input_email">请输入邮箱</string>
+    <string name="cancel">取消</string>
+    <string name="send_email">发送邮件</string>
 </resources>

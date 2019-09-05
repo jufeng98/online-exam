@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
  * @date 2019/8/18
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-class Result<T> constructor(
+class ResultVo<T> constructor(
     val success: Boolean,
     val errorCode: Int?,
     val errorMsg: String?,

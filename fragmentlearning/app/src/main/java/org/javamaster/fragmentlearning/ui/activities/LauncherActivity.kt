@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.consts.AppConsts
+import org.javamaster.fragmentlearning.data.LoginService.Companion.REGISTER_FLAG
+import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 
 /**
+ * 启动页
  * @author yudong
  * @date 2019/8/18
  */
@@ -18,13 +20,13 @@ class LauncherActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
-        var registerFlag = preferences.getString(AppConsts.REGISTER_FLAG, "")
-        if (registerFlag == "") {
+        var registerFlag = preferences.getBoolean(REGISTER_FLAG, false)
+        if (!registerFlag) {
             OnboardingActivity.actionStart(this)
             finish()
             return
         }
-        var rememberMeCookie = preferences.getString(AppConsts.REMEMBER_ME_COOKIE_KEY, "")
+        var rememberMeCookie = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         if (rememberMeCookie == "") {
             LoginActivity.actionStart(this)
             finish()

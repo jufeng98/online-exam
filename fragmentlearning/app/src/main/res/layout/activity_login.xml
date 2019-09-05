@@ -10,6 +10,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/colorAppPrimary"
         tools:context=".ui.activities.LoginActivity">
 
     <EditText
@@ -61,6 +62,30 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.2"/>
 
+    <CheckBox
+            android:text="@string/remember_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.058"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/password"/>
+
+    <include
+            layout="@layout/qq_wechat_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+
     <ProgressBar
             android:id="@+id/loading"
             android:visibility="gone"
@@ -77,16 +102,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"/>
 
-    <CheckBox
-            android:text="记住密码"
+    <TextView
+            android:text="@string/forget_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
+            android:id="@+id/forget_pwd"
+            app:layout_constraintTop_toBottomOf="@+id/login"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.058"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/password"/>
+            android:layout_marginTop="20dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

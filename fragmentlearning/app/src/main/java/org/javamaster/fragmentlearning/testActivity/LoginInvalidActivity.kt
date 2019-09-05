@@ -1,14 +1,10 @@
 package org.javamaster.fragmentlearning.testActivity
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 
-class LoginInvalidActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_invalid)
+class LoginInvalidActivity : BaseAppActivity() {
+    override fun initContentView(): Int? {
+        return R.layout.activity_login_invalid
     }
-
 }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -18,7 +17,6 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
-import org.javamaster.fragmentlearning.testActivity.OfflineActivity
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import javax.inject.Inject
 
@@ -39,23 +37,18 @@ class LoginActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-
         var pre = getPreferences(Context.MODE_PRIVATE)
-        username.setText(pre.getString("username", ""))
-        password.setText(pre.getString("password", ""))
+        username.setText(pre.getString(USERNAME, ""))
+        password.setText(pre.getString(PASSWORD, ""))
         if (username.text.toString() != "" && password.text.toString() != "") {
             login.isEnabled = true
         }
-        checkBox.isChecked = pre.getBoolean("rememberPwd", false)
+        checkBox.isChecked = pre.getBoolean(REMEMBER_PWD, false)
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+        loginViewModel.loginFormState.observe(this, Observer {
             val state = it ?: return@Observer
-
             // disable login button unless both username / password is valid
             login.isEnabled = state.isDataValid
-
             if (state.usernameError != null) {
                 username.error = getString(state.usernameError)
             }
@@ -64,7 +57,7 @@ class LoginActivity : BaseAppActivity() {
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
+        loginViewModel.loginResultVo.observe(this, Observer {
             val result = it ?: return@Observer
 
             loading.visibility = View.GONE
@@ -74,8 +67,7 @@ class LoginActivity : BaseAppActivity() {
             }
             updateUiWithUser(result.data!!)
             setResult(Activity.RESULT_OK)
-//            TODO
-            OfflineActivity.actionStart(this)
+            MainActivity.actionStart(this)
             finish()
         })
 
@@ -113,6 +105,16 @@ class LoginActivity : BaseAppActivity() {
         loginViewModel.login(username.text.toString(), password.text.toString())
     }
 
+    @OnClick(R.id.forget_pwd)
+    fun forgetPwd() {
+        ForgetPwdActivity.actionStart(this)
+    }
+
+    @OnClick(R.id.sign_up_wechat, R.id.sign_up_qq)
+    fun loginFromTecent() {
+        Toast.makeText(this, R.string.app_completing, Toast.LENGTH_SHORT).show()
+    }
+
     private fun updateUiWithUser(model: User) {
         val welcome = getString(R.string.welcome)
         val username = model.username
@@ -130,27 +132,28 @@ class LoginActivity : BaseAppActivity() {
     override fun onDestroy() {
         super.onDestroy()
         var edit = getPreferences(Context.MODE_PRIVATE).edit()
-        edit.putString("username", username.text.toString())
-        edit.putBoolean("rememberPwd", checkBox.isChecked)
+        edit.putString(USERNAME, username.text.toString())
+        edit.putBoolean(REMEMBER_PWD, checkBox.isChecked)
         if (checkBox.isChecked) {
-            edit.putString("password", password.text.toString())
+            edit.putString(PASSWORD, password.text.toString())
         } else {
-            edit.putString("password", "")
+            edit.putString(PASSWORD, "")
         }
         edit.apply()
     }
 
     companion object {
-        fun actionStart(context: Activity) {
+        fun actionStart(context: Context) {
             var intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
         }
+
+        const val USERNAME = "username"
+        const val PASSWORD = "password"
+        const val REMEMBER_PWD = "rememberPwd"
     }
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {

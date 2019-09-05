@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAppPrimary">
+
+    <Button
+            android:text="@string/sign_up_wechat"
+            android:drawableLeft="@drawable/sign_up_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_wechat"
+            android:textColor="#666666"/>
+
+    <Button
+            android:text="@string/sign_up_qq"
+            android:drawableLeft="@drawable/sign_up_qq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#666666"
+            android:id="@+id/sign_up_qq"/>
+
+</LinearLayout>
