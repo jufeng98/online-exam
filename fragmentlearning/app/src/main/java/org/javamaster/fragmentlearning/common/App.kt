@@ -3,6 +3,7 @@ package org.javamaster.fragmentlearning.common
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -39,6 +40,13 @@ class App : Application() {
         lateinit var globalComponent: GlobalComponent
         val activities: MutableSet<Activity> = mutableSetOf()
 
+        fun getLoginSharedPreferences(): SharedPreferences {
+            return context.getSharedPreferences(
+                context.packageName + "_login_user_info",
+                Context.MODE_PRIVATE
+            )
+        }
+
         fun addActivity(activity: Activity) {
             activities.add(activity)
         }
@@ -48,12 +56,28 @@ class App : Application() {
         }
 
         fun finishAll() {
-            for (activity in activities) {
-                if (!activity.isFinishing) {
-                    activity.finish()
+            activities.forEach {
+                if (!it.isFinishing) {
+                    it.finish()
                 }
             }
             activities.clear()
+        }
+
+        fun finishExcept(exceptActivityClasses: MutableSet<Class<out Activity>>) {
+            activities.filter {
+                for (exceptActivityClass in exceptActivityClasses) {
+                    if (it.javaClass.name == exceptActivityClass.name) {
+                        false
+                    }
+                }
+                true
+            }.forEach {
+                if (!it.isFinishing) {
+                    it.finish()
+                }
+                activities.remove(it)
+            }
         }
     }
 

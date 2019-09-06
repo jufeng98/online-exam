@@ -124,3 +124,9 @@ Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
 }
 
 ###
+POST {{url}}/onlineExam/core/logout
+Content-Type:application/json
+Accept: application/json
+Cookie: SESSION={{SESSION}};CORE_REMEMBER_ME={{CORE_REMEMBER_ME}}
+
+###

@@ -49,6 +49,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".testActivity.FruitActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
                 android:name=".ui.activities.ForgetPwdActivity"
                 android:theme="@style/App.Send.Email">
         </activity>
@@ -149,7 +153,9 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.activities.OnboardingActivity"/>
         </activity>
-        <activity android:name=".ui.activities.MainActivity">
+        <activity
+                android:name=".ui.activities.MainActivity"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <receiver
@@ -219,7 +225,9 @@
         </activity>
         <activity android:name=".ui.activities.OnboardingActivity">
         </activity>
-        <activity android:name=".testActivity.MenuActivity">
+        <activity
+                android:name=".testActivity.MenuActivity"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".testActivity.AnimationActivity">
         </activity>

@@ -1,10 +1,11 @@
 package org.javamaster.fragmentlearning.data.impl
 
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.util.Log
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Response
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
@@ -15,7 +16,10 @@ import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_C
 import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
+import org.javamaster.fragmentlearning.listener.OperationListener
+import org.javamaster.fragmentlearning.utils.ImageUtils
 import org.javamaster.fragmentlearning.utils.NetUtils
+import java.io.IOException
 
 /**
  * @author yudong
@@ -37,15 +41,52 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         if (!resultVo.success) {
             return resultVo
         }
-        var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
+
+        var preferences = App.getLoginSharedPreferences()
         var cookieStr: String = response.headers("Set-Cookie").joinToString(";")
+        preferences.putBooleanAndCommit(REGISTER_FLAG, true)
         preferences.putStringAndCommit(
             REMEMBER_ME_COOKIE_KEY,
             cookieStr
         )
         var userInfoJsonStr = App.objectMapper.writeValueAsString(resultVo.data)
         preferences.putStringAndCommit(LOGIN_USER_INFO, userInfoJsonStr)
+        var picUrl = resultVo.data!!.picUrl
+        if (picUrl != "") {
+            var suffix = picUrl.substring(picUrl.lastIndexOf("."))
+            NetUtils.postForStream(picUrl, object : OperationListener<ByteArray> {
+                override fun success(t: ByteArray) {
+                    ImageUtils.saveUserPhoto(suffix, t)
+                }
+
+                override fun fail(e: Exception) {
+                    Log.e(this::class.qualifiedName, "get img error", e)
+                }
+            })
+        }
+
         return resultVo
+    }
+
+    override fun logout() {
+        NetUtils.postForResponse(AppConsts.LOGOUT_URL, mapOf(), object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.i(this::class.qualifiedName, "error", e)
+                clearLoginInfo()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.i(this::class.qualifiedName, response.body?.string())
+                clearLoginInfo()
+            }
+        })
+    }
+
+    private fun clearLoginInfo() {
+        var preferences = App.getLoginSharedPreferences()
+        var edit = preferences.edit()
+        edit.clear()
+        edit.commit()
     }
 
     override fun signUp(createUsersReqVo: CreateUsersReqVo): ResultVo<User> {
@@ -61,10 +102,8 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         if (!resultVo.success) {
             return resultVo
         }
-        var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
-        var edit = preferences.edit()
-        edit.putBoolean(REGISTER_FLAG, true)
-        edit.commit()
+        var preferences = App.getLoginSharedPreferences()
+        preferences.putBooleanAndCommit(REGISTER_FLAG, true)
         return login(
             createUsersReqVo.createOrEditUsersForm!!.username!!,
             createUsersReqVo.createOrEditUsersForm!!.password!!
@@ -74,6 +113,12 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
     private fun SharedPreferences.putStringAndCommit(key: String, value: String) {
         var editor = this.edit()
         editor.putString(key, value)
+        editor.commit()
+    }
+
+    private fun SharedPreferences.putBooleanAndCommit(key: String, value: Boolean) {
+        var editor = this.edit()
+        editor.putBoolean(key, value)
         editor.commit()
     }
 }

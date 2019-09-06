@@ -1,7 +1,6 @@
 package org.javamaster.fragmentlearning.interceptor
 
 import android.content.Intent
-import android.preference.PreferenceManager
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -22,7 +21,7 @@ class CommonInterceptor : Interceptor {
     private val objectMapper = ObjectMapper()
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
+        var preferences = App.getLoginSharedPreferences()
         val value = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         val request = chain.request()
             .newBuilder()
@@ -41,6 +40,11 @@ class CommonInterceptor : Interceptor {
         source.request(Long.MAX_VALUE) // Buffer the entire body.
         var buffer = source.buffer
         val contentType = responseBody.contentType()
+        if (contentType != null) {
+            if (!contentType.subtype.contains("json")) {
+                return response
+            }
+        }
         val charset: Charset = contentType?.charset(StandardCharsets.UTF_8) ?: StandardCharsets.UTF_8
         val resJsonStr = buffer.clone().readString(charset)
         val jsonNode = objectMapper.readTree(resJsonStr)

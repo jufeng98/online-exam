@@ -68,7 +68,7 @@ class LoginActivity : BaseAppActivity() {
             updateUiWithUser(result.data!!)
             setResult(Activity.RESULT_OK)
             MainActivity.actionStart(this)
-            finish()
+            App.finishExcept(mutableSetOf(MainActivity::class.java))
         })
 
         username.afterTextChanged {

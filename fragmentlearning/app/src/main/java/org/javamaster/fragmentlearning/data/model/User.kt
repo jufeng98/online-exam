@@ -7,6 +7,7 @@ package org.javamaster.fragmentlearning.data.model
 data class User(
     var username: String = "",
     var picUrl: String = "",
+    var email: String = "",
     var accountNonExpired: Boolean = false,
     var accountNonLocked: Boolean = false,
     var credentialsNonExpired: Boolean = false,

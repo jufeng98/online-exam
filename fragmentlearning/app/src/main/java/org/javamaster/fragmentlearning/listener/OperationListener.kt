@@ -6,4 +6,7 @@ package org.javamaster.fragmentlearning.listener
  */
 interface OperationListener<T> {
     fun success(t: T)
+    fun fail(e: Exception) {
+        throw e
+    }
 }

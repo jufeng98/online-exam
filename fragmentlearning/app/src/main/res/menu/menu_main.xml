@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="org.javamaster.fragmentlearning.ui.activities.MainActivity">
+
+    <item
+            android:id="@+id/user_profile"
+            android:title="@string/user_profile"
+            android:icon="@drawable/tab_profile"
+            app:showAsAction="ifRoom"/>
+
+    <item
+            android:id="@+id/notifications"
+            android:title="@string/notifications"
+            android:icon="@drawable/tab_notifications"
+            app:showAsAction="ifRoom"/>
+
+    <group android:id="@+id/group">
+        <item
+                android:id="@+id/invite_friends"
+                android:title="邀请朋友"/>
+        <item
+                android:id="@+id/rate"
+                android:title="捐赠"/>
+        <item
+                android:id="@+id/feedback"
+                android:title="反馈"/>
+        <item
+                android:id="@+id/settings"
+                android:title="设置"/>
+        <item
+                android:id="@+id/about"
+                android:title="关于碎片学习"/>
+    </group>
+</menu>

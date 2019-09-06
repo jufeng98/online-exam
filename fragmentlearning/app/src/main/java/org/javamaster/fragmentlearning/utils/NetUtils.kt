@@ -1,14 +1,14 @@
 package org.javamaster.fragmentlearning.utils
 
-import okhttp3.FormBody
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.javamaster.fragmentlearning.common.App
+import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.interceptor.CommonInterceptor
+import org.javamaster.fragmentlearning.listener.OperationListener
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit
  * @date 2019/8/18
  */
 object NetUtils {
-    val JSON = "application/json; charset=utf-8".toMediaType()
-    fun getClient(): OkHttpClient {
+    private val JSON = "application/json; charset=utf-8".toMediaType()
+    private fun getClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
 //      包含header、body数据
         loggingInterceptor.apply { loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
@@ -47,6 +47,24 @@ object NetUtils {
     }
 
     /**
+     * form表单格式请求
+     */
+    fun postForResponse(
+        reqUrl: String,
+        reqMap: Map<String, String>,
+        callback: Callback
+    ) {
+        var client = getClient()
+        var builder = FormBody.Builder()
+        for (entry in reqMap) {
+            builder.add(entry.key, entry.value)
+        }
+        var formBody = builder.build()
+        var request = Request.Builder().url(reqUrl).post(formBody).build()
+        client.newCall(request).enqueue(callback)
+    }
+
+    /**
      * json格式请求
      */
     fun postForResponse(reqUrl: String, reqObj: Any): Response {
@@ -55,5 +73,25 @@ object NetUtils {
         var request = Request.Builder().url(reqUrl).post(body).build()
         var call = client.newCall(request)
         return call.execute()
+    }
+
+    /**
+     * 文件流请求
+     */
+    fun postForStream(reqUrl: String, operationListener: OperationListener<ByteArray>) {
+        var url = reqUrl.substring(reqUrl.indexOf(AppConsts.APP_CONTEXT) + AppConsts.APP_CONTEXT.length)
+        url = AppConsts.BASE_URL + AppConsts.APP_CONTEXT + url
+        var client = getClient()
+        var request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                operationListener.fail(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                operationListener.success(response.body!!.bytes())
+            }
+        })
+
     }
 }

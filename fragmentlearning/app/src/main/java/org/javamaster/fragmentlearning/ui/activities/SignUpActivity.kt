@@ -47,7 +47,7 @@ class SignUpActivity : BaseAppActivity() {
                 return@Observer
             }
             MainActivity.actionStart(this)
-            finish()
+            App.finishExcept(mutableSetOf(MainActivity::class.java))
         })
     }
 

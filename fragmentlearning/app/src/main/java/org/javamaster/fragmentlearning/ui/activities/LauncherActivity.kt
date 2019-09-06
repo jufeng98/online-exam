@@ -1,7 +1,6 @@
 package org.javamaster.fragmentlearning.ui.activities
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.LoginService.Companion.REGISTER_FLAG
@@ -19,7 +18,7 @@ class LauncherActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var preferences = PreferenceManager.getDefaultSharedPreferences(App.context)
+        var preferences = App.getLoginSharedPreferences()
         var registerFlag = preferences.getBoolean(REGISTER_FLAG, false)
         if (!registerFlag) {
             OnboardingActivity.actionStart(this)

@@ -14,6 +14,7 @@ object AppConsts {
     const val BASE_URL = BuildConfig.BASE_URL
     const val APP_CONTEXT = "/onlineExam"
     const val LOGIN_URL = "$BASE_URL$APP_CONTEXT/core/login"
+    const val LOGOUT_URL = "$BASE_URL$APP_CONTEXT/core/logout"
     const val SIGN_UP_URL = "$BASE_URL$APP_CONTEXT/admin/users/createUsers"
     const val UPLOAD_EXCEPTIONS = "$BASE_URL$APP_CONTEXT/core/log/uploadExceptions"
 }

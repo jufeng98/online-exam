@@ -6,18 +6,6 @@
             android:title="设置"
             android:icon="@mipmap/ic_launcher"
             app:showAsAction="ifRoom|withText"/>
-    <group android:id="@+id/group">
-        <item
-                android:id="@+id/group_item1"
-                android:onClick="onGroupItemClick"
-                android:title="菜单一"
-                android:icon="@mipmap/ic_launcher_round"/>
-        <item
-                android:id="@+id/group_item2"
-                android:onClick="onGroupItemClick"
-                android:title="菜单二"
-                android:icon="@color/design_default_color_primary_dark"/>
-    </group>
     <item
             android:id="@+id/submenu"
             android:title="子菜单"
@@ -26,6 +14,19 @@
             <item
                     android:id="@+id/submenu_item1"
                     android:title="子菜单一"/>
+            <item
+                    android:id="@+id/submenu_item2"
+                    android:title="子菜单二"/>
         </menu>
     </item>
+    <group android:id="@+id/group">
+        <item
+                android:id="@+id/group_item1"
+                android:title="菜单一"
+                android:icon="@mipmap/ic_launcher_round"/>
+        <item
+                android:id="@+id/group_item2"
+                android:title="菜单二"
+                android:icon="@color/design_default_color_primary_dark"/>
+    </group>
 </menu>

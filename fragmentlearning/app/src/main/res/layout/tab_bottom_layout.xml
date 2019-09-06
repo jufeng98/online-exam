@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:background="@color/colorAppPrimary">
+
+    <Button
+            android:id="@+id/tab0"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:drawableTop="@drawable/tab_learn_mini_choose"
+            android:text="@string/onboarding_learn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/tab1"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:drawableTop="@drawable/tab_play_mini"
+            android:text="@string/onboarding_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/tab2"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:drawableTop="@drawable/tab_home_mini"
+            android:text="@string/onboarding_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/tab3"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:drawableTop="@drawable/tab_practice_mini"
+            android:text="@string/onboarding_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/tab4"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:drawableTop="@drawable/tab_discuss_mini"
+            android:text="@string/onboarding_discuss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

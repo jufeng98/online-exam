@@ -11,6 +11,7 @@
     <string name="login_failed">"用户名或密码错误"</string>
     <string name="edit_message">请输入消息</string>
     <string name="button_send">发送</string>
+    <string name="onboarding_home">主页</string>
     <string name="onboarding_learn">学习</string>
     <string name="onboarding_learn_msg">编程基础就在你的指尖之间</string>
     <string name="onboarding_play">竞赛</string>
@@ -73,4 +74,6 @@
     <string name="input_email">请输入邮箱</string>
     <string name="cancel">取消</string>
     <string name="send_email">发送邮件</string>
+    <string name="user_profile">用户档案</string>
+    <string name="notifications">通知</string>
 </resources>

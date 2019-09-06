@@ -46,8 +46,7 @@ public class LoginHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         Map<String, Object> map = new HashMap<>(10);
         map.put("success", true);
-        map.put("data", authentication.getPrincipal());
-        map.put("picUrl", usersService.findUsersByUsername(request.getParameter("username")).getPicUrl());
+        map.put("data", usersService.findUsersByUsername(request.getParameter("username")));
         response.getWriter().print(objectMapper.writeValueAsString(map));
     }
 

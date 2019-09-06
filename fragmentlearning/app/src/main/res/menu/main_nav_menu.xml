@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_edit_profile"
+                android:icon="@drawable/nav_task"
+                android:title="编辑档案"/>
+        <item
+                android:id="@+id/nav_change_pwd"
+                android:icon="@drawable/nav_task"
+                android:title="修改密码"/>
+        <item
+                android:id="@+id/nav_link_accounts"
+                android:icon="@drawable/nav_task"
+                android:title="关联账户"/>
+        <item
+                android:id="@+id/nav_block_accounts"
+                android:icon="@drawable/nav_task"
+                android:title="停用账户"/>
+        <item
+                android:id="@+id/nav_manage_skill"
+                android:icon="@drawable/nav_task"
+                android:title="技能管理"/>
+        <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/nav_task"
+                android:title="退出登录"/>
+    </group>
+</menu>
