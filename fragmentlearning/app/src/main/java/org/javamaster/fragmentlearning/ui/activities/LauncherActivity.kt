@@ -3,7 +3,6 @@ package org.javamaster.fragmentlearning.ui.activities
 import android.os.Bundle
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.data.LoginService.Companion.REGISTER_FLAG
 import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 
 /**
@@ -19,15 +18,9 @@ class LauncherActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var preferences = App.getLoginSharedPreferences()
-        var registerFlag = preferences.getBoolean(REGISTER_FLAG, false)
-        if (!registerFlag) {
-            OnboardingActivity.actionStart(this)
-            finish()
-            return
-        }
         var rememberMeCookie = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         if (rememberMeCookie == "") {
-            LoginActivity.actionStart(this)
+            OnboardingActivity.actionStart(this)
             finish()
             return
         }

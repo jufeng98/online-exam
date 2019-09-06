@@ -26,24 +26,32 @@ object ImageUtils {
         editor.putString(USER_PHOTO_KEY, "user_photo$suffix")
         editor.commit()
         var file = File(path, "user_photo$suffix")
-        var outputStream = FileOutputStream(file)
-        StreamUtils.copy(t, outputStream)
-        outputStream.close()
+        FileOutputStream(file).use {
+            StreamUtils.copy(t, it)
+        }
     }
 
     fun getUserPhoto(): Bitmap? {
         var path = App.context.getExternalFilesDir("").path + "/img/"
+        var filePath = File(path)
+        if (!filePath.exists()) {
+            return null
+        }
         var preferences = App.getLoginSharedPreferences()
-        var file = File(path, preferences.getString(USER_PHOTO_KEY, ""))
+        var name = preferences.getString(USER_PHOTO_KEY, "")
+        if (name == "") {
+            return null
+        }
+        var file = File(filePath, preferences.getString(USER_PHOTO_KEY, ""))
         if (!file.exists()) {
             return null
         }
-        var inputStream = FileInputStream(file)
-        var outputStream = ByteArrayOutputStream()
-        StreamUtils.copy(inputStream, outputStream)
-        var bytes = outputStream.toByteArray()
-        inputStream.close()
-        outputStream.close()
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        FileInputStream(file).use { input ->
+            ByteArrayOutputStream().use {
+                StreamUtils.copy(input, it)
+                var bytes = it.toByteArray()
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            }
+        }
     }
 }

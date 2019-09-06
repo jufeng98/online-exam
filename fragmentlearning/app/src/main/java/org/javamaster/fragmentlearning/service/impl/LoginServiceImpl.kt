@@ -11,7 +11,6 @@ import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.LoginService
 import org.javamaster.fragmentlearning.data.LoginService.Companion.LOGIN_USER_INFO
-import org.javamaster.fragmentlearning.data.LoginService.Companion.REGISTER_FLAG
 import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo
@@ -44,7 +43,6 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
 
         var preferences = App.getLoginSharedPreferences()
         var cookieStr: String = response.headers("Set-Cookie").joinToString(";")
-        preferences.putBooleanAndCommit(REGISTER_FLAG, true)
         preferences.putStringAndCommit(
             REMEMBER_ME_COOKIE_KEY,
             cookieStr
@@ -102,8 +100,6 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         if (!resultVo.success) {
             return resultVo
         }
-        var preferences = App.getLoginSharedPreferences()
-        preferences.putBooleanAndCommit(REGISTER_FLAG, true)
         return login(
             createUsersReqVo.createOrEditUsersForm!!.username!!,
             createUsersReqVo.createOrEditUsersForm!!.password!!
