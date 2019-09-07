@@ -8,7 +8,6 @@ import org.javamaster.fragmentlearning.R
  * @date 2019/8/18
  */
 object AppConsts {
-    const val ERROR_CODE = -1
     const val ERROR_MSG = R.string.network_error
 
     const val BASE_URL = BuildConfig.BASE_URL
@@ -16,5 +15,5 @@ object AppConsts {
     const val LOGIN_URL = "$BASE_URL$APP_CONTEXT/core/login"
     const val LOGOUT_URL = "$BASE_URL$APP_CONTEXT/core/logout"
     const val SIGN_UP_URL = "$BASE_URL$APP_CONTEXT/admin/users/createUsers"
-    const val UPLOAD_EXCEPTIONS = "$BASE_URL$APP_CONTEXT/core/log/uploadExceptions"
+    const val UPLOAD_EXCEPTIONS = "$BASE_URL$APP_CONTEXT/public/log/uploadExceptions"
 }

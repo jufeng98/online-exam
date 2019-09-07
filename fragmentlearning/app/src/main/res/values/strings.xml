@@ -76,4 +76,11 @@
     <string name="send_email">发送邮件</string>
     <string name="user_profile">用户档案</string>
     <string name="notifications">通知</string>
+    <string name="service_error">"服务器异常,请联系管理人员"</string>
+    <string name="edit_profile">编辑档案</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="link_accounts">关联账户</string>
+    <string name="block_accounts">取消关联</string>
+    <string name="manage_skill">技能管理</string>
+    <string name="logout">退出登录</string>
 </resources>

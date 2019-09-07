@@ -6,13 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activities.MainActivity"
-        android:background="#546E7A">
+        android:background="@color/colorAppPrimary">
 
     <TextView
             android:text="欢迎来到碎片学习!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView12"
+            android:id="@+id/welcome_msg"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"

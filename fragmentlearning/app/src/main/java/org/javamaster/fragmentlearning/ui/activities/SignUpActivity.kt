@@ -43,6 +43,9 @@ class SignUpActivity : BaseAppActivity() {
         signupViewModel.signupResult.observe(this, Observer {
             sign_up_loading.visibility = View.GONE
             if (!it.success) {
+                if (it.errorMsg == App.context.getString(R.string.login_invalided)) {
+                    return@Observer
+                }
                 Toast.makeText(this, it.errorMsg, Toast.LENGTH_LONG).show()
                 return@Observer
             }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
+import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.LoginService
@@ -33,7 +34,7 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
             response = NetUtils.postForResponse(AppConsts.LOGIN_URL, map)
         } catch (e: Exception) {
             Log.e(this::class.qualifiedName, map.toString(), e)
-            return ResultVo(AppConsts.ERROR_CODE, App.context.getString(AppConsts.ERROR_MSG))
+            return ResultVo(errorMsg = e.message ?: App.context.getString(R.string.network_error))
         }
         var resJsonStr: String = response.body!!.string()
         var resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
@@ -93,7 +94,7 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
             response = NetUtils.postForResponse(AppConsts.SIGN_UP_URL, createUsersReqVo)
         } catch (e: Exception) {
             Log.e(this::class.qualifiedName, createUsersReqVo.toString(), e)
-            return ResultVo(AppConsts.ERROR_CODE, App.context.getString(AppConsts.ERROR_MSG))
+            return ResultVo(errorMsg = e.message ?: App.context.getString(R.string.network_error))
         }
         var resJsonStr: String = response.body!!.string()
         var resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
@@ -112,11 +113,6 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         editor.commit()
     }
 
-    private fun SharedPreferences.putBooleanAndCommit(key: String, value: Boolean) {
-        var editor = this.edit()
-        editor.putBoolean(key, value)
-        editor.commit()
-    }
 }
 
 

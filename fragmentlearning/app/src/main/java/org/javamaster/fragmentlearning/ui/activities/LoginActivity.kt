@@ -58,14 +58,15 @@ class LoginActivity : BaseAppActivity() {
         })
 
         loginViewModel.loginResultVo.observe(this, Observer {
-            val result = it ?: return@Observer
-
             loading.visibility = View.GONE
-            if (!result.success) {
-                showLoginFailed(result.errorMsg!!)
+            if (!it.success) {
+                if (it.errorMsg == App.context.getString(R.string.login_invalided)) {
+                    return@Observer
+                }
+                showLoginFailed(it.errorMsg!!)
                 return@Observer
             }
-            updateUiWithUser(result.data!!)
+            updateUiWithUser(it.data!!)
             setResult(Activity.RESULT_OK)
             MainActivity.actionStart(this)
             App.finishExcept(mutableSetOf(MainActivity::class.java))
@@ -134,6 +135,7 @@ class LoginActivity : BaseAppActivity() {
         var edit = getPreferences(Context.MODE_PRIVATE).edit()
         edit.putString(USERNAME, username.text.toString())
         edit.putBoolean(REMEMBER_PWD, checkBox.isChecked)
+        // 演示使用,为了简单起见,密码直接明文保存
         if (checkBox.isChecked) {
             edit.putString(PASSWORD, password.text.toString())
         } else {

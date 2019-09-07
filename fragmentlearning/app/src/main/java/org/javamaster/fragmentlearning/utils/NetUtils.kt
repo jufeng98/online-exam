@@ -79,8 +79,7 @@ object NetUtils {
      * 文件流请求
      */
     fun postForStream(reqUrl: String, operationListener: OperationListener<ByteArray>) {
-        var url = reqUrl.substring(reqUrl.indexOf(AppConsts.APP_CONTEXT) + AppConsts.APP_CONTEXT.length)
-        url = AppConsts.BASE_URL + AppConsts.APP_CONTEXT + url
+        var url = AppConsts.BASE_URL + AppConsts.APP_CONTEXT + reqUrl
         var client = getClient()
         var request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object : Callback {

@@ -32,8 +32,8 @@ class FruitAdapter(context: Context, private var textViewResourcesId: Int, fruit
             view = convertView
             viewHolder = view.tag as ViewHolder
         }
-        view.fruit_image.setImageResource(fruit.imageId)
-        view.fruit_name.text = fruit.name
+        viewHolder.imageView.setImageResource(fruit.imageId)
+        viewHolder.textView.text = fruit.name
         return view
     }
 }

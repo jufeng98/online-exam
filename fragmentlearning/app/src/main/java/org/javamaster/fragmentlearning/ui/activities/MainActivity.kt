@@ -60,9 +60,7 @@ class MainActivity : BaseAppActivity() {
         main_nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_exit -> {
-                    Thread {
-                        loginService.logout()
-                    }.start()
+                    loginService.logout()
                     OnboardingActivity.actionStart(this@MainActivity)
                     App.finishExcept(mutableSetOf(OnboardingActivity::class.java))
                 }
@@ -157,7 +155,6 @@ class MainActivity : BaseAppActivity() {
     private fun replaceFragment(fragment: Fragment) {
         var tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.main_frame_fragment, fragment)
-        tran.addToBackStack(null)
         tran.commit()
     }
 

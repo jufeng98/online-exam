@@ -1,13 +1,15 @@
 package org.javamaster.fragmentlearning.interceptor
 
 import android.content.Intent
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.Interceptor
 import okhttp3.Response
+import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.ActionConsts
+import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
-import org.javamaster.fragmentlearning.exception.BizException
 import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
@@ -30,9 +32,13 @@ class CommonInterceptor : Interceptor {
         val response = chain.proceed(request)
         when (response.code) {
             301, 302, 304, 401, 403 -> {
+                var localBroadcastManager = LocalBroadcastManager.getInstance(App.context)
                 var intent = Intent(ActionConsts.FORCE_OFFLINE)
-                App.context.sendBroadcast(intent)
-                throw BizException(-1, "登录失效,请重新登录")
+                localBroadcastManager.sendBroadcast(intent)
+                throw IOException(App.context.getString(R.string.login_invalided))
+            }
+            in 500..599 -> {
+                throw IOException(App.context.getString(AppConsts.ERROR_MSG))
             }
         }
         val responseBody = response.body!!
@@ -51,9 +57,10 @@ class CommonInterceptor : Interceptor {
         if (!jsonNode.get("success").asBoolean()) {
             val errorCode = jsonNode.get("errorCode").asInt(-1)
             if (1007 == errorCode) {
+                var localBroadcastManager = LocalBroadcastManager.getInstance(App.context)
                 var intent = Intent(ActionConsts.FORCE_OFFLINE)
-                App.context.sendBroadcast(intent)
-                throw BizException(-1, "登录失效,请重新登录")
+                localBroadcastManager.sendBroadcast(intent)
+                throw IOException(App.context.getString(R.string.login_invalided))
             }
         }
         return response

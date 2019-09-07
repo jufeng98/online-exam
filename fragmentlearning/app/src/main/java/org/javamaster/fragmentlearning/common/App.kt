@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import org.javamaster.fragmentlearning.GlobalHandler
 import org.javamaster.fragmentlearning.ioc.DaggerGlobalComponent
 import org.javamaster.fragmentlearning.ioc.GlobalComponent
+import org.javamaster.fragmentlearning.testBroadcastReceiver.ForceOfflineReceiver
 import org.litepal.LitePal
 
 /**
@@ -38,7 +39,8 @@ class App : Application() {
         lateinit var context: Context
         lateinit var objectMapper: ObjectMapper
         lateinit var globalComponent: GlobalComponent
-        val activities: MutableSet<Activity> = mutableSetOf()
+        val OFFLINE_RECEIVER = ForceOfflineReceiver()
+        private val ACTIVITIES: MutableSet<Activity> = mutableSetOf()
 
         fun getLoginSharedPreferences(): SharedPreferences {
             return context.getSharedPreferences(
@@ -48,24 +50,28 @@ class App : Application() {
         }
 
         fun addActivity(activity: Activity) {
-            activities.add(activity)
+            ACTIVITIES.add(activity)
         }
 
         fun removeActivity(activity: Activity) {
-            activities.remove(activity)
+            ACTIVITIES.remove(activity)
         }
 
         fun finishAll() {
-            activities.forEach {
+            ACTIVITIES.forEach {
                 if (!it.isFinishing) {
                     it.finish()
                 }
             }
-            activities.clear()
+            ACTIVITIES.clear()
+        }
+
+        fun getActivitiesSize(): Int {
+            return ACTIVITIES.size
         }
 
         fun finishExcept(exceptActivityClasses: MutableSet<Class<out Activity>>) {
-            activities.filter {
+            ACTIVITIES.filter {
                 for (exceptActivityClass in exceptActivityClasses) {
                     if (it.javaClass.name == exceptActivityClass.name) {
                         false
@@ -76,7 +82,7 @@ class App : Application() {
                 if (!it.isFinishing) {
                     it.finish()
                 }
-                activities.remove(it)
+                ACTIVITIES.remove(it)
             }
         }
     }

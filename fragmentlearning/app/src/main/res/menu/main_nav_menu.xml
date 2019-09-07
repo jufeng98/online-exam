@@ -4,26 +4,26 @@
         <item
                 android:id="@+id/nav_edit_profile"
                 android:icon="@drawable/nav_task"
-                android:title="编辑档案"/>
+                android:title="@string/edit_profile"/>
         <item
                 android:id="@+id/nav_change_pwd"
                 android:icon="@drawable/nav_task"
-                android:title="修改密码"/>
+                android:title="@string/change_pwd"/>
         <item
                 android:id="@+id/nav_link_accounts"
                 android:icon="@drawable/nav_task"
-                android:title="关联账户"/>
+                android:title="@string/link_accounts"/>
         <item
                 android:id="@+id/nav_block_accounts"
                 android:icon="@drawable/nav_task"
-                android:title="停用账户"/>
+                android:title="@string/block_accounts"/>
         <item
                 android:id="@+id/nav_manage_skill"
                 android:icon="@drawable/nav_task"
-                android:title="技能管理"/>
+                android:title="@string/manage_skill"/>
         <item
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/nav_task"
-                android:title="退出登录"/>
+                android:title="@string/logout"/>
     </group>
 </menu>

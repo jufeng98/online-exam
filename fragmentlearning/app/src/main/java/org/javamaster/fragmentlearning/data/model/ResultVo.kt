@@ -8,15 +8,9 @@ import com.fasterxml.jackson.annotation.JsonInclude
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 class ResultVo<T> constructor(
-    val success: Boolean,
-    val errorCode: Int?,
-    val errorMsg: String?,
-    val data: T?,
-    val total: Long?
-) {
-    constructor() : this(false, null, null, null, null)
-    constructor(
-        errorCode: Int?,
-        errorMsg: String?
-    ) : this(false, errorCode, errorMsg, null, null)
-}
+    val success: Boolean = false,
+    val errorCode: Int? = null,
+    val errorMsg: String? = "",
+    val data: T? = null,
+    val total: Long? = null
+)
