@@ -60,7 +60,7 @@
           }
           baseAxios.post(config.LOGIN_URL, this.usersForm, {contentType: 'form'}).then(resJson => {
             localStorage.setItem(appConsts.LOGIN_USERNAME, resJson.data.username)
-            localStorage.setItem(appConsts.LOGIN_USER_PIC_URL, resJson.picUrl)
+            localStorage.setItem(appConsts.LOGIN_USER_PIC_URL, config.BASE_PATH + config.APP_CONTEXT + resJson.data.picUrl)
             let authorities = resJson.data.authorities.map((item) => {
               return item.authority
             })

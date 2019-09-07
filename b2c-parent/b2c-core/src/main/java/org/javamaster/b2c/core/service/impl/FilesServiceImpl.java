@@ -30,10 +30,10 @@ public class FilesServiceImpl implements FilesService {
         for (MultipartFile multipartFile : multipartFiles) {
             String url = ftpHelper.uploadFile("/online-exam/image", multipartFile.getOriginalFilename(),
                     multipartFile.getBytes());
-            String path = uriComponentsBuilder.path("/core/files/downloadFile")
-                    .queryParam("completePath", URLEncoder.encode(url, "UTF-8"))
-                    .build()
-                    .toUriString();
+            String path = new StringBuilder("/core/files/downloadFile?")
+                    .append("completePath=")
+                    .append(URLEncoder.encode(url, "UTF-8"))
+                    .toString();
             urls.add(path);
         }
         return urls;

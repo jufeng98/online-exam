@@ -1,11 +1,14 @@
 package org.javamaster.b2c.core.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.javamaster.b2c.core.entity.Users;
 import org.javamaster.b2c.core.enums.BizExceptionEnum;
 import org.javamaster.b2c.core.model.Result;
+import org.javamaster.b2c.core.model.UserVo;
 import org.javamaster.b2c.core.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,14 +42,19 @@ public class LoginHandler {
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response
             , Authentication authentication) throws IOException {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         logger.info("username:{} login in,login time:{}", request.getParameter("username")
                 , format.format(LocalDateTime.now()));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        UserVo userVo = new UserVo();
+        Users users = usersService.findUsersByUsername(request.getParameter("username"));
+        BeanUtils.copyProperties(users, userVo);
+        userVo.setAuthorities(userDetails.getAuthorities());
         Map<String, Object> map = new HashMap<>(10);
         map.put("success", true);
-        map.put("data", usersService.findUsersByUsername(request.getParameter("username")));
+        map.put("data", userVo);
         response.getWriter().print(objectMapper.writeValueAsString(map));
     }
 
@@ -63,8 +71,11 @@ public class LoginHandler {
 
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                 Authentication authentication) throws IOException {
-        logger.info("username:{} logout,logout time:{}", ((UserDetails) authentication.getPrincipal()).getUsername()
-                , format.format(LocalDateTime.now()));
+        String username = "";
+        if (authentication.getPrincipal() != null) {
+            username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        }
+        logger.info("username:{} logout,logout time:{}", username, format.format(LocalDateTime.now()));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().print(objectMapper.writeValueAsString(new Result<>("登出成功")));

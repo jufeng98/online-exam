@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019/7/29
  */
 @RestController
-@RequestMapping("/core/log")
+@RequestMapping("/public/log")
 public class ExceptionLogController {
 
     @Autowired
