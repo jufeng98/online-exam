@@ -21,4 +21,11 @@ appConsts.QUESTIONS_TYPE = [
   {name: '判断题', value: 3},
   {name: '排序题', value: 4},
 ]
+appConsts.TOPICS_TYPE = [
+  {name: '编码挑战', value: 1},
+  {name: '网页开发', value: 2},
+  {name: '编程语言', value: 3},
+  {name: '数据科学', value: 4},
+  {name: '开发基础', value: 5},
+]
 export default appConsts

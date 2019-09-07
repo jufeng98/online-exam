@@ -163,6 +163,8 @@ create table `topics` (
   comment '主题名称',
   `topics_cover_image` mediumblob             not null
   comment '主题封面',
+  `topics_type`    tinyint(2)  default null   not null
+  comment '主题类型,1:编码挑战;2:网页开发;3:编程语言;4:数据科学;5:开发基础',
   `exams_code`         varchar(6) default ''  not null
   comment '关联考试表exams_code',
   `create_usename`     varchar(20) default '' not null

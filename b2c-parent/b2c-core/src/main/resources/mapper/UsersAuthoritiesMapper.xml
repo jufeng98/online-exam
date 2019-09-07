@@ -105,7 +105,7 @@
     values (#{authority,jdbcType=VARCHAR}, #{authorityName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.UsersAuthorities">
+  <insert id="insertSelective" keyProperty="authority" parameterType="org.javamaster.b2c.core.entity.UsersAuthorities" useGeneratedKeys="true">
     insert into users_authorities
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="authority != null">

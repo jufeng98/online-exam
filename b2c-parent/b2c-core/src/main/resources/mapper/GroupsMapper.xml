@@ -101,7 +101,7 @@
     insert into groups (id, group_name)
     values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Groups">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Groups" useGeneratedKeys="true">
     insert into groups
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

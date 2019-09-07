@@ -6,6 +6,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="topics_code" jdbcType="VARCHAR" property="topicsCode" />
     <result column="topics_name" jdbcType="VARCHAR" property="topicsName" />
+    <result column="topics_type" jdbcType="TINYINT" property="topicsType" />
     <result column="exams_code" jdbcType="VARCHAR" property="examsCode" />
     <result column="create_usename" jdbcType="VARCHAR" property="createUsename" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, topics_code, topics_name, exams_code, create_usename, create_time
+    id, topics_code, topics_name, topics_type, exams_code, create_usename, create_time
   </sql>
   <sql id="Blob_Column_List">
     topics_cover_image
@@ -127,13 +128,13 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Topics" useGeneratedKeys="true">
     insert into topics (id, topics_code, topics_name, 
-      exams_code, create_usename, create_time, 
-      topics_cover_image)
+      topics_type, exams_code, create_usename, 
+      create_time, topics_cover_image)
     values (#{id,jdbcType=INTEGER}, #{topicsCode,jdbcType=VARCHAR}, #{topicsName,jdbcType=VARCHAR}, 
-      #{examsCode,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{topicsCoverImage,jdbcType=LONGVARBINARY})
+      #{topicsType,jdbcType=TINYINT}, #{examsCode,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{topicsCoverImage,jdbcType=LONGVARBINARY})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Topics">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Topics" useGeneratedKeys="true">
     insert into topics
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -144,6 +145,9 @@
       </if>
       <if test="topicsName != null">
         topics_name,
+      </if>
+      <if test="topicsType != null">
+        topics_type,
       </if>
       <if test="examsCode != null">
         exams_code,
@@ -167,6 +171,9 @@
       </if>
       <if test="topicsName != null">
         #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsType != null">
+        #{topicsType,jdbcType=TINYINT},
       </if>
       <if test="examsCode != null">
         #{examsCode,jdbcType=VARCHAR},
@@ -200,6 +207,9 @@
       <if test="record.topicsName != null">
         topics_name = #{record.topicsName,jdbcType=VARCHAR},
       </if>
+      <if test="record.topicsType != null">
+        topics_type = #{record.topicsType,jdbcType=TINYINT},
+      </if>
       <if test="record.examsCode != null">
         exams_code = #{record.examsCode,jdbcType=VARCHAR},
       </if>
@@ -222,6 +232,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       topics_code = #{record.topicsCode,jdbcType=VARCHAR},
       topics_name = #{record.topicsName,jdbcType=VARCHAR},
+      topics_type = #{record.topicsType,jdbcType=TINYINT},
       exams_code = #{record.examsCode,jdbcType=VARCHAR},
       create_usename = #{record.createUsename,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -235,6 +246,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       topics_code = #{record.topicsCode,jdbcType=VARCHAR},
       topics_name = #{record.topicsName,jdbcType=VARCHAR},
+      topics_type = #{record.topicsType,jdbcType=TINYINT},
       exams_code = #{record.examsCode,jdbcType=VARCHAR},
       create_usename = #{record.createUsename,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -250,6 +262,9 @@
       </if>
       <if test="topicsName != null">
         topics_name = #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsType != null">
+        topics_type = #{topicsType,jdbcType=TINYINT},
       </if>
       <if test="examsCode != null">
         exams_code = #{examsCode,jdbcType=VARCHAR},
@@ -270,6 +285,7 @@
     update topics
     set topics_code = #{topicsCode,jdbcType=VARCHAR},
       topics_name = #{topicsName,jdbcType=VARCHAR},
+      topics_type = #{topicsType,jdbcType=TINYINT},
       exams_code = #{examsCode,jdbcType=VARCHAR},
       create_usename = #{createUsename,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -280,6 +296,7 @@
     update topics
     set topics_code = #{topicsCode,jdbcType=VARCHAR},
       topics_name = #{topicsName,jdbcType=VARCHAR},
+      topics_type = #{topicsType,jdbcType=TINYINT},
       exams_code = #{examsCode,jdbcType=VARCHAR},
       create_usename = #{createUsename,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}

@@ -2,6 +2,7 @@ package org.javamaster.b2c.core.entity;
 
 import java.util.Date;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -50,6 +51,21 @@ public class Sections {
      * 章节封面
      */
     private byte[] sectionsCoverImage;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 
     /**
      * 获取主键id
@@ -161,15 +177,5 @@ public class Sections {
      */
     public void setSectionsCoverImage(byte[] sectionsCoverImage) {
         this.sectionsCoverImage = sectionsCoverImage;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }

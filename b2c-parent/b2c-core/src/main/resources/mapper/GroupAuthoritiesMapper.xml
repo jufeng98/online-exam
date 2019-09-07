@@ -104,7 +104,7 @@
     values (#{id,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{authority,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.GroupAuthorities">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.GroupAuthorities" useGeneratedKeys="true">
     insert into group_authorities
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

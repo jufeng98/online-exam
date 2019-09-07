@@ -109,7 +109,7 @@
       #{picUrl,jdbcType=VARCHAR}, #{createUsername,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Certs">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Certs" useGeneratedKeys="true">
     insert into certs
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

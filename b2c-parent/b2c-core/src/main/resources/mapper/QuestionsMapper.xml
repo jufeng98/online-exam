@@ -115,7 +115,7 @@
       #{answerAnalysis,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Questions">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Questions" useGeneratedKeys="true">
     insert into questions
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

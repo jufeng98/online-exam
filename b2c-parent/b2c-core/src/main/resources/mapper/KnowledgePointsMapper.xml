@@ -111,7 +111,7 @@
       #{sortOrder,jdbcType=INTEGER}, #{knowledgesCode,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.KnowledgePoints">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.KnowledgePoints" useGeneratedKeys="true">
     insert into knowledge_points
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

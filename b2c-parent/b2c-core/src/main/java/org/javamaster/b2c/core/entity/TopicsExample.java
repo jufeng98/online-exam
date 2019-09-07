@@ -310,6 +310,66 @@ public class TopicsExample {
             return (Criteria) this;
         }
 
+        public Criteria andTopicsTypeIsNull() {
+            addCriterion("topics_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeIsNotNull() {
+            addCriterion("topics_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeEqualTo(Byte value) {
+            addCriterion("topics_type =", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeNotEqualTo(Byte value) {
+            addCriterion("topics_type <>", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeGreaterThan(Byte value) {
+            addCriterion("topics_type >", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("topics_type >=", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeLessThan(Byte value) {
+            addCriterion("topics_type <", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeLessThanOrEqualTo(Byte value) {
+            addCriterion("topics_type <=", value, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeIn(List<Byte> values) {
+            addCriterion("topics_type in", values, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeNotIn(List<Byte> values) {
+            addCriterion("topics_type not in", values, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeBetween(Byte value1, Byte value2) {
+            addCriterion("topics_type between", value1, value2, "topicsType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTopicsTypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("topics_type not between", value1, value2, "topicsType");
+            return (Criteria) this;
+        }
+
         public Criteria andExamsCodeIsNull() {
             addCriterion("exams_code is null");
             return (Criteria) this;

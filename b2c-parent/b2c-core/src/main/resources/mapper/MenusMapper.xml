@@ -114,7 +114,7 @@
       #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{opTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Menus">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Menus" useGeneratedKeys="true">
     insert into menus
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

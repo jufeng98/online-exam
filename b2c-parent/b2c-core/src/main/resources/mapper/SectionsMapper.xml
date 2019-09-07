@@ -134,7 +134,7 @@
       #{topicsCode,jdbcType=VARCHAR}, #{sortOrder,jdbcType=INTEGER}, #{createUsename,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{sectionsCoverImage,jdbcType=LONGVARBINARY})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Sections">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Sections" useGeneratedKeys="true">
     insert into sections
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

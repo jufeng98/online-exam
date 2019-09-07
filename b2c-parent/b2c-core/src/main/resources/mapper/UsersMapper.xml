@@ -128,7 +128,7 @@
       #{remark,jdbcType=VARCHAR}, #{createUsername,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{lastOpUsername,jdbcType=VARCHAR}, #{lastOpTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Users">
+  <insert id="insertSelective" keyProperty="username" parameterType="org.javamaster.b2c.core.entity.Users" useGeneratedKeys="true">
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="username != null">

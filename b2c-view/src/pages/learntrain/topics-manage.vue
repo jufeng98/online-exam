@@ -25,6 +25,7 @@
           <el-table :data="topicsList" highlight-current-row v-loading="listLoading" fit>
             <el-table-column type="index" width="60px"></el-table-column>
             <el-table-column prop="topicsName" label="主题名称"></el-table-column>
+            <el-table-column prop="topicsType" :formatter="formatData" label="主题类型"></el-table-column>
             <el-table-column label="主题封面">
               <template slot-scope="scope">
                 <img style="width:100px;height:100px" :src="`${base64Prefix}${scope.row.topicsCoverImage}`"/>
@@ -56,7 +57,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditTopicsDialogVisible">
-      <el-form :model="createOrEditTopicsForm" label-width="90px" :rules="createOrEditTopicsFormRules"
+      <el-form :model="createOrEditTopicsForm" label-width="100px" :rules="createOrEditTopicsFormRules"
                ref="createOrEditTopicsFormRef">
         <el-form-item label="主题名称" prop="topicsName">
           <el-input v-model="createOrEditTopicsForm.topicsName" auto-complete="off"
@@ -80,6 +81,16 @@
                     v-model="createOrEditTopicsForm.topicsCoverImage">
           </el-input>
         </el-form-item>
+        <el-form-item label="主题类型" prop="topicsType" style="text-align: left">
+          <el-select v-model="createOrEditTopicsForm.topicsType">
+            <el-option
+              v-for="item in topicsTypes"
+              :key="item.value"
+              :label="item.name"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="关联考试" prop="examsCode" style="text-align: left">
           <el-select v-model="createOrEditTopicsForm.examsCode">
             <el-option
@@ -102,12 +113,14 @@
 <script>
   import baseAxios from '../../common/baseAxios'
   import appConsts from '../../common/appConsts'
+  import stringUtils from '../../common/stringUtils'
   import config from '../../config'
 
   export default {
     data() {
       return {
         base64Prefix: appConsts.BASE64_JPG_PREFIX,
+        topicsTypes: appConsts.TOPICS_TYPE,
         topicsForm: {
           topicsName: ''
         },
@@ -121,6 +134,7 @@
           topicsName: '',
           topicsCoverImage: null,
           examsCode: '',
+          topicsType: '',
         },
         uploadShowImageUrl: '',
         createTopics: true,
@@ -142,6 +156,9 @@
       formatData(row, column) {
         if (column.property === 'examsCode') {
           return this.examsMap.get(row.examsCode)
+        }
+        if (column.property === 'topicsType') {
+          return stringUtils.formatTableRowData(row.topicsType, this.topicsTypes)
         }
       },
       handleSizeChange(val) {

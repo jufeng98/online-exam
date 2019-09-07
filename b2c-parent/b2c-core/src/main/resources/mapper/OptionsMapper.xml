@@ -110,7 +110,7 @@
       #{sort,jdbcType=INTEGER}, #{questionsCode,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Options">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Options" useGeneratedKeys="true">
     insert into options
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

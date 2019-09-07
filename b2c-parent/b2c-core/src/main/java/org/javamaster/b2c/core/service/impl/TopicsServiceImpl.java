@@ -54,6 +54,7 @@ public class TopicsServiceImpl implements TopicsService {
         topics.setTopicsCode(code);
         topics.setCreateUsename(userDetails.getUsername());
         topics.setExamsCode(reqVo.getTopicsForm().getExamsCode());
+        topics.setTopicsType(reqVo.getTopicsForm().getTopicsType());
         topicsMapper.insertSelective(topics);
         CreateTopicsResVo createTopicsResVo = new CreateTopicsResVo();
         createTopicsResVo.setTopics(topics);
@@ -67,6 +68,7 @@ public class TopicsServiceImpl implements TopicsService {
         topics.setTopicsCoverImage(reqVo.getTopicsForm().getTopicsCoverImage());
         topics.setTopicsName(reqVo.getTopicsForm().getTopicsName());
         topics.setExamsCode(reqVo.getTopicsForm().getExamsCode());
+        topics.setTopicsType(reqVo.getTopicsForm().getTopicsType());
         return topicsMapper.updateByPrimaryKeySelective(topics);
     }
 
