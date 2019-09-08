@@ -16,4 +16,5 @@ object AppConsts {
     const val LOGOUT_URL = "$BASE_URL$APP_CONTEXT/core/logout"
     const val SIGN_UP_URL = "$BASE_URL$APP_CONTEXT/admin/users/createUsers"
     const val UPLOAD_EXCEPTIONS = "$BASE_URL$APP_CONTEXT/public/log/uploadExceptions"
+    const val FIND_TOPICS_LIST = "$BASE_URL$APP_CONTEXT/core/topics/findTopicsList"
 }

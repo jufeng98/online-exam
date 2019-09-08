@@ -36,6 +36,7 @@ class LoginActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.title = getString(R.string.action_sign_in)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         var pre = getPreferences(Context.MODE_PRIVATE)
         username.setText(pre.getString(USERNAME, ""))

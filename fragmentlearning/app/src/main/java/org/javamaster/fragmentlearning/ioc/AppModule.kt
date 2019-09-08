@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Module
 import dagger.Provides
 import org.javamaster.fragmentlearning.data.LoginService
+import org.javamaster.fragmentlearning.data.TopicsService
 import org.javamaster.fragmentlearning.data.impl.LoginServiceImpl
+import org.javamaster.fragmentlearning.data.impl.TopicsServiceImpl
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import org.javamaster.fragmentlearning.ui.signup.SignupViewModel
 
@@ -20,6 +22,12 @@ class AppModule {
     @ActivityScope
     fun loginService(objectMapper: ObjectMapper): LoginService {
         return LoginServiceImpl(objectMapper)
+    }
+
+    @Provides
+    @ActivityScope
+    fun topicsService(objectMapper: ObjectMapper): TopicsService {
+        return TopicsServiceImpl(objectMapper)
     }
 
     //  @Named("dev")

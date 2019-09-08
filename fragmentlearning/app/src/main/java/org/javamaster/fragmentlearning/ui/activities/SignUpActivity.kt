@@ -26,6 +26,7 @@ class SignUpActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.title = getString(R.string.action_register)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         signupViewModel.signupFormState.observe(this, Observer {
             sign_up.isEnabled = it.isDataValid

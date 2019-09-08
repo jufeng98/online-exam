@@ -12,6 +12,7 @@
             android:background="@color/colorTransparent"
             android:drawableTop="@drawable/tab_learn_mini_choose"
             android:text="@string/onboarding_learn"
+            android:textColor="@color/tabTextColorChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -21,6 +22,7 @@
             android:background="@color/colorTransparent"
             android:drawableTop="@drawable/tab_play_mini"
             android:text="@string/onboarding_play"
+            android:textColor="@color/cardview_light_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -30,6 +32,7 @@
             android:background="@color/colorTransparent"
             android:drawableTop="@drawable/tab_home_mini"
             android:text="@string/onboarding_home"
+            android:textColor="@color/cardview_light_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -39,6 +42,7 @@
             android:background="@color/colorTransparent"
             android:drawableTop="@drawable/tab_practice_mini"
             android:text="@string/onboarding_code"
+            android:textColor="@color/cardview_light_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -48,6 +52,7 @@
             android:background="@color/colorTransparent"
             android:drawableTop="@drawable/tab_discuss_mini"
             android:text="@string/onboarding_discuss"
+            android:textColor="@color/cardview_light_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </LinearLayout>

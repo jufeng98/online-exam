@@ -5,4 +5,6 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorAppPrimary">#546E7A</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorGrey">#AACCCCCC</color>
+    <color name="tabTextColorChoose">#FF1177CC</color>
 </resources>

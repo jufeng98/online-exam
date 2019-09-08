@@ -1,6 +1,7 @@
 package org.javamaster.fragmentlearning.ioc
 
 import dagger.Component
+import org.javamaster.fragmentlearning.fragment.LearnFragment
 import org.javamaster.fragmentlearning.testActivity.SQLiteActivity
 import org.javamaster.fragmentlearning.testProvider.MyContentProvider
 import org.javamaster.fragmentlearning.ui.activities.LoginActivity
@@ -22,4 +23,5 @@ interface AppComponent {
     fun inject(myContentProvider: MyContentProvider)
     fun inject(signUpActivity: SignUpActivity)
     fun inject(mainActivity: MainActivity)
+    fun inject(learnFragment: LearnFragment)
 }

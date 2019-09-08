@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import org.javamaster.fragmentlearning.GlobalHandler
 import org.javamaster.fragmentlearning.ioc.DaggerGlobalComponent
 import org.javamaster.fragmentlearning.ioc.GlobalComponent
-import org.javamaster.fragmentlearning.testBroadcastReceiver.ForceOfflineReceiver
 import org.litepal.LitePal
 
 /**
@@ -39,7 +38,6 @@ class App : Application() {
         lateinit var context: Context
         lateinit var objectMapper: ObjectMapper
         lateinit var globalComponent: GlobalComponent
-        val OFFLINE_RECEIVER = ForceOfflineReceiver()
         private val ACTIVITIES: MutableSet<Activity> = mutableSetOf()
 
         fun getLoginSharedPreferences(): SharedPreferences {

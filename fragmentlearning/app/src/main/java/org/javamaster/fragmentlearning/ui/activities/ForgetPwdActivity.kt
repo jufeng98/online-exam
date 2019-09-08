@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_forget_pwd.*
 import org.javamaster.fragmentlearning.R
 
 class ForgetPwdActivity : BaseAppActivity() {
-    var sendEmailCurrentTextColor = 0
+    private var sendEmailCurrentTextColor = 0
     override fun initContentView(): Int? {
         requestWindowFeature(Window.FEATURE_ACTION_BAR)
         return R.layout.activity_forget_pwd

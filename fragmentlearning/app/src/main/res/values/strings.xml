@@ -83,4 +83,11 @@
     <string name="block_accounts">取消关联</string>
     <string name="manage_skill">技能管理</string>
     <string name="logout">退出登录</string>
+    <string name="search">搜索</string>
+    <string name="view_more">查看更多</string>
+    <string name="topics_type_coding">编码挑战</string>
+    <string name="topics_type_web">网页开发</string>
+    <string name="topics_type_lang">编程语言</string>
+    <string name="topics_type_data">数据科学</string>
+    <string name="topics_type_dev">开发基础</string>
 </resources>

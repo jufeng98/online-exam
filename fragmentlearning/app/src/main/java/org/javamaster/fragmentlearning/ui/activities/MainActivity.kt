@@ -24,6 +24,7 @@ import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import javax.inject.Inject
 
+
 /**
  * @author yudong
  * @date 2019/8/18
@@ -69,7 +70,7 @@ class MainActivity : BaseAppActivity() {
             true
         }
 
-        var fragment = LearnFragment.newInstance("", "")
+        var fragment = LearnFragment.newInstance()
         fragmentMap[R.id.tab0] = fragment
         replaceFragment(fragment)
     }
@@ -95,15 +96,15 @@ class MainActivity : BaseAppActivity() {
         var fragment: Fragment? = fragmentMap[tabButton.id]
         when (tabButton.id) {
             R.id.tab0 -> {
-                tab0.changeDrawableTopImg(R.drawable.tab_learn_mini_choose)
+                tab0.changeTopImgAndColor(R.drawable.tab_learn_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_learn)
                 if (fragment == null) {
-                    fragment = LearnFragment.newInstance("", "")
+                    fragment = LearnFragment.newInstance()
                 }
                 replaceFragment(fragment)
             }
             R.id.tab1 -> {
-                tab1.changeDrawableTopImg(R.drawable.tab_play_mini_choose)
+                tab1.changeTopImgAndColor(R.drawable.tab_play_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_play)
                 if (fragment == null) {
                     fragment = PlayFragment.newInstance("", "")
@@ -111,7 +112,7 @@ class MainActivity : BaseAppActivity() {
                 replaceFragment(fragment)
             }
             R.id.tab2 -> {
-                tab2.changeDrawableTopImg(R.drawable.tab_home_mini_choose)
+                tab2.changeTopImgAndColor(R.drawable.tab_home_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_home)
                 if (fragment == null) {
                     fragment = HomeFragment.newInstance("", "")
@@ -119,7 +120,7 @@ class MainActivity : BaseAppActivity() {
                 replaceFragment(fragment)
             }
             R.id.tab3 -> {
-                tab3.changeDrawableTopImg(R.drawable.tab_practice_mini_choose)
+                tab3.changeTopImgAndColor(R.drawable.tab_practice_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_code)
                 if (fragment == null) {
                     fragment = PracticeFragment.newInstance("", "")
@@ -127,7 +128,7 @@ class MainActivity : BaseAppActivity() {
                 replaceFragment(fragment)
             }
             R.id.tab4 -> {
-                tab4.changeDrawableTopImg(R.drawable.tab_discuss_mini_choose)
+                tab4.changeTopImgAndColor(R.drawable.tab_discuss_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_discuss)
                 if (fragment == null) {
                     fragment = DiscussFragment.newInstance("", "")
@@ -139,17 +140,18 @@ class MainActivity : BaseAppActivity() {
     }
 
     private fun resetTabImg() {
-        tab0.changeDrawableTopImg(R.drawable.tab_learn_mini)
-        tab1.changeDrawableTopImg(R.drawable.tab_play_mini)
-        tab2.changeDrawableTopImg(R.drawable.tab_home_mini)
-        tab3.changeDrawableTopImg(R.drawable.tab_practice_mini)
-        tab4.changeDrawableTopImg(R.drawable.tab_discuss_mini)
+        tab0.changeTopImgAndColor(R.drawable.tab_learn_mini, R.color.cardview_light_background)
+        tab1.changeTopImgAndColor(R.drawable.tab_play_mini, R.color.cardview_light_background)
+        tab2.changeTopImgAndColor(R.drawable.tab_home_mini, R.color.cardview_light_background)
+        tab3.changeTopImgAndColor(R.drawable.tab_practice_mini, R.color.cardview_light_background)
+        tab4.changeTopImgAndColor(R.drawable.tab_discuss_mini, R.color.cardview_light_background)
     }
 
-    private fun Button.changeDrawableTopImg(img: Int) {
+    private fun Button.changeTopImgAndColor(img: Int, color: Int) {
         var drawable = resources.getDrawable(img, theme)
         drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
         this.setCompoundDrawables(null, drawable, null, null)
+        this.setTextColor(resources.getColor(color))
     }
 
     private fun replaceFragment(fragment: Fragment) {
