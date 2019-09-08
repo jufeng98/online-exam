@@ -12,6 +12,7 @@ import org.javamaster.b2c.core.model.vo.FindTopicsListReqVo;
 import org.javamaster.b2c.core.service.TopicsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +36,7 @@ public class TopicsController {
     @Autowired
     private TopicsService topicsService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/findTopicsList")
     public Result<List<Topics>> findTopicsList(@Validated @RequestBody FindTopicsListReqVo reqVo) {
         PageInfo<Topics> resVo = topicsService.findTopicsList(reqVo);

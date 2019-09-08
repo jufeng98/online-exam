@@ -341,7 +341,7 @@
       showEditUsersDialog(index, row) {
         this.title = '编辑用户'
         this.showPasswordFormItem = false
-        this.uploadShowImageUrl = row.picUrl
+        this.uploadShowImageUrl = config.BASE_PATH + config.APP_CONTEXT + row.picUrl
         this.createOrEditUsersForm = Object.assign({}, row)
         this.createOrEditUsersDialogVisible = true
       },
