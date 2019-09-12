@@ -33,7 +33,7 @@ android {
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"http://${getIP()}:9888\"")
-            buildConfigField("Boolean", "EXERCISE_MODE", "true")
+            buildConfigField("Boolean", "EXERCISE_MODE", "false")
         }
     }
     buildToolsVersion = '28.0.3'

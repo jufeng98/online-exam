@@ -6,6 +6,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_exercise_main.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.testAdapter.ExerciseArrayAdapter
+import org.javamaster.fragmentlearning.testCompleteDown.DownloadActivity
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 
 class ExerciseMainActivity : BaseAppActivity() {
@@ -39,6 +40,7 @@ class ExerciseMainActivity : BaseAppActivity() {
         list.add(Pair("RecyclerView的使用", RecyclerViewActivity::class.java))
         list.add(Pair("SQLite数据库的使用", SQLiteActivity::class.java))
         list.add(Pair("LitePal的使用", LitePalActivity::class.java))
+        list.add(Pair("下载功能的实现", DownloadActivity::class.java))
         list.add(Pair("WebView的使用", WebViewActivity::class.java))
         list.add(Pair("选取或拍摄相片", TakeAndPickPhotoActivity::class.java))
         list.add(Pair("Service的使用", ServiceActivity::class.java))

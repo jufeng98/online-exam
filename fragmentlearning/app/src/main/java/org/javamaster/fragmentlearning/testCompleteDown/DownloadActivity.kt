@@ -20,7 +20,7 @@ class DownloadActivity : BaseAppActivity() {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            Toast.makeText(this@DownloadActivity, "启动服务", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@DownloadActivity, "服务已启动", Toast.LENGTH_SHORT).show()
             downloadBinder = service as DownloadService.DownloadBinder
         }
 
@@ -32,13 +32,13 @@ class DownloadActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var intent = Intent(this@DownloadActivity, DownloadService::class.java)
+        var intent = Intent(this, DownloadService::class.java)
         bindService(intent, conn, Context.BIND_AUTO_CREATE)
     }
 
     @OnClick(R.id.start_download)
     fun startDownload() {
-        Toast.makeText(this@DownloadActivity, "开始下载", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "开始下载", Toast.LENGTH_SHORT).show()
         downloadBinder.startDownload("http://cr1.197946.com/baiduyunguanjria_6.7.4.zip")
     }
 

@@ -16,11 +16,10 @@ import org.javamaster.fragmentlearning.testActivity.SaveAndLoadActivity
 class DownloadService : Service() {
 
     lateinit var fileName: String
-
-    lateinit var downloadTask: DownloadTask
+    var downloadTask: DownloadTask? = null
     var downloadListener: DownloadListener = object : DownloadListener {
         override fun onProgress(progress: Int) {
-            getNotificationManager().notify(1, getNotification("正在下载${fileName}", progress))
+            getNotificationManager().notify(1, getNotification("正在下载$fileName", progress))
         }
 
         override fun onSuccess() {
@@ -53,19 +52,23 @@ class DownloadService : Service() {
 
     inner class DownloadBinder : Binder() {
         fun startDownload(url: String) {
+            if (downloadTask != null && !downloadTask!!.pause && !downloadTask!!.cancel) {
+                Toast.makeText(this@DownloadService, "下载中......", Toast.LENGTH_SHORT).show()
+                return
+            }
             var index = url.lastIndexOf("/")
             fileName = url.substring(index + 1)
             downloadTask = DownloadTask(downloadListener, cancel = false, pause = false)
-            downloadTask.execute(url)
+            downloadTask!!.execute(url)
             startForeground(1, getNotification("下载中", 0))
         }
 
         fun pauseDownload() {
-            downloadTask.pause = true
+            downloadTask?.pause = true
         }
 
         fun stopDownload() {
-            downloadTask.cancel = true
+            downloadTask?.cancel = true
         }
     }
 
