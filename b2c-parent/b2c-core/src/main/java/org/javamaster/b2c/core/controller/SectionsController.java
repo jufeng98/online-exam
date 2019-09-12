@@ -12,6 +12,7 @@ import org.javamaster.b2c.core.model.vo.FindSectionsListReqVo;
 import org.javamaster.b2c.core.service.SectionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +36,7 @@ public class SectionsController {
     @Autowired
     private SectionsService sectionsService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/findSectionsList")
     public Result<List<Sections>> findSectionsList(@Validated @RequestBody FindSectionsListReqVo reqVo) {
         PageInfo<Sections> resVo = sectionsService.findSectionsList(reqVo);

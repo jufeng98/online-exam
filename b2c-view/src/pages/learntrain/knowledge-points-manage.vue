@@ -37,6 +37,11 @@
                 <div v-html="scope.row.knowledgePointsContent"></div>
               </template>
             </el-table-column>
+            <el-table-column prop="questionsCode" label="关联试题" width="180px">
+              <template slot-scope="scope">
+                <div v-html="formatQuestionsCode(scope.row.questionsCode)"></div>
+              </template>
+            </el-table-column>
             <el-table-column prop="sortOrder" label="顺序" width="120px"></el-table-column>
             <el-table-column label="操作" width="180">
               <template slot-scope="scope">
@@ -76,6 +81,16 @@
               :key="item.knowledgesCode"
               :label="item.knowledgesName"
               :value="item.knowledgesCode">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="关联题目" prop="questionsCode" style="text-align: left">
+          <el-select v-model="createOrEditKnowledgePointsForm.questionsCode">
+            <el-option
+              v-for="item in questionsList"
+              :key="item.questionsCode"
+              :label="item.questionsTitle"
+              :value="item.questionsCode">
             </el-option>
           </el-select>
         </el-form-item>
@@ -134,6 +149,7 @@
         listLoading: false,
         createOrEditKnowledgePointsForm: {
           knowledgesCode: '',
+          questionsCode: '',
           sortOrder: 1,
           knowledgePointsContent: ''
         },
@@ -141,7 +157,9 @@
         createOrEditKnowledgePointsDialogVisible: false,
         addLoading: false,
         knowledgesList: [],
+        questionsList: [],
         knowledgesMap: new Map(),
+        questionsMap: new Map(),
         createOrEditKnowledgePointsFormRules: {
           knowledgesCode: [
             {required: true, message: '请选择所属知识', trigger: 'blur'}
@@ -166,6 +184,9 @@
           return this.knowledgesMap.get(row.knowledgesCode)
         }
       },
+      formatQuestionsCode(questionsCode) {
+        return this.questionsMap.get(questionsCode)
+      },
       findKnowledgePointsList(pageNum) {
         let reqJsonParams = {
           page: {pageNum: pageNum, pageSize: this.pageSize},
@@ -184,13 +205,28 @@
           page: {pageNum: 1, pageSize: 99999},
           knowledgesForm: {}
         }
-        baseAxios.post(config.FIND_KNOWLEDGES_LIST, reqJsonParams).then((resJson) => {
-          this.knowledgesList = resJson.data
-          for (let i = 0; i < this.knowledgesList.length; i++) {
-            this.knowledgesMap.set(this.knowledgesList[i].knowledgesCode, this.knowledgesList[i].knowledgesName)
-          }
-          this.findKnowledgePointsList(1)
-        })
+        return baseAxios.post(config.FIND_KNOWLEDGES_LIST, reqJsonParams)
+      },
+      findQuestionsList() {
+        let reqJsonParams = {
+          page: {pageNum: 1, pageSize: 99999},
+          questionsForm: {}
+        }
+        return baseAxios.post(config.FIND_QUESTIONS_LIST, reqJsonParams)
+      },
+      findNecessaryList() {
+        baseAxios.all([this.findKnowledgesList(), this.findQuestionsList()])
+          .then(baseAxios.spread((res1, res2) => {
+            this.knowledgesList = res1.data
+            for (let i = 0; i < this.knowledgesList.length; i++) {
+              this.knowledgesMap.set(this.knowledgesList[i].knowledgesCode, this.knowledgesList[i].knowledgesName)
+            }
+            this.questionsList = res2.data
+            for (let i = 0; i < this.questionsList.length; i++) {
+              this.questionsMap.set(this.questionsList[i].questionsCode, this.questionsList[i].questionsTitle)
+            }
+            this.findKnowledgePointsList(1)
+          }))
       },
       resetUeditorAndClearValidate() {
         this.$refs.createOrEditKnowledgePointsFormRef.clearValidate()
@@ -253,7 +289,7 @@
       },
     },
     mounted() {
-      this.findKnowledgesList()
+      this.findNecessaryList()
       window.vue = this
     }
   }

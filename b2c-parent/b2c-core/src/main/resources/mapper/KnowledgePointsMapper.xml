@@ -8,6 +8,7 @@
     <result column="knowledge_points_content" jdbcType="VARCHAR" property="knowledgePointsContent" />
     <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
     <result column="knowledges_code" jdbcType="VARCHAR" property="knowledgesCode" />
+    <result column="questions_code" jdbcType="VARCHAR" property="questionsCode" />
     <result column="create_usename" jdbcType="VARCHAR" property="createUsename" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -71,7 +72,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, knowledge_points_code, knowledge_points_content, sort_order, knowledges_code, 
-    create_usename, create_time
+    questions_code, create_usename, create_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.KnowledgePointsExample" resultMap="BaseResultMap">
     select
@@ -105,11 +106,11 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.KnowledgePoints" useGeneratedKeys="true">
     insert into knowledge_points (id, knowledge_points_code, knowledge_points_content, 
-      sort_order, knowledges_code, create_usename, 
-      create_time)
+      sort_order, knowledges_code, questions_code, 
+      create_usename, create_time)
     values (#{id,jdbcType=INTEGER}, #{knowledgePointsCode,jdbcType=VARCHAR}, #{knowledgePointsContent,jdbcType=VARCHAR}, 
-      #{sortOrder,jdbcType=INTEGER}, #{knowledgesCode,jdbcType=VARCHAR}, #{createUsename,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{sortOrder,jdbcType=INTEGER}, #{knowledgesCode,jdbcType=VARCHAR}, #{questionsCode,jdbcType=VARCHAR}, 
+      #{createUsename,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.KnowledgePoints" useGeneratedKeys="true">
     insert into knowledge_points
@@ -128,6 +129,9 @@
       </if>
       <if test="knowledgesCode != null">
         knowledges_code,
+      </if>
+      <if test="questionsCode != null">
+        questions_code,
       </if>
       <if test="createUsename != null">
         create_usename,
@@ -151,6 +155,9 @@
       </if>
       <if test="knowledgesCode != null">
         #{knowledgesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionsCode != null">
+        #{questionsCode,jdbcType=VARCHAR},
       </if>
       <if test="createUsename != null">
         #{createUsename,jdbcType=VARCHAR},
@@ -184,6 +191,9 @@
       <if test="record.knowledgesCode != null">
         knowledges_code = #{record.knowledgesCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.questionsCode != null">
+        questions_code = #{record.questionsCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.createUsename != null">
         create_usename = #{record.createUsename,jdbcType=VARCHAR},
       </if>
@@ -202,6 +212,7 @@
       knowledge_points_content = #{record.knowledgePointsContent,jdbcType=VARCHAR},
       sort_order = #{record.sortOrder,jdbcType=INTEGER},
       knowledges_code = #{record.knowledgesCode,jdbcType=VARCHAR},
+      questions_code = #{record.questionsCode,jdbcType=VARCHAR},
       create_usename = #{record.createUsename,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -223,6 +234,9 @@
       <if test="knowledgesCode != null">
         knowledges_code = #{knowledgesCode,jdbcType=VARCHAR},
       </if>
+      <if test="questionsCode != null">
+        questions_code = #{questionsCode,jdbcType=VARCHAR},
+      </if>
       <if test="createUsename != null">
         create_usename = #{createUsename,jdbcType=VARCHAR},
       </if>
@@ -238,6 +252,7 @@
       knowledge_points_content = #{knowledgePointsContent,jdbcType=VARCHAR},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       knowledges_code = #{knowledgesCode,jdbcType=VARCHAR},
+      questions_code = #{questionsCode,jdbcType=VARCHAR},
       create_usename = #{createUsename,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

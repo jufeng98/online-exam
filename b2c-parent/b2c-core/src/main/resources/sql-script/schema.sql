@@ -232,6 +232,8 @@ CREATE TABLE `knowledge_points` (
   comment '顺序',
   `knowledges_code`          varchar(6) default ''     not null
   comment '关联知识表的knowledges_code',
+  `questionsCode`            varchar(6) default ''     not null
+  comment '关联题目表的questions_code',
   `create_usename`           varchar(20) default ''    not null
   comment '创建人编号',
   `create_time`              datetime default now()    not null
@@ -287,19 +289,6 @@ CREATE TABLE `options` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COMMENT = '选项表';
-
-drop table if exists knowledge_points_questions;
-CREATE TABLE `knowledge_points_questions` (
-  `id`                    int PRIMARY KEY AUTO_INCREMENT
-  COMMENT '主键id',
-  `knowledge_points_code` varchar(7) DEFAULT ''     not null
-  COMMENT '关联知识点表knowledge_points_code',
-  `questions_code`        varchar(6) DEFAULT ''     not null
-  COMMENT '关联题目表questions_code'
-)
-  ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COMMENT = '知识点题目表';
 
 drop table if exists certs;
 CREATE TABLE `certs` (

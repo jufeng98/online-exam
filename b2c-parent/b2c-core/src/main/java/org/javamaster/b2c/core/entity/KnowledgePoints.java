@@ -38,6 +38,11 @@ public class KnowledgePoints {
     private String knowledgesCode;
 
     /**
+     * 关联题目表的questions_code
+     */
+    private String questionsCode;
+
+    /**
      * 创建人编号
      */
     private String createUsename;
@@ -130,6 +135,20 @@ public class KnowledgePoints {
      */
     public void setKnowledgesCode(String knowledgesCode) {
         this.knowledgesCode = knowledgesCode;
+    }
+
+    /**
+     * 获取关联题目表的questions_code
+     */
+    public String getQuestionsCode() {
+        return questionsCode;
+    }
+
+    /**
+     * 设置关联题目表的questions_code
+     */
+    public void setQuestionsCode(String questionsCode) {
+        this.questionsCode = questionsCode;
     }
 
     /**

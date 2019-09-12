@@ -53,6 +53,7 @@ public class KnowledgePointsServiceImpl implements KnowledgePointsService {
         knowledgePoints.setCreateUsename(userDetails.getUsername());
         knowledgePoints.setKnowledgePointsContent(reqVo.getKnowledgePointsForm().getKnowledgePointsContent());
         knowledgePoints.setKnowledgesCode(reqVo.getKnowledgePointsForm().getKnowledgesCode());
+        knowledgePoints.setQuestionsCode(reqVo.getKnowledgePointsForm().getQuestionsCode());
         knowledgePoints.setSortOrder(reqVo.getKnowledgePointsForm().getSortOrder());
         knowledgePointsMapper.insertSelective(knowledgePoints);
         CreateKnowledgePointsResVo createKnowledgePointsResVo = new CreateKnowledgePointsResVo();
@@ -67,6 +68,7 @@ public class KnowledgePointsServiceImpl implements KnowledgePointsService {
         knowledgePoints.setKnowledgePointsContent(reqVo.getKnowledgePointsForm().getKnowledgePointsContent());
         knowledgePoints.setSortOrder(reqVo.getKnowledgePointsForm().getSortOrder());
         knowledgePoints.setKnowledgesCode(reqVo.getKnowledgePointsForm().getKnowledgesCode());
+        knowledgePoints.setQuestionsCode(reqVo.getKnowledgePointsForm().getQuestionsCode());
         return knowledgePointsMapper.updateByPrimaryKeySelective(knowledgePoints);
     }
 
