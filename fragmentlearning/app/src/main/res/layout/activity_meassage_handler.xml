@@ -8,7 +8,7 @@
         tools:context=".testActivity.MessageHandlerActivity">
 
     <Button
-            android:text="change text"
+            android:text="从网络取数据"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button4"
@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-            android:text="original text"
+            android:text="此文本内容会被网络数据所更新"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:id="@+id/textView14"
@@ -42,11 +42,12 @@
 
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="92dp"
-            android:id="@+id/progressBar"
-            android:min="0"
             android:max="100"
+            android:progress="0"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:id="@+id/progress_bar"
+            android:progressTint="@color/tabTextColorChoose"
             app:layout_constraintTop_toBottomOf="@+id/button8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -13,7 +13,7 @@ import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 import java.io.File
 
 class VideoPlayerActivity : BaseAppActivity() {
-    lateinit var player: VideoView
+    private lateinit var player: VideoView
 
     override fun initContentView(): Int? {
         return R.layout.activity_video_player
@@ -26,7 +26,8 @@ class VideoPlayerActivity : BaseAppActivity() {
     }
 
     private fun init() {
-        var musicFile = File(Environment.getExternalStorageDirectory(), "boss_before.wmv")
+        var musicFile =
+            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "media.mp4")
         player.setVideoPath(musicFile.path)
     }
 
@@ -38,11 +39,9 @@ class VideoPlayerActivity : BaseAppActivity() {
     fun handler(view: View) {
         when (view.id) {
             R.id.button5 -> {
-                Thread {
-                    if (!player.isPlaying) {
-                        player.start()
-                    }
-                }.start()
+                if (!player.isPlaying) {
+                    player.start()
+                }
             }
             R.id.button6 -> {
                 if (player.isPlaying) {
@@ -59,9 +58,7 @@ class VideoPlayerActivity : BaseAppActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (player != null) {
-            player.suspend()
-        }
+        player.suspend()
     }
 
     companion object {

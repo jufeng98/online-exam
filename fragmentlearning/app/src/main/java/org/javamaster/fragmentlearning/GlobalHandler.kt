@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
-import android.os.Process
 import android.util.Log
 import com.google.android.gms.common.util.Base64Utils
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.utils.NetUtils
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,27 +38,22 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
 
     override fun uncaughtException(t: Thread?, e: Throwable?) {
         try {
-            Log.e(GlobalHandler.javaClass.name, "occur error", e)
+            Log.e(this.javaClass.name, "occur error", e)
             logExceptionToSdCard(e)
             Thread {
                 uploadToServer(e)
             }.start()
         } catch (e: Exception) {
-            Log.e(this.javaClass.name, t.toString(), e)
+            Log.e(this.javaClass.name, "something error", e)
         } finally {
-            if (exceptionHandler != null) {
-                exceptionHandler.uncaughtException(t, e)
-            } else {
-                Process.killProcess(Process.myPid())
-                System.exit(-1)
-            }
+            exceptionHandler.uncaughtException(t, e)
         }
     }
 
     private fun uploadToServer(e: Throwable?) {
         var outputStream = ByteArrayOutputStream()
         val printWriter = PrintWriter(outputStream)
-        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Date())
+        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
         printWriter.println(time)
         e?.printStackTrace(printWriter)
         dumpDeviceInfo(printWriter)
@@ -68,20 +62,28 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
         outputStream.close()
         var str = Base64Utils.encodeUrlSafe(bytes)
         var map = mapOf("fileName" to "fragmentlearning.log", "encodeBase64Str" to str)
-        NetUtils.postForResponse(AppConsts.UPLOAD_EXCEPTIONS, map)
+        NetUtils.postForResponse(AppConsts.UPLOAD_EXCEPTIONS, map, object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e(this.javaClass.name, "upload error", e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                Log.i(this.javaClass.name, response.body?.string())
+            }
+
+        })
     }
 
     private fun logExceptionToSdCard(e: Throwable?) {
         if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
-            Log.w(GlobalHandler.javaClass.name, "sdcard unmounted,skip dump exception to sdcard")
+            Log.w(this.javaClass.name, "sdcard unmounted,skip dump exception to sdcard")
             return
         }
-        var path = context.getExternalFilesDir("").path + "/crashlog/"
-        var dir = File(path)
-        if (!dir.exists()) {
-            dir.mkdirs()
+        var path = context.getExternalFilesDir("crashlog")
+        if (!path.exists()) {
+            path.mkdirs()
         }
-        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Date())
+        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
         var fileName = "$path$time-crash.log"
         var file = File(fileName)
         if (!file.exists()) {

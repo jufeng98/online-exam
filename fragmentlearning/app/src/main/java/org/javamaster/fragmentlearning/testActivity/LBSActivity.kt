@@ -1,34 +1,32 @@
 package org.javamaster.fragmentlearning.testActivity
 
-import android.Manifest.permission_group.LOCATION
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Criteria
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.baidu.location.BDLocation
 import com.baidu.location.BDLocationListener
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
 import kotlinx.android.synthetic.main.activity_lbs.*
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
+import org.javamaster.fragmentlearning.utils.LocationUtils
 
 
 class LBSActivity : BaseAppActivity() {
     private lateinit var locationClient: LocationClient
-    var locationListener: android.location.LocationListener = object : android.location.LocationListener {
+    var refreshTimes: Int = 1
+    var refreshTimes1: Int = 1
+    private var locationListener: android.location.LocationListener = object : android.location.LocationListener {
         override fun onLocationChanged(location: Location?) {
             if (location != null) {
-                textView16.text = "" + location.latitude + " " + location.longitude
+                textView16.text = StringBuilder()
+                    .append("来自locationManager:").append("\n")
+                    .append("经度:${location.longitude}").append("\n")
+                    .append("纬度:${location.latitude}").append("\n")
+                    .append("刷新次数:${refreshTimes++}").toString()
             }
         }
 
@@ -53,7 +51,7 @@ class LBSActivity : BaseAppActivity() {
         locationClient.registerLocationListener(LocationListener())
         locationClient.locOption = initOption()
         locationClient.start()
-        LocationUtil.getCurrentLocation(this@LBSActivity, locationListener)
+        LocationUtils.refreshCurrentLocation(this@LBSActivity, locationListener)
     }
 
 
@@ -101,22 +99,25 @@ class LBSActivity : BaseAppActivity() {
     }
 
     inner class LocationListener : BDLocationListener {
-        override fun onReceiveLocation(p0: BDLocation?) {
+        override fun onReceiveLocation(bdLocation: BDLocation) {
             runOnUiThread {
                 var stringBuilder = StringBuilder()
-                stringBuilder.append("经度:").append(p0?.latitude)
-                stringBuilder.append(" 纬度:").append(p0?.longitude)
-                stringBuilder.append(" 定位方式:")
-                if (p0!!.locType == BDLocation.TypeGpsLocation) {
-                    stringBuilder.append(" GPS")
-                } else if (p0.locType == BDLocation.TypeNetWorkLocation) {
-                    stringBuilder.append("NETWORK")
+                stringBuilder.append("来自百度地图:").append("\n")
+                stringBuilder.append("经度:").append(bdLocation.longitude).append("\n")
+                stringBuilder.append("纬度:").append(bdLocation.latitude).append("\n")
+                stringBuilder.append("定位方式:")
+                when {
+                    bdLocation.locType == BDLocation.TypeGpsLocation -> stringBuilder.append("GPS").append("\n")
+                    bdLocation.locType == BDLocation.TypeNetWorkLocation -> stringBuilder.append("NETWORK").append("\n")
+                    else -> stringBuilder.append("未知(${bdLocation.locType})").append("\n")
                 }
-                stringBuilder.append(" ").append(p0?.country)
-                stringBuilder.append(" ").append(p0?.province)
-                stringBuilder.append(" ").append(p0?.city)
-                stringBuilder.append(" ").append(p0?.district)
-                stringBuilder.append(" ").append(p0?.street)
+                stringBuilder.append("具体地址:").append("\n")
+                stringBuilder.append(" ").append(bdLocation.country)
+                stringBuilder.append(" ").append(bdLocation.province)
+                stringBuilder.append(" ").append(bdLocation.city)
+                stringBuilder.append(" ").append(bdLocation.district)
+                stringBuilder.append(" ").append(bdLocation.street).append("\n")
+                stringBuilder.append("刷新次数:${refreshTimes1++}")
                 textView15.text = stringBuilder.toString()
             }
         }
@@ -125,43 +126,7 @@ class LBSActivity : BaseAppActivity() {
     override fun onDestroy() {
         super.onDestroy()
         locationClient.stop()
-        val locationManager = this!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationManager.removeUpdates(locationListener)
-    }
-}
-
-object LocationUtil {
-    private const val TAG = "LocationUtil"
-    fun getCurrentLocation(context: Context, locationListener: LocationListener) {
-        //如果系统版本号在23及其以上则检查权限
-        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(
-                context!!,
-                LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            Toast.makeText(context, "no permission", Toast.LENGTH_SHORT).show()
-            return
-        }
-        //获取LocationManager对象
-        val locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        //配置Criteria耗电高
-        val cri = Criteria()
-        cri.powerRequirement = Criteria.POWER_HIGH
-        // 获取可用的provider,第二个参数标识 provider是否可用.
-        val bestProvider = locationManager.getBestProvider(cri, true)
-
-        if (!TextUtils.isEmpty(bestProvider)) {
-            Log.e(TAG, "bestProvider = " + bestProvider + "可用")
-            locationManager.requestLocationUpdates(bestProvider, 5000L, 10f, locationListener)
-        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Log.e(TAG, LocationManager.NETWORK_PROVIDER + "可用")
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000L, 10f, locationListener)
-        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Log.e(TAG, LocationManager.GPS_PROVIDER + "可用")
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10f, locationListener)
-        } else {
-            //定位不可用，提示打开GPS
-            Log.e(TAG, "定位不可用，提示打开GPS")
-        }
     }
 }

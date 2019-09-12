@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.model.News
+import org.javamaster.fragmentlearning.testActivity.NewsActivity
 import org.javamaster.fragmentlearning.testActivity.NewsContentActivity
-import org.javamaster.fragmentlearning.testActivity.NewsTitleActivity
 import org.javamaster.fragmentlearning.testFragment.NewsContentFragment
 
 
@@ -20,7 +20,7 @@ import org.javamaster.fragmentlearning.testFragment.NewsContentFragment
 class NewsTitleAdapter(private val newsList: List<News>) : RecyclerView.Adapter<NewsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         var view = LayoutInflater.from(parent.context)
-            .inflate(org.javamaster.fragmentlearning.R.layout.news_item_layout, parent, false)
+            .inflate(R.layout.news_item_layout, parent, false)
         var holder = NewsViewHolder(view)
         holder.view.setOnClickListener {
             var position = holder.adapterPosition
@@ -30,7 +30,7 @@ class NewsTitleAdapter(private val newsList: List<News>) : RecyclerView.Adapter<
             val ori = mConfiguration.orientation
             if (ori == Configuration.ORIENTATION_LANDSCAPE) {
                 //横屏
-                var activity = parent.context as NewsTitleActivity
+                var activity = parent.context as NewsActivity
                 var fragment =
                     activity.supportFragmentManager.findFragmentById(R.id.news_content_fragment) as NewsContentFragment
                 fragment.refresh(news)
@@ -55,5 +55,5 @@ class NewsTitleAdapter(private val newsList: List<News>) : RecyclerView.Adapter<
 
 data class NewsViewHolder(val view: View) :
     RecyclerView.ViewHolder(view) {
-    val newsTitle: TextView = view.findViewById(org.javamaster.fragmentlearning.R.id.news_title)
+    val newsTitle: TextView = view.findViewById(R.id.news_title)
 }

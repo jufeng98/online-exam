@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import butterknife.OnClick
 import org.javamaster.fragmentlearning.R
@@ -32,7 +31,7 @@ class SQLiteActivity : BaseAppActivity() {
     @OnClick(R.id.create_table)
     fun createTable() {
         var db = myDatabaseHelper.writableDatabase
-        Log.i(this::class.qualifiedName, db.path)
+        Toast.makeText(this, "${db.path}", Toast.LENGTH_SHORT).show()
     }
 
     @OnClick(R.id.insert_data)
@@ -52,8 +51,6 @@ class SQLiteActivity : BaseAppActivity() {
             db.execSQL("insert into Book(author,price,pages,name)values('yudong',88,535,'Java高手之路')")
             db.setTransactionSuccessful()
             Toast.makeText(this, "insert data succeed", Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            throw e
         } finally {
             db.endTransaction()
         }
@@ -82,7 +79,7 @@ class SQLiteActivity : BaseAppActivity() {
 
     @OnClick(R.id.query_data)
     fun queryData() {
-        var db = myDatabaseHelper.writableDatabase
+        var db = myDatabaseHelper.readableDatabase
         var cursor = db.query(
             "Book",
             arrayOf("id", "author", "price", "pages", "name"),
@@ -98,7 +95,7 @@ class SQLiteActivity : BaseAppActivity() {
         var cursor1 = db.rawQuery("select * from Book where author in (?,?)", arrayOf("Dan Brown", "yudong"))
         var str1 = getData(cursor1)
         cursor1.close()
-        Toast.makeText(this, str + str1, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "$str\n$str1", Toast.LENGTH_LONG).show()
     }
 
     private fun getData(cursor: Cursor): String {

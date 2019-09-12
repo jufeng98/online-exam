@@ -22,7 +22,6 @@ class ContentResolverActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_content_resolver)
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, contacts)
         contacts_view.adapter = adapter
         readContacts()
@@ -46,7 +45,7 @@ class ContentResolverActivity : BaseAppActivity() {
                     ContactsContract.CommonDataKinds.Phone.NUMBER
                 )
             )
-            contacts.add(displayName + "\r\n" + number)
+            contacts.add("姓名:$displayName\r\n号码:$number")
             cursor.moveToNext()
         }
         cursor.close()

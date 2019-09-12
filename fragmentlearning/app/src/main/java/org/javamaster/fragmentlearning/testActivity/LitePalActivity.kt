@@ -23,7 +23,7 @@ class LitePalActivity : BaseAppActivity() {
 
     @OnClick(R.id.insert_data_copy)
     fun insertData() {
-        var book = Book("yudong", 88.8, 678, "Java高手之路", "")
+        var book = Book(0, "yudong", 88.8, 678, "Java高手之路", "")
         book.save()
         book.pages = 666
         book.save()
@@ -49,8 +49,8 @@ class LitePalActivity : BaseAppActivity() {
     fun queryData() {
         var list = LitePal.findAll(Book::class.java)
         Toast.makeText(this, list.joinToString(), Toast.LENGTH_SHORT).show()
-        var book = LitePal.where("author=?", "yudong").order("id").find(Book::class.java)
-        Toast.makeText(this, book.toString(), Toast.LENGTH_SHORT).show()
+        var books = LitePal.where("author=?", "yudong").order("id").find(Book::class.java)
+        Toast.makeText(this, books.toString(), Toast.LENGTH_SHORT).show()
     }
 
     @OnClick(R.id.data_async)

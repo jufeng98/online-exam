@@ -8,8 +8,9 @@
         tools:context=".testActivity.NewsContentActivity">
 
     <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
+            android:text="标题"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/news_title"
             android:layout_weight="1"/>
@@ -21,7 +22,7 @@
             />
 
     <TextView
-            android:text="TextView"
+            android:text="内容"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/news_content"

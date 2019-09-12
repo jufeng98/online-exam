@@ -35,9 +35,7 @@ class ChatAdapter(private val messageList: List<ChatMessage>) : RecyclerView.Ada
 
 }
 
-data class ChatViewHolder(val view: View) :
-    RecyclerView.ViewHolder(view) {
+data class ChatViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val messageLeft: TextView = view.findViewById(R.id.chat_left)
     val messageRight: TextView = view.findViewById(R.id.chat_right)
-
 }

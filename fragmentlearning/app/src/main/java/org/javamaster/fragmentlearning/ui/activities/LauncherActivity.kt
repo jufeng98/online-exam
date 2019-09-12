@@ -1,9 +1,11 @@
 package org.javamaster.fragmentlearning.ui.activities
 
 import android.os.Bundle
+import org.javamaster.fragmentlearning.BuildConfig
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
+import org.javamaster.fragmentlearning.testActivity.ExerciseMainActivity
 
 /**
  * 启动页
@@ -17,6 +19,11 @@ class LauncherActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (BuildConfig.EXERCISE_MODE) {
+            ExerciseMainActivity.actionStart(this)
+            finish()
+            return
+        }
         var preferences = App.getLoginSharedPreferences()
         var rememberMeCookie = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         if (rememberMeCookie == "") {

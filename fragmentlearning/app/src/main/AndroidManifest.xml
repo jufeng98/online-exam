@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.javamaster.fragmentlearning">
-
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -47,11 +46,23 @@
             android:label="@string/app_name"
             android:roundIcon="@drawable/app_icon"
             android:supportsRtl="true"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize">
+        <activity
+                android:name=".testActivity.AnimationMoreActivity"
+                android:theme="@style/FruitActivityTheme">
+        </activity>
+        <activity
+                android:name=".testActivity.MaterialDesignActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".testActivity.StoragePathActivity">
+        </activity>
+        <activity android:name=".testActivity.ExerciseMainActivity">
+        </activity>
         <activity
                 android:name=".testActivity.FruitActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/FruitActivityTheme">
         </activity>
         <activity
                 android:name=".ui.activities.ForgetPwdActivity"
@@ -159,9 +170,13 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".testActivity.OfflineActivity">
-        </activity>
-
+        <receiver
+                android:name=".testBroadcastReceiver.ForceOfflineReceiver"
+                android:enabled="true">
+            <intent-filter>
+                <action android:name="org.javamaster.fragmentlearning.FORCE_OFFLINE"/>
+            </intent-filter>
+        </receiver>
         <receiver
                 android:name=".testBroadcastReceiver.MyLocalReceiver"
                 android:enabled="true"
@@ -194,17 +209,13 @@
         </activity>
         <activity android:name=".testActivity.NewsContentActivity">
         </activity>
-        <activity android:name=".testActivity.NewsTitleActivity">
+        <activity android:name=".testActivity.NewsActivity">
         </activity>
         <activity android:name=".testActivity.FragmentActivity">
         </activity>
         <activity android:name=".testActivity.ChatActivity">
         </activity>
-        <activity android:name=".testActivity.StaggeredViewActivity">
-        </activity>
         <activity android:name=".testActivity.RecyclerViewActivity">
-        </activity>
-        <activity android:name=".testActivity.ProgressDialogActivity">
         </activity>
         <activity android:name=".testActivity.AlertDialogActivity">
         </activity>
@@ -212,7 +223,7 @@
         </activity>
         <activity android:name=".testActivity.ListViewActivity">
         </activity>
-        <activity android:name=".testActivity.CustomerTitleActivity">
+        <activity android:name=".testActivity.ReplaceActionBarActivity">
         </activity>
         <activity
                 android:name=".testActivity.LoginInvalidActivity"
@@ -222,9 +233,7 @@
                 android:name=".ui.activities.OnboardingActivity"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity
-                android:name=".testActivity.MenuActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".testActivity.MenuActivity">
         </activity>
         <activity android:name=".testActivity.AnimationActivity">
         </activity>

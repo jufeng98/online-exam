@@ -13,8 +13,13 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.testActivity.SaveAndLoadActivity
 import java.util.concurrent.TimeUnit
 
+/**
+ * 服务的代码默认运行在主线程
+ */
 class MyService : Service() {
     var mBinder = DownBinder()
+    private var stopped = false
+    private var progress = 0
     override fun onCreate() {
         super.onCreate()
         Log.i(this::class.qualifiedName, "service first started")
@@ -24,19 +29,18 @@ class MyService : Service() {
             .setContentTitle("This is content title")
             .setContentText("This is content text")
             .setWhen(System.currentTimeMillis())
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+            .setSmallIcon(R.drawable.ic_menu_mini)
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_menu))
             .setContentIntent(pi)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setStyle(
                 NotificationCompat.BigPictureStyle().bigPicture(
                     BitmapFactory.decodeResource(
                         resources,
-                        R.mipmap.ic_launcher
+                        R.drawable.banana
                     )
                 )
             )
-            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
             .setDefaults(Notification.DEFAULT_ALL)
             .build()
@@ -45,15 +49,21 @@ class MyService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.i(this::class.qualifiedName, "service started")
+        var i = 0
         Thread {
-            //            耗时工作
-//            自动停止
+            // 模拟耗时工作
+            while (i++ < 6 && !stopped) {
+                Log.i(this::class.qualifiedName, "$i.后台服务运行中......")
+                TimeUnit.SECONDS.sleep(2)
+            }
 //            stopSelf()
+            stopped = true
         }.start()
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
+        stopped = true
         super.onDestroy()
         Log.i(this::class.qualifiedName, "service destroyed")
     }
@@ -61,21 +71,30 @@ class MyService : Service() {
     override fun onBind(intent: Intent): IBinder {
         return mBinder
     }
-}
 
-class DownBinder : Binder() {
-    private var progress: Int = 0
+
     fun startDownload() {
-        Log.i(this::class.qualifiedName, "start download")
         Thread {
-            while (progress <= 100) {
-                TimeUnit.SECONDS.sleep(1)
+            while (progress < 100 && !stopped) {
+                Log.i(this::class.qualifiedName, "后台服务下载中......")
                 progress += 10
+                TimeUnit.SECONDS.sleep(2)
             }
         }.start()
     }
 
-    fun progress(): Int {
+    fun getProgress(): Int {
         return progress
+    }
+
+
+    inner class DownBinder : Binder() {
+        fun startDownload() {
+            this@MyService.startDownload()
+        }
+
+        fun getProgress(): Int {
+            return this@MyService.getProgress()
+        }
     }
 }

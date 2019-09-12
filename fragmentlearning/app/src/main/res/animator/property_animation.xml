@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--sequentially	按顺序播放动画-->
+<!--together (default)	同时播放动画(默认)-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:ordering="together">
+    <!--propertyName:需要施加动画的属性-->
+    <!--valueEnd:动画结束时属性的值-->
+    <!--valueFrom:动画开始时属性的值,如果传入的是颜色,则当是16进制,如果不设置,则取属性的原始值-->
+    <!--duration:动画持续时间-->
+    <!--startOffset:start()方法被调用后动画延迟的时间-->
+    <!--repeatCount:默认0,表示不重复;-1:无限重复-->
+    <!--repeatMode:repeatCount>0此属性才有意义.reverse:反转;repeat:重复-->
+    <!--valueType:属性单位-->
+    <set android:ordering="sequentially">
+        <objectAnimator
+                android:propertyName="scaleX"
+                android:duration="1000"
+                android:valueFrom="0.5"
+                android:valueTo="2"
+                android:repeatCount="-1"
+                android:repeatMode="reverse"
+                android:valueType="floatType"/>
+        <!--不知道为何这个没起作用-->
+        <objectAnimator
+                android:propertyName="scaleY"
+                android:duration="1000"
+                android:valueTo="2"
+                android:repeatCount="-1"
+                android:repeatMode="reverse"
+                android:valueType="floatType"/>
+    </set>
+    <objectAnimator
+            android:propertyName="alpha"
+            android:duration="2000"
+            android:repeatCount="-1"
+            android:repeatMode="reverse"
+            android:valueFrom="0f"
+            android:valueTo="1f"/>
+</set>

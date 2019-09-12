@@ -14,7 +14,8 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.model.Fruit
 import org.javamaster.fragmentlearning.testActivity.FruitActivity
 
-class FruitAdapterMenu(private val mFruitList: List<Fruit>) : RecyclerView.Adapter<FruitAdapterMenu.ViewHolder>() {
+class MaterialDesignFruitAdapter(private val mFruitList: List<Fruit>) :
+    RecyclerView.Adapter<MaterialDesignFruitAdapter.ViewHolder>() {
 
     private var mContext: Context? = null
 

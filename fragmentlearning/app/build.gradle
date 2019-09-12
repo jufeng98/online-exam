@@ -29,9 +29,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"http://www.javamaster.org:9888\"")
+            buildConfigField("Boolean", "EXERCISE_MODE", "false")
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"http://${getIP()}:9888\"")
+            buildConfigField("Boolean", "EXERCISE_MODE", "true")
         }
     }
     buildToolsVersion = '28.0.3'
@@ -79,7 +81,9 @@ dependencies {
     releaseImplementation 'com.idescout.sql:sqlscout-server-noop:4.1'
 
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // Glide 一个强大的图片加载库,可以加载网络图片,GIF图片,甚至是本地视频
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
 }
 
 def getIP() {

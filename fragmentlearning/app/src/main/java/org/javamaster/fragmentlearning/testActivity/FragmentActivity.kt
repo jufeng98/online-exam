@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import butterknife.OnClick
 import org.javamaster.fragmentlearning.R
-import org.javamaster.fragmentlearning.testFragment.AnotherRightFragment
-import org.javamaster.fragmentlearning.testFragment.RightFragment
+import org.javamaster.fragmentlearning.testFragment.AnotherCenterFragment
+import org.javamaster.fragmentlearning.testFragment.CenterFragment
 
 class FragmentActivity : AppCompatActivity() {
     private var switchBool = true
@@ -17,22 +17,22 @@ class FragmentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_fragment)
         ButterKnife.bind(this)
         // 获取碎片
-        supportFragmentManager.findFragmentById(R.id.frame_fragment)
+        supportFragmentManager.findFragmentById(R.id.frame_fragment_center)
     }
 
     @OnClick(R.id.left_switch_fragment)
     fun switchFragment(view: View) {
         switchBool = !switchBool
         if (switchBool) {
-            replaceFragment(RightFragment())
+            replaceFragment(CenterFragment())
         } else {
-            replaceFragment(AnotherRightFragment())
+            replaceFragment(AnotherCenterFragment())
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
         var tran = supportFragmentManager.beginTransaction()
-        tran.replace(R.id.frame_fragment, fragment)
+        tran.replace(R.id.frame_fragment_center, fragment)
         // 添加到调用栈中
         tran.addToBackStack(null)
         tran.commit()

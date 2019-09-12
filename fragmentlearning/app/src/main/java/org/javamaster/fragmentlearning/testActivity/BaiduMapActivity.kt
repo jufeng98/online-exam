@@ -15,10 +15,11 @@ import org.javamaster.fragmentlearning.R
 class BaiduMapActivity : AppCompatActivity() {
 
     private lateinit var client: LocationClient
-    var firstLocate = true
+    private var firstLocate = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         client = LocationClient(applicationContext)
         SDKInitializer.initialize(applicationContext)
         setContentView(R.layout.activity_baidu_map)

@@ -6,7 +6,6 @@
         android:layout_height="match_parent"
         tools:context=".testActivity.FragmentActivity">
 
-
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -14,18 +13,18 @@
             android:name="org.javamaster.fragmentlearning.testFragment.LeftFragment"
             android:id="@+id/fragment_left"/>
 
+    <FrameLayout
+            android:id="@+id/frame_fragment_center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </FrameLayout>
+
     <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:name="org.javamaster.fragmentlearning.testFragment.RightFragment"
             android:id="@+id/fragment_right"/>
-
-    <FrameLayout
-            android:id="@+id/frame_fragment"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    </FrameLayout>
 
 </LinearLayout>

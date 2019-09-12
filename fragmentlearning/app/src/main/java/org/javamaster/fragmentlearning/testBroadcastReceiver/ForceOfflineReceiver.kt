@@ -16,7 +16,7 @@ import org.javamaster.fragmentlearning.ui.activities.LoginActivity
 class ForceOfflineReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        var alertDialog = AlertDialog.Builder(context)
+        var alertDialog = AlertDialog.Builder(App.context)
         alertDialog.setTitle(R.string.dialog_title_warm_tip)
         alertDialog.setMessage(R.string.login_invalided)
         alertDialog.setCancelable(false)

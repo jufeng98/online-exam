@@ -8,7 +8,7 @@
         tools:context=".testActivity.LocalBroadcastActivity">
 
     <Button
-            android:text="Button"
+            android:text="点击发送本地广播"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/send_local_broadcast"

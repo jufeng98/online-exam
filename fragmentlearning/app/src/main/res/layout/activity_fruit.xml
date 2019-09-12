@@ -5,13 +5,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
-
+    <!--fitsSystemWindows属性:使得view和系统状态栏融合-->
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:fitsSystemWindows="true">
-
+        <!--CollapsingToolbarLayout必须是AppBarLayout的子布局,AppBarLayout又必须是CoordinatorLayout的子布局-->
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
@@ -68,6 +68,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="@color/colorAppPrimary"
             android:layout_margin="16dp"
             android:src="@drawable/ic_comment"
             app:layout_anchor="@id/appBar"

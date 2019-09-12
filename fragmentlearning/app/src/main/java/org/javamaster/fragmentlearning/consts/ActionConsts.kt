@@ -6,4 +6,5 @@ package org.javamaster.fragmentlearning.consts
  */
 object ActionConsts {
     const val FORCE_OFFLINE = "org.javamaster.fragmentlearning.FORCE_OFFLINE"
+    const val LOCAL_MSG = "org.javamaster.fragmentlearning.LOCAL_MSG"
 }

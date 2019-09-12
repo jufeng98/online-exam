@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,18 +17,14 @@ class MakeCallActivity : BaseAppActivity() {
         return R.layout.activity_make_call
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     @OnClick(R.id.make_call)
     fun makeCall() {
         if (ContextCompat.checkSelfPermission(
-                this@MakeCallActivity,
+                this,
                 Manifest.permission.CALL_PHONE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this@MakeCallActivity, arrayOf(Manifest.permission.CALL_PHONE), 1)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), 1)
             return
         }
         call()

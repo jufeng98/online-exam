@@ -29,7 +29,7 @@ class FruitActivity : BaseAppActivity() {
     private fun generateFruitContent(fruitName: String): String {
         val fruitContent = StringBuilder()
         for (i in 0..499) {
-            fruitContent.append(fruitName)
+            fruitContent.append(fruitName).append(" ")
         }
         return fruitContent.toString()
     }

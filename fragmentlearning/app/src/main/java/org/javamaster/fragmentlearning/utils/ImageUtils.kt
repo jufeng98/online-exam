@@ -1,5 +1,6 @@
 package org.javamaster.fragmentlearning.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import org.javamaster.fragmentlearning.common.App
@@ -16,11 +17,7 @@ object ImageUtils {
     private const val USER_PHOTO_KEY = "userPhotoFileName"
 
     fun saveUserPhoto(suffix: String, t: ByteArray) {
-        var path = App.context.getExternalFilesDir("").path + "/img/"
-        var parent = File(path)
-        if (!parent.exists()) {
-            parent.mkdirs()
-        }
+        var path = App.context.getDir("img", Context.MODE_PRIVATE)
         var preferences = App.getLoginSharedPreferences()
         var editor = preferences.edit()
         editor.putString(USER_PHOTO_KEY, "user_photo$suffix")
@@ -32,9 +29,8 @@ object ImageUtils {
     }
 
     fun getUserPhoto(): Bitmap? {
-        var path = App.context.getExternalFilesDir("").path + "/img/"
-        var filePath = File(path)
-        if (!filePath.exists()) {
+        var path = App.context.getDir("img", Context.MODE_PRIVATE)
+        if (!path.exists()) {
             return null
         }
         var preferences = App.getLoginSharedPreferences()
@@ -42,7 +38,7 @@ object ImageUtils {
         if (name == "") {
             return null
         }
-        var file = File(filePath, preferences.getString(USER_PHOTO_KEY, ""))
+        var file = File(path, preferences.getString(USER_PHOTO_KEY, ""))
         if (!file.exists()) {
             return null
         }

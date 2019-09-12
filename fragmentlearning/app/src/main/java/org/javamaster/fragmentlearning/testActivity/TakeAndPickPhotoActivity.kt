@@ -14,24 +14,25 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_take_photo.*
+import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 import java.io.File
 
 
 class TakeAndPickPhotoActivity : BaseAppActivity() {
-    lateinit var imageUri: Uri
+    private lateinit var imageUri: Uri
     override fun initContentView(): Int? {
-        return org.javamaster.fragmentlearning.R.layout.activity_take_photo
+        return R.layout.activity_take_photo
     }
 
-    @OnClick(org.javamaster.fragmentlearning.R.id.take_photo)
+    @OnClick(R.id.take_photo)
     fun takePhoto() {
         var file = File(externalCacheDir, "output_image.jpg")
         if (file.exists()) {
             file.delete()
         }
         imageUri = if (Build.VERSION.SDK_INT >= 24) {
-            FileProvider.getUriForFile(this@TakeAndPickPhotoActivity, "org.javamaster", file)
+            FileProvider.getUriForFile(this, "org.javamaster", file)
         } else {
             Uri.fromFile(file)
         }
@@ -41,7 +42,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
         imageView8.setImageBitmap(null)
     }
 
-    @OnClick(org.javamaster.fragmentlearning.R.id.pick_photo)
+    @OnClick(R.id.pick_photo)
     fun pickPhoto() {
         var intent = Intent("android.intent.action.GET_CONTENT")
         intent.type = "image/*"
@@ -56,7 +57,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
                     var map = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
                     imageView8.setImageBitmap(map)
                 } else {
-                    Toast.makeText(this@TakeAndPickPhotoActivity, "你取消了选择", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "你取消了拍摄", Toast.LENGTH_SHORT).show()
                 }
             }
             2 -> {
@@ -68,6 +69,8 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
                         // 4.4以下系统使用这个方法处理图片
                         data?.let { handleImageBeforeKitKat(it) }
                     }
+                } else {
+                    Toast.makeText(this, "你取消了选择", Toast.LENGTH_SHORT).show()
                 }
             }
         }

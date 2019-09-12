@@ -44,8 +44,13 @@ class MyContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        var affect = LitePal.getDatabase().insert("book", null, values)
-        return Uri.parse("content://$AUTHORITY/book/$affect")
+        var book = Book()
+        book.author = values!!["author"] as String
+        book.name = values["name"] as String
+        book.pages = values["pages"] as Int
+        book.price = values["price"] as Double
+        book.save()
+        return Uri.parse("content://$AUTHORITY/book/${book.id}")
     }
 
     override fun onCreate(): Boolean {

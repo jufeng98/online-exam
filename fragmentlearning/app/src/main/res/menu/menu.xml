@@ -4,10 +4,11 @@
     <item
             android:id="@+id/item1"
             android:title="设置"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/sign_up_wechat"
             app:showAsAction="ifRoom|withText"/>
     <item
             android:id="@+id/submenu"
+            android:icon="@drawable/sign_up_qq"
             android:title="子菜单"
             app:showAsAction="ifRoom|withText">
         <menu>

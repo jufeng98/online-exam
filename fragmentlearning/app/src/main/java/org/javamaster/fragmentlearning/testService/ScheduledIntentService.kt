@@ -15,21 +15,14 @@ import java.util.*
 
 
 class ScheduledIntentService : Service() {
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        object : AsyncTask<Void, Int, String>() {
-            override fun doInBackground(vararg params: Void?): String {
-                var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                return format.format(Date())
-            }
 
-            override fun onPostExecute(result: String?) {
-                listener.success(result!!)
-            }
-        }.execute()
+        Task().execute()
 
         val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 //        第一个参数是一个整型参数，用于指定 AlarmManager的
@@ -42,13 +35,23 @@ class ScheduledIntentService : Service() {
 //        以获取到系统开机至今所经历时间的毫秒数，使用 System.currentTimeMillis()方法可以获取
 //        到 1970年 1 月 1日 0点至今所经历时间的毫秒数。
         val triggerAtTime = SystemClock.elapsedRealtime() + 5 * 1000
-        var intent = Intent(this, ScheduledReceiver::class.java)
-        var pi = PendingIntent
-            .getBroadcast(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
+        val intent = Intent(this, ScheduledReceiver::class.java)
+        val pi = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi)
 //        要求 Alarm任务的执行时间必须准备无误
 //        manager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi)
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    class Task : AsyncTask<Void, Int, String>() {
+        override fun doInBackground(vararg params: Void?): String {
+            var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE)
+            return format.format(Date())
+        }
+
+        override fun onPostExecute(result: String?) {
+            listener.success(result!!)
+        }
     }
 
     companion object {

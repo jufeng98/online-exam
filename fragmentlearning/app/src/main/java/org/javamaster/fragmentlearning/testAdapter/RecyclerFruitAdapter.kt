@@ -14,14 +14,16 @@ import org.javamaster.fragmentlearning.data.model.Fruit
  * @author yudong
  * @date 2019/8/25
  */
-class RecyclerFruitAdapter(private val fruitList: List<Fruit>) : RecyclerView.Adapter<RecyclerViewHolder>() {
+class RecyclerFruitAdapter(val type: Int, private val fruitList: List<Fruit>) :
+    RecyclerView.Adapter<RecyclerViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-//        var view = LayoutInflater.from(parent.context).inflate(R.layout.fruit_item_layout, parent, false)
-//        横向滚动布局
-//        var view = LayoutInflater.from(parent.context).inflate(R.layout.fruit_item_horizontal_layout, parent, false)
-//        瀑布流布局
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.fruit_item_staggered_layout, parent, false)
-
+        var view = when (type) {
+            1 -> LayoutInflater.from(parent.context).inflate(R.layout.fruit_item_layout, parent, false)
+            2 -> LayoutInflater.from(parent.context)
+                .inflate(R.layout.fruit_item_horizontal_layout, parent, false) // 横向滚动布局
+            else -> LayoutInflater.from(parent.context)
+                .inflate(R.layout.fruit_item_staggered_layout, parent, false) // 瀑布流布局
+        }
         var holder = RecyclerViewHolder(view)
         holder.view.setOnClickListener {
             var position = holder.adapterPosition

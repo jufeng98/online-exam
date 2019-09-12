@@ -7,6 +7,6 @@ import android.widget.Toast
 
 class MyLocalReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        Toast.makeText(context, "这是本地广播:" + intent.getStringExtra("myOwnString"), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "来自本地广播接收器的消息:" + intent.getStringExtra("myOwnString"), Toast.LENGTH_LONG).show()
     }
 }

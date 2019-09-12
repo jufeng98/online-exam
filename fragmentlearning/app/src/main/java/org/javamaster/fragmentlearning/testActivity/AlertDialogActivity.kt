@@ -1,7 +1,9 @@
 package org.javamaster.fragmentlearning.testActivity
 
-import android.content.DialogInterface
+import android.app.ProgressDialog
+import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import butterknife.OnClick
 import org.javamaster.fragmentlearning.R
@@ -14,12 +16,34 @@ class AlertDialogActivity : BaseAppActivity() {
 
     @OnClick(R.id.alert_button)
     fun showAlertDialog(view: View) {
-        var alertDialog = AlertDialog.Builder(this@AlertDialogActivity)
+        var alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("这是警告框")
-        alertDialog.setMessage("很重要的信息")
+//        alertDialog.setMessage("很重要的信息")
+        alertDialog.setItems(arrayOf("Apple", "Orange")) { _, which ->
+            Toast.makeText(this, "you click $which", Toast.LENGTH_SHORT).show()
+        }
+        alertDialog.setPositiveButton("OK") { _, which ->
+            Toast.makeText(this, "you click $which", Toast.LENGTH_SHORT).show()
+        }
+        alertDialog.setNegativeButton("Cancel") { _, which ->
+            Toast.makeText(this, "you click $which", Toast.LENGTH_SHORT).show()
+        }
         alertDialog.setCancelable(false)
-        alertDialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which -> })
-        alertDialog.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> })
         alertDialog.show()
+    }
+
+    @OnClick(R.id.button16)
+    fun showActivityAlertDialog(view: View) {
+        var intent = Intent(this, LoginInvalidActivity::class.java)
+        startActivity(intent)
+    }
+
+    @OnClick(R.id.alert_button1)
+    fun showAlertDialog1(view: View) {
+        var progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("这是进度条警告框")
+        progressDialog.setMessage("加载中")
+        progressDialog.setCancelable(true)
+        progressDialog.show()
     }
 }

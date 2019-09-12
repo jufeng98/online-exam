@@ -12,6 +12,7 @@ import android.telephony.SmsManager
 import android.widget.Toast
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_sms.*
+import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 
 
@@ -21,7 +22,7 @@ class SmsActivity : BaseAppActivity() {
     private lateinit var sendStatusReceiver: SendStatusReceiver
 
     override fun initContentView(): Int? {
-        return org.javamaster.fragmentlearning.R.layout.activity_sms
+        return R.layout.activity_sms
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class SmsActivity : BaseAppActivity() {
         unregisterReceiver(sendStatusReceiver)
     }
 
-    @OnClick(org.javamaster.fragmentlearning.R.id.button14)
+    @OnClick(R.id.button14)
     fun send() {
         var number = textView17.text.toString()
         var content = editText3.text.toString()

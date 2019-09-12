@@ -8,6 +8,7 @@ import butterknife.BindString
 import butterknife.ButterKnife
 import butterknife.OnClick
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.consts.ActionConsts
 
 class MyBroadcastActivity : AppCompatActivity() {
 
@@ -28,5 +29,11 @@ class MyBroadcastActivity : AppCompatActivity() {
         sendBroadcast(intent)
         // 发送有序广播
 //        sendBroadcast(intent, null)
+    }
+
+    @OnClick(R.id.offline)
+    fun sendBroadcast1(view: View) {
+        var intent = Intent(ActionConsts.FORCE_OFFLINE)
+        sendBroadcast(intent)
     }
 }
