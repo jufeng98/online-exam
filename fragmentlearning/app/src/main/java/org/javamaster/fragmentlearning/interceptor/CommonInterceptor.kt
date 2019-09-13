@@ -37,6 +37,9 @@ class CommonInterceptor : Interceptor {
                 localBroadcastManager.sendBroadcast(intent)
                 throw LoginException(AppConsts.LOGIN_ERROR_CODE, App.context.getString(R.string.login_invalided))
             }
+            404 -> {
+                throw IOException("404:${request.url}")
+            }
             in 500..599 -> {
                 throw IOException(App.context.getString(AppConsts.ERROR_MSG))
             }

@@ -9,6 +9,7 @@ import org.javamaster.b2c.core.model.vo.CreateKnowledgePointsResVo;
 import org.javamaster.b2c.core.model.vo.DelKnowledgePointsReqVo;
 import org.javamaster.b2c.core.model.vo.EditKnowledgePointsReqVo;
 import org.javamaster.b2c.core.model.vo.FindKnowledgePointsListReqVo;
+import org.javamaster.b2c.core.model.vo.KnowledgesQuestionNumVo;
 import org.javamaster.b2c.core.service.KnowledgePointsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 知识点管理
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author yudong
  * @date 2019/08/07
  */
+@Validated
 @RestController
 @RequestMapping("/core/knowledgePoints")
 public class KnowledgePointsController {
@@ -47,9 +49,9 @@ public class KnowledgePointsController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/findKnowledgesQuestionNum")
-    public Result<Map<String, Integer>> findKnowledgesQuestionNum() {
-        Map<String, Integer> resVo = knowledgePointsService.findKnowledgesQuestionNum();
-        Result<Map<String, Integer>> result = new Result(resVo);
+    public Result<List<KnowledgesQuestionNumVo>> findKnowledgesQuestionNum(@NotBlank String sectionsCode) {
+        List<KnowledgesQuestionNumVo> resVo = knowledgePointsService.findKnowledgesQuestionNum(sectionsCode);
+        Result<List<KnowledgesQuestionNumVo>> result = new Result(resVo);
         return result;
     }
 

@@ -92,4 +92,5 @@
     <string name="topics_type_dev">开发基础</string>
     <string name="glossary">词汇表</string>
     <string name="reset_progress">重置进度</string>
+    <string name="question_num">个问题</string>
 </resources>

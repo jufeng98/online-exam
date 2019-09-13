@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="5dp"
+        app:cardCornerRadius="4dp">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/linear_layout"
+            android:layout_height="200dp">
+
+        <TextView
+                android:id="@+id/num_text"
+                android:text="1/5"
+                android:paddingEnd="10dp"
+                android:textSize="20sp"
+                android:textAlignment="viewEnd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
+        <TextView
+                android:text="什么是Java?"
+                android:textSize="25sp"
+                android:gravity="center_horizontal"
+                android:id="@+id/knowledges_title"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+
+        <TextView
+                android:text="1个问题"
+                android:textSize="20sp"
+                android:paddingStart="10sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorAccent"
+                android:background="@color/colorAppPrimary"
+                android:id="@+id/questions_num"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -81,7 +81,6 @@ class LearnFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        swipe_refresh.isRefreshing = true
         val listener = object : OperationListener<List<Topics>> {
             override fun success(t: List<Topics>) {
                 swipe_refresh.isRefreshing = false
@@ -101,8 +100,8 @@ class LearnFragment : Fragment() {
         val topicsList = LitePal.findAll(Topics::class.java)
         if (topicsList.isNotEmpty()) {
             initAdapter(topicsList)
-            swipe_refresh.isRefreshing = false
         } else {
+            swipe_refresh.isRefreshing = true
             TopicsAsyncTask(learnService, listener).execute()
         }
         swipe_refresh.setOnRefreshListener {
@@ -112,7 +111,6 @@ class LearnFragment : Fragment() {
 
     @SuppressLint("InflateParams")
     private fun initAdapter(topicsList: List<Topics>) {
-        swipe_refresh.isRefreshing = false
         val map = topicsList.groupBy { it.topicsType }
         val topicsPlaceholder: LinearLayout = view!!.findViewById(R.id.topics_placeholder)
         topicsPlaceholder.removeAllViews()

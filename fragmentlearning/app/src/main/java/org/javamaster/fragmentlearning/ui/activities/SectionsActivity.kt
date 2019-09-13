@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_sections.*
 import kotlinx.android.synthetic.main.fragment_learn.swipe_refresh
@@ -13,7 +12,6 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.SectionsAdapter
 import org.javamaster.fragmentlearning.asyncTask.SectionsAsyncTask
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.entity.Sections
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
@@ -37,13 +35,14 @@ class SectionsActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        app_tool_bar.title = intent.getStringExtra("topicsName")
+        val topicsCode = intent.getStringExtra("topicsCode")
         setSupportActionBar(app_tool_bar)
+        supportActionBar!!.title = intent.getStringExtra("topicsName")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val listener = object : OperationListener<List<Sections>> {
             override fun success(t: List<Sections>) {
                 swipe_refresh.isRefreshing = false
-                LitePal.deleteAll(Sections::class.java)
+                LitePal.deleteAll(Sections::class.java, "topicsCode=?", topicsCode)
                 // 缓存到数据库
                 LitePal.saveAll(t)
                 initAdapter(t)
@@ -51,21 +50,18 @@ class SectionsActivity : BaseAppActivity() {
 
             override fun fail(errorCode: Int, errorMsg: String) {
                 swipe_refresh.isRefreshing = false
-                if (errorCode != AppConsts.LOGIN_ERROR_CODE) {
-                    Toast.makeText(this@SectionsActivity, errorMsg, Toast.LENGTH_SHORT).show()
-                }
+                super.fail(errorCode, errorMsg)
             }
         }
-        swipe_refresh.isRefreshing = true
-        val sectionsList = LitePal.findAll(Sections::class.java)
+        val sectionsList = LitePal.where("topicsCode=?", topicsCode).find(Sections::class.java)
         if (sectionsList.isNotEmpty()) {
             initAdapter(sectionsList)
-            swipe_refresh.isRefreshing = false
         } else {
-            SectionsAsyncTask(learnService, listener).execute(intent.getStringExtra("topicsCode"))
+            swipe_refresh.isRefreshing = true
+            SectionsAsyncTask(learnService, listener).execute(topicsCode)
         }
         swipe_refresh.setOnRefreshListener {
-            SectionsAsyncTask(learnService, listener).execute(intent.getStringExtra("topicsCode"))
+            SectionsAsyncTask(learnService, listener).execute(topicsCode)
         }
     }
 

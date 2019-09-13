@@ -8,6 +8,7 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.entity.Knowledges
+import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
 import org.javamaster.fragmentlearning.data.entity.Sections
 import org.javamaster.fragmentlearning.data.entity.Topics
 import org.javamaster.fragmentlearning.data.model.Page
@@ -82,10 +83,10 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Knowledges>>>() {})
     }
 
-    override fun findKnowledgesQuestionNum(): ResultVo<Map<String, Int>> {
+    override fun findKnowledgesQuestionNum(sectionsCode: String): ResultVo<List<KnowledgesQuestionNumVo>> {
         val response: Response
         try {
-            val map = mutableMapOf<String, Any>()
+            val map = mutableMapOf("sectionsCode" to sectionsCode)
             response = NetUtils.postForResponse(AppConsts.FIND_KNOWLEDGES_QUESTION_NUM, map)
         } catch (e: LoginException) {
             return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
@@ -97,7 +98,7 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
             )
         }
         val resJsonStr: String = response.body!!.string()
-        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Map<String, Int>>>() {})
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<KnowledgesQuestionNumVo>>>() {})
     }
 
     private fun getPage(): Page {

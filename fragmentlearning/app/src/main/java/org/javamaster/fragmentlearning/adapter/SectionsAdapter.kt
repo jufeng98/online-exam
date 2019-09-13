@@ -42,8 +42,8 @@ class SectionsAdapter(private var sectionsList: List<Sections>) : RecyclerView.A
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var myCourseProgressBar: RoundProgressBar = itemView.findViewById(R.id.holder_progress_bar)
-        var topicsCoverImg: CircleImageView = itemView.findViewById(R.id.holder_cover_img)
-        var topicsName: TextView = itemView.findViewById(R.id.holder_name)
+        val myCourseProgressBar: RoundProgressBar = itemView.findViewById(R.id.holder_progress_bar)
+        val topicsCoverImg: CircleImageView = itemView.findViewById(R.id.holder_cover_img)
+        val topicsName: TextView = itemView.findViewById(R.id.holder_name)
     }
 }
