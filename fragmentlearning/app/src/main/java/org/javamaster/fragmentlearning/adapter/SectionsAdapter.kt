@@ -9,39 +9,35 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import org.javamaster.fragmentlearning.R
-import org.javamaster.fragmentlearning.data.entity.Topics
-import org.javamaster.fragmentlearning.ui.activities.SectionsActivity
+import org.javamaster.fragmentlearning.data.entity.Sections
+import org.javamaster.fragmentlearning.ui.activities.KnowledgesActivity
 import org.javamaster.fragmentlearning.view.RoundProgressBar
 
 
 /**
  * @author yudong
- * @date 2019/9/7
+ * @date 2019/9/12
  */
-class LearnAdapter(private var topicsList: List<Topics>, private val needProgressBar: Boolean) :
-    RecyclerView.Adapter<LearnAdapter.ViewHolder>() {
+class SectionsAdapter(private var sectionsList: List<Sections>) : RecyclerView.Adapter<SectionsAdapter.ViewHolder>() {
     private lateinit var mContext: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mContext = parent.context
-        val view = LayoutInflater.from(mContext).inflate(R.layout.fragment_learn_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.learn_section_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return topicsList.size
+        return sectionsList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val topics = topicsList[position]
+        val sections = sectionsList[position]
         holder.myCourseProgressBar.progress = 0
-        if (!needProgressBar) {
-            holder.myCourseProgressBar.visibility = View.INVISIBLE
-        }
-        holder.topicsName.text = topics.topicsName
-        val bitmap = BitmapFactory.decodeByteArray(topics.topicsCoverImage, 0, topics.topicsCoverImage.size)
+        holder.topicsName.text = sections.sectionsName
+        val bitmap = BitmapFactory.decodeByteArray(sections.sectionsCoverImage, 0, sections.sectionsCoverImage.size)
         holder.topicsCoverImg.setImageBitmap(bitmap)
         holder.topicsCoverImg.setOnClickListener {
-            SectionsActivity.actionStart(mContext, topics.topicsCode, topics.topicsName)
+            KnowledgesActivity.actionStart(mContext, sections.sectionsCode, sections.sectionsName)
         }
     }
 

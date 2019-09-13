@@ -1,7 +1,6 @@
 package org.javamaster.fragmentlearning.data
 
 /**
- * Data validation state of the login form.
  * @author yudong
  * @date 2019/8/18
  */

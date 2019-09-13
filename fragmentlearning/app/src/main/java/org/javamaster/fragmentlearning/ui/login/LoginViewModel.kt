@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.LoginFormState
-import org.javamaster.fragmentlearning.data.LoginService
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
+import org.javamaster.fragmentlearning.service.LoginService
 import java.util.regex.Pattern
 import javax.inject.Inject
 

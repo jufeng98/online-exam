@@ -13,6 +13,7 @@
             android:layout_height="wrap_content">
 
         <ScrollView
+                android:id="@+id/learn_fragment_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -24,13 +25,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.SearchView
+                <SearchView
                         android:id="@+id/search"
-                        app:iconifiedByDefault="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:queryHint="搜索">
-                </androidx.appcompat.widget.SearchView>
+                </SearchView>
+
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/topics_placeholder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

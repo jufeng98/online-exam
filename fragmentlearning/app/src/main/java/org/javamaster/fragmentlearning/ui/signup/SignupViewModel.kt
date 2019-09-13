@@ -5,12 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.javamaster.fragmentlearning.R
-import org.javamaster.fragmentlearning.data.LoginService
 import org.javamaster.fragmentlearning.data.SignupFormState
 import org.javamaster.fragmentlearning.data.model.CreateOrEditUsersForm
 import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
+import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import javax.inject.Inject
 
@@ -38,14 +38,14 @@ class SignupViewModel @Inject constructor(private val LoginService: LoginService
     }
 
     fun signup(email: String, username: String, password: String) {
-        var createUsersReqVo = CreateUsersReqVo()
-        var createOrEditUsersForm = CreateOrEditUsersForm()
+        val createUsersReqVo = CreateUsersReqVo()
+        val createOrEditUsersForm = CreateOrEditUsersForm()
         createUsersReqVo.createOrEditUsersForm = createOrEditUsersForm
         createOrEditUsersForm.email = email
         createOrEditUsersForm.username = username
         createOrEditUsersForm.password = password
         Thread {
-            var resultVo = LoginService.signUp(createUsersReqVo)
+            val resultVo = LoginService.signUp(createUsersReqVo)
             _signupResult.postValue(resultVo)
         }.start()
     }

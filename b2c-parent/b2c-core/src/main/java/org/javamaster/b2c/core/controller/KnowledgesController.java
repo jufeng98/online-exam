@@ -12,6 +12,7 @@ import org.javamaster.b2c.core.model.vo.FindKnowledgesListReqVo;
 import org.javamaster.b2c.core.service.KnowledgesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +36,7 @@ public class KnowledgesController {
     @Autowired
     private KnowledgesService knowledgesService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/findKnowledgesList")
     public Result<List<Knowledges>> findKnowledgesList(@Validated @RequestBody FindKnowledgesListReqVo reqVo) {
         PageInfo<Knowledges> resVo = knowledgesService.findKnowledgesList(reqVo);

@@ -28,6 +28,7 @@ class ForgetPwdActivity : BaseAppActivity() {
         finish()
     }
 
+    @Suppress("DEPRECATION")
     @OnTextChanged(R.id.input_email)
     fun dataChange(text: CharSequence) {
         if (!Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
@@ -47,7 +48,7 @@ class ForgetPwdActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Context) {
-            var intent = Intent(context, ForgetPwdActivity::class.java)
+            val intent = Intent(context, ForgetPwdActivity::class.java)
             context.startActivity(intent)
         }
     }

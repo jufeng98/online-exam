@@ -90,4 +90,6 @@
     <string name="topics_type_lang">编程语言</string>
     <string name="topics_type_data">数据科学</string>
     <string name="topics_type_dev">开发基础</string>
+    <string name="glossary">词汇表</string>
+    <string name="reset_progress">重置进度</string>
 </resources>

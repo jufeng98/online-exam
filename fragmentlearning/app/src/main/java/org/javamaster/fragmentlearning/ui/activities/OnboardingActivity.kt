@@ -123,7 +123,7 @@ class OnboardingActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Context) {
-            var intent = Intent(context, OnboardingActivity::class.java)
+            val intent = Intent(context, OnboardingActivity::class.java)
             context.startActivity(intent)
         }
     }

@@ -1,15 +1,16 @@
-package org.javamaster.fragmentlearning.data.model;
+package org.javamaster.fragmentlearning.data.entity;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
 
 /**
  * @author yudong
  */
-public class Topics {
+public class Topics extends LitePalSupport {
     /**
      * 主键id
      */

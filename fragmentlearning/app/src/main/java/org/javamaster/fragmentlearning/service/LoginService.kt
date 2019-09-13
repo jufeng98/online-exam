@@ -1,4 +1,4 @@
-package org.javamaster.fragmentlearning.data
+package org.javamaster.fragmentlearning.service
 
 import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo

@@ -76,7 +76,7 @@ class SignUpActivity : BaseAppActivity() {
 
     @OnClick(R.id.user_term)
     fun showUserTerm() {
-        var intent = Intent()
+        val intent = Intent()
         intent.data = Uri.parse("https://www.baidu.com")
         intent.action = Intent.ACTION_VIEW
         startActivity(intent)
@@ -89,7 +89,7 @@ class SignUpActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Context) {
-            var intent = Intent(context, SignUpActivity::class.java)
+            val intent = Intent(context, SignUpActivity::class.java)
             context.startActivity(intent)
         }
     }

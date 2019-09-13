@@ -27,9 +27,10 @@ import java.util.concurrent.TimeUnit
  */
 abstract class BaseAppActivity : AppCompatActivity() {
     private lateinit var forceOfflineReceiver: ForceOfflineReceiver
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var viewId = initContentView()
+        val viewId = initContentView()
         if (viewId != null) setContentView(viewId)
         val color = resources.getColor(R.color.colorAppPrimary)
         val drawable = ColorDrawable(color)
@@ -44,18 +45,16 @@ abstract class BaseAppActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        var intentFilter = IntentFilter(ActionConsts.FORCE_OFFLINE)
-        var localBroadcastManager = LocalBroadcastManager.getInstance(this)
+        val intentFilter = IntentFilter(ActionConsts.FORCE_OFFLINE)
+        val localBroadcastManager = LocalBroadcastManager.getInstance(this)
         forceOfflineReceiver = ForceOfflineReceiver()
         localBroadcastManager.registerReceiver(forceOfflineReceiver, intentFilter)
     }
 
     override fun onPause() {
         super.onPause()
-        var localBroadcastManager = LocalBroadcastManager.getInstance(this)
-        if (forceOfflineReceiver != null) {
-            localBroadcastManager.unregisterReceiver(forceOfflineReceiver)
-        }
+        val localBroadcastManager = LocalBroadcastManager.getInstance(this)
+        localBroadcastManager.unregisterReceiver(forceOfflineReceiver)
     }
 
     override fun onDestroy() {
@@ -65,7 +64,7 @@ abstract class BaseAppActivity : AppCompatActivity() {
 
     private var exitTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode != KeyEvent.KEYCODE_BACK || event.action !== KeyEvent.ACTION_DOWN) {
+        if (keyCode != KeyEvent.KEYCODE_BACK || event.action != KeyEvent.ACTION_DOWN) {
             return super.onKeyDown(keyCode, event)
         }
         if (App.getActivitiesSize() > 1) {
@@ -97,7 +96,7 @@ abstract class BaseAppActivity : AppCompatActivity() {
     inner class ForceOfflineReceiver : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-            var alertDialog = AlertDialog.Builder(this@BaseAppActivity)
+            val alertDialog = AlertDialog.Builder(this@BaseAppActivity)
             alertDialog.setTitle(R.string.dialog_title_warm_tip)
             alertDialog.setMessage(R.string.login_invalided)
             alertDialog.setCancelable(false)

@@ -48,6 +48,15 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
+        <activity android:name=".ui.activities.KnowledgesActivity">
+        </activity>
+        <activity
+                android:name=".ui.activities.SectionsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.activities.MainActivity"/>
+        </activity>
         <activity
                 android:name=".testActivity.AnimationMoreActivity"
                 android:theme="@style/FruitActivityTheme">

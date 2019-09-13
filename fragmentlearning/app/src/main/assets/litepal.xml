@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="BookStoreCopy"/>
-    <version value="1"/>
+    <dbname value="LearnDatabase"/>
+    <version value="5"/>
     <list>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Book"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.Topics"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.Sections"/>
     </list>
 </litepal>

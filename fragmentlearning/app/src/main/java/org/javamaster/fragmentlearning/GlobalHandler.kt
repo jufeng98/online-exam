@@ -51,17 +51,17 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
     }
 
     private fun uploadToServer(e: Throwable?) {
-        var outputStream = ByteArrayOutputStream()
+        val outputStream = ByteArrayOutputStream()
         val printWriter = PrintWriter(outputStream)
-        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
+        val time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
         printWriter.println(time)
         e?.printStackTrace(printWriter)
         dumpDeviceInfo(printWriter)
         printWriter.close()
-        var bytes = outputStream.toByteArray()
+        val bytes = outputStream.toByteArray()
         outputStream.close()
-        var str = Base64Utils.encodeUrlSafe(bytes)
-        var map = mapOf("fileName" to "fragmentlearning.log", "encodeBase64Str" to str)
+        val str = Base64Utils.encodeUrlSafe(bytes)
+        val map = mapOf("fileName" to "fragmentlearning.log", "encodeBase64Str" to str)
         NetUtils.postForResponse(AppConsts.UPLOAD_EXCEPTIONS, map, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.e(this.javaClass.name, "upload error", e)
@@ -79,13 +79,13 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
             Log.w(this.javaClass.name, "sdcard unmounted,skip dump exception to sdcard")
             return
         }
-        var path = context.getExternalFilesDir("crashlog")
+        val path = context.getExternalFilesDir("crashlog")!!
         if (!path.exists()) {
             path.mkdirs()
         }
-        var time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
-        var fileName = "$path$time-crash.log"
-        var file = File(fileName)
+        val time = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.SIMPLIFIED_CHINESE).format(Date())
+        val fileName = "$path$time-crash.log"
+        val file = File(fileName)
         if (!file.exists()) {
             file.createNewFile()
         }
@@ -97,8 +97,8 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
     }
 
     private fun dumpDeviceInfo(printWriter: PrintWriter) {
-        var packageManager = context.packageManager
-        var packageInfo = packageManager.getPackageInfo(context.packageName, PackageManager.GET_ACTIVITIES)
+        val packageManager = context.packageManager
+        val packageInfo = packageManager.getPackageInfo(context.packageName, PackageManager.GET_ACTIVITIES)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             printWriter.println("App Version: " + packageInfo.versionName + "_" + packageInfo.longVersionCode)
         }

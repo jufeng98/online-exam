@@ -5,7 +5,7 @@ import java.util.*
 
 /**
  * @author yudong
- * @date 2019/6/10
+ * @date 2019/8/10
  */
 enum class TopicsTypeEnum(val code: Int, val msg: Int) {
     CODING(1, R.string.topics_type_coding),

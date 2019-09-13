@@ -1,5 +1,6 @@
 package org.javamaster.fragmentlearning.utils
 
+import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -35,14 +36,14 @@ object NetUtils {
      * form表单格式请求
      */
     fun postForResponse(reqUrl: String, reqMap: Map<String, String>): Response {
-        var client = getClient()
-        var builder = FormBody.Builder()
+        val client = getClient()
+        val builder = FormBody.Builder()
         for (entry in reqMap) {
             builder.add(entry.key, entry.value)
         }
-        var formBody = builder.build()
-        var request = Request.Builder().url(reqUrl).post(formBody).build()
-        var call = client.newCall(request)
+        val formBody = builder.build()
+        val request = Request.Builder().url(reqUrl).post(formBody).build()
+        val call = client.newCall(request)
         return call.execute()
     }
 
@@ -54,13 +55,13 @@ object NetUtils {
         reqMap: Map<String, String>,
         callback: Callback
     ) {
-        var client = getClient()
-        var builder = FormBody.Builder()
+        val client = getClient()
+        val builder = FormBody.Builder()
         for (entry in reqMap) {
             builder.add(entry.key, entry.value)
         }
-        var formBody = builder.build()
-        var request = Request.Builder().url(reqUrl).post(formBody).build()
+        val formBody = builder.build()
+        val request = Request.Builder().url(reqUrl).post(formBody).build()
         client.newCall(request).enqueue(callback)
     }
 
@@ -68,10 +69,10 @@ object NetUtils {
      * json格式请求
      */
     fun postForResponse(reqUrl: String, reqObj: Any): Response {
-        var client = getClient()
+        val client = getClient()
         val body = App.objectMapper.writeValueAsString(reqObj).toRequestBody(JSON)
-        var request = Request.Builder().url(reqUrl).post(body).build()
-        var call = client.newCall(request)
+        val request = Request.Builder().url(reqUrl).post(body).build()
+        val call = client.newCall(request)
         return call.execute()
     }
 
@@ -79,12 +80,13 @@ object NetUtils {
      * 文件流请求
      */
     fun postForStream(reqUrl: String, operationListener: OperationListener<ByteArray>) {
-        var url = AppConsts.BASE_URL + AppConsts.APP_CONTEXT + reqUrl
-        var client = getClient()
-        var request = Request.Builder().url(url).build()
+        val url = AppConsts.BASE_URL + AppConsts.APP_CONTEXT + reqUrl
+        val client = getClient()
+        val request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                operationListener.fail(e)
+                Log.e(this::class.qualifiedName, "", e)
+                operationListener.fail(AppConsts.ERROR_CODE, App.context.getString(AppConsts.ERROR_MSG))
             }
 
             override fun onResponse(call: Call, response: Response) {

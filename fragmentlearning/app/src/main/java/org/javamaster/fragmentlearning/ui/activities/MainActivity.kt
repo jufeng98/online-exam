@@ -1,6 +1,6 @@
 package org.javamaster.fragmentlearning.ui.activities
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -17,10 +17,10 @@ import kotlinx.android.synthetic.main.tab_bottom_layout.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.data.LoginService
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.fragment.*
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
+import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import javax.inject.Inject
 
@@ -44,16 +44,15 @@ class MainActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        var preferences = App.getLoginSharedPreferences()
-        var jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
+        val preferences = App.getLoginSharedPreferences()
+        val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
         loginUserInfo = App.objectMapper.readValue(jsonStr, User::class.java)
         main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.username).text = loginUserInfo.username
         main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.user_email).text = loginUserInfo.email
-        var bitmap = ImageUtils.getUserPhoto()
+        val bitmap = ImageUtils.getUserPhoto()
         if (bitmap != null) {
             main_nav_view.getHeaderView(0).findViewById<CircleImageView>(R.id.user_photo).setImageBitmap(bitmap)
         }
-        supportActionBar?.hide()
         app_tool_bar.title = getString(R.string.onboarding_learn)
         setSupportActionBar(app_tool_bar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -70,7 +69,7 @@ class MainActivity : BaseAppActivity() {
             true
         }
 
-        var fragment = LearnFragment.newInstance()
+        val fragment = LearnFragment.newInstance()
         fragmentMap[R.id.tab0] = fragment
         replaceFragment(fragment)
     }
@@ -98,10 +97,7 @@ class MainActivity : BaseAppActivity() {
             R.id.tab0 -> {
                 tab0.changeTopImgAndColor(R.drawable.tab_learn_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_learn)
-                if (fragment == null) {
-                    fragment = LearnFragment.newInstance()
-                }
-                replaceFragment(fragment)
+                replaceFragment(fragment!!)
             }
             R.id.tab1 -> {
                 tab1.changeTopImgAndColor(R.drawable.tab_play_mini_choose, R.color.tabTextColorChoose)
@@ -140,29 +136,30 @@ class MainActivity : BaseAppActivity() {
     }
 
     private fun resetTabImg() {
-        tab0.changeTopImgAndColor(R.drawable.tab_learn_mini, R.color.cardview_light_background)
-        tab1.changeTopImgAndColor(R.drawable.tab_play_mini, R.color.cardview_light_background)
-        tab2.changeTopImgAndColor(R.drawable.tab_home_mini, R.color.cardview_light_background)
-        tab3.changeTopImgAndColor(R.drawable.tab_practice_mini, R.color.cardview_light_background)
-        tab4.changeTopImgAndColor(R.drawable.tab_discuss_mini, R.color.cardview_light_background)
+        tab0.changeTopImgAndColor(R.drawable.tab_learn_mini, R.color.colorAccent)
+        tab1.changeTopImgAndColor(R.drawable.tab_play_mini, R.color.colorAccent)
+        tab2.changeTopImgAndColor(R.drawable.tab_home_mini, R.color.colorAccent)
+        tab3.changeTopImgAndColor(R.drawable.tab_practice_mini, R.color.colorAccent)
+        tab4.changeTopImgAndColor(R.drawable.tab_discuss_mini, R.color.colorAccent)
     }
 
+    @Suppress("DEPRECATION")
     private fun Button.changeTopImgAndColor(img: Int, color: Int) {
-        var drawable = resources.getDrawable(img, theme)
+        val drawable = resources.getDrawable(img, theme)
         drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
         this.setCompoundDrawables(null, drawable, null, null)
         this.setTextColor(resources.getColor(color))
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        var tran = supportFragmentManager.beginTransaction()
+        val tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.main_frame_fragment, fragment)
         tran.commit()
     }
 
     companion object {
-        fun actionStart(context: Activity) {
-            var intent = Intent(context, MainActivity::class.java)
+        fun actionStart(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         }
     }

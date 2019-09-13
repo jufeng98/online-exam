@@ -9,6 +9,8 @@ import org.javamaster.b2c.core.model.vo.EditKnowledgePointsReqVo;
 import org.javamaster.b2c.core.model.vo.FindKnowledgePointsListReqVo;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Map;
+
 /**
  * 知识点管理
  *
@@ -49,5 +51,12 @@ public interface KnowledgePointsService {
      * @return
      */
     Integer delKnowledgePoints(DelKnowledgePointsReqVo reqVo);
+
+    /**
+     * 查找知识下所有知识点关联的试题数量
+     *
+     * @return key是知识编码, value是试题数量
+     */
+    Map<String, Integer> findKnowledgesQuestionNum();
 
 }

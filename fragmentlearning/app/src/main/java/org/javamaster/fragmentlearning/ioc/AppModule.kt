@@ -3,10 +3,10 @@ package org.javamaster.fragmentlearning.ioc
 import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Module
 import dagger.Provides
-import org.javamaster.fragmentlearning.data.LoginService
-import org.javamaster.fragmentlearning.data.TopicsService
-import org.javamaster.fragmentlearning.data.impl.LoginServiceImpl
-import org.javamaster.fragmentlearning.data.impl.TopicsServiceImpl
+import org.javamaster.fragmentlearning.service.LearnService
+import org.javamaster.fragmentlearning.service.LoginService
+import org.javamaster.fragmentlearning.service.impl.LearnServiceImpl
+import org.javamaster.fragmentlearning.service.impl.LoginServiceImpl
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import org.javamaster.fragmentlearning.ui.signup.SignupViewModel
 
@@ -26,8 +26,8 @@ class AppModule {
 
     @Provides
     @ActivityScope
-    fun topicsService(objectMapper: ObjectMapper): TopicsService {
-        return TopicsServiceImpl(objectMapper)
+    fun learnService(objectMapper: ObjectMapper): LearnService {
+        return LearnServiceImpl(objectMapper)
     }
 
     //  @Named("dev")

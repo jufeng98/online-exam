@@ -13,6 +13,7 @@ import org.javamaster.fragmentlearning.R;
  *
  * @author wangxiao
  */
+@SuppressWarnings("all")
 public class RoundProgressBar extends View {
     public static final int STROKE = 0;
     public static final int FILL = 1;
@@ -92,8 +93,8 @@ public class RoundProgressBar extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        /**
-         * 画最外层的大圆环
+        /*
+          画最外层的大圆环
          */
         int centre = getWidth() / 2; //获取圆心的x坐标
         int radius = (int) (centre - roundWidth / 2) - 2; //圆环的半径
@@ -105,8 +106,8 @@ public class RoundProgressBar extends View {
 
         Log.e("log", centre + "");
 
-        /**
-         * 画进度百分比
+        /*
+          画进度百分比
          */
         paint.setStrokeWidth(0);
         paint.setColor(textColor);

@@ -17,7 +17,7 @@ class TitleLinearLayout(context: Context, attributes: AttributeSet) : LinearLayo
     init {
         LayoutInflater.from(context).inflate(R.layout.linear_layout_menu, this)
         back.setOnClickListener {
-            var activity = context as Activity
+            val activity = context as Activity
             activity.finish()
         }
         edit.setOnClickListener {

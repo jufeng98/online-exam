@@ -6,6 +6,7 @@ import org.javamaster.fragmentlearning.testActivity.SQLiteActivity
 import org.javamaster.fragmentlearning.testProvider.MyContentProvider
 import org.javamaster.fragmentlearning.ui.activities.LoginActivity
 import org.javamaster.fragmentlearning.ui.activities.MainActivity
+import org.javamaster.fragmentlearning.ui.activities.SectionsActivity
 import org.javamaster.fragmentlearning.ui.activities.SignUpActivity
 
 /**
@@ -23,5 +24,6 @@ interface AppComponent {
     fun inject(myContentProvider: MyContentProvider)
     fun inject(signUpActivity: SignUpActivity)
     fun inject(mainActivity: MainActivity)
+    fun inject(sectionsActivity: SectionsActivity)
     fun inject(learnFragment: LearnFragment)
 }

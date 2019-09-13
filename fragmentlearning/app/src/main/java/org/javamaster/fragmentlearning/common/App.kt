@@ -22,29 +22,33 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         LitePal.initialize(this)
-        app = this
         context = applicationContext
         globalComponent = DaggerGlobalComponent.create()
         GlobalHandler.getInstance().init(context)
-        objectMapper = ObjectMapper()
-        objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS)
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false)
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
     }
 
     companion object {
-        lateinit var app: App
+        // 这里的AS内存泄漏警告未能找到解决方案去掉这个警告
         lateinit var context: Context
-        lateinit var objectMapper: ObjectMapper
+        val objectMapper: ObjectMapper
         lateinit var globalComponent: GlobalComponent
         private val ACTIVITIES: MutableSet<Activity> = mutableSetOf()
 
+        init {
+            objectMapper = newObjectMapper()
+        }
+
+        private fun newObjectMapper(): ObjectMapper {
+            val objectMapper = ObjectMapper()
+            objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS)
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false)
+            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            return objectMapper
+        }
+
         fun getLoginSharedPreferences(): SharedPreferences {
-            return context.getSharedPreferences(
-                context.packageName + "_login_user_info",
-                Context.MODE_PRIVATE
-            )
+            return context.getSharedPreferences(context.packageName + "_login_user_info", Context.MODE_PRIVATE)
         }
 
         fun addActivity(activity: Activity) {
@@ -72,7 +76,7 @@ class App : Application() {
             ACTIVITIES.filter {
                 for (exceptActivityClass in exceptActivityClasses) {
                     if (it.javaClass.name == exceptActivityClass.name) {
-                        false
+                        return@filter false
                     }
                 }
                 true

@@ -133,7 +133,7 @@ class LoginActivity : BaseAppActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        var edit = getPreferences(Context.MODE_PRIVATE).edit()
+        val edit = getPreferences(Context.MODE_PRIVATE).edit()
         edit.putString(USERNAME, username.text.toString())
         edit.putBoolean(REMEMBER_PWD, checkBox.isChecked)
         // 演示使用,为了简单起见,密码直接明文保存
@@ -147,7 +147,7 @@ class LoginActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Context) {
-            var intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
         }
 

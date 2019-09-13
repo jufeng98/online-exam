@@ -2,6 +2,9 @@ package org.javamaster.b2c.core.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
 import org.apache.commons.lang3.StringUtils;
 import org.javamaster.b2c.core.entity.KnowledgePoints;
 import org.javamaster.b2c.core.entity.KnowledgePointsExample;
@@ -17,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yudong
@@ -75,6 +80,22 @@ public class KnowledgePointsServiceImpl implements KnowledgePointsService {
     @Override
     public Integer delKnowledgePoints(DelKnowledgePointsReqVo reqVo) {
         return knowledgePointsMapper.deleteByPrimaryKey(reqVo.getId());
+    }
+
+    @Override
+    public Map<String, Integer> findKnowledgesQuestionNum() {
+        List<KnowledgePoints> knowledgePointsList = knowledgePointsMapper.selectByExample(new KnowledgePointsExample());
+        Map<String, List<String>> mapCodes = knowledgePointsList.stream()
+                .collect(groupingBy(KnowledgePoints::getKnowledgesCode, mapping(KnowledgePoints::getQuestionsCode, toList())));
+        Map<String, Integer> map = new HashMap<>(mapCodes.size(), 1);
+        for (Map.Entry<String, List<String>> stringListEntry : mapCodes.entrySet()) {
+            Integer questionNUm = stringListEntry.getValue().stream()
+                    .filter(StringUtils::isNotBlank)
+                    .collect(toList())
+                    .size();
+            map.put(stringListEntry.getKey(), questionNUm);
+        }
+        return map;
     }
 
 }

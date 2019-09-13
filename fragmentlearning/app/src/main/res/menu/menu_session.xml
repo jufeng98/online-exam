@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="org.javamaster.fragmentlearning.ui.activities.SectionsActivity">
+
+    <group android:id="@+id/group">
+        <item
+                android:id="@+id/glossary"
+                android:title="@string/glossary"/>
+        <item
+                android:id="@+id/resetProgress"
+                android:title="@string/reset_progress"/>
+    </group>
+</menu>

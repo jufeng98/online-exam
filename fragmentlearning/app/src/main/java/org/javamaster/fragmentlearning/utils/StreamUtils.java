@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  */
 public class StreamUtils {
 
-    public static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE = 4096;
 
     private static final byte[] EMPTY_CONTENT = new byte[0];
 
@@ -31,7 +31,7 @@ public class StreamUtils {
         StringBuilder out = new StringBuilder();
         InputStreamReader reader = new InputStreamReader(in, charset);
         char[] buffer = new char[BUFFER_SIZE];
-        int bytesRead = -1;
+        int bytesRead;
         while ((bytesRead = reader.read(buffer)) != -1) {
             out.append(buffer, 0, bytesRead);
         }
@@ -55,7 +55,7 @@ public class StreamUtils {
 
         int byteCount = 0;
         byte[] buffer = new byte[BUFFER_SIZE];
-        int bytesRead = -1;
+        int bytesRead;
         while ((bytesRead = in.read(buffer)) != -1) {
             out.write(buffer, 0, bytesRead);
             byteCount += bytesRead;
@@ -73,7 +73,7 @@ public class StreamUtils {
         }
 
         long bytesToCopy = end - start + 1;
-        byte buffer[] = new byte[StreamUtils.BUFFER_SIZE];
+        byte[] buffer = new byte[StreamUtils.BUFFER_SIZE];
         while (bytesToCopy > 0) {
             int bytesRead = in.read(buffer);
             if (bytesRead == -1) {
@@ -92,7 +92,7 @@ public class StreamUtils {
 
     public static int drain(InputStream in) throws IOException {
         byte[] buffer = new byte[BUFFER_SIZE];
-        int bytesRead = -1;
+        int bytesRead;
         int byteCount = 0;
         while ((bytesRead = in.read(buffer)) != -1) {
             byteCount += bytesRead;
@@ -118,19 +118,19 @@ public class StreamUtils {
 
     private static class NonClosingInputStream extends FilterInputStream {
 
-        public NonClosingInputStream(InputStream in) {
+        NonClosingInputStream(InputStream in) {
             super(in);
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
         }
     }
 
 
     private static class NonClosingOutputStream extends FilterOutputStream {
 
-        public NonClosingOutputStream(OutputStream out) {
+        NonClosingOutputStream(OutputStream out) {
             super(out);
         }
 
@@ -141,7 +141,7 @@ public class StreamUtils {
         }
 
         @Override
-        public void close() throws IOException {
+        public void close() {
         }
     }
 

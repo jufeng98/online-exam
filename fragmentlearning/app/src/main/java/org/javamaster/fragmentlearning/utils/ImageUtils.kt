@@ -17,35 +17,35 @@ object ImageUtils {
     private const val USER_PHOTO_KEY = "userPhotoFileName"
 
     fun saveUserPhoto(suffix: String, t: ByteArray) {
-        var path = App.context.getDir("img", Context.MODE_PRIVATE)
-        var preferences = App.getLoginSharedPreferences()
-        var editor = preferences.edit()
+        val path = App.context.getDir("img", Context.MODE_PRIVATE)
+        val preferences = App.getLoginSharedPreferences()
+        val editor = preferences.edit()
         editor.putString(USER_PHOTO_KEY, "user_photo$suffix")
-        editor.commit()
-        var file = File(path, "user_photo$suffix")
+        editor.apply()
+        val file = File(path, "user_photo$suffix")
         FileOutputStream(file).use {
             StreamUtils.copy(t, it)
         }
     }
 
     fun getUserPhoto(): Bitmap? {
-        var path = App.context.getDir("img", Context.MODE_PRIVATE)
+        val path = App.context.getDir("img", Context.MODE_PRIVATE)
         if (!path.exists()) {
             return null
         }
-        var preferences = App.getLoginSharedPreferences()
-        var name = preferences.getString(USER_PHOTO_KEY, "")
+        val preferences = App.getLoginSharedPreferences()
+        val name = preferences.getString(USER_PHOTO_KEY, "")
         if (name == "") {
             return null
         }
-        var file = File(path, preferences.getString(USER_PHOTO_KEY, ""))
+        val file = File(path, preferences.getString(USER_PHOTO_KEY, ""))
         if (!file.exists()) {
             return null
         }
         FileInputStream(file).use { input ->
             ByteArrayOutputStream().use {
                 StreamUtils.copy(input, it)
-                var bytes = it.toByteArray()
+                val bytes = it.toByteArray()
                 return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
             }
         }

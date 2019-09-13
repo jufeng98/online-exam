@@ -4,7 +4,7 @@ import android.os.Bundle
 import org.javamaster.fragmentlearning.BuildConfig
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
+import org.javamaster.fragmentlearning.service.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.testActivity.ExerciseMainActivity
 
 /**
@@ -24,8 +24,8 @@ class LauncherActivity : BaseAppActivity() {
             finish()
             return
         }
-        var preferences = App.getLoginSharedPreferences()
-        var rememberMeCookie = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
+        val preferences = App.getLoginSharedPreferences()
+        val rememberMeCookie = preferences.getString(REMEMBER_ME_COOKIE_KEY, "")
         if (rememberMeCookie == "") {
             OnboardingActivity.actionStart(this)
             finish()

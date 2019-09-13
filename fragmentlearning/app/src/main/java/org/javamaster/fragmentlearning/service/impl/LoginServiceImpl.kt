@@ -1,4 +1,4 @@
-package org.javamaster.fragmentlearning.data.impl
+package org.javamaster.fragmentlearning.service.impl
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -10,13 +10,14 @@ import okhttp3.Response
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
-import org.javamaster.fragmentlearning.data.LoginService
-import org.javamaster.fragmentlearning.data.LoginService.Companion.LOGIN_USER_INFO
-import org.javamaster.fragmentlearning.data.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
+import org.javamaster.fragmentlearning.exception.LoginException
 import org.javamaster.fragmentlearning.listener.OperationListener
+import org.javamaster.fragmentlearning.service.LoginService
+import org.javamaster.fragmentlearning.service.LoginService.Companion.LOGIN_USER_INFO
+import org.javamaster.fragmentlearning.service.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import org.javamaster.fragmentlearning.utils.NetUtils
 import java.io.IOException
@@ -28,38 +29,38 @@ import java.io.IOException
 class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : LoginService {
 
     override fun login(username: String, password: String): ResultVo<User> {
-        var map = mapOf("username" to username, "password" to password, "coreRememberMe" to "true")
-        var response: Response
+        val map = mapOf("username" to username, "password" to password, "coreRememberMe" to "true")
+        val response: Response
         try {
             response = NetUtils.postForResponse(AppConsts.LOGIN_URL, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
         } catch (e: Exception) {
-            Log.e(this::class.qualifiedName, map.toString(), e)
-            return ResultVo(errorMsg = e.message ?: App.context.getString(R.string.network_error))
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
         }
-        var resJsonStr: String = response.body!!.string()
-        var resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
+        val resJsonStr: String = response.body!!.string()
+        val resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
         if (!resultVo.success) {
             return resultVo
         }
 
-        var preferences = App.getLoginSharedPreferences()
-        var cookieStr: String = response.headers("Set-Cookie").joinToString(";")
+        val preferences = App.getLoginSharedPreferences()
+        val cookieStr: String = response.headers("Set-Cookie").joinToString(";")
         preferences.putStringAndCommit(
             REMEMBER_ME_COOKIE_KEY,
             cookieStr
         )
-        var userInfoJsonStr = App.objectMapper.writeValueAsString(resultVo.data)
+        val userInfoJsonStr = App.objectMapper.writeValueAsString(resultVo.data)
         preferences.putStringAndCommit(LOGIN_USER_INFO, userInfoJsonStr)
-        var picUrl = resultVo.data!!.picUrl
+        val picUrl = resultVo.data!!.picUrl
         if (picUrl != "") {
-            var suffix = picUrl.substring(picUrl.lastIndexOf("."))
+            val suffix = picUrl.substring(picUrl.lastIndexOf("."))
             NetUtils.postForStream(picUrl, object : OperationListener<ByteArray> {
                 override fun success(t: ByteArray) {
                     ImageUtils.saveUserPhoto(suffix, t)
-                }
-
-                override fun fail(e: Exception) {
-                    Log.e(this::class.qualifiedName, "get img error", e)
                 }
             })
         }
@@ -82,22 +83,28 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
     }
 
     private fun clearLoginInfo() {
-        var preferences = App.getLoginSharedPreferences()
-        var edit = preferences.edit()
-        edit.clear()
-        edit.commit()
+        val preferences = App.getLoginSharedPreferences()
+        preferences.edit()
+            .apply {
+                clear()
+                apply()
+            }
     }
 
     override fun signUp(createUsersReqVo: CreateUsersReqVo): ResultVo<User> {
-        var response: Response
+        val response: Response
         try {
             response = NetUtils.postForResponse(AppConsts.SIGN_UP_URL, createUsersReqVo)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
         } catch (e: Exception) {
-            Log.e(this::class.qualifiedName, createUsersReqVo.toString(), e)
-            return ResultVo(errorMsg = e.message ?: App.context.getString(R.string.network_error))
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
         }
-        var resJsonStr: String = response.body!!.string()
-        var resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
+        val resJsonStr: String = response.body!!.string()
+        val resultVo: ResultVo<User> = objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<User>>() {})
         if (!resultVo.success) {
             return resultVo
         }
@@ -108,9 +115,10 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
     }
 
     private fun SharedPreferences.putStringAndCommit(key: String, value: String) {
-        var editor = this.edit()
-        editor.putString(key, value)
-        editor.commit()
+        this.edit().apply {
+            putString(key, value)
+            apply()
+        }
     }
 
 }
