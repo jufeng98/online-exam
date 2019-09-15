@@ -50,6 +50,10 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity
+                android:name=".ui.activities.ResetPwdActivity"
+                android:theme="@style/Theme.AppCompat.Dialog.Alert">
+        </activity>
         <activity android:name=".ui.activities.ArchiveActivity">
         </activity>
         <activity

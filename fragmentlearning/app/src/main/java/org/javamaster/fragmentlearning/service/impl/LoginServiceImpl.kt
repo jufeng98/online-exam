@@ -136,6 +136,26 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Int>>() {})
     }
 
+    override fun changePwd(username: String, password: String, newPassword: String): ResultVo<Int> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["username"] = username
+            map["password"] = password
+            map["newPassword"] = newPassword
+            response = NetUtils.postForResponse(AppConsts.UPDATE_USERS_PASSWORD, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Int>>() {})
+    }
 
     private fun SharedPreferences.putStringAndCommit(key: String, value: String) {
         this.edit().apply {

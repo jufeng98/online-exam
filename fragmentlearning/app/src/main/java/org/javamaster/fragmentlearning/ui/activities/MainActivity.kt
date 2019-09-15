@@ -33,7 +33,6 @@ class MainActivity : BaseAppActivity() {
 
     @Inject
     lateinit var loginService: LoginService
-
     lateinit var loginUserInfo: User
     private var fragmentMap = mutableMapOf<Int, Fragment>()
 
@@ -52,6 +51,9 @@ class MainActivity : BaseAppActivity() {
             when (it.itemId) {
                 R.id.nav_edit_profile -> {
                     ArchiveActivity.actionStart(this)
+                }
+                R.id.nav_change_pwd -> {
+                    ResetPwdActivity.actionStart(this)
                 }
                 R.id.nav_exit -> {
                     loginService.logout()
@@ -80,6 +82,7 @@ class MainActivity : BaseAppActivity() {
             main_nav_view.getHeaderView(0).findViewById<CircleImageView>(R.id.user_photo).setImageBitmap(bitmap)
         }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         app_tool_bar.inflateMenu(R.menu.menu_main)
         return true

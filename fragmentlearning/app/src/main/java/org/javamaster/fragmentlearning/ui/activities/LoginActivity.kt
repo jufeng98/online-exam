@@ -15,6 +15,7 @@ import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_login.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
+import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.ui.login.LoginViewModel
@@ -61,7 +62,7 @@ class LoginActivity : BaseAppActivity() {
         loginViewModel.loginResultVo.observe(this, Observer {
             loading.visibility = View.GONE
             if (!it.success) {
-                if (it.errorMsg == App.context.getString(R.string.login_invalided)) {
+                if (it.errorCode == AppConsts.LOGIN_ERROR_CODE) {
                     return@Observer
                 }
                 showLoginFailed(it.errorMsg!!)

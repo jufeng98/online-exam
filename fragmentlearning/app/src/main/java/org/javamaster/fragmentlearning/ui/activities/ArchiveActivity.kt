@@ -94,7 +94,7 @@ class ArchiveActivity : BaseAppActivity() {
                         val suffix = picUrl.substring(picUrl.lastIndexOf("."))
                         ImageUtils.saveUserPhoto(suffix, user_photo_path.tag as ByteArray)
                     }
-                    Toast.makeText(this@ArchiveActivity, "修改成功", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ArchiveActivity, getString(R.string.change_success), Toast.LENGTH_SHORT).show()
                 } else {
                     if (resultVo.errorCode != AppConsts.LOGIN_ERROR_CODE) {
                         Toast.makeText(this@ArchiveActivity, resultVo.errorMsg, Toast.LENGTH_SHORT).show()
