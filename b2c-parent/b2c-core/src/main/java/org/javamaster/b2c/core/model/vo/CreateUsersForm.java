@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * @date 2019/7/28
  */
 @Data
-public class CreateOrEditUsersForm {
+public class CreateUsersForm {
     @NotBlank
     private String username;
     @NotBlank

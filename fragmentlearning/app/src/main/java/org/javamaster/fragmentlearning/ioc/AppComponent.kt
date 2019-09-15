@@ -23,5 +23,7 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(sectionsActivity: SectionsActivity)
     fun inject(knowledgesActivity: KnowledgesActivity)
+    fun inject(knowledgePointsActivity: KnowledgePointsActivity)
+    fun inject(archiveActivity: ArchiveActivity)
     fun inject(learnFragment: LearnFragment)
 }

@@ -9,7 +9,6 @@ import org.javamaster.b2c.core.model.Result;
 import org.javamaster.b2c.core.model.vo.ChangeUsersEnabledReqVo;
 import org.javamaster.b2c.core.model.vo.CreateUsersReqVo;
 import org.javamaster.b2c.core.model.vo.EditUsersReqVo;
-import org.javamaster.b2c.core.model.vo.EditUsersResVo;
 import org.javamaster.b2c.core.model.vo.FindUsersReqVo;
 import org.javamaster.b2c.core.model.vo.UpdateUsersPasswordReqVo;
 import org.javamaster.b2c.core.service.UsersService;
@@ -122,11 +121,12 @@ public class UsersController {
         return new Result<>(usersService.deleteUsers(username, userDetails));
     }
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("hasAuthority(T(org.javamaster.b2c.core.consts.AppConsts).ROLE_ADMIN) " +
+            "or (#reqVo.createOrEditUsersForm.username == #userDetails.username)")
     @PostMapping("/editUsers")
-    public Result<EditUsersResVo> editUsers(@Validated @RequestBody EditUsersReqVo reqVo, @AuthenticationPrincipal UserDetails userDetails) {
-        EditUsersResVo resVo = usersService.editUsers(reqVo, userDetails);
-        Result<EditUsersResVo> result = new Result(resVo);
+    public Result<Integer> editUsers(@Validated @RequestBody EditUsersReqVo reqVo, @AuthenticationPrincipal UserDetails userDetails) {
+        Integer resVo = usersService.editUsers(reqVo, userDetails);
+        Result<Integer> result = new Result(resVo);
         return result;
     }
 

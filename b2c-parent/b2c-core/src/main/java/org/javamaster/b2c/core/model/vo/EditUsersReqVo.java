@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class EditUsersReqVo {
     @NotNull
     @Valid
-    private CreateOrEditUsersForm createOrEditUsersForm;
+    private EditUsersForm createOrEditUsersForm;
 
     @Override
     public String toString() {

@@ -7,10 +7,7 @@ import okhttp3.Response
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
-import org.javamaster.fragmentlearning.data.entity.Knowledges
-import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
-import org.javamaster.fragmentlearning.data.entity.Sections
-import org.javamaster.fragmentlearning.data.entity.Topics
+import org.javamaster.fragmentlearning.data.entity.*
 import org.javamaster.fragmentlearning.data.model.Page
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.exception.LoginException
@@ -99,6 +96,65 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         }
         val resJsonStr: String = response.body!!.string()
         return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<KnowledgesQuestionNumVo>>>() {})
+    }
+
+    override fun findKnowledgePointsList(knowledgesCode: String): ResultVo<List<KnowledgePoints>> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["knowledgePointsForm"] = mapOf<String, Any>("knowledgesCode" to knowledgesCode)
+            map["page"] = getPage()
+            response = NetUtils.postForResponse(AppConsts.FIND_KNOWLEDGE_POINTS_LIST, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<KnowledgePoints>>>() {})
+    }
+
+    override fun findQuestionsList(questionsCode: String): ResultVo<List<Questions>> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["questionsForm"] = mapOf<String, Any>("questionsCode" to questionsCode)
+            map["page"] = getPage()
+            response = NetUtils.postForResponse(AppConsts.FIND_QUESTIONS_LIST, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Questions>>>() {})
+    }
+
+    override fun findAssociateOptions(questionsCode: String): ResultVo<List<Options>> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["questionsCode"] = questionsCode
+            response = NetUtils.postForResponse(AppConsts.FIND_OPTIONS_LIST, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Options>>>() {})
     }
 
     private fun getPage(): Page {

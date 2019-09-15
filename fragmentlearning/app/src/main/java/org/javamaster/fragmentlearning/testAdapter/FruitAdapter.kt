@@ -17,9 +17,9 @@ import org.javamaster.fragmentlearning.data.model.Fruit
 class FruitAdapter(context: Context, private var textViewResourcesId: Int, fruits: List<Fruit>) :
     ArrayAdapter<Fruit>(context, textViewResourcesId, fruits) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var fruit = getItem(position)
-        var view: View
-        var viewHolder: ViewHolder
+        val fruit = getItem(position)
+        val view: View
+        val viewHolder: ViewHolder
         if (convertView == null) {
             view = convertView ?: LayoutInflater.from(context).inflate(
                 textViewResourcesId,

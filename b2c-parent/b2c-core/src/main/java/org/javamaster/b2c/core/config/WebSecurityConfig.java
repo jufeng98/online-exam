@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actuator/**").hasAuthority(AppConsts.ROLE_ACTUATOR)
                 .antMatchers("/public/**/*").permitAll()
                 .antMatchers("/admin/users/createUsers").permitAll()
+                .antMatchers("/core/files/uploadFile").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

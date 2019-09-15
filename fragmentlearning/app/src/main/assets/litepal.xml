@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="LearnDatabase"/>
-    <version value="6"/>
+    <version value="8"/>
     <list>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Book"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Topics"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Sections"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Knowledges"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.KnowledgePoints"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.Questions"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.Options"/>
     </list>
 </litepal>

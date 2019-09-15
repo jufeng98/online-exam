@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.entity.Knowledges
 import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
+import org.javamaster.fragmentlearning.ui.activities.KnowledgePointsActivity
 
 
 /**
@@ -46,7 +46,7 @@ class KnowledgesAdapter(
         val num = map[knowledges.knowledgesCode] ?: 0
         holder.questionsNum.text = "" + num + mContext.getString(R.string.question_num)
         holder.linearLayout.setOnClickListener {
-            Toast.makeText(mContext, "hello world", Toast.LENGTH_SHORT).show()
+            KnowledgePointsActivity.actionStart(mContext, knowledges.knowledgesCode)
         }
     }
 

@@ -1,9 +1,6 @@
 package org.javamaster.fragmentlearning.service
 
-import org.javamaster.fragmentlearning.data.entity.Knowledges
-import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
-import org.javamaster.fragmentlearning.data.entity.Sections
-import org.javamaster.fragmentlearning.data.entity.Topics
+import org.javamaster.fragmentlearning.data.entity.*
 import org.javamaster.fragmentlearning.data.model.ResultVo
 
 /**
@@ -19,4 +16,10 @@ interface LearnService {
     fun findKnowledgesList(sectionsCode: String): ResultVo<List<Knowledges>>
 
     fun findKnowledgesQuestionNum(sectionsCode: String): ResultVo<List<KnowledgesQuestionNumVo>>
+
+    fun findKnowledgePointsList(knowledgesCode: String): ResultVo<List<KnowledgePoints>>
+
+    fun findQuestionsList(questionsCode: String): ResultVo<List<Questions>>
+
+    fun findAssociateOptions(questionsCode: String): ResultVo<List<Options>>
 }

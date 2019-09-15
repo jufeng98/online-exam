@@ -5,7 +5,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class CreateUsersReqVo {
     @NotNull
     @Valid
-    private CreateOrEditUsersForm createOrEditUsersForm;
+    private CreateUsersForm createOrEditUsersForm;
 
     @Override
     public String toString() {

@@ -17,4 +17,5 @@ interface LoginService {
     fun login(username: String, password: String): ResultVo<User>
     fun logout()
     fun signUp(createUsersReqVo: CreateUsersReqVo): ResultVo<User>
+    fun editUsers(userInfo: User): ResultVo<Int>
 }

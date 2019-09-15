@@ -5,7 +5,6 @@ import org.javamaster.b2c.core.entity.Users;
 import org.javamaster.b2c.core.model.vo.ChangeUsersEnabledReqVo;
 import org.javamaster.b2c.core.model.vo.CreateUsersReqVo;
 import org.javamaster.b2c.core.model.vo.EditUsersReqVo;
-import org.javamaster.b2c.core.model.vo.EditUsersResVo;
 import org.javamaster.b2c.core.model.vo.FindUsersReqVo;
 import org.javamaster.b2c.core.model.vo.UpdateUsersPasswordReqVo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,5 +28,5 @@ public interface UsersService {
 
     Integer deleteUsers(String username, UserDetails userDetails);
 
-    EditUsersResVo editUsers(EditUsersReqVo reqVo, UserDetails userDetails);
+    Integer editUsers(EditUsersReqVo reqVo, UserDetails userDetails);
 }

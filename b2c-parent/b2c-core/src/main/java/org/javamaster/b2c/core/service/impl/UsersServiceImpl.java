@@ -15,7 +15,6 @@ import org.javamaster.b2c.core.model.Page;
 import org.javamaster.b2c.core.model.vo.ChangeUsersEnabledReqVo;
 import org.javamaster.b2c.core.model.vo.CreateUsersReqVo;
 import org.javamaster.b2c.core.model.vo.EditUsersReqVo;
-import org.javamaster.b2c.core.model.vo.EditUsersResVo;
 import org.javamaster.b2c.core.model.vo.FindUsersReqVo;
 import org.javamaster.b2c.core.model.vo.UpdateUsersPasswordReqVo;
 import org.javamaster.b2c.core.service.UsersService;
@@ -155,14 +154,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public EditUsersResVo editUsers(EditUsersReqVo reqVo, UserDetails userDetails) {
-        reqVo.getCreateOrEditUsersForm().setPassword(null);
+    public Integer editUsers(EditUsersReqVo reqVo, UserDetails userDetails) {
         Users users = new Users();
         BeanUtils.copyProperties(reqVo.getCreateOrEditUsersForm(), users);
         int affectRow = usersMapper.updateByPrimaryKeySelective(users);
-        EditUsersResVo editUsersResVo = new EditUsersResVo();
-        editUsersResVo.setAffectRow(affectRow);
-        return editUsersResVo;
+        return affectRow;
     }
 
     private void verifyOriginalPassword(String originalPassword, String username) {

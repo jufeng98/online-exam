@@ -50,6 +50,16 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.activities.ArchiveActivity">
+        </activity>
+        <activity
+                android:name=".ui.activities.AboutActivity"
+                android:theme="@style/Theme.AppCompat.Dialog.Alert">
+        </activity>
+        <activity
+                android:name=".ui.activities.KnowledgePointsActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
                 android:name=".ui.activities.KnowledgesActivity"
                 android:theme="@style/AppTheme.NoActionBar">

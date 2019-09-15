@@ -93,4 +93,15 @@
     <string name="glossary">词汇表</string>
     <string name="reset_progress">重置进度</string>
     <string name="question_num">个问题</string>
+    <string name="author_label">作者:</string>
+    <string name="author">liangyudong</string>
+    <string name="email_label">邮箱:</string>
+    <string name="author_email">375709770@qq.com</string>
+    <string name="version_label">版本号:</string>
+    <string name="desc_label">说明:</string>
+    <string name="desc">此项目为个人兴趣爱好,大部分功能尚未完成,正在逐步完善中</string>
+    <string name="china">中国</string>
+    <string name="usa">美国</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
 </resources>

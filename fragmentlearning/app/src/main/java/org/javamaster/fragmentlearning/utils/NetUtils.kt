@@ -3,12 +3,16 @@ package org.javamaster.fragmentlearning.utils
 import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.interceptor.CommonInterceptor
 import org.javamaster.fragmentlearning.listener.OperationListener
+import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -93,6 +97,27 @@ object NetUtils {
                 operationListener.success(response.body!!.bytes())
             }
         })
+    }
 
+    fun uploadImage(reqUrl: String, file: File, operationListener: OperationListener<String>) {
+        val fileBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("file", file.name, fileBody)
+            .build()
+        val request = Request.Builder()
+            .url(reqUrl)
+            .post(requestBody)
+            .build()
+        getClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e(this::class.qualifiedName, "", e)
+                operationListener.fail(AppConsts.ERROR_CODE, App.context.getString(AppConsts.ERROR_MSG))
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                operationListener.success(App.objectMapper.readTree(response.body!!.string()).get("data")[0].asText())
+            }
+        })
     }
 }

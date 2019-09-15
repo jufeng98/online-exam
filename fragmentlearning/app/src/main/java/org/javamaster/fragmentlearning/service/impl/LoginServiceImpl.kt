@@ -114,6 +114,29 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
         )
     }
 
+    override fun editUsers(userInfo: User): ResultVo<Int> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["createOrEditUsersForm"] = userInfo
+            response = NetUtils.postForResponse(AppConsts.EDIT_URL, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val userInfoJsonStr = App.objectMapper.writeValueAsString(userInfo)
+        val preferences = App.getLoginSharedPreferences()
+        preferences.putStringAndCommit(LOGIN_USER_INFO, userInfoJsonStr)
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Int>>() {})
+    }
+
+
     private fun SharedPreferences.putStringAndCommit(key: String, value: String) {
         this.edit().apply {
             putString(key, value)

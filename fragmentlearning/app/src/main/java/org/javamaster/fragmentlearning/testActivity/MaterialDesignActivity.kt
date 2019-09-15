@@ -30,7 +30,7 @@ class MaterialDesignActivity : BaseAppActivity() {
         Fruit("Mango", R.drawable.mango)
     )
     private val fruitList: MutableList<Fruit> = mutableListOf()
-    lateinit var adapterMaterialDesign: MaterialDesignFruitAdapter
+    private lateinit var adapterMaterialDesign: MaterialDesignFruitAdapter
 
     override fun initContentView(): Int? {
         return R.layout.activity_material_design

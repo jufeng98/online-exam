@@ -44,21 +44,15 @@ class MainActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        val preferences = App.getLoginSharedPreferences()
-        val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
-        loginUserInfo = App.objectMapper.readValue(jsonStr, User::class.java)
-        main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.username).text = loginUserInfo.username
-        main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.user_email).text = loginUserInfo.email
-        val bitmap = ImageUtils.getUserPhoto()
-        if (bitmap != null) {
-            main_nav_view.getHeaderView(0).findViewById<CircleImageView>(R.id.user_photo).setImageBitmap(bitmap)
-        }
         app_tool_bar.title = getString(R.string.onboarding_learn)
         setSupportActionBar(app_tool_bar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_mini)
         main_nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.nav_edit_profile -> {
+                    ArchiveActivity.actionStart(this)
+                }
                 R.id.nav_exit -> {
                     loginService.logout()
                     OnboardingActivity.actionStart(this@MainActivity)
@@ -74,6 +68,18 @@ class MainActivity : BaseAppActivity() {
         replaceFragment(fragment)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val preferences = App.getLoginSharedPreferences()
+        val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
+        loginUserInfo = App.objectMapper.readValue(jsonStr, User::class.java)
+        main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.username).text = loginUserInfo.username
+        main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.user_email).text = loginUserInfo.email
+        val bitmap = ImageUtils.getUserPhoto()
+        if (bitmap != null) {
+            main_nav_view.getHeaderView(0).findViewById<CircleImageView>(R.id.user_photo).setImageBitmap(bitmap)
+        }
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         app_tool_bar.inflateMenu(R.menu.menu_main)
         return true
@@ -85,7 +91,12 @@ class MainActivity : BaseAppActivity() {
                 main_drawer_layout.openDrawer(GravityCompat.START)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            R.id.about -> {
+                AboutActivity.actionStart(this)
+                true
+            }
+
+            else -> true
         }
     }
 
