@@ -48,7 +48,7 @@
             <el-table-column prop="email" label="邮箱" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="createTime" label="创建时间" :formatter="formatData"
                              :show-overflow-tooltip="true"></el-table-column>
-            <el-table-column label="操作" width="450px">
+            <el-table-column label="操作" width="500px">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="showAuthoritiesDialog(scope.$index, scope.row)">
                   授权
@@ -186,15 +186,11 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="用户授权管理" :visible.sync="authDialogVisible">
+    <el-dialog title="用户授权管理" width="30%" :visible.sync="authDialogVisible">
       <template>
         <el-transfer style="text-align: left;margin-left:18%" :titles="['未授予角色','已授予角色']" :data="usersAuthorities"
                      v-model="authorities" @change="changeAuthorities"></el-transfer>
       </template>
-    </el-dialog>
-
-    <el-dialog title="查看头像" :visible.sync="showImageDialogVisible" width="30%">
-
     </el-dialog>
 
   </div>
@@ -341,7 +337,9 @@
       showEditUsersDialog(index, row) {
         this.title = '编辑用户'
         this.showPasswordFormItem = false
-        this.uploadShowImageUrl = config.BASE_PATH + config.APP_CONTEXT + row.picUrl
+        if (row.picUrl) {
+          this.uploadShowImageUrl = config.BASE_PATH + config.APP_CONTEXT + row.picUrl;
+        }
         this.createOrEditUsersForm = Object.assign({}, row)
         this.createOrEditUsersDialogVisible = true
       },

@@ -54,7 +54,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditAuthoritiesDialogVisible" @closed="clearCheckNodes">
-      <el-form :model="createOrEditAuthoritiesForm" label-width="80px" :rules="createOrEditAuthoritiesFormRules"
+      <el-form :model="createOrEditAuthoritiesForm" label-width="100px" :rules="createOrEditAuthoritiesFormRules"
                ref="createOrEditAuthoritiesFormRef">
         <el-form-item label="角色" prop="authority">
           <el-input :disabled="!createAuthorities" v-model="createOrEditAuthoritiesForm.authority" auto-complete="off"

@@ -71,7 +71,7 @@
 
     <el-dialog :fullscreen="true" :title="title" :close-on-click-modal="false" @opened="fillUeditorContent"
                :visible.sync="createOrEditKnowledgePointsDialogVisible" @close="resetUeditorAndClearValidate">
-      <el-form :model="createOrEditKnowledgePointsForm" label-width="100px"
+      <el-form :model="createOrEditKnowledgePointsForm" label-width="150px"
                :rules="createOrEditKnowledgePointsFormRules"
                ref="createOrEditKnowledgePointsFormRef">
         <el-form-item label="所属知识" prop="knowledgesCode" style="text-align: left">

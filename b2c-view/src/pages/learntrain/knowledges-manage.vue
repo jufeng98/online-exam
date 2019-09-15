@@ -62,7 +62,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditKnowledgesDialogVisible">
-      <el-form :model="createOrEditKnowledgesForm" label-width="100px" :rules="createOrEditKnowledgesFormRules"
+      <el-form :model="createOrEditKnowledgesForm" label-width="120px" :rules="createOrEditKnowledgesFormRules"
                ref="createOrEditKnowledgesFormRef">
         <el-form-item label="知识名称" prop="knowledgesName">
           <el-input v-model="createOrEditKnowledgesForm.knowledgesName" auto-complete="off"

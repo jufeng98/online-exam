@@ -67,7 +67,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditSectionsDialogVisible">
-      <el-form :model="createOrEditSectionsForm" label-width="90px" :rules="createOrEditSectionsFormRules"
+      <el-form :model="createOrEditSectionsForm" label-width="120px" :rules="createOrEditSectionsFormRules"
                ref="createOrEditSectionsFormRef">
         <el-form-item label="章节名称" prop="sectionsName">
           <el-input v-model="createOrEditSectionsForm.sectionsName" auto-complete="off"

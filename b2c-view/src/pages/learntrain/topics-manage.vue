@@ -57,7 +57,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditTopicsDialogVisible">
-      <el-form :model="createOrEditTopicsForm" label-width="100px" :rules="createOrEditTopicsFormRules"
+      <el-form :model="createOrEditTopicsForm" label-width="120px" :rules="createOrEditTopicsFormRules"
                ref="createOrEditTopicsFormRef">
         <el-form-item label="主题名称" prop="topicsName">
           <el-input v-model="createOrEditTopicsForm.topicsName" auto-complete="off"

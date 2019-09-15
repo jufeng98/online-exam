@@ -56,7 +56,7 @@
     </el-row>
 
     <el-dialog :title="title" :visible.sync="createOrEditExamsDialogVisible">
-      <el-form :model="createOrEditExamsForm" label-width="90px" :rules="createOrEditExamsFormRules"
+      <el-form :model="createOrEditExamsForm" label-width="120px" :rules="createOrEditExamsFormRules"
                ref="createOrEditExamsFormRef">
         <el-form-item label="考试名称" prop="examsName">
           <el-input v-model="createOrEditExamsForm.examsName" auto-complete="off"
