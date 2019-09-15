@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @date 2019/6/10
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result<T> {
     private Boolean success;
     private Integer errorCode;

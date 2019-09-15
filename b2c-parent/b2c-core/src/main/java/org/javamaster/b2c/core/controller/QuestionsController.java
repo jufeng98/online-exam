@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +49,7 @@ public class QuestionsController {
     @Autowired
     private QuestionsService questionsService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/findQuestionsList")
     public Result<List<Questions>> findQuestionsList(@Validated @RequestBody FindQuestionsListReqVo reqVo) {
         PageInfo<Questions> resVo = questionsService.findQuestionsList(reqVo);
