@@ -29,7 +29,7 @@ class KnowledgesActivity : BaseAppActivity() {
     @Inject
     lateinit var learnService: LearnService
     lateinit var sectionsCode: String
-    lateinit var sectionsName: String
+    private lateinit var sectionsName: String
 
     override fun initContentView(): Int? {
         return R.layout.activity_knowledges
@@ -59,7 +59,7 @@ class KnowledgesActivity : BaseAppActivity() {
             }
         }
         val knowledgesList = LitePal.where("sectionsCode=?", sectionsCode).find(Knowledges::class.java)
-        var questionNumVos = LitePal.where("sectionsCode=?", sectionsCode).find(KnowledgesQuestionNumVo::class.java)
+        val questionNumVos = LitePal.where("sectionsCode=?", sectionsCode).find(KnowledgesQuestionNumVo::class.java)
         if (knowledgesList.isNotEmpty()) {
             initAdapter(knowledgesList, questionNumVos)
         } else {

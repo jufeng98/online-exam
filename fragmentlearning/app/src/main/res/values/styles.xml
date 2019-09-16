@@ -11,6 +11,14 @@
         <!--<item name="android:background">@color/colorAppPrimary</item>-->
     </style>
 
+    <style name="LunchTheme" parent="Theme.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:navigationBarColor">@color/transparent</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/launcher_img</item>
+    </style>
+
     <style name="positiveBtnStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/colorAppPrimary</item>
     </style>

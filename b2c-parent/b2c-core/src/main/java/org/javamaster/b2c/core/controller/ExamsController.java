@@ -16,6 +16,7 @@ import org.javamaster.b2c.core.model.vo.FindExamsListReqVo;
 import org.javamaster.b2c.core.service.ExamsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +40,7 @@ public class ExamsController {
     @Autowired
     private ExamsService examsService;
 
-    @Secured(AppConsts.ROLE_ADMIN)
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/findExamsList")
     public Result<List<Exams>> findExamsList(@Validated @RequestBody FindExamsListReqVo reqVo) {
         PageInfo<Exams> resVo = examsService.findExamsList(reqVo);

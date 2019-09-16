@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_sections.*
 import kotlinx.android.synthetic.main.fragment_learn.swipe_refresh
@@ -71,6 +72,10 @@ class SectionsActivity : BaseAppActivity() {
     }
 
     private fun initAdapter(sectionsList: List<Sections>) {
+        if (sectionsList.isEmpty()) {
+            no_data.visibility = View.VISIBLE
+            return
+        }
         val adapter = SectionsAdapter(sectionsList)
         val layoutManager = GridLayoutManager(this, 2)
         sections_recycler_view.layoutManager = layoutManager

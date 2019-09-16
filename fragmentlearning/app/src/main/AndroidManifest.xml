@@ -51,7 +51,7 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".ui.activities.ResetPwdActivity"
+                android:name=".ui.activities.ChangePwdActivity"
                 android:theme="@style/Theme.AppCompat.Dialog.Alert">
         </activity>
         <activity android:name=".ui.activities.ArchiveActivity">
@@ -283,7 +283,9 @@
                 android:name=".testActivity.SendActivity"
                 android:label="@string/button_send">
         </activity>
-        <activity android:name=".ui.activities.LauncherActivity">
+        <activity
+                android:name=".ui.activities.LauncherActivity"
+                android:theme="@style/LunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

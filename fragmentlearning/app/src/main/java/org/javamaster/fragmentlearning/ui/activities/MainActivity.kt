@@ -33,8 +33,8 @@ class MainActivity : BaseAppActivity() {
 
     @Inject
     lateinit var loginService: LoginService
-    lateinit var loginUserInfo: User
-    private var fragmentMap = mutableMapOf<Int, Fragment>()
+    private lateinit var loginUserInfo: User
+    private val fragmentMap = mutableMapOf<Int, Fragment>()
 
     override fun initContentView(): Int? {
         return R.layout.activity_main
@@ -53,7 +53,7 @@ class MainActivity : BaseAppActivity() {
                     ArchiveActivity.actionStart(this)
                 }
                 R.id.nav_change_pwd -> {
-                    ResetPwdActivity.actionStart(this)
+                    ChangePwdActivity.actionStart(this)
                 }
                 R.id.nav_exit -> {
                     loginService.logout()
@@ -89,18 +89,18 @@ class MainActivity : BaseAppActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 main_drawer_layout.openDrawer(GravityCompat.START)
-                true
             }
             R.id.about -> {
                 AboutActivity.actionStart(this)
-                true
             }
+            else -> {
 
-            else -> true
+            }
         }
+        return true
     }
 
     @OnClick(R.id.tab0, R.id.tab1, R.id.tab2, R.id.tab3, R.id.tab4)
@@ -117,7 +117,7 @@ class MainActivity : BaseAppActivity() {
                 tab1.changeTopImgAndColor(R.drawable.tab_play_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_play)
                 if (fragment == null) {
-                    fragment = PlayFragment.newInstance("", "")
+                    fragment = PlayFragment.newInstance()
                 }
                 replaceFragment(fragment)
             }

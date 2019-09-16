@@ -11,6 +11,16 @@
             layout="@layout/tool_bar_layout"
             android:id="@+id/include_tool_bar"/>
 
+    <TextView
+            android:id="@+id/no_data"
+            android:text="@string/no_data"
+            android:textSize="30sp"
+            android:visibility="gone"
+            android:textColor="@color/colorAppPrimary"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     <LinearLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"

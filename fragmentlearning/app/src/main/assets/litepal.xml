@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="LearnDatabase"/>
-    <version value="8"/>
+    <version value="9"/>
     <list>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Book"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Topics"/>
@@ -11,5 +11,6 @@
         <mapping class="org.javamaster.fragmentlearning.data.entity.KnowledgePoints"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Questions"/>
         <mapping class="org.javamaster.fragmentlearning.data.entity.Options"/>
+        <mapping class="org.javamaster.fragmentlearning.data.entity.Exams"/>
     </list>
 </litepal>

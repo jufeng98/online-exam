@@ -22,4 +22,6 @@ interface LearnService {
     fun findQuestionsList(questionsCode: String): ResultVo<List<Questions>>
 
     fun findAssociateOptions(questionsCode: String): ResultVo<List<Options>>
+
+    fun findExamsList(): ResultVo<List<Exams>>
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_reset_pwd.*
+import kotlinx.android.synthetic.main.activity_change_pwd.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
@@ -14,13 +14,13 @@ import org.javamaster.fragmentlearning.service.LoginService
 import javax.inject.Inject
 import kotlin.concurrent.thread
 
-class ResetPwdActivity : BaseAppActivity() {
+class ChangePwdActivity : BaseAppActivity() {
 
     @Inject
     lateinit var loginService: LoginService
 
     override fun initContentView(): Int? {
-        return R.layout.activity_reset_pwd
+        return R.layout.activity_change_pwd
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class ResetPwdActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Context) {
-            val intent = Intent(context, ResetPwdActivity::class.java)
+            val intent = Intent(context, ChangePwdActivity::class.java)
             context.startActivity(intent)
         }
     }

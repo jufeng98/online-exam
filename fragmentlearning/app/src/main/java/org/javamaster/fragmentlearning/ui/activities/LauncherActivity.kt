@@ -2,7 +2,6 @@ package org.javamaster.fragmentlearning.ui.activities
 
 import android.os.Bundle
 import org.javamaster.fragmentlearning.BuildConfig
-import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.service.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
 import org.javamaster.fragmentlearning.testActivity.ExerciseMainActivity
@@ -14,7 +13,7 @@ import org.javamaster.fragmentlearning.testActivity.ExerciseMainActivity
  */
 class LauncherActivity : BaseAppActivity() {
     override fun initContentView(): Int? {
-        return R.layout.activity_launcher
+        return null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
