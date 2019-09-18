@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.core.mapper.LearnsRecordMapper">
+  <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
+  <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.LearnsRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="topics_code" jdbcType="VARCHAR" property="topicsCode" />
+    <result column="sections_code" jdbcType="VARCHAR" property="sectionsCode" />
+    <result column="knowledges_code" jdbcType="VARCHAR" property="knowledgesCode" />
+    <result column="knowledge_points_code" jdbcType="VARCHAR" property="knowledgePointsCode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, username, topics_code, sections_code, knowledges_code, knowledge_points_code, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.LearnsRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from learns_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from learns_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from learns_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.LearnsRecordExample">
+    delete from learns_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.LearnsRecord" useGeneratedKeys="true">
+    insert into learns_record (id, username, topics_code, 
+      sections_code, knowledges_code, knowledge_points_code, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{topicsCode,jdbcType=VARCHAR}, 
+      #{sectionsCode,jdbcType=VARCHAR}, #{knowledgesCode,jdbcType=VARCHAR}, #{knowledgePointsCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.LearnsRecord" useGeneratedKeys="true">
+    insert into learns_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="topicsCode != null">
+        topics_code,
+      </if>
+      <if test="sectionsCode != null">
+        sections_code,
+      </if>
+      <if test="knowledgesCode != null">
+        knowledges_code,
+      </if>
+      <if test="knowledgePointsCode != null">
+        knowledge_points_code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsCode != null">
+        #{topicsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionsCode != null">
+        #{sectionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgesCode != null">
+        #{knowledgesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgePointsCode != null">
+        #{knowledgePointsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.javamaster.b2c.core.entity.LearnsRecordExample" resultType="java.lang.Long">
+    select count(*) from learns_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update learns_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topicsCode != null">
+        topics_code = #{record.topicsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionsCode != null">
+        sections_code = #{record.sectionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowledgesCode != null">
+        knowledges_code = #{record.knowledgesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.knowledgePointsCode != null">
+        knowledge_points_code = #{record.knowledgePointsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update learns_record
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      topics_code = #{record.topicsCode,jdbcType=VARCHAR},
+      sections_code = #{record.sectionsCode,jdbcType=VARCHAR},
+      knowledges_code = #{record.knowledgesCode,jdbcType=VARCHAR},
+      knowledge_points_code = #{record.knowledgePointsCode,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.LearnsRecord">
+    update learns_record
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsCode != null">
+        topics_code = #{topicsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionsCode != null">
+        sections_code = #{sectionsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgesCode != null">
+        knowledges_code = #{knowledgesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgePointsCode != null">
+        knowledge_points_code = #{knowledgePointsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.LearnsRecord">
+    update learns_record
+    set username = #{username,jdbcType=VARCHAR},
+      topics_code = #{topicsCode,jdbcType=VARCHAR},
+      sections_code = #{sectionsCode,jdbcType=VARCHAR},
+      knowledges_code = #{knowledgesCode,jdbcType=VARCHAR},
+      knowledge_points_code = #{knowledgePointsCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
