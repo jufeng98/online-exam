@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * @author yudong
  */
-public interface QuestionsExtMapper {
+public interface ExtMapper {
     List<ExamQuestionsVo> selectQuestionsByExamsCode(@Param("examsCode") String examsCode);
+
+    int findKnowledgePointsCount(@Param("topicsCode") String topicsCode, @Param("sectionsCode") String sectionsCode);
 }

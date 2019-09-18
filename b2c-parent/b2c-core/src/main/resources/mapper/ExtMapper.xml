@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.javamaster.b2c.core.mapper.QuestionsExtMapper">
+<mapper namespace="org.javamaster.b2c.core.mapper.ExtMapper">
 
     <resultMap id="selectQuestionsByExamsCodeMap" type="org.javamaster.b2c.core.model.vo.ExamQuestionsVo">
         <id property="id" column="id"/>
@@ -25,5 +25,18 @@
                  inner join exams_questions eq on eq.questions_code = q.questions_code
                  inner join `options` o on o.questions_code = q.questions_code
         where eq.exams_code = #{examsCode}
+    </select>
+    <select id="findKnowledgePointsCount" resultType="int">
+        select count(kp.knowledge_points_code)
+        from sections s
+        inner join knowledges k on k.sections_code = s.sections_code
+        inner join knowledge_points kp on kp.knowledges_code = k.knowledges_code
+        where
+        <if test=" topicsCode!='' ">
+            s.topics_code = #{topicsCode}
+        </if>
+        <if test=" sectionsCode!='' ">
+            s.sections_code = #{sectionsCode}
+        </if>
     </select>
 </mapper>

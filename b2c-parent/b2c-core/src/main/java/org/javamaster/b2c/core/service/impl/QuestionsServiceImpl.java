@@ -14,7 +14,7 @@ import org.javamaster.b2c.core.entity.QuestionsExample;
 import org.javamaster.b2c.core.enums.QuestionsTypeEnum;
 import org.javamaster.b2c.core.helper.CodeHelper;
 import org.javamaster.b2c.core.mapper.OptionsMapper;
-import org.javamaster.b2c.core.mapper.QuestionsExtMapper;
+import org.javamaster.b2c.core.mapper.ExtMapper;
 import org.javamaster.b2c.core.mapper.QuestionsMapper;
 import org.javamaster.b2c.core.model.vo.BatchImportQuestionsResVo;
 import org.javamaster.b2c.core.model.vo.CreateQuestionsReqVo;
@@ -58,7 +58,7 @@ public class QuestionsServiceImpl implements QuestionsService {
     @Autowired
     private OptionsMapper optionsMapper;
     @Autowired
-    private QuestionsExtMapper questionsExtMapper;
+    private ExtMapper extMapper;
     @Autowired
     private CodeHelper codeHelper;
 
@@ -279,6 +279,6 @@ public class QuestionsServiceImpl implements QuestionsService {
 
     @Override
     public List<ExamQuestionsVo> findQuestionsByExamsCode(String examsCode) {
-        return questionsExtMapper.selectQuestionsByExamsCode(examsCode);
+        return extMapper.selectQuestionsByExamsCode(examsCode);
     }
 }
