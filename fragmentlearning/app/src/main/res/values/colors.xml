@@ -8,4 +8,5 @@
     <color name="colorGrey">#AACCCCCC</color>
     <color name="tabTextColorChoose">#FF1177CC</color>
     <color name="colorBlack">#FF000000</color>
+    <color name="colorBlue">#FF0000FF</color>
 </resources>

@@ -7,11 +7,14 @@ import org.javamaster.b2c.core.model.vo.CreateQuestionsReqVo;
 import org.javamaster.b2c.core.model.vo.CreateQuestionsResVo;
 import org.javamaster.b2c.core.model.vo.DelQuestionsReqVo;
 import org.javamaster.b2c.core.model.vo.EditQuestionsReqVo;
+import org.javamaster.b2c.core.model.vo.ExamQuestionsVo;
 import org.javamaster.b2c.core.model.vo.FindOptionsListReqVo;
 import org.javamaster.b2c.core.model.vo.FindOptionsListResVo;
 import org.javamaster.b2c.core.model.vo.FindQuestionsListReqVo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 试题管理
@@ -78,5 +81,13 @@ public interface QuestionsService {
      * @return
      */
     FindOptionsListResVo findOptionsList(FindOptionsListReqVo reqVo);
+
+    /**
+     * 获取试题信息
+     *
+     * @param examsCode
+     * @return
+     */
+    List<ExamQuestionsVo> findQuestionsByExamsCode(String examsCode);
 
 }

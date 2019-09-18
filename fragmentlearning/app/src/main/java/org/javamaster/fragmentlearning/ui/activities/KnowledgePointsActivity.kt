@@ -8,9 +8,11 @@ import android.webkit.WebView
 import android.widget.*
 import androidx.core.view.children
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_onboarding.*
+import kotlinx.android.synthetic.main.activity_knowledge_points.*
+import kotlinx.android.synthetic.main.activity_login.loading
+import kotlinx.android.synthetic.main.activity_onboarding.view_pager
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.asyncTask.KnowledgePointsAsyncTask
@@ -65,6 +67,16 @@ class KnowledgePointsActivity : BaseAppActivity() {
                 sumList.add(Pair(it.second!!, it.third))
             }
         }
+
+        points_options_radio_group.removeAllViews()
+        sumList.forEach { _ ->
+            val radioButton = RadioButton(this)
+            points_options_radio_group.addView(radioButton)
+        }
+        val radioButton = points_options_radio_group.getChildAt(0) as RadioButton
+        radioButton.isChecked = true
+
+
         val adapter = object : PagerAdapter() {
             override fun isViewFromObject(view: View, `object`: Any): Boolean {
                 return view == `object`
@@ -116,7 +128,7 @@ class KnowledgePointsActivity : BaseAppActivity() {
                         ) {
                             val radioGroup = RadioGroup(this@KnowledgePointsActivity)
                             optionsList.forEach {
-                                var button = RadioButton(this@KnowledgePointsActivity)
+                                val button = RadioButton(this@KnowledgePointsActivity)
                                 button.setTextColor(resources.getColor(R.color.colorAccent))
                                 button.text = it.optionName
                                 button.tag = it.correct
@@ -130,12 +142,7 @@ class KnowledgePointsActivity : BaseAppActivity() {
                                         answerRight = radioButton.tag as Boolean
                                     }
                                 }
-                                var text = if (answerRight) {
-                                    "回答正确"
-                                } else {
-                                    "回答错误"
-                                }
-                                Snackbar.make(checkButton, text, Snackbar.LENGTH_SHORT).show()
+                                showResponse(answerRight, checkButton)
                             }
                             linearLayout.addView(radioGroup)
                         } else if (questions.questionsType.toInt() == QuestionsTypeEnum.MULTIPLY.code) {
@@ -143,7 +150,34 @@ class KnowledgePointsActivity : BaseAppActivity() {
                                 val checkBox = CheckBox(this@KnowledgePointsActivity)
                                 checkBox.setTextColor(resources.getColor(R.color.colorAccent))
                                 checkBox.text = it.optionName
+                                checkBox.tag = it.correct
                                 linearLayout.addView(checkBox)
+                            }
+                            checkButton.setOnClickListener {
+                                var selectedNum = 0
+                                val correctOptions = mutableListOf<CheckBox>()
+                                linearLayout.children.forEach {
+                                    val checkBox = it as CheckBox
+                                    val correct = checkBox.tag as Boolean
+                                    if (correct) {
+                                        correctOptions.add(checkBox)
+                                    }
+                                    if (checkBox.isChecked) {
+                                        selectedNum++
+                                    }
+                                }
+                                var answerRight = true
+                                if (correctOptions.size == selectedNum) {
+                                    for (correctOption in correctOptions) {
+                                        if (!correctOption.isChecked) {
+                                            answerRight = false
+                                            break
+                                        }
+                                    }
+                                } else {
+                                    answerRight = false
+                                }
+                                showResponse(answerRight, checkButton)
                             }
                         }
                     }
@@ -154,10 +188,38 @@ class KnowledgePointsActivity : BaseAppActivity() {
             }
         }
         view_pager.adapter = adapter
+        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                chooseDot(position)
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+        })
+    }
+
+    fun chooseDot(position: Int) {
+        if (points_options_radio_group.getChildAt(position) == null) {
+            return
+        }
+        val radioButton = points_options_radio_group.getChildAt(position) as RadioButton
+        radioButton.isChecked = true
+    }
+
+    fun showResponse(answerRight: Boolean, checkButton: Button) {
+        val text = if (answerRight) {
+            getString(R.string.answer_right_tip)
+        } else {
+            getString(R.string.answer_wrong_tip)
+        }
+        Snackbar.make(checkButton, text, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        app_tool_bar.inflateMenu(org.javamaster.fragmentlearning.R.menu.menu_knowledge_points)
+        app_tool_bar.inflateMenu(R.menu.menu_knowledge_points)
         return true
     }
 

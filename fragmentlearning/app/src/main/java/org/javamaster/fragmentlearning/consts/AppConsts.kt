@@ -29,4 +29,5 @@ object AppConsts {
     const val FIND_OPTIONS_LIST = "$BASE_URL$APP_CONTEXT/core/options/findAssociateOptions"
     const val UPLOAD_FILE = "$BASE_URL$APP_CONTEXT/core/files/uploadFile"
     const val FIND_EXAMS_LIST = "$BASE_URL$APP_CONTEXT/core/exams/findExamsList"
+    const val FIND_QUESTIONS_BY_EXAMSCODE = "$BASE_URL$APP_CONTEXT/core/questions/findQuestionsByExamsCode"
 }

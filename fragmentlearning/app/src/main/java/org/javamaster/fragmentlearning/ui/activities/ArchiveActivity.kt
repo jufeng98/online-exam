@@ -90,7 +90,7 @@ class ArchiveActivity : BaseAppActivity() {
             runOnUiThread {
                 if (resultVo.success) {
                     val picUrl = userInfo.picUrl
-                    if (picUrl != "") {
+                    if (user_photo_path.tag != null) {
                         val suffix = picUrl.substring(picUrl.lastIndexOf("."))
                         ImageUtils.saveUserPhoto(suffix, user_photo_path.tag as ByteArray)
                     }

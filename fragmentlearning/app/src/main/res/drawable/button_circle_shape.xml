@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <selector>
+            <item android:state_pressed="true">
+                <shape android:shape="oval">
+                    <!--边框角度-->
+                    <corners android:radius="10dip"/>
+                    <!--外边框颜色-->
+                    <solid android:color="@color/colorAccent"/>
+                </shape>
+            </item>
+            <item android:state_pressed="false">
+                <shape android:shape="oval">
+                    <!--边框角度-->
+                    <corners android:radius="10dip"/>
+                    <!--外边框颜色-->
+                    <solid android:color="@color/colorBlack"/>
+                </shape>
+            </item>
+        </selector>
+    </item>
+    <!--离边框的厚度-->
+    <item
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"
+            android:top="1dp">
+        <shape android:shape="oval">
+            <!--边框角度-->
+            <corners android:radius="10dip"/>
+            <!--内部颜色-->
+            <solid android:color="@color/colorGrey"/>
+        </shape>
+    </item>
+</layer-list>

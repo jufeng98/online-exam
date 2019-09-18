@@ -32,7 +32,7 @@ public class Questions extends LitePalSupport {
     /**
      * 题目类型,1:单选;2:多选;3:判断:4:排序
      */
-    private Byte questionsType;
+    private Integer questionsType;
 
     /**
      * 分数
@@ -119,14 +119,15 @@ public class Questions extends LitePalSupport {
     /**
      * 获取题目类型,1:单选;2:多选;3:判断:4:排序
      */
-    public Byte getQuestionsType() {
+    public Integer getQuestionsType() {
         return questionsType;
     }
 
     /**
      * 设置题目类型,1:单选;2:多选;3:判断:4:排序
+     * @param questionsType
      */
-    public void setQuestionsType(Byte questionsType) {
+    public void setQuestionsType(Integer questionsType) {
         this.questionsType = questionsType;
     }
 

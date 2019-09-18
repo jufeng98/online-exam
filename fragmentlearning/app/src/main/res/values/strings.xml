@@ -14,7 +14,7 @@
     <string name="onboarding_home">主页</string>
     <string name="onboarding_learn">学习</string>
     <string name="onboarding_learn_msg">编程基础就在你的指尖之间</string>
-    <string name="onboarding_play">竞赛</string>
+    <string name="onboarding_play">考试</string>
     <string name="onboarding_play_msg">挑战同行并参与互动代码竞赛</string>
     <string name="onboarding_code">编码</string>
     <string name="onboarding_code_msg">使用我们的Code Playground直接在您的手机上编写和运行代码</string>
@@ -107,4 +107,14 @@
     <string name="change_pwd_success">修改密码成功,请重新登录</string>
     <string name="change_success">修改成功</string>
     <string name="no_data">暂无数据</string>
+    <string name="exams_name">考试名称</string>
+    <string name="exams_desc">考试说明</string>
+    <string name="operation">操作</string>
+    <string name="lose_exams_progress">您的考试进度将会丢失，确定返回?</string>
+    <string name="already_first">已经是第一题</string>
+    <string name="already_last">已经是最后一题</string>
+    <string name="before_submit_tip">注意:蓝色代表已答,灰色代表未答,点击序号可跳到对应题目,确认无误后请点击提交答案</string>
+    <string name="submit_answer">提交答案</string>
+    <string name="answer_right_tip">回答正确</string>
+    <string name="answer_wrong_tip">回答错误</string>
 </resources>

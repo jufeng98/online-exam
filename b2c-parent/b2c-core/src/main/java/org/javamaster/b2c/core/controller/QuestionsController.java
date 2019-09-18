@@ -10,6 +10,7 @@ import org.javamaster.b2c.core.model.vo.CreateQuestionsReqVo;
 import org.javamaster.b2c.core.model.vo.CreateQuestionsResVo;
 import org.javamaster.b2c.core.model.vo.DelQuestionsReqVo;
 import org.javamaster.b2c.core.model.vo.EditQuestionsReqVo;
+import org.javamaster.b2c.core.model.vo.ExamQuestionsVo;
 import org.javamaster.b2c.core.model.vo.FindOptionsListReqVo;
 import org.javamaster.b2c.core.model.vo.FindOptionsListResVo;
 import org.javamaster.b2c.core.model.vo.FindQuestionsListReqVo;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -42,6 +44,7 @@ import java.util.List;
  * @author yudong
  * @date 2019/08/08
  */
+@Validated
 @RestController
 @RequestMapping("/core/questions")
 public class QuestionsController {
@@ -53,7 +56,7 @@ public class QuestionsController {
     @PostMapping("/findQuestionsList")
     public Result<List<Questions>> findQuestionsList(@Validated @RequestBody FindQuestionsListReqVo reqVo) {
         PageInfo<Questions> resVo = questionsService.findQuestionsList(reqVo);
-        Result<List<Questions>> result = new Result(resVo.getList(), resVo.getTotal());
+        Result<List<Questions>> result = new Result<>(resVo.getList(), resVo.getTotal());
         return result;
     }
 
@@ -62,7 +65,7 @@ public class QuestionsController {
     public Result<CreateQuestionsResVo> createQuestions(@Validated @RequestBody CreateQuestionsReqVo reqVo,
                                                         @AuthenticationPrincipal UserDetails userDetails) {
         CreateQuestionsResVo resVo = questionsService.createQuestions(reqVo, userDetails);
-        Result<CreateQuestionsResVo> result = new Result(resVo);
+        Result<CreateQuestionsResVo> result = new Result<>(resVo);
         return result;
     }
 
@@ -71,7 +74,7 @@ public class QuestionsController {
     public Result<Integer> editQuestions(@Validated @RequestBody EditQuestionsReqVo reqVo,
                                          @AuthenticationPrincipal UserDetails userDetails) {
         Integer resVo = questionsService.editQuestions(reqVo, userDetails);
-        Result<Integer> result = new Result(resVo);
+        Result<Integer> result = new Result<>(resVo);
         return result;
     }
 
@@ -79,7 +82,7 @@ public class QuestionsController {
     @PostMapping("/delQuestions")
     public Result<Integer> delQuestions(@Validated @RequestBody DelQuestionsReqVo reqVo) {
         Integer resVo = questionsService.delQuestions(reqVo);
-        Result<Integer> result = new Result(resVo);
+        Result<Integer> result = new Result<>(resVo);
         return result;
     }
 
@@ -101,14 +104,21 @@ public class QuestionsController {
     public Result<BatchImportQuestionsResVo> batchImportQuestions(@RequestPart("file") MultipartFile[] multipartFiles,
                                                                   @AuthenticationPrincipal UserDetails userDetails) {
         BatchImportQuestionsResVo resVo = questionsService.batchImportQuestions(multipartFiles[0], userDetails);
-        Result<BatchImportQuestionsResVo> result = new Result(resVo);
+        Result<BatchImportQuestionsResVo> result = new Result<>(resVo);
         return result;
     }
 
     @PostMapping("/findOptionsList")
     public Result<FindOptionsListResVo> findOptionsList(@Validated @RequestBody FindOptionsListReqVo reqVo) {
         FindOptionsListResVo resVo = questionsService.findOptionsList(reqVo);
-        Result<FindOptionsListResVo> result = new Result(resVo);
+        Result<FindOptionsListResVo> result = new Result<>(resVo);
+        return result;
+    }
+
+    @PostMapping("/findQuestionsByExamsCode")
+    public Result<List<ExamQuestionsVo>> findQuestionsByExamsCode(@Validated @NotBlank String examsCode) {
+        List<ExamQuestionsVo> resVo = questionsService.findQuestionsByExamsCode(examsCode);
+        Result<List<ExamQuestionsVo>> result = new Result<>(resVo);
         return result;
     }
 

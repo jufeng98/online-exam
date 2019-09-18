@@ -1,12 +1,12 @@
 package org.javamaster.fragmentlearning.adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.entity.Sections
@@ -34,8 +34,7 @@ class SectionsAdapter(private var sectionsList: List<Sections>) : RecyclerView.A
         val sections = sectionsList[position]
         holder.myCourseProgressBar.progress = 0
         holder.topicsName.text = sections.sectionsName
-        val bitmap = BitmapFactory.decodeByteArray(sections.sectionsCoverImage, 0, sections.sectionsCoverImage.size)
-        holder.topicsCoverImg.setImageBitmap(bitmap)
+        Glide.with(mContext).load(sections.sectionsCoverImage).into(holder.topicsCoverImg)
         holder.topicsCoverImg.setOnClickListener {
             KnowledgesActivity.actionStart(mContext, sections.sectionsCode, sections.sectionsName)
         }

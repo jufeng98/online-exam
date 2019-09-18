@@ -176,6 +176,24 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Exams>>>() {})
     }
 
+    override fun findQuestionsByExamsCode(examsCode: String): ResultVo<List<ExamQuestionsVo>> {
+        val response: Response
+        try {
+            val map = mutableMapOf("examsCode" to examsCode)
+            response = NetUtils.postForResponse(AppConsts.FIND_QUESTIONS_BY_EXAMSCODE, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<ExamQuestionsVo>>>() {})
+    }
+
     private fun getPage(): Page {
         val page = Page()
         page.pageSize = 99999

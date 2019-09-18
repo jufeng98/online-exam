@@ -50,6 +50,8 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.activities.ExamingActivity">
+        </activity>
         <activity
                 android:name=".ui.activities.ChangePwdActivity"
                 android:theme="@style/Theme.AppCompat.Dialog.Alert">

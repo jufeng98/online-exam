@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.entity.Exams
+import org.javamaster.fragmentlearning.ui.activities.ExamingActivity
 
 
 /**
@@ -32,7 +33,7 @@ class ExamsAdapter(private var examsList: List<Exams>) : RecyclerView.Adapter<Ex
         holder.examsName.text = exams.examsName
         holder.examsDesc.text = exams.examsDesc
         holder.startExams.setOnClickListener {
-
+            ExamingActivity.actionStart(mContext, exams.examsCode)
         }
     }
 

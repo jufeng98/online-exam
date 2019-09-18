@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.javamaster.b2c.core.mapper.QuestionsExtMapper">
+
+    <resultMap id="selectQuestionsByExamsCodeMap" type="org.javamaster.b2c.core.model.vo.ExamQuestionsVo">
+        <id property="id" column="id"/>
+        <result property="questionsCode" column="questionsCode"/>
+        <result property="questionsTitle" column="questionsTitle"/>
+        <result property="questionsType" column="questionsType"/>
+        <collection property="optionsVos" ofType="org.javamaster.b2c.core.model.vo.OptionsVo">
+            <id property="id" column="optionId"/>
+            <result property="optionName" column="optionName"/>
+            <result property="sort" column="sort"/>
+        </collection>
+    </resultMap>
+    <select id="selectQuestionsByExamsCode" resultMap="selectQuestionsByExamsCodeMap">
+        select q.id,
+               q.questions_code  questionsCode,
+               q.questions_title questionsTitle,
+               q.questions_type  questionsType,
+               o.id              optionId,
+               o.`option_name`   optionName,
+               o.sort            sort
+        from questions q
+                 inner join exams_questions eq on eq.questions_code = q.questions_code
+                 inner join `options` o on o.questions_code = q.questions_code
+        where eq.exams_code = #{examsCode}
+    </select>
+</mapper>

@@ -1,12 +1,12 @@
 package org.javamaster.fragmentlearning.adapter
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.entity.Topics
@@ -38,8 +38,7 @@ class LearnAdapter(private var topicsList: List<Topics>, private val needProgres
             holder.myCourseProgressBar.visibility = View.INVISIBLE
         }
         holder.topicsName.text = topics.topicsName
-        val bitmap = BitmapFactory.decodeByteArray(topics.topicsCoverImage, 0, topics.topicsCoverImage.size)
-        holder.topicsCoverImg.setImageBitmap(bitmap)
+        Glide.with(mContext).load(topics.topicsCoverImage).into(holder.topicsCoverImg)
         holder.topicsCoverImg.setOnClickListener {
             SectionsActivity.actionStart(mContext, topics.topicsCode, topics.topicsName)
         }
