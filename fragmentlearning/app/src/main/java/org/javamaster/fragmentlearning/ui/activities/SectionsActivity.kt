@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_sections.*
-import kotlinx.android.synthetic.main.fragment_learn.swipe_refresh
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.SectionsAdapter
@@ -36,17 +36,21 @@ class SectionsActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        val topicsCode = intent.getStringExtra("topicsCode")
         setSupportActionBar(app_tool_bar)
         supportActionBar!!.title = intent.getStringExtra("topicsName")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        val listener = object : OperationListener<List<Sections>> {
-            override fun success(t: List<Sections>) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val topicsCode = intent.getStringExtra("topicsCode")
+        val listener = object : OperationListener<Pair<List<Sections>, Map<String, Int>>> {
+            override fun success(t: Pair<List<Sections>, Map<String, Int>>) {
                 swipe_refresh.isRefreshing = false
                 LitePal.deleteAll(Sections::class.java, "topicsCode=?", topicsCode)
                 // 缓存到数据库
-                LitePal.saveAll(t)
-                initAdapter(t)
+                LitePal.saveAll(t.first)
+                initAdapter(t.first, t.second)
             }
 
             override fun fail(errorCode: Int, errorMsg: String) {
@@ -55,8 +59,9 @@ class SectionsActivity : BaseAppActivity() {
             }
         }
         val sectionsList = LitePal.where("topicsCode=?", topicsCode).find(Sections::class.java)
+        val map = LearnService.getSectionsProgressMap()
         if (sectionsList.isNotEmpty()) {
-            initAdapter(sectionsList)
+            initAdapter(sectionsList, map)
         } else {
             swipe_refresh.isRefreshing = true
             SectionsAsyncTask(learnService, listener).execute(topicsCode)
@@ -71,12 +76,16 @@ class SectionsActivity : BaseAppActivity() {
         return true
     }
 
-    private fun initAdapter(sectionsList: List<Sections>) {
+    private fun initAdapter(
+        sectionsList: List<Sections>,
+        map: Map<String, Int>
+    ) {
         if (sectionsList.isEmpty()) {
             no_data.visibility = View.VISIBLE
             return
         }
-        val adapter = SectionsAdapter(sectionsList)
+
+        val adapter = SectionsAdapter(sectionsList, map)
         val layoutManager = GridLayoutManager(this, 2)
         sections_recycler_view.layoutManager = layoutManager
         sections_recycler_view.adapter = adapter
@@ -87,6 +96,10 @@ class SectionsActivity : BaseAppActivity() {
             val intent = Intent(context, SectionsActivity::class.java)
             intent.putExtra("topicsCode", topicsCode)
             intent.putExtra("topicsName", topicsName)
+            App.getLearnSharedPreferences().edit {
+                putString("topicsCode", topicsCode)
+                apply()
+            }
             context.startActivity(intent)
         }
     }

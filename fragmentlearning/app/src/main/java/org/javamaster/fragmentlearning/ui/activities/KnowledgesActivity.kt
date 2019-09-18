@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MenuItem
+import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_knowledges.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
@@ -93,6 +94,10 @@ class KnowledgesActivity : BaseAppActivity() {
             val intent = Intent(context, KnowledgesActivity::class.java)
             intent.putExtra("sectionsCode", sectionsCode)
             intent.putExtra("sectionsName", sectionsName)
+            App.getLearnSharedPreferences().edit {
+                putString("sectionsCode", sectionsCode)
+                apply()
+            }
             context.startActivity(intent)
         }
     }

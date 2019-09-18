@@ -18,8 +18,11 @@ import org.javamaster.fragmentlearning.view.RoundProgressBar
  * @author yudong
  * @date 2019/9/7
  */
-class LearnAdapter(private var topicsList: List<Topics>, private val needProgressBar: Boolean) :
-    RecyclerView.Adapter<LearnAdapter.ViewHolder>() {
+class LearnAdapter(
+    private var topicsList: List<Topics>,
+    private var progressMap: Map<String, Int>,
+    private val needProgressBar: Boolean
+) : RecyclerView.Adapter<LearnAdapter.ViewHolder>() {
     private lateinit var mContext: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mContext = parent.context
@@ -33,7 +36,8 @@ class LearnAdapter(private var topicsList: List<Topics>, private val needProgres
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val topics = topicsList[position]
-        holder.myCourseProgressBar.progress = 0
+        val progress = progressMap[topics.topicsCode] ?: 0
+        holder.myCourseProgressBar.progress = progress
         if (!needProgressBar) {
             holder.myCourseProgressBar.visibility = View.INVISIBLE
         }

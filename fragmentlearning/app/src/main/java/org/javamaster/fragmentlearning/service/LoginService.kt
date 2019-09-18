@@ -12,6 +12,7 @@ interface LoginService {
     companion object {
         const val REMEMBER_ME_COOKIE_KEY = "rememberMeKey"
         const val LOGIN_USER_INFO = "loginUserInfo"
+        const val USERNAME = "username"
     }
 
     fun login(username: String, password: String): ResultVo<User>

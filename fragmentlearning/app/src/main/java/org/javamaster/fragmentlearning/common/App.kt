@@ -51,6 +51,10 @@ class App : Application() {
             return context.getSharedPreferences(context.packageName + "_login_user_info", Context.MODE_PRIVATE)
         }
 
+        fun getLearnSharedPreferences(): SharedPreferences {
+            return context.getSharedPreferences(context.packageName + "_learn_info", Context.MODE_PRIVATE)
+        }
+
         fun addActivity(activity: Activity) {
             ACTIVITIES.add(activity)
         }

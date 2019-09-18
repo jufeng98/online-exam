@@ -18,8 +18,12 @@ import org.javamaster.fragmentlearning.view.RoundProgressBar
  * @author yudong
  * @date 2019/9/12
  */
-class SectionsAdapter(private var sectionsList: List<Sections>) : RecyclerView.Adapter<SectionsAdapter.ViewHolder>() {
+class SectionsAdapter(
+    private var sectionsList: List<Sections>,
+    private var progressMap: Map<String, Int>
+) : RecyclerView.Adapter<SectionsAdapter.ViewHolder>() {
     private lateinit var mContext: Context
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mContext = parent.context
         val view = LayoutInflater.from(mContext).inflate(R.layout.learn_section_item, parent, false)
@@ -32,7 +36,8 @@ class SectionsAdapter(private var sectionsList: List<Sections>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val sections = sectionsList[position]
-        holder.myCourseProgressBar.progress = 0
+        val progress = progressMap[sections.sectionsCode] ?: 0
+        holder.myCourseProgressBar.progress = progress
         holder.topicsName.text = sections.sectionsName
         Glide.with(mContext).load(sections.sectionsCoverImage).into(holder.topicsCoverImg)
         holder.topicsCoverImg.setOnClickListener {

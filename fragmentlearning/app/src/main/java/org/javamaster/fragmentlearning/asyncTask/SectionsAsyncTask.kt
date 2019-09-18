@@ -12,13 +12,15 @@ import org.javamaster.fragmentlearning.service.LearnService
  */
 class SectionsAsyncTask(
     private val learnService: LearnService,
-    private val operationListener: OperationListener<List<Sections>>
-) : AsyncTask<String, Int, ResultVo<List<Sections>>>() {
-    override fun doInBackground(vararg params: String): ResultVo<List<Sections>> {
-        return learnService.findSectionsList(params[0])
+    private val operationListener: OperationListener<Pair<List<Sections>, Map<String, Int>>>
+) : AsyncTask<String, Int, ResultVo<Pair<List<Sections>, Map<String, Int>>>>() {
+    override fun doInBackground(vararg params: String): ResultVo<Pair<List<Sections>, Map<String, Int>>> {
+        val resultVo = learnService.findSectionsList(params[0])
+        val resultVo1 = learnService.findSectionsProgress()
+        return ResultVo(true, null, null, Pair(resultVo.data!!, resultVo1.data!!), null)
     }
 
-    override fun onPostExecute(result: ResultVo<List<Sections>>) {
+    override fun onPostExecute(result: ResultVo<Pair<List<Sections>, Map<String, Int>>>) {
         if (!result.success) {
             operationListener.fail(result.errorCode!!, result.errorMsg!!)
         } else {

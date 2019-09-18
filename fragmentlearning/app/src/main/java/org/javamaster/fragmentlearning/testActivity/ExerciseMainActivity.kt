@@ -9,6 +9,10 @@ import org.javamaster.fragmentlearning.testAdapter.ExerciseArrayAdapter
 import org.javamaster.fragmentlearning.testCompleteDown.DownloadActivity
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 
+/**
+ * @author yudong
+ * @date 2019/8/28
+ */
 class ExerciseMainActivity : BaseAppActivity() {
     var list: MutableList<Pair<String, Class<out Any>>> = mutableListOf()
     override fun initContentView(): Int? {

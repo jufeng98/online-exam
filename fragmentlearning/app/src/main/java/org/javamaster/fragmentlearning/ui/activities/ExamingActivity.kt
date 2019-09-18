@@ -27,6 +27,10 @@ import org.javamaster.fragmentlearning.service.LearnService
 import org.litepal.LitePal
 import javax.inject.Inject
 
+/**
+ * @author yudong
+ * @date 2019/9/12
+ */
 class ExamingActivity : BaseAppActivity() {
     @Inject
     lateinit var learnService: LearnService

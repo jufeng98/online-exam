@@ -8,11 +8,14 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.entity.*
+import org.javamaster.fragmentlearning.data.model.LearnsRecordVo
 import org.javamaster.fragmentlearning.data.model.Page
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.exception.LoginException
 import org.javamaster.fragmentlearning.service.LearnService
+import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.utils.NetUtils
+import org.litepal.LitePal
 
 /**
  * @author yudong
@@ -180,7 +183,7 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         val response: Response
         try {
             val map = mutableMapOf("examsCode" to examsCode)
-            response = NetUtils.postForResponse(AppConsts.FIND_QUESTIONS_BY_EXAMSCODE, map)
+            response = NetUtils.postForResponse(AppConsts.FIND_QUESTIONS_BY_EXAMS_CODE, map)
         } catch (e: LoginException) {
             return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
         } catch (e: Exception) {
@@ -192,6 +195,88 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         }
         val resJsonStr: String = response.body!!.string()
         return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<ExamQuestionsVo>>>() {})
+    }
+
+    override fun saveLearns(knowledgePointsCode: String): ResultVo<Int> {
+        val response: Response
+        val learnsRecordVo = LearnsRecordVo()
+        val preference = App.getLearnSharedPreferences()
+        learnsRecordVo.topicsCode = preference.getString("topicsCode", "")
+        learnsRecordVo.sectionsCode = preference.getString("sectionsCode", "")
+        learnsRecordVo.knowledgesCode = preference.getString("knowledgesCode", "")
+        learnsRecordVo.username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
+        learnsRecordVo.knowledgePointsCode = knowledgePointsCode
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["learnsRecordVo"] = learnsRecordVo
+            response = NetUtils.postForResponse(AppConsts.SAVE_LEARNS, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Int>>() {})
+    }
+
+    override fun findTopicsProgress(): ResultVo<Map<String, Int>> {
+        val response: Response
+        val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
+        try {
+            val map = mutableMapOf("username" to username)
+            response = NetUtils.postForResponse(AppConsts.FIND_TOPICS_PROGRESS, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        val resultVo: ResultVo<List<TopicsProgressVo>> =
+            objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<TopicsProgressVo>>>() {})
+        if (!resultVo.success) {
+            return ResultVo(false, resultVo.errorCode, resultVo.errorMsg)
+        }
+        val list = resultVo.data!!
+        LitePal.deleteAll(TopicsProgressVo::class.java, "username=?", username)
+        LitePal.saveAll(list)
+        val map = LearnService.getTopicsProgressMap()
+        return ResultVo(true, null, null, map, null)
+    }
+
+    override fun findSectionsProgress(): ResultVo<Map<String, Int>> {
+        val response: Response
+        val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
+        try {
+            val map = mutableMapOf("username" to username)
+            response = NetUtils.postForResponse(AppConsts.FIND_SECTIONS_PROGRESS, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        val resultVo: ResultVo<List<SectionsProgressVo>> =
+            objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<SectionsProgressVo>>>() {})
+        if (!resultVo.success) {
+            return ResultVo(false, resultVo.errorCode, resultVo.errorMsg)
+        }
+        val list = resultVo.data!!
+        LitePal.deleteAll(SectionsProgressVo::class.java, "username=?", username)
+        LitePal.saveAll(list)
+        val map = LearnService.getSectionsProgressMap()
+        return ResultVo(true, null, null, map, null)
     }
 
     private fun getPage(): Page {

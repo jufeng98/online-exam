@@ -24,7 +24,6 @@ import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import javax.inject.Inject
 
-
 /**
  * @author yudong
  * @date 2019/8/18

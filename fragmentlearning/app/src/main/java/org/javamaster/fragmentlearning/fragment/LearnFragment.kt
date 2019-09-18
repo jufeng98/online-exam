@@ -81,12 +81,12 @@ class LearnFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val listener = object : OperationListener<List<Topics>> {
-            override fun success(t: List<Topics>) {
+        val listener = object : OperationListener<Pair<List<Topics>, Map<String, Int>>> {
+            override fun success(t: Pair<List<Topics>, Map<String, Int>>) {
                 swipe_refresh.isRefreshing = false
                 LitePal.deleteAll(Topics::class.java)
                 // 缓存到数据库
-                LitePal.saveAll(t)
+                LitePal.saveAll(t.first)
                 initAdapter(t)
             }
 
@@ -98,8 +98,9 @@ class LearnFragment : Fragment() {
             }
         }
         val topicsList = LitePal.findAll(Topics::class.java)
+        val map = LearnService.getTopicsProgressMap()
         if (topicsList.isNotEmpty()) {
-            initAdapter(topicsList)
+            initAdapter(Pair(topicsList, map))
         } else {
             swipe_refresh.isRefreshing = true
             TopicsAsyncTask(learnService, listener).execute()
@@ -110,8 +111,8 @@ class LearnFragment : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun initAdapter(topicsList: List<Topics>) {
-        val map = topicsList.groupBy { it.topicsType }
+    private fun initAdapter(pair: Pair<List<Topics>, Map<String, Int>>) {
+        val map = pair.first.groupBy { it.topicsType }
         val topicsPlaceholder: LinearLayout = view!!.findViewById(R.id.topics_placeholder)
         topicsPlaceholder.removeAllViews()
         map.forEach {
@@ -125,7 +126,7 @@ class LearnFragment : Fragment() {
             }
             val topicsRecyclerView: RecyclerView = newView.findViewById(R.id.no_course_recycler_view)
             topicsRecyclerView.layoutManager = getLayoutManage()
-            val learnAdapter = LearnAdapter(it.value, true)
+            val learnAdapter = LearnAdapter(it.value, pair.second, true)
             topicsRecyclerView.adapter = learnAdapter
             topicsPlaceholder.addView(newView)
         }

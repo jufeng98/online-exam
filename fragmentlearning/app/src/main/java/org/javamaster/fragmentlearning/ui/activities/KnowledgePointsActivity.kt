@@ -3,9 +3,11 @@ package org.javamaster.fragmentlearning.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.webkit.WebView
 import android.widget.*
+import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -25,6 +27,7 @@ import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.LearnService
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 
 class KnowledgePointsActivity : BaseAppActivity() {
@@ -108,6 +111,14 @@ class KnowledgePointsActivity : BaseAppActivity() {
                             .setOnClickListener {
                                 view_pager.currentItem = position + 1
                             }
+                        thread {
+                            val resultVo = learnService.saveLearns(item.knowledgePointsCode)
+                            Log.i(this::class.qualifiedName, resultVo.toString())
+                            val resultVo1 = learnService.findTopicsProgress()
+                            Log.i(this::class.qualifiedName, resultVo1.toString())
+                            val resultVo2 = learnService.findSectionsProgress()
+                            Log.i(this::class.qualifiedName, resultVo2.toString())
+                        }
                     }
                     is Pair<*, *> -> {
                         val questions: Questions = item.first as Questions
@@ -237,6 +248,10 @@ class KnowledgePointsActivity : BaseAppActivity() {
         fun actionStart(context: Context, knowledgesCode: String) {
             val intent = Intent(context, KnowledgePointsActivity::class.java)
             intent.putExtra("knowledgesCode", knowledgesCode)
+            App.getLearnSharedPreferences().edit {
+                putString("knowledgesCode", knowledgesCode)
+                apply()
+            }
             context.startActivity(intent)
         }
     }

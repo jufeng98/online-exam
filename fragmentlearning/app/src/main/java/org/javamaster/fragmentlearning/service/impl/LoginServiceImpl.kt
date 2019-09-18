@@ -18,6 +18,7 @@ import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.service.LoginService.Companion.LOGIN_USER_INFO
 import org.javamaster.fragmentlearning.service.LoginService.Companion.REMEMBER_ME_COOKIE_KEY
+import org.javamaster.fragmentlearning.service.LoginService.Companion.USERNAME
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import org.javamaster.fragmentlearning.utils.NetUtils
 import java.io.IOException
@@ -53,9 +54,10 @@ class LoginServiceImpl constructor(private val objectMapper: ObjectMapper) : Log
             REMEMBER_ME_COOKIE_KEY,
             cookieStr
         )
-        val userInfoJsonStr = App.objectMapper.writeValueAsString(resultVo.data)
+        val userInfoJsonStr = App.objectMapper.writeValueAsString(resultVo.data!!)
         preferences.putStringAndCommit(LOGIN_USER_INFO, userInfoJsonStr)
-        val picUrl = resultVo.data!!.picUrl
+        preferences.putStringAndCommit(USERNAME, resultVo.data.username)
+        val picUrl = resultVo.data.picUrl
         if (picUrl != "") {
             val suffix = picUrl.substring(picUrl.lastIndexOf("."))
             NetUtils.postForStream(picUrl, object : OperationListener<ByteArray> {

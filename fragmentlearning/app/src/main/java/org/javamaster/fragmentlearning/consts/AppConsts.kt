@@ -29,5 +29,8 @@ object AppConsts {
     const val FIND_OPTIONS_LIST = "$BASE_URL$APP_CONTEXT/core/options/findAssociateOptions"
     const val UPLOAD_FILE = "$BASE_URL$APP_CONTEXT/core/files/uploadFile"
     const val FIND_EXAMS_LIST = "$BASE_URL$APP_CONTEXT/core/exams/findExamsList"
-    const val FIND_QUESTIONS_BY_EXAMSCODE = "$BASE_URL$APP_CONTEXT/core/questions/findQuestionsByExamsCode"
+    const val FIND_QUESTIONS_BY_EXAMS_CODE = "$BASE_URL$APP_CONTEXT/core/questions/findQuestionsByExamsCode"
+    const val SAVE_LEARNS = "$BASE_URL$APP_CONTEXT/core/learns/saveLearns"
+    const val FIND_TOPICS_PROGRESS = "$BASE_URL$APP_CONTEXT/core/learns/findTopicsProgress"
+    const val FIND_SECTIONS_PROGRESS = "$BASE_URL$APP_CONTEXT/core/learns/findSectionsProgress"
 }
