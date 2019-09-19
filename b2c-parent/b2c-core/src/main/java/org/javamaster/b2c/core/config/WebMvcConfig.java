@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.catalina.connector.Connector;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,6 +25,9 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Value("${http.port}")
+    private int httpPort;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**/*").allowedOrigins("*");
@@ -38,6 +44,23 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
             }
         }
+    }
+
+    @Bean
+    public TomcatServletWebServerFactory servletContainer() {
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        tomcat.addAdditionalTomcatConnectors(createHttpConnector());
+        return tomcat;
+    }
+
+    /**
+     * 配置http
+     */
+    private Connector createHttpConnector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setSecure(false);
+        connector.setPort(httpPort);
+        return connector;
     }
 
     @Bean

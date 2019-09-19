@@ -19,9 +19,17 @@ ftp:
   username: admin
   password: admin
 server:
-  port: 9888
+  port: 9443
   servlet:
     context-path: /onlineExam
+  ssl:
+    key-store: classpath:keystore.pfx
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+  max-http-header-size: 8192
+http:
+  port: 9888
 management:
   endpoints:
     web:

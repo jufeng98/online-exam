@@ -3,17 +3,23 @@ package org.javamaster.b2c.core.model.vo;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.javamaster.b2c.core.model.Page;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 /**
  * @author yudong
- * @date 2019/08/11
+ * @date 2019/09/19
  */
 @Data
-public class FindExamsListReqVo {
+public class SubmitAnswersReqVo {
+    @NotBlank
     private String examsCode;
-    private String examsName;
-    private Page page;
+    @NotNull
+    @Size(min = 1)
+    private List<ExamsAnswer> examsAnswers;
 
     @Override
     public String toString() {

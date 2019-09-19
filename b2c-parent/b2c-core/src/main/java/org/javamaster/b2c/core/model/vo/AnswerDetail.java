@@ -3,21 +3,24 @@ package org.javamaster.b2c.core.model.vo;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.javamaster.b2c.core.model.Page;
+
+import java.util.Set;
 
 /**
  * @author yudong
- * @date 2019/08/11
+ * @date 2019/9/19
  */
 @Data
-public class FindExamsListReqVo {
-    private String examsCode;
-    private String examsName;
-    private Page page;
+public class AnswerDetail {
+    private String questionsCode;
+    private Boolean correct;
+    private Set<Integer> examsRightAnswers;
+    private String answerAnalysis;
+    private Integer score;
+    private Integer questionsNum;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
-
 }

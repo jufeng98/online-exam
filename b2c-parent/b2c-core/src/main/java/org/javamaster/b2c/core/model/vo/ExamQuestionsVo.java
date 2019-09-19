@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,13 @@ public class ExamQuestionsVo {
      * 题目标题
      */
     private String questionsTitle;
+    /**
+     * 答案解析
+     */
+    @JsonIgnore
+    private String answerAnalysis;
+    @JsonIgnore
+    private Integer questionsScore;
     /**
      * 题目类型,1:单选;2:多选;3:判断:4:排序
      */

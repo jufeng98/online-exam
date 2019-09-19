@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,8 @@ public class OptionsVo {
      */
     private String optionName;
 
+    @JsonIgnore
+    private Boolean correct;
     /**
      * 选项排序,仅针对排序题
      */

@@ -30,7 +30,7 @@ public class ExamsRecord {
     /**
      * 得分
      */
-    private Byte score;
+    private Short score;
 
     /**
      * 创建时间
@@ -97,14 +97,14 @@ public class ExamsRecord {
     /**
      * 获取得分
      */
-    public Byte getScore() {
+    public Short getScore() {
         return score;
     }
 
     /**
      * 设置得分
      */
-    public void setScore(Byte score) {
+    public void setScore(Short score) {
         this.score = score;
     }
 

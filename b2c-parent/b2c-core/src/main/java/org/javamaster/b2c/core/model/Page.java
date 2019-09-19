@@ -31,6 +31,14 @@ public class Page implements Serializable {
      */
     private String orderBy;
 
+    public Page() {
+    }
+
+    public Page(@Range(min = 1) Integer pageNum, @Range(min = 1) Integer pageSize) {
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(ToStringStyle.JSON_STYLE);

@@ -7,9 +7,12 @@
         <result property="questionsCode" column="questionsCode"/>
         <result property="questionsTitle" column="questionsTitle"/>
         <result property="questionsType" column="questionsType"/>
+        <result property="answerAnalysis" column="answerAnalysis"/>
+        <result property="questionsScore" column="questionsScore"/>
         <collection property="optionsVos" ofType="org.javamaster.b2c.core.model.vo.OptionsVo">
             <id property="id" column="optionId"/>
             <result property="optionName" column="optionName"/>
+            <result property="correct" column="correct"/>
             <result property="sort" column="sort"/>
         </collection>
     </resultMap>
@@ -18,8 +21,11 @@
                q.questions_code  questionsCode,
                q.questions_title questionsTitle,
                q.questions_type  questionsType,
+               q.answer_analysis answerAnalysis,
+               q.questions_score questionsScore,
                o.id              optionId,
                o.`option_name`   optionName,
+               o.correct         correct,
                o.sort            sort
         from questions q
                  inner join exams_questions eq on eq.questions_code = q.questions_code

@@ -45,13 +45,16 @@ public class ExamsServiceImpl implements ExamsService {
 
     @Override
     public PageInfo<Exams> findExamsList(FindExamsListReqVo reqVo) {
-        ExamsExample ExamsExample = new ExamsExample();
-        ExamsExample.Criteria criteria = ExamsExample.createCriteria();
+        ExamsExample examsExample = new ExamsExample();
+        ExamsExample.Criteria criteria = examsExample.createCriteria();
         if (StringUtils.isNotBlank(reqVo.getExamsName())) {
             criteria.andExamsNameEqualTo(reqVo.getExamsName() + "%");
         }
+        if (StringUtils.isNotBlank(reqVo.getExamsCode())) {
+            criteria.andExamsCodeEqualTo(reqVo.getExamsCode());
+        }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "create_time desc");
-        List<Exams> exams = examsMapper.selectByExample(ExamsExample);
+        List<Exams> exams = examsMapper.selectByExample(examsExample);
         PageInfo<Exams> pageInfo = new PageInfo<>(exams);
         return pageInfo;
     }

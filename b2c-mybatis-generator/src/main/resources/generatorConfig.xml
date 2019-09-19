@@ -73,6 +73,7 @@
         <table tableName="certs" schema="online_exam"/>
         <table tableName="learns_record" schema="online_exam"/>
         <table tableName="exams_record" schema="online_exam"/>
+        <table tableName="answers_record" schema="online_exam"/>
         <table tableName="messages" schema="online_exam"/>
     </context>
 </generatorConfiguration>

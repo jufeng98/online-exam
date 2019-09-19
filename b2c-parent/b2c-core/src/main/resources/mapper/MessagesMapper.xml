@@ -6,7 +6,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="read" jdbcType="TINYINT" property="read" />
+    <result column="already_read" jdbcType="TINYINT" property="alreadyRead" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, content, read, create_time
+    id, username, content, already_read, create_time
   </sql>
   <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.MessagesExample" resultMap="BaseResultMap">
     select
@@ -102,9 +102,9 @@
   </delete>
   <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Messages" useGeneratedKeys="true">
     insert into messages (id, username, content, 
-      read, create_time)
+      already_read, create_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{read,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+      #{alreadyRead,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Messages" useGeneratedKeys="true">
     insert into messages
@@ -118,8 +118,8 @@
       <if test="content != null">
         content,
       </if>
-      <if test="read != null">
-        read,
+      <if test="alreadyRead != null">
+        already_read,
       </if>
       <if test="createTime != null">
         create_time,
@@ -135,8 +135,8 @@
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="read != null">
-        #{read,jdbcType=TINYINT},
+      <if test="alreadyRead != null">
+        #{alreadyRead,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -161,8 +161,8 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.read != null">
-        read = #{record.read,jdbcType=TINYINT},
+      <if test="record.alreadyRead != null">
+        already_read = #{record.alreadyRead,jdbcType=TINYINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -177,7 +177,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      read = #{record.read,jdbcType=TINYINT},
+      already_read = #{record.alreadyRead,jdbcType=TINYINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -192,8 +192,8 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="read != null">
-        read = #{read,jdbcType=TINYINT},
+      <if test="alreadyRead != null">
+        already_read = #{alreadyRead,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -205,7 +205,7 @@
     update messages
     set username = #{username,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      read = #{read,jdbcType=TINYINT},
+      already_read = #{alreadyRead,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

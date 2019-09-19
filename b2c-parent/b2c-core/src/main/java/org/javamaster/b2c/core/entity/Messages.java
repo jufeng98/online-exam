@@ -30,7 +30,7 @@ public class Messages {
     /**
      * 是否已读,1:否;2:是
      */
-    private Byte read;
+    private Byte alreadyRead;
 
     /**
      * 创建时间
@@ -97,15 +97,15 @@ public class Messages {
     /**
      * 获取是否已读,1:否;2:是
      */
-    public Byte getRead() {
-        return read;
+    public Byte getAlreadyRead() {
+        return alreadyRead;
     }
 
     /**
      * 设置是否已读,1:否;2:是
      */
-    public void setRead(Byte read) {
-        this.read = read;
+    public void setAlreadyRead(Byte alreadyRead) {
+        this.alreadyRead = alreadyRead;
     }
 
     /**

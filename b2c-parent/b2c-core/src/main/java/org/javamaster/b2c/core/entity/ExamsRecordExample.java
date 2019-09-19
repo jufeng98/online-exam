@@ -320,52 +320,52 @@ public class ExamsRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andScoreEqualTo(Byte value) {
+        public Criteria andScoreEqualTo(Short value) {
             addCriterion("score =", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotEqualTo(Byte value) {
+        public Criteria andScoreNotEqualTo(Short value) {
             addCriterion("score <>", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThan(Byte value) {
+        public Criteria andScoreGreaterThan(Short value) {
             addCriterion("score >", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreGreaterThanOrEqualTo(Byte value) {
+        public Criteria andScoreGreaterThanOrEqualTo(Short value) {
             addCriterion("score >=", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThan(Byte value) {
+        public Criteria andScoreLessThan(Short value) {
             addCriterion("score <", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreLessThanOrEqualTo(Byte value) {
+        public Criteria andScoreLessThanOrEqualTo(Short value) {
             addCriterion("score <=", value, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreIn(List<Byte> values) {
+        public Criteria andScoreIn(List<Short> values) {
             addCriterion("score in", values, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotIn(List<Byte> values) {
+        public Criteria andScoreNotIn(List<Short> values) {
             addCriterion("score not in", values, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreBetween(Byte value1, Byte value2) {
+        public Criteria andScoreBetween(Short value1, Short value2) {
             addCriterion("score between", value1, value2, "score");
             return (Criteria) this;
         }
 
-        public Criteria andScoreNotBetween(Byte value1, Byte value2) {
+        public Criteria andScoreNotBetween(Short value1, Short value2) {
             addCriterion("score not between", value1, value2, "score");
             return (Criteria) this;
         }

@@ -6,7 +6,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="exams_code" jdbcType="VARCHAR" property="examsCode" />
-    <result column="score" jdbcType="TINYINT" property="score" />
+    <result column="score" jdbcType="SMALLINT" property="score" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -104,7 +104,7 @@
     insert into exams_record (id, username, exams_code, 
       score, create_time)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{examsCode,jdbcType=VARCHAR}, 
-      #{score,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+      #{score,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.ExamsRecord" useGeneratedKeys="true">
     insert into exams_record
@@ -136,7 +136,7 @@
         #{examsCode,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        #{score,jdbcType=TINYINT},
+        #{score,jdbcType=SMALLINT},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -162,7 +162,7 @@
         exams_code = #{record.examsCode,jdbcType=VARCHAR},
       </if>
       <if test="record.score != null">
-        score = #{record.score,jdbcType=TINYINT},
+        score = #{record.score,jdbcType=SMALLINT},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -177,7 +177,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       exams_code = #{record.examsCode,jdbcType=VARCHAR},
-      score = #{record.score,jdbcType=TINYINT},
+      score = #{record.score,jdbcType=SMALLINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -193,7 +193,7 @@
         exams_code = #{examsCode,jdbcType=VARCHAR},
       </if>
       <if test="score != null">
-        score = #{score,jdbcType=TINYINT},
+        score = #{score,jdbcType=SMALLINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -205,7 +205,7 @@
     update exams_record
     set username = #{username,jdbcType=VARCHAR},
       exams_code = #{examsCode,jdbcType=VARCHAR},
-      score = #{score,jdbcType=TINYINT},
+      score = #{score,jdbcType=SMALLINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

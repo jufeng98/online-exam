@@ -310,63 +310,63 @@ public class MessagesExample {
             return (Criteria) this;
         }
 
-        public Criteria andReadIsNull() {
-            addCriterion("read is null");
+        public Criteria andAlreadyReadIsNull() {
+            addCriterion("already_read is null");
             return (Criteria) this;
         }
 
-        public Criteria andReadIsNotNull() {
-            addCriterion("read is not null");
+        public Criteria andAlreadyReadIsNotNull() {
+            addCriterion("already_read is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReadEqualTo(Byte value) {
-            addCriterion("read =", value, "read");
+        public Criteria andAlreadyReadEqualTo(Byte value) {
+            addCriterion("already_read =", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadNotEqualTo(Byte value) {
-            addCriterion("read <>", value, "read");
+        public Criteria andAlreadyReadNotEqualTo(Byte value) {
+            addCriterion("already_read <>", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadGreaterThan(Byte value) {
-            addCriterion("read >", value, "read");
+        public Criteria andAlreadyReadGreaterThan(Byte value) {
+            addCriterion("already_read >", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadGreaterThanOrEqualTo(Byte value) {
-            addCriterion("read >=", value, "read");
+        public Criteria andAlreadyReadGreaterThanOrEqualTo(Byte value) {
+            addCriterion("already_read >=", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadLessThan(Byte value) {
-            addCriterion("read <", value, "read");
+        public Criteria andAlreadyReadLessThan(Byte value) {
+            addCriterion("already_read <", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadLessThanOrEqualTo(Byte value) {
-            addCriterion("read <=", value, "read");
+        public Criteria andAlreadyReadLessThanOrEqualTo(Byte value) {
+            addCriterion("already_read <=", value, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadIn(List<Byte> values) {
-            addCriterion("read in", values, "read");
+        public Criteria andAlreadyReadIn(List<Byte> values) {
+            addCriterion("already_read in", values, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadNotIn(List<Byte> values) {
-            addCriterion("read not in", values, "read");
+        public Criteria andAlreadyReadNotIn(List<Byte> values) {
+            addCriterion("already_read not in", values, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadBetween(Byte value1, Byte value2) {
-            addCriterion("read between", value1, value2, "read");
+        public Criteria andAlreadyReadBetween(Byte value1, Byte value2) {
+            addCriterion("already_read between", value1, value2, "alreadyRead");
             return (Criteria) this;
         }
 
-        public Criteria andReadNotBetween(Byte value1, Byte value2) {
-            addCriterion("read not between", value1, value2, "read");
+        public Criteria andAlreadyReadNotBetween(Byte value1, Byte value2) {
+            addCriterion("already_read not between", value1, value2, "alreadyRead");
             return (Criteria) this;
         }
 
