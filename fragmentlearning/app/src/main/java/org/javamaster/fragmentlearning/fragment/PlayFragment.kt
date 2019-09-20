@@ -38,8 +38,6 @@ class PlayFragment : Fragment() {
         val listener = object : OperationListener<List<Exams>> {
             override fun success(t: List<Exams>) {
                 swipe_refresh.isRefreshing = false
-                LitePal.deleteAll(Exams::class.java)
-                LitePal.saveAll(t)
                 initAdapter(t)
             }
 

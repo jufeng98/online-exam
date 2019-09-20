@@ -18,7 +18,7 @@ import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
-import org.javamaster.fragmentlearning.ui.login.LoginViewModel
+import org.javamaster.fragmentlearning.ui.viewModel.LoginViewModel
 import javax.inject.Inject
 
 /**

@@ -5,10 +5,13 @@ import dagger.Module
 import dagger.Provides
 import org.javamaster.fragmentlearning.service.LearnService
 import org.javamaster.fragmentlearning.service.LoginService
+import org.javamaster.fragmentlearning.service.MessagesService
 import org.javamaster.fragmentlearning.service.impl.LearnServiceImpl
 import org.javamaster.fragmentlearning.service.impl.LoginServiceImpl
-import org.javamaster.fragmentlearning.ui.login.LoginViewModel
-import org.javamaster.fragmentlearning.ui.signup.SignupViewModel
+import org.javamaster.fragmentlearning.service.impl.MessagesServiceImpl
+import org.javamaster.fragmentlearning.ui.viewModel.ExamingViewPageModel
+import org.javamaster.fragmentlearning.ui.viewModel.LoginViewModel
+import org.javamaster.fragmentlearning.ui.viewModel.SignupViewModel
 
 /**
  * 单例对象只能在同一个Activity中有效,不同的Activity注入的不是同一个对象.所以这里提供的对象仅仅是Activity范围内单例
@@ -30,6 +33,12 @@ class AppModule {
         return LearnServiceImpl(objectMapper)
     }
 
+    @Provides
+    @ActivityScope
+    fun messagesService(objectMapper: ObjectMapper): MessagesService {
+        return MessagesServiceImpl(objectMapper)
+    }
+
     //  @Named("dev")
     @Provides
     @ActivityScope
@@ -41,6 +50,12 @@ class AppModule {
     @ActivityScope
     fun signupViewModel(loginService: LoginService): SignupViewModel {
         return SignupViewModel(loginService)
+    }
+
+    @Provides
+    @ActivityScope
+    fun examingViewPageModel(learnService: LearnService): ExamingViewPageModel {
+        return ExamingViewPageModel(learnService)
     }
 
 }

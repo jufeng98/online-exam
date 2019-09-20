@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import butterknife.OnClick
 import de.hdodenhof.circleimageview.CircleImageView
@@ -16,12 +18,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab_bottom_layout.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
+import org.javamaster.fragmentlearning.asyncTask.ExamsAsyncTask
+import org.javamaster.fragmentlearning.asyncTask.HasUnreadMessagesTask
 import org.javamaster.fragmentlearning.common.App
+import org.javamaster.fragmentlearning.data.entity.Exams
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.fragment.*
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
+import org.javamaster.fragmentlearning.listener.OperationListener
+import org.javamaster.fragmentlearning.service.LearnService
 import org.javamaster.fragmentlearning.service.LoginService
+import org.javamaster.fragmentlearning.service.MessagesService
 import org.javamaster.fragmentlearning.utils.ImageUtils
+import org.javamaster.fragmentlearning.view.BadgeActionProvider
+import org.litepal.LitePal
 import javax.inject.Inject
 
 /**
@@ -32,6 +42,11 @@ class MainActivity : BaseAppActivity() {
 
     @Inject
     lateinit var loginService: LoginService
+    @Inject
+    lateinit var learnService: LearnService
+    @Inject
+    lateinit var messagesService: MessagesService
+    private lateinit var menuNotificationActionProvider: BadgeActionProvider
     private lateinit var loginUserInfo: User
     private val fragmentMap = mutableMapOf<Int, Fragment>()
 
@@ -71,6 +86,16 @@ class MainActivity : BaseAppActivity() {
 
     override fun onResume() {
         super.onResume()
+        val examsList = LitePal.findAll(Exams::class.java)
+        if (examsList.isNotEmpty()) {
+            play_corner.setTipCout(examsList.size)
+        } else {
+            ExamsAsyncTask(learnService, object : OperationListener<List<Exams>> {
+                override fun success(t: List<Exams>) {
+                    play_corner.setTipCout(t.size)
+                }
+            }).execute()
+        }
         val preferences = App.getLoginSharedPreferences()
         val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
         loginUserInfo = App.objectMapper.readValue(jsonStr, User::class.java)
@@ -84,7 +109,28 @@ class MainActivity : BaseAppActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         app_tool_bar.inflateMenu(R.menu.menu_main)
+        val menuItem = menu.findItem(R.id.notifications)
+        menuNotificationActionProvider = MenuItemCompat.getActionProvider(menuItem) as BadgeActionProvider
+        menuNotificationActionProvider.setOnClickListener(View.OnClickListener {
+            MessagesActivity.actionStart(this@MainActivity)
+        })
         return true
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+//        动态设置actionBar菜单的图标和角标文本,此处我简单一点有未读消息只显示一个小红点
+//        menuNotificationActionProvider.setText("10")
+//        menuNotificationActionProvider.setIcon(R.drawable.tab_notifications_mini)
+        HasUnreadMessagesTask(messagesService, object : OperationListener<Boolean> {
+            override fun success(t: Boolean) {
+                if (t) {
+                    menuNotificationActionProvider.showRedDot()
+                } else {
+                    menuNotificationActionProvider.hideRedDot()
+                }
+            }
+        }).execute()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

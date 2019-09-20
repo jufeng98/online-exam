@@ -84,9 +84,6 @@ class LearnFragment : Fragment() {
         val listener = object : OperationListener<Pair<List<Topics>, Map<String, Int>>> {
             override fun success(t: Pair<List<Topics>, Map<String, Int>>) {
                 swipe_refresh.isRefreshing = false
-                LitePal.deleteAll(Topics::class.java)
-                // 缓存到数据库
-                LitePal.saveAll(t.first)
                 initAdapter(t)
             }
 

@@ -1,4 +1,4 @@
-package org.javamaster.fragmentlearning.ui.login
+package org.javamaster.fragmentlearning.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

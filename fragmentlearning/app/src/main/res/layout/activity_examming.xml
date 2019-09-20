@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/options_radio_group">
+            android:id="@+id/questions_radio_group">
     </RadioGroup>
 
     <androidx.viewpager.widget.ViewPager
@@ -24,7 +24,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/options_radio_group"
+            app:layout_constraintTop_toBottomOf="@id/questions_radio_group"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
 
@@ -77,6 +77,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"/>
 
+        <Button
+                android:text="@string/return_submit_answer"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/return_submit"
+                app:layout_constraintStart_toEndOf="@+id/previous"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/next"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
@@ -89,7 +103,7 @@
             android:indeterminateTintMode="src_atop"
             app:layout_constraintEnd_toEndOf="@+id/questions_view_pager"
             app:layout_constraintStart_toStartOf="@+id/questions_view_pager"
-            app:layout_constraintTop_toTopOf="@+id/options_radio_group"
+            app:layout_constraintTop_toTopOf="@+id/questions_radio_group"
             app:layout_constraintBottom_toBottomOf="@+id/questions_view_pager"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

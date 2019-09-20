@@ -11,6 +11,7 @@
 
     <item
             android:id="@+id/notifications"
+            app:actionProviderClass="org.javamaster.fragmentlearning.view.BadgeActionProvider"
             android:title="@string/notifications"
             android:icon="@drawable/tab_notifications"
             app:showAsAction="ifRoom"/>

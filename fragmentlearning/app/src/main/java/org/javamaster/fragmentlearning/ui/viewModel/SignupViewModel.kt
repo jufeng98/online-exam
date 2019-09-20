@@ -1,4 +1,4 @@
-package org.javamaster.fragmentlearning.ui.signup
+package org.javamaster.fragmentlearning.ui.viewModel
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
@@ -11,7 +11,6 @@ import org.javamaster.fragmentlearning.data.model.CreateUsersReqVo
 import org.javamaster.fragmentlearning.data.model.ResultVo
 import org.javamaster.fragmentlearning.data.model.User
 import org.javamaster.fragmentlearning.service.LoginService
-import org.javamaster.fragmentlearning.ui.login.LoginViewModel
 import javax.inject.Inject
 
 /**

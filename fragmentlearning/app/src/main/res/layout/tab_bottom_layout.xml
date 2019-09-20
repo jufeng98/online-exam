@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:gravity="center_horizontal|center_vertical"
         android:background="@color/colorAppPrimary">
 
@@ -16,15 +17,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    <Button
-            android:id="@+id/tab1"
-            android:layout_weight="1"
-            android:background="@color/colorTransparent"
-            android:drawableTop="@drawable/tab_play_mini"
-            android:text="@string/onboarding_play"
-            android:textColor="@color/cardview_light_background"
+    <com.lzt.tiptextviews.view.TipLayout
+            android:id="@+id/play_corner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:tl_surround_padding="1"
+            app:tl_radius="8"
+            app:ttv_color="@color/colorPureRed"
+            app:tl_outer_stroke="1"
+            app:tl_sice="10"
+            app:tl_direction="topRight">
+
+        <Button
+                android:id="@+id/tab1"
+                android:layout_weight="1"
+                android:background="@color/colorTransparent"
+                android:drawableTop="@drawable/tab_play_mini"
+                android:text="@string/onboarding_play"
+                android:textColor="@color/cardview_light_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </com.lzt.tiptextviews.view.TipLayout>
 
     <Button
             android:id="@+id/tab2"

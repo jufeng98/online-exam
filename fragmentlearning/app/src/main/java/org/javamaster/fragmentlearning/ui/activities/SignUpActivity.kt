@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
-import org.javamaster.fragmentlearning.ui.signup.SignupViewModel
+import org.javamaster.fragmentlearning.ui.viewModel.SignupViewModel
 import javax.inject.Inject
 
 class SignUpActivity : BaseAppActivity() {

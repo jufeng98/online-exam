@@ -2,7 +2,9 @@ package org.javamaster.fragmentlearning.service
 
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.*
+import org.javamaster.fragmentlearning.data.model.ExamsAnswer
 import org.javamaster.fragmentlearning.data.model.ResultVo
+import org.javamaster.fragmentlearning.data.model.SubmitAnswersResVo
 import org.litepal.LitePal
 
 /**
@@ -35,7 +37,20 @@ interface LearnService {
 
     fun findSectionsProgress(): ResultVo<Map<String, Int>>
 
+    fun submitAnswers(examsCode: String, examsAnswers: List<ExamsAnswer>): ResultVo<SubmitAnswersResVo>
+
     companion object {
+
+        fun getExamQuestionsVos(examsCode: String): List<ExamQuestionsVo> {
+            val examQuestionsVos = LitePal.where("examsCode=?", examsCode).find(ExamQuestionsVo::class.java)
+            if (examQuestionsVos.isNotEmpty()) {
+                examQuestionsVos.forEach {
+                    it.optionsVos = LitePal.where("questionsCode=?", it.questionsCode).find(OptionsVo::class.java)
+                }
+            }
+            return examQuestionsVos
+        }
+
         fun getTopicsProgressMap(): Map<String, Int> {
             val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
             val progressList = LitePal.where("username=?", username).find(TopicsProgressVo::class.java)

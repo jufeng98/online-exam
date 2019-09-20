@@ -5,6 +5,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +15,12 @@ import org.javamaster.fragmentlearning.interceptor.CommonInterceptor
 import org.javamaster.fragmentlearning.listener.OperationListener
 import java.io.File
 import java.io.IOException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 
 /**
@@ -23,18 +29,6 @@ import java.util.concurrent.TimeUnit
  */
 object NetUtils {
     private val JSON = "application/json; charset=utf-8".toMediaType()
-    private fun getClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-//      包含header、body数据
-        loggingInterceptor.apply { loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
-        return OkHttpClient.Builder()
-            .connectTimeout(3, TimeUnit.SECONDS)
-            .readTimeout(3, TimeUnit.SECONDS)
-            .writeTimeout(3, TimeUnit.SECONDS)
-            .addInterceptor(CommonInterceptor())
-            .addInterceptor(loggingInterceptor)
-            .build()
-    }
 
     /**
      * form表单格式请求
@@ -120,4 +114,40 @@ object NetUtils {
             }
         })
     }
+
+    private fun getClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+//      包含header、body数据
+        loggingInterceptor.apply { loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
+        return getUnsafeOkHttpClient().newBuilder()
+            .connectTimeout(3, TimeUnit.SECONDS)
+            .readTimeout(3, TimeUnit.SECONDS)
+            .writeTimeout(3, TimeUnit.SECONDS)
+            .addInterceptor(CommonInterceptor())
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
+    private fun getUnsafeOkHttpClient(): OkHttpClient {
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun getAcceptedIssuers(): Array<X509Certificate> {
+                return arrayOf()
+            }
+
+            override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+            }
+
+            override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+            }
+        })
+        val builder = OkHttpClient.Builder()
+        val trustManager = trustAllCerts[0] as X509TrustManager
+        val sslContext = SSLContext.getInstance("TLSv1.2")
+        sslContext.init(null, null, null)
+        val noSSLv3SocketFactory = NoSSLv3SocketFactory(sslContext.socketFactory)
+        builder.sslSocketFactory(noSSLv3SocketFactory, trustManager)
+        builder.hostnameVerifier(HostnameVerifier { _, _ -> true })
+        return builder.build()
+    }
+
 }

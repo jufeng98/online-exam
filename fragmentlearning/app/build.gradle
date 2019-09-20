@@ -83,6 +83,8 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     // Glide 一个强大的图片加载库,可以加载网络图片,GIF图片,甚至是本地视频
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    // 为组件添加角标的开源库
+    implementation 'com.github.liangzhongtai:TipTextView:v1.1'
 
 }
 

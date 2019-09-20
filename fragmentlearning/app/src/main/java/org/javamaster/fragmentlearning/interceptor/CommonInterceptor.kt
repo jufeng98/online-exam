@@ -30,6 +30,13 @@ class CommonInterceptor : Interceptor {
             .addHeader("cookie", value ?: "")
             .build()
         val response = chain.proceed(request)
+        val cookieStr: String = response.headers("Set-Cookie").joinToString(";")
+        if (cookieStr.contains("CORE_REMEMBER_ME")) {
+            preferences.edit().apply {
+                putString(REMEMBER_ME_COOKIE_KEY, cookieStr)
+                apply()
+            }
+        }
         when (response.code) {
             301, 302, 304, 401, 403 -> {
                 val localBroadcastManager = LocalBroadcastManager.getInstance(App.context)

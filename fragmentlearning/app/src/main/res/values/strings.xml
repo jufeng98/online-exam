@@ -112,9 +112,17 @@
     <string name="operation">操作</string>
     <string name="lose_exams_progress">您的考试进度将会丢失，确定返回?</string>
     <string name="already_first">已经是第一题</string>
-    <string name="already_last">已经是最后一题</string>
     <string name="before_submit_tip">注意:蓝色代表已答,灰色代表未答,点击序号可跳到对应题目,确认无误后请点击提交答案</string>
-    <string name="submit_answer">提交答案</string>
+    <string name="submit_answer">提交考试答案</string>
+    <string name="return_submit_answer">返回提交页面</string>
     <string name="answer_right_tip">回答正确</string>
     <string name="answer_wrong_tip">回答错误</string>
+    <string name="refresh_question">刷新试题,会丢失考试进度</string>
+    <string name="exams_score_tip">本次考试得分:%s分,红色代表做错的题目,点击序号可跳到对应题目查看正确答案及解析</string>
+    <string name="unknown_question_type">未知题目类型</string>
+    <string name="answer_analysis">答案解析:%s</string>
+    <string name="mark_all_as_read">所有通知标为已读</string>
+    <string name="loading">正在加载...</string>
+    <string name="bottom_of_view">我是有底线的</string>
+    <string name="chinese_date_pattern">yyyy年MM月dd日 HH时mm分ss秒</string>
 </resources>

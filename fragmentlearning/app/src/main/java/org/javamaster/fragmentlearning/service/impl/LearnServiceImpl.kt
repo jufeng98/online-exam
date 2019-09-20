@@ -8,9 +8,7 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.entity.*
-import org.javamaster.fragmentlearning.data.model.LearnsRecordVo
-import org.javamaster.fragmentlearning.data.model.Page
-import org.javamaster.fragmentlearning.data.model.ResultVo
+import org.javamaster.fragmentlearning.data.model.*
 import org.javamaster.fragmentlearning.exception.LoginException
 import org.javamaster.fragmentlearning.service.LearnService
 import org.javamaster.fragmentlearning.service.LoginService
@@ -40,7 +38,14 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
             )
         }
         val resJsonStr: String = response.body!!.string()
-        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Topics>>>() {})
+        val resultVo: ResultVo<List<Topics>> =
+            objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Topics>>>() {})
+        if (resultVo.success) {
+            LitePal.deleteAll(Topics::class.java)
+            // 缓存到数据库
+            LitePal.saveAll(resultVo.data!!)
+        }
+        return resultVo
     }
 
     override fun findSectionsList(topicsCode: String): ResultVo<List<Sections>> {
@@ -176,7 +181,13 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
             )
         }
         val resJsonStr: String = response.body!!.string()
-        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Exams>>>() {})
+        val resultVo: ResultVo<List<Exams>> =
+            objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<Exams>>>() {})
+        if (resultVo.success) {
+            LitePal.deleteAll(Exams::class.java)
+            LitePal.saveAll(resultVo.data!!)
+        }
+        return resultVo
     }
 
     override fun findQuestionsByExamsCode(examsCode: String): ResultVo<List<ExamQuestionsVo>> {
@@ -194,7 +205,21 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
             )
         }
         val resJsonStr: String = response.body!!.string()
-        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<ExamQuestionsVo>>>() {})
+        val resultVo: ResultVo<List<ExamQuestionsVo>> =
+            objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<List<ExamQuestionsVo>>>() {})
+        if (resultVo.success) {
+            LitePal.deleteAll(ExamQuestionsVo::class.java, "examsCode=?", examsCode)
+            resultVo.data!!.forEach {
+                LitePal.deleteAll(OptionsVo::class.java, "questionsCode=?", it.questionsCode)
+                it.examsCode = examsCode
+                it.optionsVos.forEach { optionsVo: OptionsVo ->
+                    optionsVo.questionsCode = it.questionsCode
+                }
+                LitePal.saveAll(it.optionsVos)
+            }
+            LitePal.saveAll(resultVo.data)
+        }
+        return resultVo
     }
 
     override fun saveLearns(knowledgePointsCode: String): ResultVo<Int> {
@@ -277,6 +302,26 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
         LitePal.saveAll(list)
         val map = LearnService.getSectionsProgressMap()
         return ResultVo(true, null, null, map, null)
+    }
+
+    override fun submitAnswers(examsCode: String, examsAnswers: List<ExamsAnswer>): ResultVo<SubmitAnswersResVo> {
+        val response: Response
+        try {
+            val map = mutableMapOf<String, Any>()
+            map["examsCode"] = examsCode
+            map["examsAnswers"] = examsAnswers
+            response = NetUtils.postForResponse(AppConsts.SUBMIT_ANSWERS, map)
+        } catch (e: LoginException) {
+            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
+        } catch (e: Exception) {
+            Log.e(this::class.qualifiedName, "", e)
+            return ResultVo(
+                errorCode = AppConsts.ERROR_CODE,
+                errorMsg = e.message ?: App.context.getString(R.string.network_error)
+            )
+        }
+        val resJsonStr: String = response.body!!.string()
+        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<SubmitAnswersResVo>>() {})
     }
 
     private fun getPage(): Page {
