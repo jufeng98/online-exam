@@ -13,4 +13,5 @@
 根据数据库表结构生成相应的mybatis Java实体类,mapper类和mapper类关联的xml文件
 ### handypoi-excel
 一个简洁方便的可通过注解来读取excel文件以及生成excel文件的工具类库,简化Apache poi类库繁琐的操作
+### 更多详细页面介绍参见https://zhuanlan.zhihu.com/p/82739209
 ### 项目待续完善中。。。。。。
