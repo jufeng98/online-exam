@@ -186,7 +186,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="用户授权管理" width="30%" :visible.sync="authDialogVisible">
+    <el-dialog title="用户授权管理" width="50%" :visible.sync="authDialogVisible">
       <template>
         <el-transfer style="text-align: left;margin-left:18%" :titles="['未授予角色','已授予角色']" :data="usersAuthorities"
                      v-model="authorities" @change="changeAuthorities"></el-transfer>

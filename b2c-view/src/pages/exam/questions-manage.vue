@@ -23,7 +23,7 @@
             <el-button type="primary" icon="el-icon-plus" @click="showCreateQuestionsDialog">新增</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-eleme" v-on:click="showBatchImportDialog">批量导入</el-button>
+            <el-button type="primary" icon="el-icon-eleme" v-on:click="showBatchImportDialog">批量导入试题</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-download" :loading="downloadLoading"
@@ -210,7 +210,7 @@
         }
       },
       showBatchImportDialog() {
-        this.title = '批量导入'
+        this.title = '批量导入试题'
         this.importQuestionsFormDialogVisible = true
       },
       handleImportClose() {

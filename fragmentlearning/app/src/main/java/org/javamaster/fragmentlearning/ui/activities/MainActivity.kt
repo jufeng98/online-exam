@@ -98,6 +98,11 @@ class MainActivity : BaseAppActivity() {
         }
         val preferences = App.getLoginSharedPreferences()
         val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
+        if (jsonStr == "") {
+            OnboardingActivity.actionStart(this)
+            App.finishExcept(mutableSetOf(OnboardingActivity::class.java))
+            return
+        }
         loginUserInfo = App.objectMapper.readValue(jsonStr, User::class.java)
         main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.username).text = loginUserInfo.username
         main_nav_view.getHeaderView(0).findViewById<TextView>(R.id.user_email).text = loginUserInfo.email
