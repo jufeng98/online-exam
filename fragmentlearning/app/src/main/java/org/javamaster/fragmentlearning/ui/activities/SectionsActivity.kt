@@ -7,17 +7,19 @@ import android.view.Menu
 import android.view.View
 import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sections.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.SectionsAdapter
-import org.javamaster.fragmentlearning.asyncTask.SectionsAsyncTask
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.Sections
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.LearnService
-import org.litepal.LitePal
 import javax.inject.Inject
 
 /**
@@ -28,6 +30,11 @@ class SectionsActivity : BaseAppActivity() {
 
     @Inject
     lateinit var learnService: LearnService
+    private lateinit var topicsCode: String
+    private lateinit var progressMap: MutableMap<String, Int>
+    private lateinit var sectionsList: MutableList<Sections>
+    private lateinit var sectionsDisposable: Disposable
+    private var refreshSectionsDisposable: Disposable? = null
 
     override fun initContentView(): Int? {
         return R.layout.activity_sections
@@ -37,38 +44,45 @@ class SectionsActivity : BaseAppActivity() {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         setSupportActionBar(app_tool_bar)
+        topicsCode = intent.getStringExtra("topicsCode")
         supportActionBar!!.title = intent.getStringExtra("topicsName")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onResume() {
         super.onResume()
-        val topicsCode = intent.getStringExtra("topicsCode")
-        val listener = object : OperationListener<Pair<List<Sections>, Map<String, Int>>> {
-            override fun success(t: Pair<List<Sections>, Map<String, Int>>) {
-                swipe_refresh.isRefreshing = false
-                LitePal.deleteAll(Sections::class.java, "topicsCode=?", topicsCode)
-                // 缓存到数据库
-                LitePal.saveAll(t.first)
-                initAdapter(t.first, t.second)
-            }
-
-            override fun fail(errorCode: Int, errorMsg: String) {
-                swipe_refresh.isRefreshing = false
-                super.fail(errorCode, errorMsg)
-            }
-        }
-        val sectionsList = LitePal.where("topicsCode=?", topicsCode).find(Sections::class.java)
-        val map = LearnService.getSectionsProgressMap()
-        if (sectionsList.isNotEmpty()) {
-            initAdapter(sectionsList, map)
-        } else {
-            swipe_refresh.isRefreshing = true
-            SectionsAsyncTask(learnService, listener).execute(topicsCode)
-        }
+        sectionsDisposable = Observable.create<Pair<MutableList<Sections>, MutableMap<String, Int>>> {
+            val first = learnService.findSectionsList(topicsCode, true)
+            val second = learnService.findSectionsProgress(topicsCode, true)
+            it.onNext(Pair(first, second))
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            initAdapter(it.first, it.second)
+        }, {
+            OperationListener.fail(it)
+        })
         swipe_refresh.setOnRefreshListener {
-            SectionsAsyncTask(learnService, listener).execute(topicsCode)
+            refreshSectionsDisposable = Observable.create<Pair<MutableList<Sections>, Map<String, Int>>> {
+                val first = learnService.findSectionsList(topicsCode, false)
+                val second = learnService.findSectionsProgress(topicsCode, false)
+                it.onNext(Pair(first, second))
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                swipe_refresh.isRefreshing = false
+                sectionsList.clear()
+                sectionsList.addAll(it.first)
+                progressMap.clear()
+                progressMap.putAll(it.second)
+                sections_recycler_view.adapter!!.notifyDataSetChanged()
+            }, {
+                swipe_refresh.isRefreshing = false
+                OperationListener.fail(it)
+            })
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sectionsDisposable.dispose()
+        refreshSectionsDisposable?.dispose()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,15 +91,16 @@ class SectionsActivity : BaseAppActivity() {
     }
 
     private fun initAdapter(
-        sectionsList: List<Sections>,
-        map: Map<String, Int>
+        sectionsList: MutableList<Sections>,
+        map: MutableMap<String, Int>
     ) {
-        if (sectionsList.isEmpty()) {
+        this.sectionsList = sectionsList
+        this.progressMap = map
+        if (this.sectionsList.isEmpty()) {
             no_data.visibility = View.VISIBLE
             return
         }
-
-        val adapter = SectionsAdapter(sectionsList, map)
+        val adapter = SectionsAdapter(this.sectionsList, this.progressMap)
         val layoutManager = GridLayoutManager(this, 2)
         sections_recycler_view.layoutManager = layoutManager
         sections_recycler_view.adapter = adapter

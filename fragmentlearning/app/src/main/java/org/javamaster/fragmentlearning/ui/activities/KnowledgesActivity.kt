@@ -7,18 +7,19 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_knowledges.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.KnowledgesAdapter
-import org.javamaster.fragmentlearning.asyncTask.KnowledgesAsyncTask
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.Knowledges
-import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.LearnService
-import org.litepal.LitePal
 import javax.inject.Inject
 
 /**
@@ -31,6 +32,10 @@ class KnowledgesActivity : BaseAppActivity() {
     lateinit var learnService: LearnService
     lateinit var sectionsCode: String
     private lateinit var sectionsName: String
+    private lateinit var knowledgesList: MutableList<Knowledges>
+    private lateinit var questionNumVosMap: MutableMap<String, Int>
+    private lateinit var knowledgesDisposable: Disposable
+    private var refreshKnowledgesDisposable: Disposable? = null
 
     override fun initContentView(): Int? {
         return R.layout.activity_knowledges
@@ -44,36 +49,47 @@ class KnowledgesActivity : BaseAppActivity() {
         setSupportActionBar(app_tool_bar)
         supportActionBar?.title = sectionsName
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val listener = object : OperationListener<Pair<List<Knowledges>, List<KnowledgesQuestionNumVo>>> {
-            override fun success(t: Pair<List<Knowledges>, List<KnowledgesQuestionNumVo>>) {
-                swipe_refresh.isRefreshing = false
-                LitePal.deleteAll(Knowledges::class.java, "sectionsCode=?", sectionsCode)
-                LitePal.saveAll(t.first)
-                LitePal.deleteAll(KnowledgesQuestionNumVo::class.java, "sectionsCode=?", sectionsCode)
-                LitePal.saveAll(t.second)
-                initAdapter(t.first, t.second)
-            }
-
-            override fun fail(errorCode: Int, errorMsg: String) {
-                swipe_refresh.isRefreshing = false
-                super.fail(errorCode, errorMsg)
-            }
-        }
-        val knowledgesList = LitePal.where("sectionsCode=?", sectionsCode).find(Knowledges::class.java)
-        val questionNumVos = LitePal.where("sectionsCode=?", sectionsCode).find(KnowledgesQuestionNumVo::class.java)
-        if (knowledgesList.isNotEmpty()) {
-            initAdapter(knowledgesList, questionNumVos)
-        } else {
-            swipe_refresh.isRefreshing = true
-            KnowledgesAsyncTask(learnService, listener).execute(sectionsCode)
-        }
+        knowledgesDisposable = Observable.create<Pair<MutableList<Knowledges>, MutableMap<String, Int>>> {
+            val first = learnService.findKnowledgesList(sectionsCode, true)
+            val second = learnService.findKnowledgesQuestionNum(sectionsCode, true)
+            it.onNext(Pair(first, second))
+            it.onComplete()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            initAdapter(it.first, it.second)
+        }, {
+            OperationListener.fail(it)
+        })
         swipe_refresh.setOnRefreshListener {
-            KnowledgesAsyncTask(learnService, listener).execute(sectionsCode)
+            refreshKnowledgesDisposable =
+                Observable.create<Pair<MutableList<Knowledges>, MutableMap<String, Int>>> {
+                    val first = learnService.findKnowledgesList(sectionsCode, false)
+                    val second = learnService.findKnowledgesQuestionNum(sectionsCode, false)
+                    it.onNext(Pair(first, second))
+                    it.onComplete()
+                }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    swipe_refresh.isRefreshing = false
+                    knowledgesList.clear()
+                    knowledgesList.addAll(it.first)
+                    questionNumVosMap.clear()
+                    questionNumVosMap.putAll(it.second)
+                    knowledges_recycler_view.adapter!!.notifyDataSetChanged()
+                }, {
+                    swipe_refresh.isRefreshing = false
+                    OperationListener.fail(it)
+                })
         }
     }
 
-    fun initAdapter(knowledges: List<Knowledges>, questionNumVos: List<KnowledgesQuestionNumVo>) {
-        val adapter = KnowledgesAdapter(knowledges, questionNumVos)
+    override fun onDestroy() {
+        super.onDestroy()
+        knowledgesDisposable.dispose()
+        refreshKnowledgesDisposable?.dispose()
+    }
+
+    private fun initAdapter(knowledges: MutableList<Knowledges>, questionNumVos: MutableMap<String, Int>) {
+        this.knowledgesList = knowledges
+        this.questionNumVosMap = questionNumVos
+        val adapter = KnowledgesAdapter(this.knowledgesList, this.questionNumVosMap)
         val layoutManager = GridLayoutManager(this, 2)
         knowledges_recycler_view.layoutManager = layoutManager
         knowledges_recycler_view.adapter = adapter

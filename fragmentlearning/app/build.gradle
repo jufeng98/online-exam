@@ -86,9 +86,11 @@ dependencies {
     // 为组件添加角标的开源库
     implementation 'com.github.liangzhongtai:TipTextView:v1.1'
 
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 }
 
-def getIP() {
+static def getIP() {
     InetAddress result = null
     Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces()
     while (interfaces.hasMoreElements()) {

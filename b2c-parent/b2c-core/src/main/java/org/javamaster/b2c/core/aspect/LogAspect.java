@@ -42,10 +42,10 @@ public class LogAspect {
         try {
             resObject = joinPoint.proceed(parameters);
         } catch (Exception e) {
-            logger.error("aspect error req ip:{}|class_method:{}|args:{}", getIpAddr(request), classMethod, Arrays.toString(parameters));
+            logger.error("aspect error req ip:{}\nclass_method:{}\nargs:{}", getIpAddr(request), classMethod, Arrays.toString(parameters));
             throw e;
         }
-        logger.info("aspect req ip:{}|class_method:{}|args:{},response:{},cost time:{}ms", getIpAddr(request), classMethod,
+        logger.info("aspect req ip:{}\nclass_method:{}\nargs:{}\nresponse:{}\ncost time:{}ms", getIpAddr(request), classMethod,
                 Arrays.toString(parameters), resObject, System.currentTimeMillis() - nowMillis);
         return resObject;
     }

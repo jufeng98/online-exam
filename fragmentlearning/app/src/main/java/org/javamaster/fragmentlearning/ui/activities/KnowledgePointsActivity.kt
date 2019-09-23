@@ -112,12 +112,17 @@ class KnowledgePointsActivity : BaseAppActivity() {
                                 view_pager.currentItem = position + 1
                             }
                         thread {
-                            val resultVo = learnService.saveLearns(item.knowledgePointsCode)
-                            Log.i(this::class.qualifiedName, resultVo.toString())
-                            val resultVo1 = learnService.findTopicsProgress()
-                            Log.i(this::class.qualifiedName, resultVo1.toString())
-                            val resultVo2 = learnService.findSectionsProgress()
-                            Log.i(this::class.qualifiedName, resultVo2.toString())
+                            try {
+                                val resultVo = learnService.saveLearns(item.knowledgePointsCode)
+                                Log.i(this::class.qualifiedName, resultVo.toString())
+                                val resultVo1 = learnService.findTopicsProgress(false)
+                                Log.i(this::class.qualifiedName, resultVo1.toString())
+                                val topicsCode = App.getLearnSharedPreferences().getString("topicsCode", "")!!
+                                val resultVo2 = learnService.findSectionsProgress(topicsCode, false)
+                                Log.i(this::class.qualifiedName, resultVo2.toString())
+                            } catch (e: Exception) {
+                                Log.e(this::class.qualifiedName, "error", e)
+                            }
                         }
                     }
                     is Pair<*, *> -> {

@@ -7,12 +7,15 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_messages.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.LoadMoreWrapper
 import org.javamaster.fragmentlearning.adapter.MessagesAdapter
 import org.javamaster.fragmentlearning.asyncTask.MarkMessagesTask
-import org.javamaster.fragmentlearning.asyncTask.MessagesTask
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.Messages
 import org.javamaster.fragmentlearning.data.model.Page
@@ -37,6 +40,9 @@ class MessagesActivity : BaseAppActivity() {
         pageNum = 1
         pageSize = 10
     }
+    private lateinit var messagesDisposable: Disposable
+    private var refreshMessagesDisposable: Disposable? = null
+    private var loadMoreMessagesDisposable: Disposable? = null
 
     override fun initContentView(): Int? {
         return R.layout.activity_messages
@@ -47,37 +53,37 @@ class MessagesActivity : BaseAppActivity() {
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         supportActionBar?.title = getString(R.string.notifications)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val listener = object : OperationListener<Pair<List<Messages>, Long>> {
-            override fun success(t: Pair<List<Messages>, Long>) {
-                messages_swipe_refresh.isRefreshing = false
-                initAdapter(t.first)
-                pageTotal = Math.ceil((1.0 * t.second / page.pageSize)).toLong()
-            }
 
-            override fun fail(errorCode: Int, errorMsg: String) {
-                messages_swipe_refresh.isRefreshing = false
-                super.fail(errorCode, errorMsg)
-            }
-        }
         messages_swipe_refresh.isRefreshing = true
-        MessagesTask(messagesService, listener).execute(page)
+        messagesDisposable = Observable.create<Pair<List<Messages>, Long>> {
+            val list = messagesService.findMessagesList(page)
+            it.onNext(list)
+            it.onComplete()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            messages_swipe_refresh.isRefreshing = false
+            initAdapter(it.first)
+            pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+        }, {
+            messages_swipe_refresh.isRefreshing = false
+            OperationListener.fail(it)
+        })
+
         messages_swipe_refresh.setOnRefreshListener {
             page.pageNum = 1
-            MessagesTask(messagesService, object : OperationListener<Pair<List<Messages>, Long>> {
-                override fun success(t: Pair<List<Messages>, Long>) {
-                    messages_swipe_refresh.isRefreshing = false
-                    messagesList.clear()
-                    messagesList.addAll(t.first)
-                    loadMoreWrapper.notifyDataSetChanged()
-                    pageTotal = Math.ceil((1.0 * t.second / page.pageSize)).toLong()
-                }
-
-                override fun fail(errorCode: Int, errorMsg: String) {
-                    messages_swipe_refresh.isRefreshing = false
-                    super.fail(errorCode, errorMsg)
-                }
-
-            }).execute(page)
+            refreshMessagesDisposable = Observable.create<Pair<List<Messages>, Long>> {
+                val list = messagesService.findMessagesList(page)
+                it.onNext(list)
+                it.onComplete()
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                messages_swipe_refresh.isRefreshing = false
+                messagesList.clear()
+                messagesList.addAll(it.first)
+                loadMoreWrapper.notifyDataSetChanged()
+                pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+            }, {
+                messages_swipe_refresh.isRefreshing = false
+                OperationListener.fail(it)
+            })
         }
         messages_recycler_view.addOnScrollListener(object : EndlessRecyclerOnScrollListener() {
             override fun onLoadMore() {
@@ -88,14 +94,26 @@ class MessagesActivity : BaseAppActivity() {
                     loadMoreWrapper.setLoadState(LoadMoreWrapper.LOADING_END)
                     return
                 }
-                MessagesTask(messagesService, object : OperationListener<Pair<List<Messages>, Long>> {
-                    override fun success(t: Pair<List<Messages>, Long>) {
-                        messagesList.addAll(t.first)
-                        loadMoreWrapper.setLoadState(LoadMoreWrapper.LOADING_COMPLETE)
-                    }
-                }).execute(page)
+                loadMoreMessagesDisposable = Observable.create<Pair<List<Messages>, Long>> {
+                    val list = messagesService.findMessagesList(page)
+                    it.onNext(list)
+                    it.onComplete()
+                }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    messagesList.addAll(it.first)
+                    pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+                    loadMoreWrapper.setLoadState(LoadMoreWrapper.LOADING_COMPLETE)
+                }, {
+                    OperationListener.fail(it)
+                })
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        messagesDisposable.dispose()
+        refreshMessagesDisposable?.dispose()
+        loadMoreMessagesDisposable?.dispose()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -121,7 +139,7 @@ class MessagesActivity : BaseAppActivity() {
         return true
     }
 
-    fun initAdapter(messagesList: List<Messages>) {
+    private fun initAdapter(messagesList: List<Messages>) {
         this.messagesList.addAll(messagesList)
         adapter = MessagesAdapter(this.messagesList, messagesService)
         loadMoreWrapper = LoadMoreWrapper(adapter)

@@ -15,19 +15,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_learn.*
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.adapter.LearnAdapter
-import org.javamaster.fragmentlearning.asyncTask.TopicsAsyncTask
 import org.javamaster.fragmentlearning.common.App
-import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.data.entity.Topics
 import org.javamaster.fragmentlearning.enums.TopicsTypeEnum
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.listener.SoftKeyBoardListener
 import org.javamaster.fragmentlearning.service.LearnService
-import org.litepal.LitePal
 import javax.inject.Inject
 
 /**
@@ -37,6 +38,8 @@ import javax.inject.Inject
 class LearnFragment : Fragment() {
     @Inject
     lateinit var learnService: LearnService
+    private lateinit var topicsDisposable: Disposable
+    private var refreshTopicsDisposable: Disposable? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -81,34 +84,41 @@ class LearnFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val listener = object : OperationListener<Pair<List<Topics>, Map<String, Int>>> {
-            override fun success(t: Pair<List<Topics>, Map<String, Int>>) {
-                swipe_refresh.isRefreshing = false
-                initAdapter(t)
-            }
-
-            override fun fail(errorCode: Int, errorMsg: String) {
-                swipe_refresh.isRefreshing = false
-                if (errorCode != AppConsts.LOGIN_ERROR_CODE) {
-                    Toast.makeText(activity, errorMsg, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        val topicsList = LitePal.findAll(Topics::class.java)
-        val map = LearnService.getTopicsProgressMap()
-        if (topicsList.isNotEmpty()) {
-            initAdapter(Pair(topicsList, map))
-        } else {
-            swipe_refresh.isRefreshing = true
-            TopicsAsyncTask(learnService, listener).execute()
-        }
+        topicsDisposable = Observable.create<Pair<MutableList<Topics>, Map<String, Int>>> {
+            val first = learnService.findTopicsList(true)
+            val second = learnService.findTopicsProgress(true)
+            it.onNext(Pair(first, second))
+            it.onComplete()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            initAdapter(it)
+        }, {
+            OperationListener.fail(it)
+        })
         swipe_refresh.setOnRefreshListener {
-            TopicsAsyncTask(learnService, listener).execute()
+            refreshTopicsDisposable = Observable.create<Pair<MutableList<Topics>, Map<String, Int>>> {
+                val first = learnService.findTopicsList(false)
+                val second = learnService.findTopicsProgress(false)
+                it.onNext(Pair(first, second))
+                it.onComplete()
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                swipe_refresh.isRefreshing = false
+                initAdapter(it)
+            }, {
+                swipe_refresh.isRefreshing = false
+                OperationListener.fail(it)
+            })
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        topicsDisposable.dispose()
+        refreshTopicsDisposable?.dispose()
+    }
+
+
     @SuppressLint("InflateParams")
-    private fun initAdapter(pair: Pair<List<Topics>, Map<String, Int>>) {
+    private fun initAdapter(pair: Pair<MutableList<Topics>, Map<String, Int>>) {
         val map = pair.first.groupBy { it.topicsType }
         val topicsPlaceholder: LinearLayout = view!!.findViewById(R.id.topics_placeholder)
         topicsPlaceholder.removeAllViews()

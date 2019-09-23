@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.entity.Knowledges
-import org.javamaster.fragmentlearning.data.entity.KnowledgesQuestionNumVo
 import org.javamaster.fragmentlearning.ui.activities.KnowledgePointsActivity
 
 
@@ -20,17 +19,13 @@ import org.javamaster.fragmentlearning.ui.activities.KnowledgePointsActivity
  */
 class KnowledgesAdapter(
     private val knowledgesList: List<Knowledges>,
-    private val questionNumVos: List<KnowledgesQuestionNumVo>
+    private val questionNumVosMap: MutableMap<String, Int>
 ) :
     RecyclerView.Adapter<KnowledgesAdapter.ViewHolder>() {
     private lateinit var mContext: Context
-    private val map: MutableMap<String, Int> = mutableMapOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         mContext = parent.context
         val view = LayoutInflater.from(mContext).inflate(R.layout.learn_knowledge_item, parent, false)
-        questionNumVos.forEach {
-            map[it.knowledgesCode] = it.questionsNum
-        }
         return ViewHolder(view)
     }
 
@@ -43,7 +38,7 @@ class KnowledgesAdapter(
         val knowledges = knowledgesList[position]
         holder.numText.text = "${position + 1}/$itemCount"
         holder.knowledgesTitle.text = knowledges.knowledgesName
-        val num = map[knowledges.knowledgesCode] ?: 0
+        val num = questionNumVosMap[knowledges.knowledgesCode] ?: 0
         holder.questionsNum.text = "" + num + mContext.getString(R.string.question_num)
         holder.linearLayout.setOnClickListener {
             KnowledgePointsActivity.actionStart(mContext, knowledges.knowledgesCode)

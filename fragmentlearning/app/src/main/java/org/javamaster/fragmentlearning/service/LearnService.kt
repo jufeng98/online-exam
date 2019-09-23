@@ -1,6 +1,5 @@
 package org.javamaster.fragmentlearning.service
 
-import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.*
 import org.javamaster.fragmentlearning.data.model.ExamsAnswer
 import org.javamaster.fragmentlearning.data.model.ResultVo
@@ -13,13 +12,13 @@ import org.litepal.LitePal
  */
 interface LearnService {
 
-    fun findTopicsList(): ResultVo<List<Topics>>
+    fun findTopicsList(cacheFirst: Boolean): MutableList<Topics>
 
-    fun findSectionsList(topicsCode: String): ResultVo<List<Sections>>
+    fun findSectionsList(topicsCode: String, cacheFirst: Boolean): MutableList<Sections>
 
-    fun findKnowledgesList(sectionsCode: String): ResultVo<List<Knowledges>>
+    fun findKnowledgesList(sectionsCode: String, cacheFirst: Boolean): MutableList<Knowledges>
 
-    fun findKnowledgesQuestionNum(sectionsCode: String): ResultVo<List<KnowledgesQuestionNumVo>>
+    fun findKnowledgesQuestionNum(sectionsCode: String, cacheFirst: Boolean): MutableMap<String, Int>
 
     fun findKnowledgePointsList(knowledgesCode: String): ResultVo<List<KnowledgePoints>>
 
@@ -27,20 +26,19 @@ interface LearnService {
 
     fun findAssociateOptions(questionsCode: String): ResultVo<List<Options>>
 
-    fun findExamsList(): ResultVo<List<Exams>>
+    fun findExamsList(cacheFirst: Boolean): MutableList<Exams>
 
     fun findQuestionsByExamsCode(examsCode: String): ResultVo<List<ExamQuestionsVo>>
 
     fun saveLearns(knowledgePointsCode: String): ResultVo<Int>
 
-    fun findTopicsProgress(): ResultVo<Map<String, Int>>
+    fun findTopicsProgress(cacheFirst: Boolean): Map<String, Int>
 
-    fun findSectionsProgress(): ResultVo<Map<String, Int>>
+    fun findSectionsProgress(topicsCode: String, cacheFirst: Boolean): MutableMap<String, Int>
 
     fun submitAnswers(examsCode: String, examsAnswers: List<ExamsAnswer>): ResultVo<SubmitAnswersResVo>
 
     companion object {
-
         fun getExamQuestionsVos(examsCode: String): List<ExamQuestionsVo> {
             val examQuestionsVos = LitePal.where("examsCode=?", examsCode).find(ExamQuestionsVo::class.java)
             if (examQuestionsVos.isNotEmpty()) {
@@ -49,26 +47,6 @@ interface LearnService {
                 }
             }
             return examQuestionsVos
-        }
-
-        fun getTopicsProgressMap(): Map<String, Int> {
-            val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
-            val progressList = LitePal.where("username=?", username).find(TopicsProgressVo::class.java)
-            val map = mutableMapOf<String, Int>()
-            progressList.forEach {
-                map[it.topicsCode] = it.progress
-            }
-            return map
-        }
-
-        fun getSectionsProgressMap(): Map<String, Int> {
-            val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
-            val progressList = LitePal.where("username=?", username).find(SectionsProgressVo::class.java)
-            val map = mutableMapOf<String, Int>()
-            progressList.forEach {
-                map[it.sectionsCode] = it.progress
-            }
-            return map
         }
     }
 }

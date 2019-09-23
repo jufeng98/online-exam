@@ -14,11 +14,14 @@ import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import butterknife.OnClick
 import de.hdodenhof.circleimageview.CircleImageView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tab_bottom_layout.*
 import kotlinx.android.synthetic.main.tool_bar_layout.*
 import org.javamaster.fragmentlearning.R
-import org.javamaster.fragmentlearning.asyncTask.ExamsAsyncTask
 import org.javamaster.fragmentlearning.asyncTask.HasUnreadMessagesTask
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.data.entity.Exams
@@ -31,7 +34,6 @@ import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.service.MessagesService
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import org.javamaster.fragmentlearning.view.BadgeActionProvider
-import org.litepal.LitePal
 import javax.inject.Inject
 
 /**
@@ -49,6 +51,7 @@ class MainActivity : BaseAppActivity() {
     private lateinit var menuNotificationActionProvider: BadgeActionProvider
     private lateinit var loginUserInfo: User
     private val fragmentMap = mutableMapOf<Int, Fragment>()
+    lateinit var examsDisposable: Disposable
 
     override fun initContentView(): Int? {
         return R.layout.activity_main
@@ -86,16 +89,6 @@ class MainActivity : BaseAppActivity() {
 
     override fun onResume() {
         super.onResume()
-        val examsList = LitePal.findAll(Exams::class.java)
-        if (examsList.isNotEmpty()) {
-            play_corner.setTipCout(examsList.size)
-        } else {
-            ExamsAsyncTask(learnService, object : OperationListener<List<Exams>> {
-                override fun success(t: List<Exams>) {
-                    play_corner.setTipCout(t.size)
-                }
-            }).execute()
-        }
         val preferences = App.getLoginSharedPreferences()
         val jsonStr = preferences.getString(LoginService.LOGIN_USER_INFO, "")
         if (jsonStr == "") {
@@ -110,6 +103,20 @@ class MainActivity : BaseAppActivity() {
         if (bitmap != null) {
             main_nav_view.getHeaderView(0).findViewById<CircleImageView>(R.id.user_photo).setImageBitmap(bitmap)
         }
+        examsDisposable = Observable.create<MutableList<Exams>> {
+            val examsList = learnService.findExamsList(true)
+            it.onNext(examsList)
+            it.onComplete()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            play_corner.setTipCout(it.size)
+        }, {
+            OperationListener.fail(it)
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        examsDisposable.dispose()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

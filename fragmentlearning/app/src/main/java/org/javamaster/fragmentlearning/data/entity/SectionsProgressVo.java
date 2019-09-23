@@ -10,6 +10,7 @@ import org.litepal.crud.LitePalSupport;
  */
 public class SectionsProgressVo extends LitePalSupport {
     private String username;
+    private String topicsCode;
     private String sectionsCode;
     private Integer progress;
 
@@ -24,6 +25,14 @@ public class SectionsProgressVo extends LitePalSupport {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getTopicsCode() {
+        return topicsCode;
+    }
+
+    public void setTopicsCode(String topicsCode) {
+        this.topicsCode = topicsCode;
     }
 
     public String getSectionsCode() {

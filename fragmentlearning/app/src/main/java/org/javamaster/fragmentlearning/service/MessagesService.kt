@@ -10,6 +10,6 @@ import org.javamaster.fragmentlearning.data.model.ResultVo
  */
 interface MessagesService {
     fun hasUnreadMessages(): ResultVo<Boolean>
-    fun findMessagesList(page: Page): ResultVo<List<Messages>>
+    fun findMessagesList(page: Page): Pair<MutableList<Messages>, Long>
     fun markMessages(id: Int?): ResultVo<Int>
 }
