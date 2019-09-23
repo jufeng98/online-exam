@@ -14,14 +14,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.32"/>
 
-    <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:id="@+id/user_photo_path"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
     <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="75dp"
             android:layout_height="75dp"

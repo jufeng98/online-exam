@@ -9,6 +9,7 @@ import org.javamaster.fragmentlearning.service.MessagesService
 import org.javamaster.fragmentlearning.service.impl.LearnServiceImpl
 import org.javamaster.fragmentlearning.service.impl.LoginServiceImpl
 import org.javamaster.fragmentlearning.service.impl.MessagesServiceImpl
+import org.javamaster.fragmentlearning.ui.viewModel.ArchiveViewModel
 import org.javamaster.fragmentlearning.ui.viewModel.ExamingViewPageModel
 import org.javamaster.fragmentlearning.ui.viewModel.LoginViewModel
 import org.javamaster.fragmentlearning.ui.viewModel.SignupViewModel
@@ -56,6 +57,12 @@ class AppModule {
     @ActivityScope
     fun examingViewPageModel(learnService: LearnService): ExamingViewPageModel {
         return ExamingViewPageModel(learnService)
+    }
+
+    @Provides
+    @ActivityScope
+    fun archiveViewModel(loginService: LoginService): ArchiveViewModel {
+        return ArchiveViewModel(loginService)
     }
 
 }

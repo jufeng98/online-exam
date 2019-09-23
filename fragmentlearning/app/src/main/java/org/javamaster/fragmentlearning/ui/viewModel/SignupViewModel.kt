@@ -17,7 +17,7 @@ import javax.inject.Inject
  * @author yudong
  * @date 2019/9/3
  */
-class SignupViewModel @Inject constructor(private val LoginService: LoginService) : ViewModel() {
+class SignupViewModel @Inject constructor(private val loginService: LoginService) : ViewModel() {
     private var _signupFormState = MutableLiveData<SignupFormState>()
     var signupFormState: LiveData<SignupFormState> = _signupFormState
 
@@ -44,7 +44,7 @@ class SignupViewModel @Inject constructor(private val LoginService: LoginService
         createOrEditUsersForm.username = username
         createOrEditUsersForm.password = password
         Thread {
-            val resultVo = LoginService.signUp(createUsersReqVo)
+            val resultVo = loginService.signUp(createUsersReqVo)
             _signupResult.postValue(resultVo)
         }.start()
     }

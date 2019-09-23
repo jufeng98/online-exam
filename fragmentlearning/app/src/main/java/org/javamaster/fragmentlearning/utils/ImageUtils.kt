@@ -31,6 +31,9 @@ object ImageUtils {
         editor.putString(USER_PHOTO_KEY, "user_photo$suffix")
         editor.apply()
         val file = File(path, "user_photo$suffix")
+        if (file.exists()) {
+            file.delete()
+        }
         FileOutputStream(file).use {
             StreamUtils.copy(t, it)
         }
