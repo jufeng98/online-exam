@@ -31,8 +31,7 @@ public class OptionsController {
     @PostMapping("/findAssociateOptions")
     public Result<List<Options>> findAssociateOptions(@Validated @RequestBody FindAssociateOptionsReqVo reqVo) {
         List<Options> resVo = optionsService.findAssociateOptions(reqVo);
-        Result<List<Options>> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

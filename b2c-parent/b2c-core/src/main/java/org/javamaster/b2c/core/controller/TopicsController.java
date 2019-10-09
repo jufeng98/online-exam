@@ -40,8 +40,7 @@ public class TopicsController {
     @PostMapping("/findTopicsList")
     public Result<List<Topics>> findTopicsList(@Validated @RequestBody FindTopicsListReqVo reqVo) {
         PageInfo<Topics> resVo = topicsService.findTopicsList(reqVo);
-        Result<List<Topics>> result = new Result(resVo.getList(), resVo.getTotal());
-        return result;
+        return new Result<>(resVo.getList(), resVo.getTotal());
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -49,24 +48,21 @@ public class TopicsController {
     public Result<CreateTopicsResVo> createTopics(@Validated @RequestBody CreateTopicsReqVo reqVo,
                                                   @AuthenticationPrincipal UserDetails userDetails) {
         CreateTopicsResVo resVo = topicsService.createTopics(reqVo, userDetails);
-        Result<CreateTopicsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/editTopics")
     public Result<Integer> editTopics(@Validated @RequestBody EditTopicsReqVo reqVo) {
         Integer resVo = topicsService.editTopics(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delTopics")
     public Result<Integer> delTopics(@Validated @RequestBody DelTopicsReqVo reqVo) {
         Integer resVo = topicsService.delTopics(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

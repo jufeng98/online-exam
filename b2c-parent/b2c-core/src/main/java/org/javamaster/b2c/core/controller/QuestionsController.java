@@ -56,8 +56,7 @@ public class QuestionsController {
     @PostMapping("/findQuestionsList")
     public Result<List<Questions>> findQuestionsList(@Validated @RequestBody FindQuestionsListReqVo reqVo) {
         PageInfo<Questions> resVo = questionsService.findQuestionsList(reqVo);
-        Result<List<Questions>> result = new Result<>(resVo.getList(), resVo.getTotal());
-        return result;
+        return new Result<>(resVo.getList(), resVo.getTotal());
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -65,8 +64,7 @@ public class QuestionsController {
     public Result<CreateQuestionsResVo> createQuestions(@Validated @RequestBody CreateQuestionsReqVo reqVo,
                                                         @AuthenticationPrincipal UserDetails userDetails) {
         CreateQuestionsResVo resVo = questionsService.createQuestions(reqVo, userDetails);
-        Result<CreateQuestionsResVo> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -74,16 +72,14 @@ public class QuestionsController {
     public Result<Integer> editQuestions(@Validated @RequestBody EditQuestionsReqVo reqVo,
                                          @AuthenticationPrincipal UserDetails userDetails) {
         Integer resVo = questionsService.editQuestions(reqVo, userDetails);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delQuestions")
     public Result<Integer> delQuestions(@Validated @RequestBody DelQuestionsReqVo reqVo) {
         Integer resVo = questionsService.delQuestions(reqVo);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -104,22 +100,19 @@ public class QuestionsController {
     public Result<BatchImportQuestionsResVo> batchImportQuestions(@RequestPart("file") MultipartFile[] multipartFiles,
                                                                   @AuthenticationPrincipal UserDetails userDetails) {
         BatchImportQuestionsResVo resVo = questionsService.batchImportQuestions(multipartFiles[0], userDetails);
-        Result<BatchImportQuestionsResVo> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findOptionsList")
     public Result<FindOptionsListResVo> findOptionsList(@Validated @RequestBody FindOptionsListReqVo reqVo) {
         FindOptionsListResVo resVo = questionsService.findOptionsList(reqVo);
-        Result<FindOptionsListResVo> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findQuestionsByExamsCode")
     public Result<List<ExamQuestionsVo>> findQuestionsByExamsCode(@Validated @NotBlank String examsCode) {
         List<ExamQuestionsVo> resVo = questionsService.findQuestionsByExamsCode(examsCode);
-        Result<List<ExamQuestionsVo>> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

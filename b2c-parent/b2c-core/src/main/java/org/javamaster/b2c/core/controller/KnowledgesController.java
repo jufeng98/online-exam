@@ -40,8 +40,7 @@ public class KnowledgesController {
     @PostMapping("/findKnowledgesList")
     public Result<List<Knowledges>> findKnowledgesList(@Validated @RequestBody FindKnowledgesListReqVo reqVo) {
         PageInfo<Knowledges> resVo = knowledgesService.findKnowledgesList(reqVo);
-        Result<List<Knowledges>> result = new Result(resVo.getList(), resVo.getTotal());
-        return result;
+        return new Result<>(resVo.getList(), resVo.getTotal());
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -49,24 +48,21 @@ public class KnowledgesController {
     public Result<CreateKnowledgesResVo> createKnowledges(@Validated @RequestBody CreateKnowledgesReqVo reqVo,
                                                           @AuthenticationPrincipal UserDetails userDetails) {
         CreateKnowledgesResVo resVo = knowledgesService.createKnowledges(reqVo, userDetails);
-        Result<CreateKnowledgesResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/editKnowledges")
     public Result<Integer> editKnowledges(@Validated @RequestBody EditKnowledgesReqVo reqVo) {
         Integer resVo = knowledgesService.editKnowledges(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delKnowledges")
     public Result<Integer> delKnowledges(@Validated @RequestBody DelKnowledgesReqVo reqVo) {
         Integer resVo = knowledgesService.delKnowledges(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

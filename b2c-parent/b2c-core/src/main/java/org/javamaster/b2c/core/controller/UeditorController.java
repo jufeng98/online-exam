@@ -47,6 +47,7 @@ public class UeditorController {
             state.setOriginal(fileName);
             state.setSize(String.valueOf(multipartFile.getSize()));
             state.setTitle(RandomStringUtils.randomNumeric(8));
+            assert fileName != null;
             state.setType(fileName.substring(fileName.lastIndexOf(".")));
             state.setUrl(urls.get(0));
             return objectMapper.writeValueAsString(state);

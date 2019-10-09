@@ -33,29 +33,25 @@ public class LearnsController {
     @PostMapping("/saveLearns")
     public Result<Integer> saveLearns(@Validated @RequestBody SaveLearnsReqVo reqVo) {
         Integer resVo = learnsService.saveLearns(reqVo);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findLearnsByUsername")
     public Result<List<LearnsRecord>> findLearnsByUsername(@NotBlank String username) {
         List<LearnsRecord> resVo = learnsService.findLearnsByUsername(username);
-        Result<List<LearnsRecord>> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findTopicsProgress")
     public Result<List<TopicsProgressVo>> findTopicsProgress(@NotBlank String username) {
         List<TopicsProgressVo> resVo = learnsService.findTopicsProgress(username);
-        Result<List<TopicsProgressVo>> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findSectionsProgress")
     public Result<List<SectionsProgressVo>> findSectionsProgress(@NotBlank String username) {
         List<SectionsProgressVo> resVo = learnsService.findSectionsProgress(username);
-        Result<List<SectionsProgressVo>> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

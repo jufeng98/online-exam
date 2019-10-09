@@ -37,43 +37,37 @@ public class MenusController {
     public Result<MenusListResVo> getUsersMenusList(@Validated @RequestBody GetUsersMenusListReqVo reqVo,
                                                     @AuthenticationPrincipal UserDetails userDetails) {
         MenusListResVo resVo = menusService.getMenusList(reqVo, userDetails);
-        Result<MenusListResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/getMenusList")
     public Result<MenusListResVo> getMenusList(@Validated @RequestBody GetUsersMenusListReqVo reqVo) {
         MenusListResVo resVo = menusService.getMenusList(reqVo, null);
-        Result<MenusListResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/getAuthoritiesMenusList")
     public Result<MenusListResVo> getAuthoritiesMenusList(@Validated @RequestBody GetAuthoritiesMenusListReqVo reqVo) {
         MenusListResVo resVo = menusService.getAuthoritiesMenusList(reqVo);
-        Result<MenusListResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/createMenus")
     public Result<CreateMenusResVo> createMenus(@Validated @RequestBody CreateMenusReqVo reqVo) {
         CreateMenusResVo resVo = menusService.createMenus(reqVo);
-        Result<CreateMenusResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/delMenus")
     public Result<DelMenusResVo> delMenus(@Validated @RequestBody DelMenusReqVo reqVo) {
         DelMenusResVo resVo = menusService.delMenus(reqVo);
-        Result<DelMenusResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/editMenus")
     public Result<EditMenusResVo> editMenus(@Validated @RequestBody EditMenusReqVo reqVo) {
         EditMenusResVo resVo = menusService.editMenus(reqVo);
-        Result<EditMenusResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

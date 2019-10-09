@@ -32,8 +32,7 @@ public class ExamsRecordController {
     public Result<SubmitAnswersResVo> submitAnswers(@Validated @RequestBody SubmitAnswersReqVo reqVo,
                                                     @AuthenticationPrincipal UserDetails userDetails) {
         SubmitAnswersResVo resVo = examsRecordService.submitAnswers(reqVo, userDetails);
-        Result<SubmitAnswersResVo> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

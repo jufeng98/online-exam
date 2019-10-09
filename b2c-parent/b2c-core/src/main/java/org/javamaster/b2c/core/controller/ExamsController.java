@@ -44,8 +44,7 @@ public class ExamsController {
     @PostMapping("/findExamsList")
     public Result<List<Exams>> findExamsList(@Validated @RequestBody FindExamsListReqVo reqVo) {
         PageInfo<Exams> resVo = examsService.findExamsList(reqVo);
-        Result<List<Exams>> result = new Result(resVo.getList(), resVo.getTotal());
-        return result;
+        return new Result<>(resVo.getList(), resVo.getTotal());
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -53,24 +52,21 @@ public class ExamsController {
     public Result<CreateExamsResVo> createExams(@Validated @RequestBody CreateExamsReqVo reqVo,
                                                 @AuthenticationPrincipal UserDetails userDetails) {
         CreateExamsResVo resVo = examsService.createExams(reqVo, userDetails);
-        Result<CreateExamsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/editExams")
     public Result<Integer> editExams(@Validated @RequestBody EditExamsReqVo reqVo) {
         Integer resVo = examsService.editExams(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delExams")
     public Result<Integer> delExams(@Validated @RequestBody DelExamsReqVo reqVo) {
         Integer resVo = examsService.delExams(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -78,16 +74,14 @@ public class ExamsController {
     public Result<AddOrEditAssociateQuestionsResVo> addOrEditAssociateQuestions(
             @Validated @RequestBody AddOrEditAssociateQuestionsReqVo reqVo) {
         AddOrEditAssociateQuestionsResVo resVo = examsService.addOrEditAssociateQuestions(reqVo);
-        Result<AddOrEditAssociateQuestionsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/findAssociateQuestions")
     public Result<FindAssociateQuestionsResVo> findAssociateQuestions(@Validated @RequestBody FindAssociateQuestionsReqVo reqVo) {
         FindAssociateQuestionsResVo resVo = examsService.findAssociateQuestions(reqVo);
-        Result<FindAssociateQuestionsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

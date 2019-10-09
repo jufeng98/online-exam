@@ -47,9 +47,6 @@ public class UsersController {
 
     /**
      * 创建用户
-     *
-     * @param reqVo
-     * @return
      */
     @PostMapping("/createUsers")
     public Result<Users> createUsers(@Validated @RequestBody CreateUsersReqVo reqVo,
@@ -68,9 +65,6 @@ public class UsersController {
 
     /**
      * 启用或者禁用用户
-     *
-     * @param reqVo
-     * @return
      */
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/changeUsersEnabled")
@@ -80,9 +74,6 @@ public class UsersController {
 
     /**
      * 拥有管理员权限可查看任何用户信息,否则只能查看自己的信息
-     *
-     * @param reqVo
-     * @return
      */
     @PreAuthorize("hasAuthority(T(org.javamaster.b2c.core.consts.AppConsts).ROLE_ADMIN) " +
             "or #reqVo.usersForm.username == #userDetails.username")
@@ -95,10 +86,6 @@ public class UsersController {
 
     /**
      * 拥有管理员权限可修改任何用户的密码,否则只能修改自己的密码
-     *
-     * @param reqVo
-     * @param userDetails
-     * @return
      */
     @PreAuthorize("hasAuthority(T(org.javamaster.b2c.core.consts.AppConsts).ROLE_ADMIN) " +
             "or (#reqVo.username == #userDetails.username and T(org.apache.commons.lang3.StringUtils).isNotBlank(#reqVo.password))")
@@ -110,10 +97,6 @@ public class UsersController {
 
     /**
      * 删除用户(逻辑删除)
-     *
-     * @param username
-     * @param userDetails
-     * @return
      */
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/deleteUsers")
@@ -126,8 +109,7 @@ public class UsersController {
     @PostMapping("/editUsers")
     public Result<Integer> editUsers(@Validated @RequestBody EditUsersReqVo reqVo, @AuthenticationPrincipal UserDetails userDetails) {
         Integer resVo = usersService.editUsers(reqVo, userDetails);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

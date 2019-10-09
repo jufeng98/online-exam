@@ -40,8 +40,7 @@ public class SectionsController {
     @PostMapping("/findSectionsList")
     public Result<List<Sections>> findSectionsList(@Validated @RequestBody FindSectionsListReqVo reqVo) {
         PageInfo<Sections> resVo = sectionsService.findSectionsList(reqVo);
-        Result<List<Sections>> result = new Result(resVo.getList(), resVo.getTotal());
-        return result;
+        return new Result<>(resVo.getList(), resVo.getTotal());
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -49,24 +48,21 @@ public class SectionsController {
     public Result<CreateSectionsResVo> createSections(@Validated @RequestBody CreateSectionsReqVo reqVo,
                                                       @AuthenticationPrincipal UserDetails userDetails) {
         CreateSectionsResVo resVo = sectionsService.createSections(reqVo, userDetails);
-        Result<CreateSectionsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/editSections")
     public Result<Integer> editSections(@Validated @RequestBody EditSectionsReqVo reqVo) {
         Integer resVo = sectionsService.editSections(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delSections")
     public Result<Integer> delSections(@Validated @RequestBody DelSectionsReqVo reqVo) {
         Integer resVo = sectionsService.delSections(reqVo);
-        Result<Integer> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

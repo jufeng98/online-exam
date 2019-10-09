@@ -40,57 +40,49 @@ public class AuthoritiesController {
     @PostMapping("/findAuthorities")
     public Result<FindAuthoritiesResVo> findAuthorities(@Validated @RequestBody FindAuthoritiesReqVo reqVo) {
         FindAuthoritiesResVo resVo = authoritiesService.findAuthorities(reqVo);
-        Result<FindAuthoritiesResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findUsersAuthorities")
     public Result<List<UsersAuthorities>> findUsersAuthorities(@Validated @RequestBody FindUsersAuthoritiesReqVo reqVo) {
         PageInfo<UsersAuthorities> pageInfo = authoritiesService.findUsersAuthorities(reqVo);
-        Result<List<UsersAuthorities>> result = new Result(pageInfo.getList(), pageInfo.getTotal());
-        return result;
+        return new Result<>(pageInfo.getList(), pageInfo.getTotal());
     }
 
     @PostMapping("/authUsers")
     public Result<AuthOrUnAuthUsersResVo> authUsers(@Validated @RequestBody AuthOrUnAuthUsersReqVo reqVo) {
         AuthOrUnAuthUsersResVo resVo = authoritiesService.authUsers(reqVo);
-        Result<AuthOrUnAuthUsersResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/unAuthUsers")
     public Result<AuthOrUnAuthUsersResVo> unAuthUsers(@Validated @RequestBody AuthOrUnAuthUsersReqVo reqVo) {
         AuthOrUnAuthUsersResVo resVo = authoritiesService.unAuthUsers(reqVo);
-        Result<AuthOrUnAuthUsersResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/createAuthorities")
     public Result<UsersAuthorities> createAuthorities(@Validated @RequestBody CreateAuthoritiesReqVo reqVo) {
         UsersAuthorities resVo = authoritiesService.createAuthorities(reqVo);
-        Result<UsersAuthorities> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/changeAuthoritiesMenus")
     public Result<ChangeAuthoritiesMenusResVo> changeAuthoritiesMenus(@Validated @RequestBody ChangeAuthoritiesMenusReqVo reqVo) {
         ChangeAuthoritiesMenusResVo resVo = authoritiesService.changeAuthoritiesMenus(reqVo);
-        Result<ChangeAuthoritiesMenusResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/editAuthorities")
     public Result<UsersAuthorities> editAuthorities(@Validated @RequestBody EditAuthoritiesReqVo reqVo) {
         UsersAuthorities resVo = authoritiesService.editAuthorities(reqVo);
-        Result<UsersAuthorities> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/delAuthorities")
     public Result<DelAuthoritiesResVo> delAuthorities(@Validated @RequestBody DelAuthoritiesReqVo reqVo) {
         DelAuthoritiesResVo resVo = authoritiesService.delAuthorities(reqVo);
-        Result<DelAuthoritiesResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

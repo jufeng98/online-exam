@@ -33,24 +33,21 @@ public class MessagesController {
     @PostMapping("/hasUnreadMessages")
     public Result<Boolean> hasUnreadMessages(@AuthenticationPrincipal UserDetails userDetails) {
         Boolean resVo = messagesService.hasUnreadMessages(userDetails);
-        Result<Boolean> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @PostMapping("/findMessagesList")
     public Result<List<Messages>> findMessagesList(@Validated @RequestBody FindMessagesListReqVo reqVo,
                                                    @AuthenticationPrincipal UserDetails userDetails) {
         Pair<List<Messages>, Long> resVo = messagesService.findMessagesList(reqVo, userDetails);
-        Result<List<Messages>> result = new Result<>(resVo.getFirst(), resVo.getSecond());
-        return result;
+        return new Result<>(resVo.getFirst(), resVo.getSecond());
     }
 
     @PostMapping("/markMessages")
     public Result<Integer> markMessages(@RequestBody MarkMessagesReqVo reqVo,
                                         @AuthenticationPrincipal UserDetails userDetails) {
         Integer resVo = messagesService.markMessages(reqVo, userDetails);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }
