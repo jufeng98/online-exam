@@ -37,4 +37,6 @@ object AppConsts {
     const val HAS_UNREAD_MESSAGES = "$BASE_URL$APP_CONTEXT/core/messages/hasUnreadMessages"
     const val FIND_MESSAGES_LIST = "$BASE_URL$APP_CONTEXT/core/messages/findMessagesList"
     const val MARK_MESSAGES = "$BASE_URL$APP_CONTEXT/core/messages/markMessages"
+    const val CREATE_DISCUSSIONS = "$BASE_URL$APP_CONTEXT/core/discussions/createDiscussions"
+    const val FIND_DISCUSSIONS_LIST = "$BASE_URL$APP_CONTEXT/core/discussions/findDiscussionsList"
 }

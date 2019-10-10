@@ -51,7 +51,7 @@ class MainActivity : BaseAppActivity() {
     private lateinit var menuNotificationActionProvider: BadgeActionProvider
     private lateinit var loginUserInfo: User
     private val fragmentMap = mutableMapOf<Int, Fragment>()
-    lateinit var examsDisposable: Disposable
+    private lateinit var examsDisposable: Disposable
 
     override fun initContentView(): Int? {
         return R.layout.activity_main
@@ -198,7 +198,7 @@ class MainActivity : BaseAppActivity() {
                 tab4.changeTopImgAndColor(R.drawable.tab_discuss_mini_choose, R.color.tabTextColorChoose)
                 app_tool_bar.title = getString(R.string.onboarding_discuss)
                 if (fragment == null) {
-                    fragment = DiscussFragment.newInstance("", "")
+                    fragment = DiscussFragment.newInstance()
                 }
                 replaceFragment(fragment)
             }

@@ -3,18 +3,62 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragment.DiscussFragment">
 
-    <TextView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/discuss_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:focusable="true"
+                android:orientation="vertical"
+                android:id="@+id/linear_layout"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.SearchView
+                        android:layout_weight="2"
+                        android:id="@+id/discuss_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:queryHint="搜索">
+                </androidx.appcompat.widget.SearchView>
+
+                <Spinner
+                        android:layout_weight="6"
+                        android:id="@+id/discuss_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                </Spinner>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/discuss_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/open_create_discuss"
+            android:backgroundTint="@color/colorAppPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_completing"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/discuss_swipe_refresh"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_done"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

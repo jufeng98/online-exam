@@ -44,7 +44,14 @@
         <item>watermelon</item>
         <item>pear</item>
     </string-array>
-
+    <array name="discussion_filter_titles">
+        <item>最近更新</item>
+        <item>最受欢迎</item>
+        <item>最多回复</item>
+        <item>无回复</item>
+        <item>我的讨论</item>
+        <item>我的回复</item>
+    </array>
     <string name="htmlWelcome">This is an <b>HTML</b> message!</string>
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="action_settings">Settings</string>
@@ -127,4 +134,11 @@
     <string name="chinese_date_pattern">yyyy年MM月dd日 HH时mm分ss秒</string>
     <string name="wrong_mobile">手机格式不正确</string>
     <string name="remark_limit">备注不能超过50个字符</string>
+    <string name="new_discuss">新讨论</string>
+    <string name="question">问题</string>
+    <string name="description">描述</string>
+    <string name="relevant_tags">关联标签</string>
+    <string name="post">发布</string>
+    <string name="question_require">请填写问题</string>
+    <string name="least_one_tag">至少填写一个标签</string>
 </resources>

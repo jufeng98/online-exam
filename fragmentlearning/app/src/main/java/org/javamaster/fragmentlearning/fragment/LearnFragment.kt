@@ -1,6 +1,5 @@
 package org.javamaster.fragmentlearning.fragment
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +10,6 @@ import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
@@ -27,7 +25,6 @@ import org.javamaster.fragmentlearning.data.entity.Topics
 import org.javamaster.fragmentlearning.enums.TopicsTypeEnum
 import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.OperationListener
-import org.javamaster.fragmentlearning.listener.SoftKeyBoardListener
 import org.javamaster.fragmentlearning.service.LearnService
 import javax.inject.Inject
 
@@ -35,7 +32,7 @@ import javax.inject.Inject
  * @author yudong
  * @date 2019/8/18
  */
-class LearnFragment : Fragment() {
+class LearnFragment : MainFragment() {
     @Inject
     lateinit var learnService: LearnService
     private lateinit var topicsDisposable: Disposable
@@ -47,6 +44,7 @@ class LearnFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_learn, container, false)
         ButterKnife.bind(this, view)
         val search = view.findViewById<SearchView>(R.id.search)
@@ -60,23 +58,6 @@ class LearnFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return true
-            }
-
-        })
-        SoftKeyBoardListener(activity!!, object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
-            override fun keyBoardShow(height: Int) {
-                activity!!.findViewById<View>(R.id.include_tab).visibility = View.GONE
-            }
-
-            override fun keyBoardHide(height: Int) {
-                val tab = activity!!.findViewById<View>(R.id.include_tab)
-                tab.alpha = 0f
-                tab.visibility = View.VISIBLE
-                ObjectAnimator.ofFloat(tab, "alpha", 0f, 1f)
-                    .apply {
-                        duration = 300
-                        start()
-                    }
             }
         })
         return view

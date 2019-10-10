@@ -27,7 +27,7 @@ import java.util.*
  */
 @Suppress("DEPRECATION")
 class MessagesAdapter(
-    private var messagesList: List<Messages>, val messagesService: MessagesService
+    private var messagesList: List<Messages>, private val messagesService: MessagesService
 ) : RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
     private lateinit var mContext: Context
     private var tipLayoutSet: MutableSet<TipLayout> = mutableSetOf()

@@ -1,6 +1,7 @@
 package org.javamaster.fragmentlearning.ioc
 
 import dagger.Component
+import org.javamaster.fragmentlearning.fragment.DiscussFragment
 import org.javamaster.fragmentlearning.fragment.LearnFragment
 import org.javamaster.fragmentlearning.fragment.PlayFragment
 import org.javamaster.fragmentlearning.testActivity.SQLiteActivity
@@ -29,6 +30,8 @@ interface AppComponent {
     fun inject(changePwdActivity: ChangePwdActivity)
     fun inject(examingActivity: ExamingActivity)
     fun inject(messagesActivity: MessagesActivity)
+    fun inject(newDiscussActivity: NewDiscussActivity)
     fun inject(learnFragment: LearnFragment)
     fun inject(playFragment: PlayFragment)
+    fun inject(discussFragment: DiscussFragment)
 }
