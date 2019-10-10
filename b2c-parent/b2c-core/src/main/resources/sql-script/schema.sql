@@ -388,3 +388,61 @@ CREATE TABLE `messages` (
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COMMENT = '消息表';
+
+DROP TABLE IF EXISTS `discussions`;
+CREATE TABLE `discussions` (
+  `id`            int(11)       NOT NULL AUTO_INCREMENT
+  COMMENT '主键id',
+  `username`      varchar(20)   NOT NULL
+  COMMENT '用户名',
+  `question`      varchar(128)  NOT NULL
+  COMMENT '问题',
+  `description`   varchar(1024) NOT NULL default ''
+  comment '描述',
+  `relevant_tags` varchar(128)  NOT NULL default ''
+  comment '关联标签,用;隔开',
+  `create_time`   datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '讨论表';
+
+DROP TABLE IF EXISTS `replys`;
+CREATE TABLE `replys` (
+  `id`             int(11)       NOT NULL AUTO_INCREMENT
+  COMMENT '主键id',
+  `discussions_id` int(11)       NOT NULL
+  COMMENT '关联discussions表主键id',
+  `username`       varchar(20)   NOT NULL
+  COMMENT '回复人用户名',
+  `description`    varchar(1024) NOT NULL default ''
+  comment '描述',
+  `relevant_tags`  varchar(128)  NOT NULL default ''
+  comment '关联标签,用;隔开',
+  `create_time`    datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '讨论表';
+
+DROP TABLE IF EXISTS `votes`;
+CREATE TABLE `votes` (
+  `id`          int(11)     NOT NULL AUTO_INCREMENT
+  COMMENT '主键id',
+  `type`        tinyint     NOT NULL
+  comment '投票类型,1:讨论;2:回复',
+  `relate_id`   int(11)     NOT NULL
+  COMMENT '关联discussions表主键id或replys表主键id',
+  `username`    varchar(20) NOT NULL
+  COMMENT '投票人用户名',
+  `create_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT = '投票表';

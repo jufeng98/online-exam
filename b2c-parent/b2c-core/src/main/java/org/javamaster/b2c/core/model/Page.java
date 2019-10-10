@@ -20,16 +20,16 @@ public class Page implements Serializable {
      * 页码，从1开始
      */
     @Range(min = 1)
-    private Integer pageNum;
+    public Integer pageNum;
     /**
      * 页数
      */
     @Range(min = 1)
-    private Integer pageSize;
+    public Integer pageSize;
     /**
      * 排序
      */
-    private String orderBy;
+    public String orderBy;
 
     public Page() {
     }

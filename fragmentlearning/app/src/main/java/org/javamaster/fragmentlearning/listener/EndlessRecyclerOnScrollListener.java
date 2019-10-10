@@ -2,6 +2,7 @@ package org.javamaster.fragmentlearning.listener;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author yudong
@@ -13,12 +14,13 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     private boolean isSlidingUpward = false;
 
     @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    public void onScrollStateChanged(@NotNull RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
         LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
         // 当不滑动时
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
             //获取最后一个完全显示的itemPosition
+            assert manager != null;
             int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
             int itemCount = manager.getItemCount();
             // 判断是否滑动到了最后一个item，并且是向上滑动
@@ -30,7 +32,7 @@ public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScr
     }
 
     @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         // 大于0表示正在向上滑动，小于等于0表示停止或向下滑动
         isSlidingUpward = dy > 0;

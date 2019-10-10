@@ -42,6 +42,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <pagehelper.version>4.1.6</pagehelper.version>
         <spring-boot-admin.version>2.1.5</spring-boot-admin.version>
+        <kotlin.version>1.2.71</kotlin.version>
+        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     </properties>
 
     <modules>
