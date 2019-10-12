@@ -32,11 +32,15 @@ android {
             buildConfigField("Boolean", "EXERCISE_MODE", "false")
         }
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://${getIP()}:9888\"")
+            buildConfigField("String", "BASE_URL", "\"http://${getLocalhostIP()}:9888\"")
             buildConfigField("Boolean", "EXERCISE_MODE", "false")
         }
     }
     buildToolsVersion = '28.0.3'
+}
+
+static def getLocalhostIP() {
+    return InetAddress.getLocalHost().getHostAddress()
 }
 
 ext {
@@ -88,23 +92,4 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-}
-
-static def getIP() {
-    InetAddress result = null
-    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces()
-    while (interfaces.hasMoreElements()) {
-        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses()
-        while (addresses.hasMoreElements()) {
-            InetAddress address = addresses.nextElement()
-            if (!address.isLoopbackAddress()) {
-                if (address.isSiteLocalAddress()) {
-                    return address.getHostAddress()
-                } else if (result == null) {
-                    result = address
-                }
-            }
-        }
-    }
-    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress()
 }
