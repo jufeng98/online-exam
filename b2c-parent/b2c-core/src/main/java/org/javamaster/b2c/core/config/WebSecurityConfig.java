@@ -1,6 +1,7 @@
 package org.javamaster.b2c.core.config;
 
 import org.javamaster.b2c.core.consts.AppConsts;
+import org.javamaster.b2c.core.filter.QrCodeLoginFilter;
 import org.javamaster.b2c.core.handler.LoginHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 import javax.sql.DataSource;
 
@@ -26,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private LoginHandler loginHandler;
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private QrCodeLoginFilter qrCodeLoginFilter;
 
     private static final int SECONDS_OF_A_WEEK = 7 * 86400;
 
@@ -60,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(loginHandler::onAuthenticationEntryPoint)
                 .and()
+                .addFilterAfter(qrCodeLoginFilter, SecurityContextPersistenceFilter.class)
                 .csrf()
                 .disable();
     }

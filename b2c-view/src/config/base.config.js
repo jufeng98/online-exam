@@ -83,3 +83,6 @@ export const CHANGE_AUTHORITIES_MENUS = '/admin/authorities/changeAuthoritiesMen
 export const CREATE_AUTHORITIES = '/admin/authorities/createAuthorities'
 export const EDIT_AUTHORITIES = '/admin/authorities/editAuthorities'
 export const DEL_AUTHORITIES = '/admin/authorities/delAuthorities'
+
+export const GENERATE_QRCODE_CONTENT = '/public/qrCode/generateQrCodeContent'
+export const CHECK_SCAN_STATUS = '/public/qrCode/checkScanStatus'

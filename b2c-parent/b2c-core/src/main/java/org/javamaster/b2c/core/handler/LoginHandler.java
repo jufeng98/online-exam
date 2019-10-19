@@ -1,22 +1,27 @@
 package org.javamaster.b2c.core.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.val;
 import org.javamaster.b2c.core.entity.Users;
 import org.javamaster.b2c.core.enums.BizExceptionEnum;
 import org.javamaster.b2c.core.model.Result;
 import org.javamaster.b2c.core.model.UserVo;
 import org.javamaster.b2c.core.service.UsersService;
+import org.javamaster.b2c.core.service.impl.LoginServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,6 +44,8 @@ public class LoginHandler {
     private ObjectMapper objectMapper;
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response
             , Authentication authentication) throws IOException {
@@ -74,6 +81,13 @@ public class LoginHandler {
         String username = "";
         if (authentication.getPrincipal() != null) {
             username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        }
+        val cookieValue = WebUtils.getCookie(request, LoginServiceImpl.cookieName);
+        if (cookieValue != null) {
+            redisTemplate.delete(LoginServiceImpl.sessionKey + cookieValue.getValue());
+            val cookie = new Cookie(LoginServiceImpl.cookieName, "");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
         }
         logger.info("username:{} logout,logout time:{}", username, format.format(LocalDateTime.now()));
         response.setStatus(HttpStatus.OK.value());

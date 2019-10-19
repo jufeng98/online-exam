@@ -17,6 +17,7 @@ public enum BizExceptionEnum {
     AUTHORITIES_NOT_EXISTS(1009, "角色不存在"),
     AUTHORITIES_ASSOCIATE_USER(1010, "角色已授权用户,请先解除授权"),
     EMAIL_EXISTS(1011, "邮箱已被使用,请重新填写"),
+    QR_CODE_EXPIRED(1012, "二维码已失效,请重新刷新二维码"),
     ;
 
     BizExceptionEnum(Integer errorCode, String errorMsg) {
