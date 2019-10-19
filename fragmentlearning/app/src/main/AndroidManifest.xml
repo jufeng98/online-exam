@@ -50,6 +50,8 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.activities.QrCodeLoginConfirmActivity">
+        </activity>
         <activity android:name=".ui.activities.NewDiscussActivity">
         </activity>
         <activity android:name=".ui.activities.MessagesActivity">

@@ -1,5 +1,6 @@
 package org.javamaster.fragmentlearning.ui.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,8 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import butterknife.OnClick
+import com.yzq.zxinglibrary.android.CaptureActivity
+import com.yzq.zxinglibrary.common.Constant
 import de.hdodenhof.circleimageview.CircleImageView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,6 +37,7 @@ import org.javamaster.fragmentlearning.service.LoginService
 import org.javamaster.fragmentlearning.service.MessagesService
 import org.javamaster.fragmentlearning.utils.ImageUtils
 import org.javamaster.fragmentlearning.view.BadgeActionProvider
+import java.net.URLEncoder
 import javax.inject.Inject
 
 /**
@@ -153,11 +157,26 @@ class MainActivity : BaseAppActivity() {
             R.id.about -> {
                 AboutActivity.actionStart(this)
             }
+            R.id.scan -> {
+                val intent = Intent(this, CaptureActivity::class.java)
+                startActivityForResult(intent, 10)
+            }
             else -> {
 
             }
         }
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 10 && resultCode == Activity.RESULT_OK) {
+            var data = data!!.getStringExtra(Constant.CODED_CONTENT)
+            val preferences = App.getLoginSharedPreferences()
+            var rememberMeCookie = preferences.getString(LoginService.REMEMBER_ME_COOKIE_KEY, "")
+            rememberMeCookie = URLEncoder.encode(rememberMeCookie, "UTF-8")
+            data = "$data&rememberMeInfo=$rememberMeCookie"
+            QrCodeLoginConfirmActivity.actionStart(this, data)
+        }
     }
 
     @OnClick(R.id.tab0, R.id.tab1, R.id.tab2, R.id.tab3, R.id.tab4)

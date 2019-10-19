@@ -141,4 +141,13 @@
     <string name="post">发布</string>
     <string name="question_require">请填写问题</string>
     <string name="least_one_tag">至少填写一个标签</string>
+    <string name="login_background_sys">登录碎片学习后台管理系统</string>
+    <string name="confirm_login">确认登录</string>
+    <string name="cancel_login">取消登录</string>
+    <string name="scan">扫一扫</string>
+    <string name="invite_friend">邀请朋友</string>
+    <string name="donate">捐赠</string>
+    <string name="feedback">反馈</string>
+    <string name="settings">设置</string>
+    <string name="about">关于碎片学习</string>
 </resources>

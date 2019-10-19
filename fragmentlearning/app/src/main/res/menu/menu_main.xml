@@ -18,19 +18,22 @@
 
     <group android:id="@+id/group">
         <item
+                android:id="@+id/scan"
+                android:title="@string/scan"/>
+        <item
                 android:id="@+id/invite_friends"
-                android:title="邀请朋友"/>
+                android:title="@string/invite_friend"/>
         <item
                 android:id="@+id/rate"
-                android:title="捐赠"/>
+                android:title="@string/donate"/>
         <item
                 android:id="@+id/feedback"
-                android:title="反馈"/>
+                android:title="@string/feedback"/>
         <item
                 android:id="@+id/settings"
-                android:title="设置"/>
+                android:title="@string/settings"/>
         <item
                 android:id="@+id/about"
-                android:title="关于碎片学习"/>
+                android:title="@string/about"/>
     </group>
 </menu>
