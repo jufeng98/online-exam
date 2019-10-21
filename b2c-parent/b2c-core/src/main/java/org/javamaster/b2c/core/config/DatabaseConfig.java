@@ -51,16 +51,15 @@ public class DatabaseConfig {
         pageHelper.setProperties(properties);
         sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageHelper});
 
-        final String MAPPER_LOCATION = "classpath*:mapper/**/*.xml";
-        sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources(MAPPER_LOCATION));
+        final String mapperLocation = "classpath*:mapper/**/*.xml";
+        sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources(mapperLocation));
         // 只指定包名,则mybatis会自动为 JavaBean 注册一个小写字母开头的非完全限定的类名形式的别名
         sqlSessionFactoryBean.setTypeAliasesPackage("org.javamaster.b2c.core.entity");
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setLogImpl(Slf4jImpl.class);
         sqlSessionFactoryBean.setConfiguration(configuration);
 
-        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
-        return sqlSessionFactory;
+        return sqlSessionFactoryBean.getObject();
     }
 
     @Bean
@@ -72,8 +71,7 @@ public class DatabaseConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
         configuration.setPassword(RedisPassword.of(redisProperties.getPassword()));
-        JedisConnectionFactory factory = new JedisConnectionFactory(configuration);
-        return factory;
+        return new JedisConnectionFactory(configuration);
     }
 
     @Bean
