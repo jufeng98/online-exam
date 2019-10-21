@@ -26,7 +26,7 @@ public class FtpHelper {
     private FtpProperties ftpProperties;
 
     @SneakyThrows
-    public FTPClient initFtpClient() {
+    private FTPClient initFtpClient() {
         FTPClient ftpClient = new FTPClient();
         ftpClient.setControlEncoding("utf-8");
         log.info("try connect to ftp server:{}:{}", ftpProperties.getHostName(), ftpProperties.getPort());
@@ -73,8 +73,7 @@ public class FtpHelper {
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
             ftpClient.retrieveFile(fileName, outputStream);
             outputStream.flush();
-            byte[] fileBytes = outputStream.toByteArray();
-            return fileBytes;
+            return outputStream.toByteArray();
         } finally {
             ftpClient.logout();
             ftpClient.disconnect();

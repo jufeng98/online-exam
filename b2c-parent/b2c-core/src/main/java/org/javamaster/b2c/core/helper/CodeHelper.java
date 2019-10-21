@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * @author yudong
  * @date 2019/7/29
@@ -22,7 +24,7 @@ public class CodeHelper {
         String sql = String.format(TEMPLATE_SQL, columnCodeName, tableName);
         try {
             String code = jdbcTemplate.queryForObject(sql, String.class);
-            int number = Integer.parseInt(code.replace(prefix, ""));
+            int number = Integer.parseInt(Objects.requireNonNull(code).replace(prefix, ""));
             number += 1;
             code = String.valueOf(number);
             return prefix + ZERO[code.length() - 1] + code;

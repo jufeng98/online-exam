@@ -25,8 +25,7 @@ public class OptionsServiceImpl implements OptionsService {
     public List<Options> findAssociateOptions(FindAssociateOptionsReqVo reqVo) {
         OptionsExample optionsExample = new OptionsExample();
         optionsExample.createCriteria().andQuestionsCodeEqualTo(reqVo.getQuestionsCode());
-        List<Options> optionsList = optionsMapper.selectByExample(optionsExample);
-        return optionsList;
+        return optionsMapper.selectByExample(optionsExample);
     }
 
 }

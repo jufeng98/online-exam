@@ -75,8 +75,7 @@ public class UsersServiceImpl implements UsersService {
             criteria.andEnabledEqualTo(reqVo.getUsersForm().getEnabled());
         }
         List<Users> list = usersMapper.selectByExample(usersExample);
-        PageInfo<Users> pageInfo = new PageInfo<>(list);
-        return pageInfo;
+        return new PageInfo<>(list);
     }
 
     @Override
@@ -157,8 +156,7 @@ public class UsersServiceImpl implements UsersService {
     public Integer editUsers(EditUsersReqVo reqVo, UserDetails userDetails) {
         Users users = new Users();
         BeanUtils.copyProperties(reqVo.getCreateOrEditUsersForm(), users);
-        int affectRow = usersMapper.updateByPrimaryKeySelective(users);
-        return affectRow;
+        return usersMapper.updateByPrimaryKeySelective(users);
     }
 
     private void verifyOriginalPassword(String originalPassword, String username) {
@@ -171,7 +169,7 @@ public class UsersServiceImpl implements UsersService {
         }
     }
 
-    protected Authentication createNewAuthentication(UserDetails userDetails) {
+    private Authentication createNewAuthentication(UserDetails userDetails) {
         UserDetails user = userDetailsService.loadUserByUsername(userDetails.getUsername());
         UsernamePasswordAuthenticationToken newAuthentication = new UsernamePasswordAuthenticationToken(
                 user, null, user.getAuthorities());

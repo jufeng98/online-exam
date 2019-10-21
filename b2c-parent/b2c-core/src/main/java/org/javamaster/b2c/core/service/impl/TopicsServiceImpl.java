@@ -41,8 +41,7 @@ public class TopicsServiceImpl implements TopicsService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "create_time desc");
         List<Topics> topics = topicsMapper.selectByExampleWithBLOBs(topicsExample);
-        PageInfo<Topics> pageInfo = new PageInfo<>(topics);
-        return pageInfo;
+        return new PageInfo<>(topics);
     }
 
     @Override

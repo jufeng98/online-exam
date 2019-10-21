@@ -44,8 +44,7 @@ public class KnowledgesServiceImpl implements KnowledgesService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "sort_order,create_time desc");
         List<Knowledges> topics = knowledgesMapper.selectByExample(knowledgesExample);
-        PageInfo<Knowledges> pageInfo = new PageInfo<>(topics);
-        return pageInfo;
+        return new PageInfo<>(topics);
     }
 
     @Override

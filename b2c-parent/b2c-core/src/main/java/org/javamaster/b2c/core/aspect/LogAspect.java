@@ -13,6 +13,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -35,7 +36,7 @@ public class LogAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         long nowMillis = System.currentTimeMillis();
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = requestAttributes.getRequest();
+        HttpServletRequest request = Objects.requireNonNull(requestAttributes).getRequest();
         Object[] parameters = joinPoint.getArgs();
         String classMethod = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
         Object resObject;

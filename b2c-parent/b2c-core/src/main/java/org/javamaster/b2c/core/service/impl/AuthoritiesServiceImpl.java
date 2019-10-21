@@ -76,8 +76,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
             criteria.andAuthorityNameLike(reqVo.getAuthoritiesForm().getAuthorityName() + "%");
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "create_time desc");
-        PageInfo<UsersAuthorities> pageInfo = new PageInfo(usersAuthoritiesMapper.selectByExample(usersAuthoritiesExample));
-        return pageInfo;
+        return new PageInfo<>(usersAuthoritiesMapper.selectByExample(usersAuthoritiesExample));
     }
 
     @Override
@@ -87,8 +86,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
             Authorities authorities = new Authorities();
             authorities.setUsername(reqVo.getUsername());
             authorities.setAuthority(authority);
-            int affect = authoritiesMapper.insert(authorities);
-            return affect;
+            return authoritiesMapper.insert(authorities);
         }).collect(Collectors.toList());
         AuthOrUnAuthUsersResVo authOrUnAuthUsersResVo = new AuthOrUnAuthUsersResVo();
         authOrUnAuthUsersResVo.setAffectRows(affectRows);
@@ -103,8 +101,7 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
             AuthoritiesExample.Criteria criteria = authoritiesExample.createCriteria();
             criteria.andUsernameEqualTo(reqVo.getUsername());
             criteria.andAuthorityEqualTo(authority);
-            int affect = authoritiesMapper.deleteByExample(authoritiesExample);
-            return affect;
+            return authoritiesMapper.deleteByExample(authoritiesExample);
         }).collect(Collectors.toList());
         AuthOrUnAuthUsersResVo authOrUnAuthUsersResVo = new AuthOrUnAuthUsersResVo();
         authOrUnAuthUsersResVo.setAffectRows(affectRows);

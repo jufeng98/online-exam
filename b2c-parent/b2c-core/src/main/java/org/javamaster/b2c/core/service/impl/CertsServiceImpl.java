@@ -79,8 +79,7 @@ public class CertsServiceImpl implements CertsService {
         appendTextToDoc(writer, topics, 300, 600);
         appendTextToDoc(writer, acquireTime, 1000, 1030);
         document.close();
-        byte[] bytes = outputStream.toByteArray();
-        return bytes;
+        return outputStream.toByteArray();
     }
 
     @SneakyThrows
@@ -103,8 +102,7 @@ public class CertsServiceImpl implements CertsService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "create_time desc");
         List<Certs> certs = certsMapper.selectByExample(certsExample);
-        PageInfo<Certs> pageInfo = new PageInfo<>(certs);
-        return pageInfo;
+        return new PageInfo<>(certs);
     }
 
     @Override

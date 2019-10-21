@@ -27,7 +27,7 @@ public class FtpUtils {
         end = directory.indexOf(AppConsts.SLASH, start);
         StringBuilder path = new StringBuilder();
         StringBuilder paths = new StringBuilder();
-        while (true) {
+        do {
             String subDirectory = remotePath.substring(start, end);
             path.append(path.toString()).append(AppConsts.SLASH).append(subDirectory);
             if (!existFile(ftpClient, path.toString())) {
@@ -44,10 +44,7 @@ public class FtpUtils {
             start = end + 1;
             end = directory.indexOf(AppConsts.SLASH, start);
             // 检查所有目录是否创建完毕
-            if (end <= start) {
-                break;
-            }
-        }
+        } while (end > start);
     }
 
     @SneakyThrows
@@ -60,7 +57,7 @@ public class FtpUtils {
     }
 
     @SneakyThrows
-    public static boolean makeDirectory(FTPClient ftpClient, String remotePath) {
+    private static boolean makeDirectory(FTPClient ftpClient, String remotePath) {
         boolean flag = ftpClient.makeDirectory(remotePath);
         if (!flag) {
             log.error("make directory failed:" + remotePath);
@@ -69,11 +66,8 @@ public class FtpUtils {
     }
 
     @SneakyThrows
-    public static boolean existFile(FTPClient ftpClient, String remotePath) {
+    private static boolean existFile(FTPClient ftpClient, String remotePath) {
         FTPFile[] ftpFileArr = ftpClient.listFiles(remotePath);
-        if (ftpFileArr.length > 0) {
-            return true;
-        }
-        return false;
+        return ftpFileArr.length > 0;
     }
 }

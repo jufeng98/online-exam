@@ -16,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
@@ -38,14 +39,14 @@ public class LockAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Object resObject;
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String cookieValue = Arrays.stream(requestAttributes.getRequest().getCookies()).filter(cookie -> {
-            String sessionKey = "SESSION";
-            if (sessionKey.equals(cookie.getName())) {
-                return true;
-            } else {
-                return false;
-            }
-        }).map(Cookie::getValue).collect(toList()).get(0);
+        String cookieValue = Arrays.stream(Objects.requireNonNull(requestAttributes).getRequest().getCookies())
+                .filter(cookie -> {
+                    String sessionKey = "SESSION";
+                    return sessionKey.equals(cookie.getName());
+                })
+                .map(Cookie::getValue)
+                .collect(toList())
+                .get(0);
         RLock lock = redisson.getLock(cookieValue);
         try {
             boolean locked = lock.tryLock(3, TimeUnit.SECONDS);

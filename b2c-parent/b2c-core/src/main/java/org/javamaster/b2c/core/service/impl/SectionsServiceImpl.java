@@ -44,8 +44,7 @@ public class SectionsServiceImpl implements SectionsService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "sort_order,create_time desc");
         List<Sections> sections = sectionsMapper.selectByExampleWithBLOBs(sectionsExample);
-        PageInfo<Sections> pageInfo = new PageInfo<>(sections);
-        return pageInfo;
+        return new PageInfo<>(sections);
     }
 
     @Override

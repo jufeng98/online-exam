@@ -10,9 +10,6 @@ public class IpUtils {
 
     /**
      * 获取IP地址
-     *
-     * @param request
-     * @return
      */
     public static String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");

@@ -24,8 +24,7 @@ public class PrintFlagsFinalEndpoint {
     @ReadOperation
     public Result<PrintFlagsFinalResVo> printFlagsFinal() {
         PrintFlagsFinalResVo resVo = systemService.printFlagsFinal();
-        Result<PrintFlagsFinalResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

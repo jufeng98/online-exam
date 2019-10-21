@@ -27,8 +27,7 @@ public class ApplicationConfig {
 
     @Bean
     public RedissonClient redissonClient(Config config) {
-        RedissonClient redisson = Redisson.create(config);
-        return redisson;
+        return Redisson.create(config);
     }
 
 }

@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -87,8 +88,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "questions_type,sort_order,create_time desc");
         List<Questions> topics = questionsMapper.selectByExample(questionsExample);
-        PageInfo<Questions> pageInfo = new PageInfo<>(topics);
-        return pageInfo;
+        return new PageInfo<>(topics);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class QuestionsServiceImpl implements QuestionsService {
             options.setOptionName(optionsVo.get(i));
             if (reqVo.getQuestionsForm().getQuestionsType() == QuestionsTypeEnum.SINGLE
                     || reqVo.getQuestionsForm().getQuestionsType() == QuestionsTypeEnum.JUDGE) {
-                options.setCorrect(i == reqVo.getQuestionsForm().getRadio() ? true : false);
+                options.setCorrect(i == reqVo.getQuestionsForm().getRadio());
             } else if (reqVo.getQuestionsForm().getQuestionsType() == QuestionsTypeEnum.MULTIPLY) {
                 options.setCorrect(reqVo.getQuestionsForm().getSelects().get(i));
             } else {
@@ -134,7 +134,7 @@ public class QuestionsServiceImpl implements QuestionsService {
         for (int i = 0; i < optionsVo.size(); i++) {
             Options options = new Options();
             options.setOptionName(optionsVo.get(i));
-            options.setCorrect(i == reqVo.getQuestionsForm().getRadio() ? true : false);
+            options.setCorrect(i == reqVo.getQuestionsForm().getRadio());
             options.setSort(i);
             options.setQuestionsCode(reqVo.getQuestionsForm().getQuestionsCode());
             options.setCreateUsename(userDetails.getUsername());
@@ -177,9 +177,9 @@ public class QuestionsServiceImpl implements QuestionsService {
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     public BatchImportQuestionsResVo batchImportQuestions(MultipartFile multipartFile, UserDetails userDetails) {
-        ExcelType excelType = multipartFile.getOriginalFilename().endsWith("xls") ? ExcelType.XLS : ExcelType.XLSX;
+        ExcelType excelType = Objects.requireNonNull(multipartFile.getOriginalFilename()).endsWith("xls") ? ExcelType.XLS : ExcelType.XLSX;
         @Cleanup InputStream inputStream = multipartFile.getInputStream();
-        ExcelReader excelReader = new ExcelReader(excelType, inputStream, QuestionsVo.class, 3, 0);
+        ExcelReader<QuestionsVo> excelReader = new ExcelReader<>(excelType, inputStream, QuestionsVo.class, 3, 0);
         excelReader.read();
         List<QuestionsVo> questionsVos = excelReader.getResultList();
         List<Questions> questionsList = questionsVos.stream()

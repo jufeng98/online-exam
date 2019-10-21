@@ -24,8 +24,7 @@ public class JinfoEndpoint {
     @ReadOperation
     public Result<JinfoResVo> jinfo() {
         JinfoResVo resVo = systemService.jinfo();
-        Result<JinfoResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

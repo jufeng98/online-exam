@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -30,7 +31,7 @@ public class SystemServiceImpl implements SystemService {
     public JpsResVo jps() {
         String string = SystemUtils.exec("jps");
         String[] strs = string.split("\\s");
-        List list = new ArrayList();
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < strs.length; i++) {
             if (pattern.matcher(strs[i]).matches()) {
                 list.add(strs[i]);
@@ -53,7 +54,7 @@ public class SystemServiceImpl implements SystemService {
         }
 
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpSession session = requestAttributes.getRequest().getSession();
+        HttpSession session = Objects.requireNonNull(requestAttributes).getRequest().getSession();
         String mainClassName = CoreApplication.class.getSimpleName();
         listMaps.forEach(listMap -> {
             for (Map.Entry<String, Object> objectObjectEntry : listMap.entrySet()) {
@@ -71,7 +72,7 @@ public class SystemServiceImpl implements SystemService {
     public JinfoResVo jinfo() {
         jps();
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpSession session = requestAttributes.getRequest().getSession();
+        HttpSession session = Objects.requireNonNull(requestAttributes).getRequest().getSession();
         Object pid = session.getAttribute("currentAppPid");
         String string = SystemUtils.exec("jinfo -flags " + pid);
         String s = "Non-default VM flags: ";

@@ -24,8 +24,7 @@ public class JpsEndpoint {
     @ReadOperation
     public Result<JpsResVo> jps() {
         JpsResVo resVo = systemService.jps();
-        Result<JpsResVo> result = new Result(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

@@ -30,10 +30,7 @@ public class FilesServiceImpl implements FilesService {
         for (MultipartFile multipartFile : multipartFiles) {
             String url = ftpHelper.uploadFile("/online-exam/image", multipartFile.getOriginalFilename(),
                     multipartFile.getBytes());
-            String path = new StringBuilder("/core/files/downloadFile?")
-                    .append("completePath=")
-                    .append(URLEncoder.encode(url, "UTF-8"))
-                    .toString();
+            String path = "/core/files/downloadFile?completePath=" + URLEncoder.encode(url, "UTF-8");
             urls.add(path);
         }
         return urls;
@@ -42,8 +39,7 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public String writeFile(String fileName, String encodeBase64Str) {
         byte[] bytes = Base64Utils.decodeFromUrlSafeString(encodeBase64Str);
-        String url = ftpHelper.uploadFile("/online-exam/logs", fileName, bytes);
-        return url;
+        return ftpHelper.uploadFile("/online-exam/logs", fileName, bytes);
     }
 
 

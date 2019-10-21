@@ -48,7 +48,7 @@ public class LearnsServiceImpl implements LearnsService {
         return learnsRecordMapper.selectByExample(example);
     }
 
-    public LearnsRecord findLearnRecord(LearnsRecordVo learnsRecordVo) {
+    private LearnsRecord findLearnRecord(LearnsRecordVo learnsRecordVo) {
         LearnsRecordExample example = new LearnsRecordExample();
         example.createCriteria()
                 .andUsernameEqualTo(learnsRecordVo.getUsername())

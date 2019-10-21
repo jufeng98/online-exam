@@ -23,12 +23,14 @@ import org.javamaster.b2c.core.service.MenusService;
 import org.javamaster.b2c.core.utils.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +55,7 @@ public class MenusServiceImpl implements MenusService {
         List<String> authorities = null;
         if (userDetails != null) {
             authorities = userDetails.getAuthorities().stream()
-                    .map(authority -> authority.getAuthority())
+                    .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
         }
         if (reqVo.getShouldFilterNullSubMenus() == null) {
@@ -111,7 +113,7 @@ public class MenusServiceImpl implements MenusService {
     public MenusListResVo getAuthoritiesMenusList(GetAuthoritiesMenusListReqVo reqVo) {
         AuthoritiesMenusExample authoritiesMenusExample = new AuthoritiesMenusExample();
         AuthoritiesMenusExample.Criteria criteria = authoritiesMenusExample.createCriteria();
-        criteria.andAuthorityIn(Arrays.asList(reqVo.getAuthority()));
+        criteria.andAuthorityIn(Collections.singletonList(reqVo.getAuthority()));
         List<AuthoritiesMenus> authoritiesMenus = authoritiesMenusMapper.selectByExample(authoritiesMenusExample);
         List<MenusEntity> menusEntities = authoritiesMenus.stream().map(authoritiesMenus1 -> {
             MenusEntity menusEntity = new MenusEntity();

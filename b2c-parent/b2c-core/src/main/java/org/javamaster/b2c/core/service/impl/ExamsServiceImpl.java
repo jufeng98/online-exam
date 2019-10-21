@@ -55,8 +55,7 @@ public class ExamsServiceImpl implements ExamsService {
         }
         PageHelper.startPage(reqVo.getPage().getPageNum(), reqVo.getPage().getPageSize(), "create_time desc");
         List<Exams> exams = examsMapper.selectByExample(examsExample);
-        PageInfo<Exams> pageInfo = new PageInfo<>(exams);
-        return pageInfo;
+        return new PageInfo<>(exams);
     }
 
     @Override
