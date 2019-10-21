@@ -104,8 +104,8 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
                 return map
             }
         }
-        val map = mutableMapOf("sectionsCode" to sectionsCode)
-        val response = NetUtils.postForResponse(AppConsts.FIND_KNOWLEDGES_QUESTION_NUM, map)
+        val reqMap = mutableMapOf("sectionsCode" to sectionsCode)
+        val response = NetUtils.postForResponse(AppConsts.FIND_KNOWLEDGES_QUESTION_NUM, reqMap)
         val resJsonStr: String = response.body!!.string()
         val resultVo: ResultVo<MutableList<KnowledgesQuestionNumVo>> = objectMapper.readValue(
             resJsonStr,

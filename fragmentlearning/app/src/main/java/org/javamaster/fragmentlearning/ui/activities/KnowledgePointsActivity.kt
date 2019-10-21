@@ -96,7 +96,7 @@ class KnowledgePointsActivity : BaseAppActivity() {
             @Suppress("DEPRECATION")
             override fun instantiateItem(container: ViewGroup, position: Int): Any {
                 val item = sumList[position]
-                var rootView: Any
+                val rootView: Any
                 when (item) {
                     is KnowledgePoints -> {
                         rootView = layoutInflater.inflate(
@@ -127,7 +127,7 @@ class KnowledgePointsActivity : BaseAppActivity() {
                     }
                     is Pair<*, *> -> {
                         val questions: Questions = item.first as Questions
-                        val optionsList: List<Options> = item.second as List<Options>
+                        val optionsList: List<*> = item.second as List<*>
                         rootView = layoutInflater.inflate(
                             R.layout.view_knowledge_points_question_item,
                             container,
@@ -135,7 +135,7 @@ class KnowledgePointsActivity : BaseAppActivity() {
                         ) as ViewGroup
                         val webView =
                             rootView.findViewById<WebView>(R.id.questions_title)
-                        var checkButton = rootView.findViewById<Button>(R.id.check_option)
+                        val checkButton = rootView.findViewById<Button>(R.id.check_option)
                         webView.loadDataWithBaseURL(null, questions.questionsTitle, "text/html", "utf-8", null)
                         val linearLayout: LinearLayout = rootView.findViewById(R.id.question_options)
                         if (
@@ -146,16 +146,17 @@ class KnowledgePointsActivity : BaseAppActivity() {
                             optionsList.forEach {
                                 val button = RadioButton(this@KnowledgePointsActivity)
                                 button.setTextColor(resources.getColor(R.color.colorAccent))
-                                button.text = it.optionName
-                                button.tag = it.correct
+                                val options = it as Options
+                                button.text = options.optionName
+                                button.tag = options.correct
                                 radioGroup.addView(button)
                             }
                             checkButton.setOnClickListener {
                                 var answerRight = false
                                 radioGroup.children.forEach {
-                                    val radioButton = it as RadioButton
-                                    if (radioButton.isChecked) {
-                                        answerRight = radioButton.tag as Boolean
+                                    val button = it as RadioButton
+                                    if (button.isChecked) {
+                                        answerRight = button.tag as Boolean
                                     }
                                 }
                                 showResponse(answerRight, checkButton)
@@ -165,8 +166,9 @@ class KnowledgePointsActivity : BaseAppActivity() {
                             optionsList.forEach {
                                 val checkBox = CheckBox(this@KnowledgePointsActivity)
                                 checkBox.setTextColor(resources.getColor(R.color.colorAccent))
-                                checkBox.text = it.optionName
-                                checkBox.tag = it.correct
+                                val options = it as Options
+                                checkBox.text = options.optionName
+                                checkBox.tag = options.correct
                                 linearLayout.addView(checkBox)
                             }
                             checkButton.setOnClickListener {

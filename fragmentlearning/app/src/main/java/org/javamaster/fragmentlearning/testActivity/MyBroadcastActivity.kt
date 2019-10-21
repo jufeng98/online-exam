@@ -2,7 +2,6 @@ package org.javamaster.fragmentlearning.testActivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.BindString
 import butterknife.ButterKnife
@@ -22,18 +21,18 @@ class MyBroadcastActivity : AppCompatActivity() {
     }
 
     @OnClick(R.id.send_broadcast)
-    fun sendBroadcast(view: View) {
-        var intent = Intent("org.javamaster.fragmentlearning.MY_BROADCAST_MSG")
+    fun sendBroadcast() {
+        val intent = Intent("org.javamaster.fragmentlearning.MY_BROADCAST_MSG")
         intent.putExtra("myOwnString", msg)
         // 发送标准广播
         sendBroadcast(intent)
         // 发送有序广播
-//        sendBroadcast(intent, null)
+        // sendBroadcast(intent, null)
     }
 
     @OnClick(R.id.offline)
-    fun sendBroadcast1(view: View) {
-        var intent = Intent(ActionConsts.FORCE_OFFLINE)
+    fun sendBroadcast1() {
+        val intent = Intent(ActionConsts.FORCE_OFFLINE)
         sendBroadcast(intent)
     }
 }

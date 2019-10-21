@@ -134,6 +134,7 @@ class ExamsQuestionsAdapter(val list: List<ExamQuestionsVo>, val context: Examin
         return rootView
     }
 
+    @Suppress("DEPRECATION")
     fun fillRootView(rootView: View, position: Int, clear: Boolean) {
         val questionsVo = list[position]
         val answersVo = submitAnswersResVo.answerDetails[position]
