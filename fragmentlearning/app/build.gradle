@@ -47,6 +47,8 @@ ext {
     dagger_version = "2.24"
     butterknife_version = "10.1.0"
     jackson_version = "2.9.9"
+    okhttp_version = "4.1.0"
+    retrofit_version = "2.6.2"
 }
 
 dependencies {
@@ -75,8 +77,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
 
-    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     implementation 'org.litepal.android:kotlin:3.0.0'
 
@@ -94,4 +96,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     implementation 'com.github.yuzhiqiang1993:zxing:2.2.8'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-jackson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 }

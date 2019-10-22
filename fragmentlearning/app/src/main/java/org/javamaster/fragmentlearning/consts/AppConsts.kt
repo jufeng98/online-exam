@@ -34,7 +34,7 @@ object AppConsts {
     const val FIND_TOPICS_PROGRESS = "$BASE_URL$APP_CONTEXT/core/learns/findTopicsProgress"
     const val FIND_SECTIONS_PROGRESS = "$BASE_URL$APP_CONTEXT/core/learns/findSectionsProgress"
     const val SUBMIT_ANSWERS = "$BASE_URL$APP_CONTEXT/core/examsRecord/submitAnswers"
-    const val HAS_UNREAD_MESSAGES = "$BASE_URL$APP_CONTEXT/core/messages/hasUnreadMessages"
+    const val HAS_UNREAD_MESSAGES = "core/messages/hasUnreadMessages"
     const val FIND_MESSAGES_LIST = "$BASE_URL$APP_CONTEXT/core/messages/findMessagesList"
     const val MARK_MESSAGES = "$BASE_URL$APP_CONTEXT/core/messages/markMessages"
     const val CREATE_DISCUSSIONS = "$BASE_URL$APP_CONTEXT/core/discussions/createDiscussions"

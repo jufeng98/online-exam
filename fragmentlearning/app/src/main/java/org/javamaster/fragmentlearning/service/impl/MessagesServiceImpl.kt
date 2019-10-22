@@ -21,24 +21,6 @@ import org.javamaster.fragmentlearning.utils.NetUtils
  */
 class MessagesServiceImpl constructor(private val objectMapper: ObjectMapper) : MessagesService {
 
-    override fun hasUnreadMessages(): ResultVo<Boolean> {
-        val response: Response
-        try {
-            val map = mutableMapOf<String, Any>()
-            response = NetUtils.postForResponse(AppConsts.HAS_UNREAD_MESSAGES, map)
-        } catch (e: LoginException) {
-            return ResultVo(errorCode = e.errorCode, errorMsg = e.message)
-        } catch (e: Exception) {
-            Log.e(this::class.qualifiedName, "", e)
-            return ResultVo(
-                errorCode = AppConsts.ERROR_CODE,
-                errorMsg = e.message ?: App.context.getString(R.string.network_error)
-            )
-        }
-        val resJsonStr: String = response.body!!.string()
-        return objectMapper.readValue(resJsonStr, object : TypeReference<ResultVo<Boolean>>() {})
-    }
-
     override fun findMessagesList(page: Page): Pair<MutableList<Messages>, Long> {
         val map = mutableMapOf<String, Any>()
         map["page"] = page

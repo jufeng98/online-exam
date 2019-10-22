@@ -3,6 +3,7 @@ package org.javamaster.fragmentlearning.ioc
 import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Component
 import org.javamaster.fragmentlearning.testDatabase.MyDatabaseHelper
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 /**
@@ -16,4 +17,5 @@ import javax.inject.Singleton
 interface GlobalComponent {
     fun objectMapper(): ObjectMapper
     fun myDatabaseHelper(): MyDatabaseHelper
+    fun retrofit(): Retrofit
 }

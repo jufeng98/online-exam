@@ -115,7 +115,7 @@ object NetUtils {
         })
     }
 
-    private fun getClient(): OkHttpClient {
+    fun getClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
 //      包含header、body数据
         loggingInterceptor.apply { loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }

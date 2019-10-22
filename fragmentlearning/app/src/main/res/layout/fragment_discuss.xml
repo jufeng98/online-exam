@@ -50,15 +50,4 @@
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/open_create_discuss"
-            android:backgroundTint="@color/colorAppPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/discuss_swipe_refresh"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_done"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

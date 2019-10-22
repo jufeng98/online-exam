@@ -4,7 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Module
 import dagger.Provides
 import org.javamaster.fragmentlearning.common.App
+import org.javamaster.fragmentlearning.consts.AppConsts
 import org.javamaster.fragmentlearning.testDatabase.MyDatabaseHelper
+import org.javamaster.fragmentlearning.utils.NetUtils
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Singleton
 
 /**
@@ -33,4 +38,14 @@ class GlobalModule {
         return MyDatabaseHelper(App.context, "BookStore.db", null, 3)
     }
 
+    @Provides
+    @Singleton
+    fun retrofit(): Retrofit {
+        return Retrofit.Builder()
+            .client(NetUtils.getClient())
+            .baseUrl(AppConsts.BASE_URL + AppConsts.APP_CONTEXT + "/")
+            .addConverterFactory(JacksonConverterFactory.create(App.objectMapper))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
 }

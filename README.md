@@ -8,7 +8,7 @@
 --
 项目框架：Vue.js + ElementUI + vue-router + axios + echarts（Apache图表库） + ueditor（富文本编辑器）等等
 ## fragmentlearning 安卓客户端
-* 项目框架：dagger + butterknife + RxJava + okhttp3 + jackson + litepal等等
+* 项目框架：dagger + butterknife + RxJava + okhttp3 + Retrofit2 + jackson + litepal等等
 ### b2c-mybatis-generator
 根据数据库表结构生成相应的mybatis Java实体类,mapper类和mapper类关联的xml文件
 ### handypoi-excel

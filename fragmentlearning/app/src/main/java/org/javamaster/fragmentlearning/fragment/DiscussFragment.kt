@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.ButterKnife
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -30,7 +29,6 @@ import org.javamaster.fragmentlearning.ioc.DaggerAppComponent
 import org.javamaster.fragmentlearning.listener.EndlessRecyclerOnScrollListener
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.DiscussService
-import org.javamaster.fragmentlearning.ui.activities.NewDiscussActivity
 import javax.inject.Inject
 
 class DiscussFragment : MainFragment() {
@@ -90,9 +88,6 @@ class DiscussFragment : MainFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 Toast.makeText(context!!, R.string.app_completing, Toast.LENGTH_SHORT).show()
             }
-        }
-        view.findViewById<FloatingActionButton>(R.id.open_create_discuss).setOnClickListener {
-            NewDiscussActivity.actionStart(context!!)
         }
         refresh = view.findViewById(R.id.discuss_swipe_refresh)
         recyclerView = view.findViewById(R.id.discuss_recycler_view)

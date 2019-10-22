@@ -27,6 +27,19 @@
                 app:layout_constraintEnd_toEndOf="parent">
         </FrameLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floating_button"
+                android:backgroundTint="@color/colorAppPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.0"
+                android:scaleY="0.0"
+                android:src="@drawable/ic_done"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/include_tab"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"/>
+
         <include
                 layout="@layout/tab_bottom_layout"
                 android:layout_width="0dp"
