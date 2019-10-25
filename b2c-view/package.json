@@ -22,6 +22,7 @@
     "element-ui": "^2.4.1",
     "echarts": "^4.2.1",
     "jquery": "^3.4.1",
+    "dijkstrajs": "^1.0.1",
     "qrcode":"^1.4.2"
   },
   "devDependencies": {

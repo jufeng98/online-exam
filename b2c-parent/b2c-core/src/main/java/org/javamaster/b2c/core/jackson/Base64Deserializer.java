@@ -12,12 +12,13 @@ import java.io.IOException;
  * @date 2019/8/7
  */
 public class Base64Deserializer extends JsonDeserializer<byte[]> {
-    private static final String PREFIX = "data:image/jpeg;base64,";
+    private static final String PREFIX = "base64,";
 
     @Override
     public byte[] deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String text = jsonParser.getText();
-        text = text.substring(PREFIX.length());
+        int index = text.indexOf(PREFIX);
+        text = text.substring(index + PREFIX.length());
         return Base64Utils.decodeFromString(text);
     }
 }
