@@ -28,7 +28,7 @@ public class Topics {
     private String topicsName;
 
     /**
-     * 主题类型,1:编码挑战;2:网页开发;3:编程语言;4:数据科学;5:开发基础
+     * 主题类型,枚举值-CODING:1:编程挑战;WEB:2:网页开发;LANG:3:编程语言;DATA:4:数据科学;FUND:5:开发基础
      */
     private Byte topicsType;
 
@@ -110,14 +110,14 @@ public class Topics {
     }
 
     /**
-     * 获取主题类型,1:编码挑战;2:网页开发;3:编程语言;4:数据科学;5:开发基础
+     * 获取主题类型,枚举值-CODING:1:编程挑战;WEB:2:网页开发;LANG:3:编程语言;DATA:4:数据科学;FUND:5:开发基础
      */
     public Byte getTopicsType() {
         return topicsType;
     }
 
     /**
-     * 设置主题类型,1:编码挑战;2:网页开发;3:编程语言;4:数据科学;5:开发基础
+     * 设置主题类型,枚举值-CODING:1:编程挑战;WEB:2:网页开发;LANG:3:编程语言;DATA:4:数据科学;FUND:5:开发基础
      */
     public void setTopicsType(Byte topicsType) {
         this.topicsType = topicsType;

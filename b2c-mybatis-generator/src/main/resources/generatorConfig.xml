@@ -17,7 +17,8 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
-        <plugin type="org.javamaster.b2c.mybatis.generator.plugin.MybatisGeneratorPlugin"></plugin>
+        <plugin type="org.javamaster.b2c.mybatis.generator.plugin.MybatisGeneratorPlugin"/>
+        <plugin type="org.javamaster.b2c.mybatis.generator.plugin.MybatisEnumsPlugin"/>
 
         <commentGenerator>
             <property name="suppressDate" value="true"/>
