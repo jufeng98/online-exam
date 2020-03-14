@@ -121,6 +121,8 @@
         </activity>
         <activity android:name=".testActivity.BaiduMapActivity">
         </activity>
+        <activity android:name=".testActivity.GaodeMapActivity">
+        </activity>
         <activity android:name=".testActivity.LBSActivity">
         </activity>
 
