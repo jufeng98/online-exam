@@ -23,7 +23,7 @@
             <el-button type="primary" icon="el-icon-warning" @click="resetForm('conditionsFormRef')">重置</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="dialogTableVisible = true">匹配条件说明</el-button>
+            <el-button type="primary" @click="openPage">匹配条件说明</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -52,6 +52,7 @@
 
   import baseAxios from '../../common/baseAxios'
   import config from '../../config'
+  import matchConditionDesc from './matchConditionDesc.vue';
 
   export default {
     data() {
@@ -116,6 +117,20 @@
           }
           return condi1
         })
+      },
+      openPage() {
+        this.$dlg.modal(matchConditionDesc, {
+          width: 800,
+          height: 600,
+          title: '匹配条件说明',
+          maxButton: false,
+          params: {
+            name: 'Terry Zeng'
+          },
+          callback: data => {
+            console.log(data)
+          }
+        });
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()

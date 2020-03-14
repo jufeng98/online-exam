@@ -55,58 +55,6 @@
         </div>
       </el-col>
     </el-row>
-
-    <el-dialog :title="title" :visible.sync="createOrEditTopicsDialogVisible">
-      <el-form :model="createOrEditTopicsForm" label-width="120px" :rules="createOrEditTopicsFormRules"
-               ref="createOrEditTopicsFormRef">
-        <el-form-item label="主题名称" prop="topicsName">
-          <el-input v-model="createOrEditTopicsForm.topicsName" auto-complete="off"
-                    :maxlength="30"></el-input>
-        </el-form-item>
-        <el-form-item label="主题封面" prop="topicsCoverImage" style="text-align: left">
-          <el-upload
-            style="margin:0px;height:200px;"
-            class="avatar-uploader"
-            action=""
-            :http-request="showImage"
-            :show-file-list="false"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="uploadShowImageUrl" :src="uploadShowImageUrl" class="avatar">
-            <i v-else class="el-upload el-icon-plus avatar-uploader-icon"></i>
-            <div slot="tip" style="color: red" class="el-upload__tip">
-              只能上传jpg文件，且不超过3MB
-            </div>
-          </el-upload>
-          <el-input type="hidden" style="width:0px;height:0px;"
-                    v-model="createOrEditTopicsForm.topicsCoverImage">
-          </el-input>
-        </el-form-item>
-        <el-form-item label="主题类型" prop="topicsType" style="text-align: left">
-          <el-select v-model="createOrEditTopicsForm.topicsType">
-            <el-option
-              v-for="item in topicsTypes"
-              :key="item.value"
-              :label="item.name"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="关联考试" prop="examsCode" style="text-align: left">
-          <el-select v-model="createOrEditTopicsForm.examsCode">
-            <el-option
-              v-for="item in examsList"
-              :key="item.examsCode"
-              :label="item.examsName"
-              :value="item.examsCode">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div>
-        <el-button @click.native="createOrEditTopicsDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="submitCreateOrEditTopics" :loading="addLoading">提交</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -115,6 +63,7 @@
   import appConsts from '../../common/appConsts'
   import stringUtils from '../../common/stringUtils'
   import config from '../../config'
+  import addOrEditTopic from "./addOrEditTopic"
 
   export default {
     data() {
@@ -169,27 +118,6 @@
         this.pageNum = val
         this.findTopicsList(this.pageNum)
       },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg'
-        const isLt3M = file.size / 1024 / 1024 < 3
-
-        if (!isJPG) {
-          this.$message.error('上传图片只能是 JPG 格式!')
-        }
-        if (!isLt3M) {
-          this.$message.error('上传图片大小不能超过 3MB!')
-        }
-        return isJPG && isLt3M
-      },
-      showImage(obj) {
-        let file = obj.file
-        this.uploadShowImageUrl = top.URL.createObjectURL(file)
-        let reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-          this.createOrEditTopicsForm.topicsCoverImage = reader.result
-        }
-      },
       findTopicsList(pageNum) {
         let reqJsonParams = {
           page: {pageNum: pageNum, pageSize: this.pageSize},
@@ -204,20 +132,26 @@
         })
       },
       showCreateTopicsDialog() {
-        this.title = '新增主题'
-        this.createTopics = true
-        this.createOrEditTopicsDialogVisible = true
-        this.uploadShowImageUrl = ''
-        this.createOrEditTopicsForm = {}
+        this.openDialog('新增主题', Object.assign({}, {createTopics: true}))
       },
-
       showEditTopicsDialog(index, row) {
-        this.title = '编辑主题'
-        this.createTopics = false
-        this.createOrEditTopicsDialogVisible = true
-        this.createOrEditTopicsForm = Object.assign({}, row)
-        this.createOrEditTopicsForm.topicsCoverImage = this.base64Prefix + this.createOrEditTopicsForm.topicsCoverImage
-        this.uploadShowImageUrl = this.createOrEditTopicsForm.topicsCoverImage
+        this.openDialog('编辑主题', Object.assign({}, row, {createTopics: false}))
+      },
+      openDialog(title, data) {
+        this.$store.commit('init', data)
+        this.$dlg.modal(addOrEditTopic, {
+          width: 800,
+          height: 600,
+          title: title,
+          maxButton: false,
+          callback: data => {
+            if (data.action !== 'success') {
+              return
+            }
+            this.$message({message: '操作成功', type: 'success'})
+            this.findTopicsList(1)
+          }
+        })
       },
       findExamsList() {
         let reqJsonParams = {
@@ -230,26 +164,6 @@
             this.examsMap.set(this.examsList[i].examsCode, this.examsList[i].examsName)
           }
           this.findTopicsList(1)
-        })
-      },
-      submitCreateOrEditTopics() {
-        this.$refs.createOrEditTopicsFormRef.validate((valid) => {
-          if (!valid) {
-            this.$message({message: '信息有误', type: 'warning'})
-            return
-          }
-          this.addLoading = true
-          let reqJsonParams = {
-            topicsForm: this.createOrEditTopicsForm,
-          }
-          let url = this.createTopics ? config.CREATE_TOPICS : config.EDIT_TOPICS
-          baseAxios.post(url, reqJsonParams).then(() => {
-            this.$message({message: '操作成功', type: 'success'})
-          }).finally(() => {
-            this.addLoading = false
-            this.createOrEditTopicsDialogVisible = false
-            this.findTopicsList(this.pageNum)
-          })
         })
       },
       delTopics(index, row) {
@@ -277,30 +191,5 @@
   }
 </script>
 <style scoped>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
 </style>
