@@ -66,6 +66,7 @@
         examsList: [],
         examsMap: new Map(),
         loading: false,
+        createTopics: false,
         createOrEditTopicsForm: {
           id: null,
           topicsName: '',
@@ -143,7 +144,7 @@
       this.createTopics = store.state.createTopics
       this.createOrEditTopicsForm.id = store.state.id
       this.createOrEditTopicsForm.topicsName = store.state.topicsName
-      if (store.state.topicsCoverImage) {
+      if (!this.createTopics) {
         this.createOrEditTopicsForm.topicsCoverImage = this.base64Prefix + store.state.topicsCoverImage
         this.uploadShowImageUrl = this.createOrEditTopicsForm.topicsCoverImage
       }

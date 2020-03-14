@@ -200,7 +200,7 @@
   import baseAxios from '../../common/baseAxios'
   import appConsts from '../../common/appConsts'
   import config from '../../config'
-  import dateUtils from '../../common/dateUtils'
+  import moment from 'moment'
   import stringUtils from '../../common/stringUtils'
 
   export default {
@@ -269,7 +269,7 @@
     methods: {
       formatData(row, column) {
         if (column.property === 'createTime') {
-          return dateUtils.formatDate(new Date(row.createTime))
+          return moment(new Date(row.createTime)).format('YYYY-MM-DD HH:mm:ss');
         } else if (column.property === 'enabled') {
           return stringUtils.formatTableRowData(row.enabled, this.ENABLED)
         } else if (column.property === 'gender') {

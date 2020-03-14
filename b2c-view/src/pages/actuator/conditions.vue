@@ -53,6 +53,7 @@
   import baseAxios from '../../common/baseAxios'
   import config from '../../config'
   import matchConditionDesc from './matchConditionDesc.vue';
+  import commonUtils from '../../common/commonUtils'
 
   export default {
     data() {
@@ -119,9 +120,10 @@
         })
       },
       openPage() {
+        let dimension = commonUtils.getDimensionFromPercent(60, 80)
         this.$dlg.modal(matchConditionDesc, {
-          width: 800,
-          height: 600,
+          width: dimension.width,
+          height: dimension.height,
           title: '匹配条件说明',
           maxButton: false,
           params: {

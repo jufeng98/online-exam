@@ -22,7 +22,7 @@
     <el-row>
       <el-col>
         <div>
-          <el-table :data="topicsList" highlight-current-row v-loading="listLoading" fit>
+          <el-table :data="topicsList" :height="tableHeight" highlight-current-row v-loading="loading" fit>
             <el-table-column type="index" width="60px"></el-table-column>
             <el-table-column prop="topicsName" label="主题名称"></el-table-column>
             <el-table-column prop="topicsType" :formatter="formatData" label="主题类型"></el-table-column>
@@ -64,6 +64,7 @@
   import stringUtils from '../../common/stringUtils'
   import config from '../../config'
   import addOrEditTopic from "./addOrEditTopic"
+  import commonUtils from "../../common/commonUtils";
 
   export default {
     data() {
@@ -74,28 +75,16 @@
           topicsName: ''
         },
         topicsList: [],
-        title: '',
         total: 0,
         pageNum: 1,
         pageSize: 10,
-        listLoading: false,
+        tableHeight:null,
+        loading: false,
         createOrEditTopicsForm: {
           topicsName: '',
           topicsCoverImage: null,
           examsCode: '',
           topicsType: '',
-        },
-        uploadShowImageUrl: '',
-        createTopics: true,
-        createOrEditTopicsDialogVisible: false,
-        addLoading: false,
-        createOrEditTopicsFormRules: {
-          topicsName: [
-            {required: true, message: '请输入主题名称', trigger: 'blur'}
-          ],
-          topicsCoverImage: [
-            {required: true, message: '请选择主题封面', trigger: 'blur'}
-          ],
         },
         examsList: [],
         examsMap: new Map(),
@@ -123,12 +112,12 @@
           page: {pageNum: pageNum, pageSize: this.pageSize},
           topicsForm: this.topicsForm
         }
-        this.listLoading = true
+        this.loading = true
         baseAxios.post(config.FIND_TOPICS_LIST, reqJsonParams).then((resJson) => {
           this.topicsList = resJson.data
           this.total = resJson.total
         }).finally(() => {
-          this.listLoading = false
+          this.loading = false
         })
       },
       showCreateTopicsDialog() {
@@ -139,9 +128,10 @@
       },
       openDialog(title, data) {
         this.$store.commit('init', data)
+        let dimension = commonUtils.getDimensionFromPercent(60, 80)
         this.$dlg.modal(addOrEditTopic, {
-          width: 800,
-          height: 600,
+          width: dimension.width,
+          height: dimension.height,
           title: title,
           maxButton: false,
           callback: data => {
@@ -169,12 +159,12 @@
       delTopics(index, row) {
         this.$confirm('确认删除该记录吗?', '提示', {type: 'warning'})
           .then(() => {
-            this.listLoading = true
+            this.loading = true
             baseAxios.post(config.DEL_TOPICS, {id: row.id}).then(() => {
               this.$message({message: '操作成功', type: 'success'})
               this.findTopicsList(1)
             }).finally(() => {
-              this.listLoading = false
+              this.loading = false
             })
           })
           .catch(() => {
@@ -183,8 +173,16 @@
       resetForm(formName) {
         this.$refs[formName].resetFields()
       },
+      recalculateTableHeight() {
+        // 表格高度自适应
+        let frameHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        let otherHeight = 130
+        this.tableHeight = frameHeight - otherHeight
+      },
     },
     mounted() {
+      this.recalculateTableHeight()
+      window.onresize = this.recalculateTableHeight
       this.findExamsList()
       window.vue = this
     }
