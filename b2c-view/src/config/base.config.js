@@ -13,6 +13,8 @@ export const DEL_MENUS = '/core/menus/delMenus'
 export const GET_USERS_MENUS_LIST = '/core/menus/getUsersMenusList'
 export const GET_AUTHORITIES_MENUS_LIST = '/core/menus/getAuthoritiesMenusList'
 export const UPLOAD_FILE = '/core/files/uploadFile'
+export const V_UPLOAD_FILE = '/core/files/vUploadFile'
+export const V_DEL_FILE = '/core/files/vDelFile'
 export const DOWNLOAD_FILE = '/core/files/downloadFile'
 
 export const FIND_TOPICS_LIST = '/core/topics/findTopicsList'
