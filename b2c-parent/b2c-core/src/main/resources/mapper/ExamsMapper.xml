@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.javamaster.b2c.core.mapper.ExamsMapper">
+<mapper namespace="org.javamaster.b2c.mybatis.mapper.ExamsMapper">
   <!-- 此文件由 mybatis generator 生成,注意: 请勿手工改动此文件, 请使用 mybatis generator -->
-  <resultMap id="BaseResultMap" type="org.javamaster.b2c.core.entity.Exams">
+  <resultMap id="BaseResultMap" type="org.javamaster.b2c.mybatis.entity.Exams">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="exams_code" jdbcType="VARCHAR" property="examsCode" />
     <result column="exams_name" jdbcType="VARCHAR" property="examsName" />
@@ -72,7 +72,7 @@
   <sql id="Base_Column_List">
     id, exams_code, exams_name, exams_desc, certs_id, create_username, create_time
   </sql>
-  <select id="selectByExample" parameterType="org.javamaster.b2c.core.entity.ExamsExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.javamaster.b2c.mybatis.entity.ExamsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -96,13 +96,13 @@
     delete from exams
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="org.javamaster.b2c.core.entity.ExamsExample">
+  <delete id="deleteByExample" parameterType="org.javamaster.b2c.mybatis.entity.ExamsExample">
     delete from exams
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.core.entity.Exams" useGeneratedKeys="true">
+  <insert id="insert" keyProperty="id" parameterType="org.javamaster.b2c.mybatis.entity.Exams" useGeneratedKeys="true">
     insert into exams (id, exams_code, exams_name, 
       exams_desc, certs_id, create_username, 
       create_time)
@@ -110,7 +110,7 @@
       #{examsDesc,jdbcType=VARCHAR}, #{certsId,jdbcType=INTEGER}, #{createUsername,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.javamaster.b2c.core.entity.Exams">
+  <insert id="insertSelective" keyProperty="id" parameterType="org.javamaster.b2c.mybatis.entity.Exams" useGeneratedKeys="true">
     insert into exams
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -159,7 +159,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.javamaster.b2c.core.entity.ExamsExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.javamaster.b2c.mybatis.entity.ExamsExample" resultType="java.lang.Long">
     select count(*) from exams
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -207,7 +207,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.core.entity.Exams">
+  <update id="updateByPrimaryKeySelective" parameterType="org.javamaster.b2c.mybatis.entity.Exams">
     update exams
     <set>
       <if test="examsCode != null">
@@ -231,7 +231,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.core.entity.Exams">
+  <update id="updateByPrimaryKey" parameterType="org.javamaster.b2c.mybatis.entity.Exams">
     update exams
     set exams_code = #{examsCode,jdbcType=VARCHAR},
       exams_name = #{examsName,jdbcType=VARCHAR},
