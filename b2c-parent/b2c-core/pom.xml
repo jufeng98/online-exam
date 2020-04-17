@@ -128,8 +128,8 @@
             <groupId>org.javamaster.mybatis</groupId>
             <artifactId>mybatis-generator</artifactId>
             <version>1.0-SNAPSHOT</version>
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/src/main/resources/lib/mybatis-generator-1.0-SNAPSHOT.jar</systemPath>-->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/mybatis-generator-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.baidu</groupId>
