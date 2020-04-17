@@ -66,6 +66,7 @@ class ExerciseMainActivity : BaseAppActivity() {
         list.add(Pair("状态栏通知", NotificationActivity::class.java))
         list.add(Pair("位置服务(LBS)", LBSActivity::class.java))
         list.add(Pair("百度地图", BaiduMapActivity::class.java))
+        list.add(Pair("高德地图", GaodeMapActivity ::class.java))
     }
 
     companion object {
