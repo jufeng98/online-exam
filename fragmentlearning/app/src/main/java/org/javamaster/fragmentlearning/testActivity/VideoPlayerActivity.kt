@@ -26,8 +26,11 @@ class VideoPlayerActivity : BaseAppActivity() {
     }
 
     private fun init() {
-        var musicFile =
-            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "media.mp4")
+        val musicFile =
+            File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),
+                "media.mp4"
+            )
         player.setVideoPath(musicFile.path)
     }
 
@@ -63,7 +66,7 @@ class VideoPlayerActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, VideoPlayerActivity::class.java)
+            val intent = Intent(context, VideoPlayerActivity::class.java)
             context.startActivity(intent)
         }
     }

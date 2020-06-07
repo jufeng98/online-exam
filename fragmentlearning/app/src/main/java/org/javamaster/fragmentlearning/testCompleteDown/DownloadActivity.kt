@@ -32,7 +32,7 @@ class DownloadActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var intent = Intent(this, DownloadService::class.java)
+        val intent = Intent(this, DownloadService::class.java)
         bindService(intent, conn, Context.BIND_AUTO_CREATE)
     }
 
@@ -60,7 +60,7 @@ class DownloadActivity : BaseAppActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, DownloadActivity::class.java)
+            val intent = Intent(context, DownloadActivity::class.java)
             context.startActivity(intent)
         }
     }

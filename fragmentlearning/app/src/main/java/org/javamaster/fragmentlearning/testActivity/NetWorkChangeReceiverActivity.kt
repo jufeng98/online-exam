@@ -15,10 +15,10 @@ class NetWorkChangeReceiverActivity : AppCompatActivity() {
     private lateinit var receiver: NetWorkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var view = TextView(this)
+        val view = TextView(this)
         view.text = "请尝试改变手机网络状态"
         setContentView(view)
-        var intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+        val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
         receiver = NetWorkChangeReceiver()
         registerReceiver(receiver, intentFilter)
     }

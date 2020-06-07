@@ -30,13 +30,13 @@ class SQLiteActivity : BaseAppActivity() {
 
     @OnClick(R.id.create_table)
     fun createTable() {
-        var db = myDatabaseHelper.writableDatabase
-        Toast.makeText(this, "${db.path}", Toast.LENGTH_SHORT).show()
+        val db = myDatabaseHelper.writableDatabase
+        Toast.makeText(this, db.path, Toast.LENGTH_SHORT).show()
     }
 
     @OnClick(R.id.insert_data)
     fun insertData() {
-        var db = myDatabaseHelper.writableDatabase
+        val db = myDatabaseHelper.writableDatabase
         try {
             db.beginTransaction()
             // 类库的辅助方法插入数据
@@ -58,7 +58,7 @@ class SQLiteActivity : BaseAppActivity() {
 
     @OnClick(R.id.update_data)
     fun updateData() {
-        var db = myDatabaseHelper.writableDatabase
+        val db = myDatabaseHelper.writableDatabase
         val values = ContentValues()
         values.put("pages", 555)
         db.update("Book", values, "author=?", arrayOf("Dan Brown"))
@@ -70,7 +70,7 @@ class SQLiteActivity : BaseAppActivity() {
 
     @OnClick(R.id.del_data)
     fun delData() {
-        var db = myDatabaseHelper.writableDatabase
+        val db = myDatabaseHelper.writableDatabase
         db.delete("Book", "author=?", arrayOf("Dan Brown"))
 
         db.execSQL("delete from Book where author='yudong'")
@@ -79,8 +79,8 @@ class SQLiteActivity : BaseAppActivity() {
 
     @OnClick(R.id.query_data)
     fun queryData() {
-        var db = myDatabaseHelper.readableDatabase
-        var cursor = db.query(
+        val db = myDatabaseHelper.readableDatabase
+        val cursor = db.query(
             "Book",
             arrayOf("id", "author", "price", "pages", "name"),
             "author in (?,?)",
@@ -89,25 +89,27 @@ class SQLiteActivity : BaseAppActivity() {
             null,
             null
         )
-        var str = getData(cursor)
+        val str = getData(cursor)
         cursor.close()
 
-        var cursor1 = db.rawQuery("select * from Book where author in (?,?)", arrayOf("Dan Brown", "yudong"))
-        var str1 = getData(cursor1)
+        val cursor1 =
+            db.rawQuery("select * from Book where author in (?,?)", arrayOf("Dan Brown", "yudong"))
+        val str1 = getData(cursor1)
         cursor1.close()
         Toast.makeText(this, "$str\n$str1", Toast.LENGTH_LONG).show()
     }
 
     private fun getData(cursor: Cursor): String {
-        var stringBuilder = StringBuilder()
+        val stringBuilder = StringBuilder()
         cursor.moveToFirst()
         while (!cursor.isAfterLast) {
-            var id = cursor.getInt(cursor.getColumnIndex("id"))
-            var author = cursor.getString(cursor.getColumnIndex("author"))
-            var price = cursor.getDouble(cursor.getColumnIndex("price"))
-            var pages = cursor.getInt(cursor.getColumnIndex("pages"))
-            var name = cursor.getString(cursor.getColumnIndex("name"))
-            stringBuilder.append("$id ").append("$author ").append("$price ").append("$pages ").append("$name ")
+            val id = cursor.getInt(cursor.getColumnIndex("id"))
+            val author = cursor.getString(cursor.getColumnIndex("author"))
+            val price = cursor.getDouble(cursor.getColumnIndex("price"))
+            val pages = cursor.getInt(cursor.getColumnIndex("pages"))
+            val name = cursor.getString(cursor.getColumnIndex("name"))
+            stringBuilder.append("$id ").append("$author ").append("$price ").append("$pages ")
+                .append("$name ")
                 .append("\r\n")
             cursor.moveToNext()
         }
@@ -116,7 +118,7 @@ class SQLiteActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, SQLiteActivity::class.java)
+            val intent = Intent(context, SQLiteActivity::class.java)
             context.startActivity(intent)
         }
     }

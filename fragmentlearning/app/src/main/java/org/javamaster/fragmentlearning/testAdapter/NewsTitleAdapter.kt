@@ -19,19 +19,19 @@ import org.javamaster.fragmentlearning.testFragment.NewsContentFragment
  */
 class NewsTitleAdapter(private val newsList: List<News>) : RecyclerView.Adapter<NewsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        var view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.news_item_layout, parent, false)
-        var holder = NewsViewHolder(view)
+        val holder = NewsViewHolder(view)
         holder.view.setOnClickListener {
-            var position = holder.adapterPosition
-            var news = newsList[position]
+            val position = holder.adapterPosition
+            val news = newsList[position]
 
             val mConfiguration = parent.context.resources.configuration
             val ori = mConfiguration.orientation
             if (ori == Configuration.ORIENTATION_LANDSCAPE) {
                 //横屏
-                var activity = parent.context as NewsActivity
-                var fragment =
+                val activity = parent.context as NewsActivity
+                val fragment =
                     activity.supportFragmentManager.findFragmentById(R.id.news_content_fragment) as NewsContentFragment
                 fragment.refresh(news)
             } else if (ori == Configuration.ORIENTATION_PORTRAIT) {
@@ -47,7 +47,7 @@ class NewsTitleAdapter(private val newsList: List<News>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        var news = newsList[position]
+        val news = newsList[position]
         holder.newsTitle.text = news.title
     }
 

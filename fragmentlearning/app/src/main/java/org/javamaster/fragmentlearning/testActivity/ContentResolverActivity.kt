@@ -14,7 +14,7 @@ import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 class ContentResolverActivity : BaseAppActivity() {
 
     lateinit var adapter: ArrayAdapter<String>
-    var contacts = mutableListOf<String>()
+    private var contacts = mutableListOf<String>()
 
     override fun initContentView(): Int? {
         return R.layout.activity_content_resolver
@@ -29,11 +29,11 @@ class ContentResolverActivity : BaseAppActivity() {
 
     private fun readContacts() {
         Log.i(this::class.qualifiedName, ContactsContract.CommonDataKinds.Phone.CONTENT_URI.toString())
-        var cursor = contentResolver.query(
+        val cursor = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             null, null, null, null
         )
-        cursor.moveToFirst()
+        cursor!!.moveToFirst()
         while (!cursor.isAfterLast) {
             val displayName = cursor.getString(
                 cursor.getColumnIndex(
@@ -53,7 +53,7 @@ class ContentResolverActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, ContentResolverActivity::class.java)
+            val intent = Intent(context, ContentResolverActivity::class.java)
             context.startActivity(intent)
         }
     }

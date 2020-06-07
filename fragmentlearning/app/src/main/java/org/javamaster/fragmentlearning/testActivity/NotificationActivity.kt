@@ -24,7 +24,7 @@ class NotificationActivity : BaseAppActivity() {
 
     @OnClick(R.id.send_notification1)
     fun send1() {
-        var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val intent = Intent(this, SaveAndLoadActivity::class.java)
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notification = NotificationCompat.Builder(this)
@@ -69,7 +69,7 @@ class NotificationActivity : BaseAppActivity() {
     @OnClick(R.id.send_notification3)
     fun send3() {
         val intent = Intent(this, SaveAndLoadActivity::class.java)
-        var manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notification = NotificationCompat.Builder(this)
             .setContentTitle("这是通知标题")
@@ -98,7 +98,7 @@ class NotificationActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, NotificationActivity::class.java)
+            val intent = Intent(context, NotificationActivity::class.java)
             context.startActivity(intent)
         }
     }

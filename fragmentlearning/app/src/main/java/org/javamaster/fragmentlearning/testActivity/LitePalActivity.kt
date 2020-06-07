@@ -23,7 +23,7 @@ class LitePalActivity : BaseAppActivity() {
 
     @OnClick(R.id.insert_data_copy)
     fun insertData() {
-        var book = Book(0, "yudong", 88.8, 678, "Java高手之路", "")
+        val book = Book(0, "yudong", 88.8, 678, "Java高手之路", "")
         book.save()
         book.pages = 666
         book.save()
@@ -32,7 +32,7 @@ class LitePalActivity : BaseAppActivity() {
 
     @OnClick(R.id.update_data_copy)
     fun updateData() {
-        var book = Book()
+        val book = Book()
         book.pages = 888
         book.saveOrUpdate("author=?", "yudong")
         Toast.makeText(this, "更新数据成功", Toast.LENGTH_SHORT).show()
@@ -47,9 +47,9 @@ class LitePalActivity : BaseAppActivity() {
 
     @OnClick(R.id.query_data_copy)
     fun queryData() {
-        var list = LitePal.findAll(Book::class.java)
+        val list = LitePal.findAll(Book::class.java)
         Toast.makeText(this, list.joinToString(), Toast.LENGTH_SHORT).show()
-        var books = LitePal.where("author=?", "yudong").order("id").find(Book::class.java)
+        val books = LitePal.where("author=?", "yudong").order("id").find(Book::class.java)
         Toast.makeText(this, books.toString(), Toast.LENGTH_SHORT).show()
     }
 
@@ -62,7 +62,7 @@ class LitePalActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, LitePalActivity::class.java)
+            val intent = Intent(context, LitePalActivity::class.java)
             context.startActivity(intent)
         }
     }

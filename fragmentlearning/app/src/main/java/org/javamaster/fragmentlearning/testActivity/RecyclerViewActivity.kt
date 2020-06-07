@@ -9,10 +9,12 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.model.Fruit
 import org.javamaster.fragmentlearning.testAdapter.RecyclerFruitAdapter
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
+import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 class RecyclerViewActivity : BaseAppActivity() {
 
-    var images = listOf(
+    private var images = listOf(
         R.drawable.tab_discuss,
         R.drawable.tab_home,
         R.drawable.tab_learn,
@@ -30,44 +32,45 @@ class RecyclerViewActivity : BaseAppActivity() {
         super.onCreate(savedInstanceState)
         initFruits()
 
-        var recyclerView: RecyclerView = recycler_view_vertical as RecyclerView
-        var linearLayoutManager = LinearLayoutManager(this)
+        val recyclerView: RecyclerView = recycler_view_vertical as RecyclerView
+        val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
-        var adapter = RecyclerFruitAdapter(1, fruitList)
+        val adapter = RecyclerFruitAdapter(1, fruitList)
         recyclerView.adapter = adapter
 
-        var recyclerViewHorizontal: RecyclerView = recycler_view_horizontal as RecyclerView
-        var linearLayoutManager1 = LinearLayoutManager(this)
+        val recyclerViewHorizontal: RecyclerView = recycler_view_horizontal as RecyclerView
+        val linearLayoutManager1 = LinearLayoutManager(this)
         linearLayoutManager1.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewHorizontal.layoutManager = linearLayoutManager1
-        var adapter1 = RecyclerFruitAdapter(2, fruitList)
+        val adapter1 = RecyclerFruitAdapter(2, fruitList)
         recyclerViewHorizontal.adapter = adapter1
 
-        var recyclerViewWaterfall: RecyclerView = recycler_view_waterfall as RecyclerView
-        var linearLayoutManager2 = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        val recyclerViewWaterfall: RecyclerView = recycler_view_waterfall as RecyclerView
+        val linearLayoutManager2 =
+            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewWaterfall.layoutManager = linearLayoutManager2
-        var adapter2 = RecyclerFruitAdapter(3, initFruits1())
+        val adapter2 = RecyclerFruitAdapter(3, initFruits1())
         recyclerViewWaterfall.adapter = adapter2
     }
 
     private fun initFruits() {
-        var fruits = resources.getStringArray(R.array.fruits)
+        val fruits = resources.getStringArray(R.array.fruits)
         var i = 1
         fruitList = fruits.map {
-            Fruit("${i++}.$it", images[Math.round(Math.random() * 4).toInt()])
+            Fruit("${i++}.$it", images[(Math.random() * 4).roundToInt()])
         }
     }
 
     private fun initFruits1(): List<Fruit> {
         var i = 1
-        var fruits = resources.getStringArray(R.array.fruits)
+        val fruits = resources.getStringArray(R.array.fruits)
         return fruits.map {
-            var num: Int = Math.ceil(Math.random() * 10).toInt()
+            val num: Int = ceil(Math.random() * 10).toInt()
             var str = "${i++}."
             for (i in 0..num) {
                 str += " $it"
             }
-            Fruit(str, images[Math.round(Math.random() * 4).toInt()])
+            Fruit(str, images[(Math.random() * 4).roundToInt()])
         }
     }
 }

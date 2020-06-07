@@ -30,6 +30,7 @@ import org.javamaster.fragmentlearning.listener.EndlessRecyclerOnScrollListener
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.DiscussService
 import javax.inject.Inject
+import kotlin.math.ceil
 
 class DiscussFragment : MainFragment() {
 
@@ -105,7 +106,7 @@ class DiscussFragment : MainFragment() {
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             refresh.isRefreshing = false
             discussionsList = it.first
-            pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+            pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
             val adapter = DiscussAdapter(discussionsList)
             loadMoreWrapper = LoadMoreWrapper(adapter)
             recyclerView.adapter = loadMoreWrapper
@@ -125,7 +126,7 @@ class DiscussFragment : MainFragment() {
                 refresh.isRefreshing = false
                 discussionsList.clear()
                 discussionsList.addAll(it.first)
-                pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+                pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
                 loadMoreWrapper.notifyDataSetChanged()
             }, {
                 refresh.isRefreshing = false
@@ -149,7 +150,7 @@ class DiscussFragment : MainFragment() {
                     it.onComplete()
                 }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     discussionsList.addAll(it.first)
-                    pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+                    pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
                     loadMoreWrapper.setLoadState(LoadMoreWrapper.LOADING_COMPLETE)
                 }, {
                     OperationListener.fail(it)

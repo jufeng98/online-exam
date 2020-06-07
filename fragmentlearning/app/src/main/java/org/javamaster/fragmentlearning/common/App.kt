@@ -28,7 +28,6 @@ class App : Application() {
     }
 
     companion object {
-        // 这里的AS内存泄漏警告未能找到解决方案去掉这个警告
         lateinit var context: Context
         val objectMapper: ObjectMapper
         lateinit var globalComponent: GlobalComponent
@@ -48,11 +47,17 @@ class App : Application() {
         }
 
         fun getLoginSharedPreferences(): SharedPreferences {
-            return context.getSharedPreferences(context.packageName + "_login_user_info", Context.MODE_PRIVATE)
+            return context.getSharedPreferences(
+                context.packageName + "_login_user_info",
+                Context.MODE_PRIVATE
+            )
         }
 
         fun getLearnSharedPreferences(): SharedPreferences {
-            return context.getSharedPreferences(context.packageName + "_learn_info", Context.MODE_PRIVATE)
+            return context.getSharedPreferences(
+                context.packageName + "_learn_info",
+                Context.MODE_PRIVATE
+            )
         }
 
         fun addActivity(activity: Activity) {

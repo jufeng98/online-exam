@@ -93,7 +93,7 @@ class LBSActivity : BaseAppActivity() {
         }
 
         fun actonStart(context: Activity) {
-            var intent = Intent(context, LBSActivity::class.java)
+            val intent = Intent(context, LBSActivity::class.java)
             context.startActivity(intent)
         }
     }
@@ -101,14 +101,14 @@ class LBSActivity : BaseAppActivity() {
     inner class LocationListener : BDLocationListener {
         override fun onReceiveLocation(bdLocation: BDLocation) {
             runOnUiThread {
-                var stringBuilder = StringBuilder()
+                val stringBuilder = StringBuilder()
                 stringBuilder.append("来自百度地图:").append("\n")
                 stringBuilder.append("经度:").append(bdLocation.longitude).append("\n")
                 stringBuilder.append("纬度:").append(bdLocation.latitude).append("\n")
                 stringBuilder.append("定位方式:")
-                when {
-                    bdLocation.locType == BDLocation.TypeGpsLocation -> stringBuilder.append("GPS").append("\n")
-                    bdLocation.locType == BDLocation.TypeNetWorkLocation -> stringBuilder.append("NETWORK").append("\n")
+                when (bdLocation.locType) {
+                    BDLocation.TypeGpsLocation -> stringBuilder.append("GPS").append("\n")
+                    BDLocation.TypeNetWorkLocation -> stringBuilder.append("NETWORK").append("\n")
                     else -> stringBuilder.append("未知(${bdLocation.locType})").append("\n")
                 }
                 stringBuilder.append("具体地址:").append("\n")

@@ -55,7 +55,7 @@ class BadgeActionProvider(context: Context) : ActionProvider(context) {
 
     @SuppressLint("SetTextI18n")
     fun setBadge(i: Int) {
-        mTvBadge.text = Integer.toString(i)
+        mTvBadge.text = i.toString()
     }
 
     fun setTextInt(@StringRes i: Int) {

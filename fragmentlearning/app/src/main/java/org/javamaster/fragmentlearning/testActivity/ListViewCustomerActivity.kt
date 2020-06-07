@@ -7,6 +7,7 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.model.Fruit
 import org.javamaster.fragmentlearning.testAdapter.FruitAdapter
 import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
+import kotlin.math.roundToInt
 
 class ListViewCustomerActivity : BaseAppActivity() {
 
@@ -16,20 +17,24 @@ class ListViewCustomerActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var images = listOf(
+        val images = listOf(
             R.drawable.pineapple,
             R.drawable.banana,
             R.drawable.orange,
             R.drawable.mango,
             R.drawable.cherry
         )
-        var fruits = resources.getStringArray(R.array.fruits)
-        var fruitList = fruits.map { Fruit(it, images[Math.round(Math.random() * 4).toInt()]) }
-        var fruitAdapter = FruitAdapter(this, R.layout.fruit_item_layout, fruitList)
+        val fruits = resources.getStringArray(R.array.fruits)
+        val fruitList = fruits.map { Fruit(it, images[(Math.random() * 4).roundToInt()]) }
+        val fruitAdapter = FruitAdapter(this, R.layout.fruit_item_layout, fruitList)
         listView.adapter = fruitAdapter
         listView.setOnItemClickListener { _, _, position, _ ->
-            var fruit = fruitList[position]
-            Toast.makeText(this@ListViewCustomerActivity, "you click the ${fruit.name}", Toast.LENGTH_SHORT).show()
+            val fruit = fruitList[position]
+            Toast.makeText(
+                this@ListViewCustomerActivity,
+                "you click the ${fruit.name}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

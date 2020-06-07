@@ -25,8 +25,8 @@ class ExerciseMainActivity : BaseAppActivity() {
         initList()
         list_view.adapter = ExerciseArrayAdapter(this, R.layout.activity_exercise_list_view, list)
         list_view.setOnItemClickListener { _, view, _, _ ->
-            var viewHolder = view.tag as ExerciseArrayAdapter.ViewHolder
-            var intent = Intent(this, viewHolder.clz)
+            val viewHolder = view.tag as ExerciseArrayAdapter.ViewHolder
+            val intent = Intent(this, viewHolder.clz)
             this@ExerciseMainActivity.startActivity(intent)
         }
     }
@@ -71,7 +71,7 @@ class ExerciseMainActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, ExerciseMainActivity::class.java)
+            val intent = Intent(context, ExerciseMainActivity::class.java)
             context.startActivity(intent)
         }
     }

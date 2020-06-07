@@ -31,14 +31,14 @@ class MakeCallActivity : BaseAppActivity() {
     }
 
     private fun call() {
-        var intent = Intent(Intent.ACTION_CALL)
+        val intent = Intent(Intent.ACTION_CALL)
         intent.data = Uri.parse("tel:10086")
         startActivity(intent)
     }
 
     @OnClick(R.id.open_dial)
     fun openDial() {
-        var intent = Intent(Intent.ACTION_DIAL)
+        val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:10086")
         startActivity(intent)
     }
@@ -56,7 +56,7 @@ class MakeCallActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, MakeCallActivity::class.java)
+            val intent = Intent(context, MakeCallActivity::class.java)
             context.startActivity(intent)
         }
     }

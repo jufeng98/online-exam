@@ -45,7 +45,7 @@ class ScheduledIntentService : Service() {
 
     class Task : AsyncTask<Void, Int, String>() {
         override fun doInBackground(vararg params: Void?): String {
-            var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE)
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE)
             return format.format(Date())
         }
 

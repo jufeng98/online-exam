@@ -19,6 +19,7 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.common.App
 import org.javamaster.fragmentlearning.consts.ActionConsts
 import java.util.concurrent.TimeUnit
+import kotlin.system.exitProcess
 
 
 /**
@@ -88,7 +89,7 @@ abstract class BaseAppActivity : AppCompatActivity() {
             TimeUnit.SECONDS.sleep(1)
             App.finishAll()
             killProcess(myPid())
-            System.exit(0)
+            exitProcess(0)
         }
         return true
     }

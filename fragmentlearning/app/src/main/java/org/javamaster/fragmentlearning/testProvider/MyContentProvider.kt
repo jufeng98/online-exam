@@ -44,7 +44,7 @@ class MyContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        var book = Book()
+        val book = Book()
         book.author = values!!["author"] as String
         book.name = values["name"] as String
         book.pages = values["pages"] as Int

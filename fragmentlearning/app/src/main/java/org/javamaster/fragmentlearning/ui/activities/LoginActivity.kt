@@ -39,7 +39,7 @@ class LoginActivity : BaseAppActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.title = getString(R.string.action_sign_in)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        var pre = getPreferences(Context.MODE_PRIVATE)
+        val pre = getPreferences(Context.MODE_PRIVATE)
         username.setText(pre.getString(USERNAME, ""))
         password.setText(pre.getString(PASSWORD, ""))
         if (username.text.toString() != "" && password.text.toString() != "") {

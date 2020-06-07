@@ -2,7 +2,6 @@ package org.javamaster.fragmentlearning.testActivity
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import butterknife.OnClick
@@ -15,8 +14,8 @@ class AlertDialogActivity : BaseAppActivity() {
     }
 
     @OnClick(R.id.alert_button)
-    fun showAlertDialog(view: View) {
-        var alertDialog = AlertDialog.Builder(this)
+    fun showAlertDialog() {
+        val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("这是警告框")
 //        alertDialog.setMessage("很重要的信息")
         alertDialog.setItems(arrayOf("Apple", "Orange")) { _, which ->
@@ -33,14 +32,14 @@ class AlertDialogActivity : BaseAppActivity() {
     }
 
     @OnClick(R.id.button16)
-    fun showActivityAlertDialog(view: View) {
-        var intent = Intent(this, LoginInvalidActivity::class.java)
+    fun showActivityAlertDialog() {
+        val intent = Intent(this, LoginInvalidActivity::class.java)
         startActivity(intent)
     }
 
     @OnClick(R.id.alert_button1)
-    fun showAlertDialog1(view: View) {
-        var progressDialog = ProgressDialog(this)
+    fun showAlertDialog1() {
+        val progressDialog = ProgressDialog(this)
         progressDialog.setTitle("这是进度条警告框")
         progressDialog.setMessage("加载中")
         progressDialog.setCancelable(true)

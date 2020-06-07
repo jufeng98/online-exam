@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
-import android.view.View
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_send.*
 import org.javamaster.fragmentlearning.R
@@ -25,7 +24,7 @@ class SendActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var fm = supportFragmentManager
+        val fm = supportFragmentManager
         retainedFragment = fm.findFragmentByTag("data") as RetainedFragment?
         // create the fragment and data the first time
         if (retainedFragment == null) {
@@ -44,19 +43,19 @@ class SendActivity : BaseAppActivity() {
         retainedFragment!!.data = mutableListOf("data from web")
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        Log.i(this::class.java.name, savedInstanceState?.getString("content"))
+        Log.i(this::class.java.name, savedInstanceState.getString("content")!!)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.putString("content", editText.text.toString())
+        outState.putString("content", editText.text.toString())
     }
 
     @OnClick(R.id.button)
-    fun sendMessage(view: View) {
-        var message = editText.text.toString()
+    fun sendMessage() {
+        val message = editText.text.toString()
         val intent = Intent(this, DisplayMessageActivity::class.java).apply {
             putExtra(SendActivity::class.java.name + EXTRA_MESSAGE, message)
         }

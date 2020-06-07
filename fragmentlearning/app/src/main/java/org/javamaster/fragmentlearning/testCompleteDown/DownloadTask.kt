@@ -23,30 +23,31 @@ class DownloadTask(private val listener: DownloadListener, var cancel: Boolean, 
     }
 
     override fun doInBackground(vararg params: String?): Int {
-        var downloadUrl = params[0]!!
-        var path = Environment.getExternalStorageDirectory()
-        var index = downloadUrl.lastIndexOf("/")
-        var fileName = downloadUrl.substring(index + 1)
+        val downloadUrl = params[0]!!
+        val path = Environment.getExternalStorageDirectory()
+        val index = downloadUrl.lastIndexOf("/")
+        val fileName = downloadUrl.substring(index + 1)
         var downloadLength = 0L
-        var file = File(path, fileName)
+        val file = File(path, fileName)
         if (file.exists()) {
             downloadLength = file.length()
         }
-        var contentLength = getContentLength(downloadUrl)
+        val contentLength = getContentLength(downloadUrl)
         if (contentLength == 0L) {
             return FAIL
         } else if (contentLength == downloadLength) {
             return SUCCESS
         }
-        var randomFile = RandomAccessFile(file, "rw")
+        val randomFile = RandomAccessFile(file, "rw")
         if (downloadLength > 0) {
             randomFile.seek(downloadLength)
         }
-        var client = OkHttpClient()
-        var request = Request.Builder().header("RANGE", "bytes=$downloadLength-").url(downloadUrl).build()
-        var response = client.newCall(request).execute()
-        var inputStream = response.body!!.byteStream()
-        var bytes = ByteArray(10240)
+        val client = OkHttpClient()
+        val request =
+            Request.Builder().header("RANGE", "bytes=$downloadLength-").url(downloadUrl).build()
+        val response = client.newCall(request).execute()
+        val inputStream = response.body!!.byteStream()
+        val bytes = ByteArray(10240)
         try {
             var total = 0
             var len = inputStream.read(bytes)
@@ -59,7 +60,7 @@ class DownloadTask(private val listener: DownloadListener, var cancel: Boolean, 
                         total += len
                         randomFile.write(bytes, 0, len)
                         len = inputStream.read(bytes)
-                        var progress = ((total + downloadLength) * 100 / contentLength).toInt()
+                        val progress = ((total + downloadLength) * 100 / contentLength).toInt()
                         publishProgress(progress)
                     }
                 }
@@ -76,13 +77,12 @@ class DownloadTask(private val listener: DownloadListener, var cancel: Boolean, 
     }
 
     override fun onProgressUpdate(vararg values: Int?) {
-        var progress = values[0]!!
+        val progress = values[0]!!
         listener.onProgress(progress)
     }
 
     override fun onPostExecute(result: Int?) {
-        var type = result!!
-        when (type) {
+        when (result!!) {
             FAIL -> listener.onFailed()
             SUCCESS -> listener.onSuccess()
             CANCEL -> listener.onCanceled()
@@ -91,11 +91,11 @@ class DownloadTask(private val listener: DownloadListener, var cancel: Boolean, 
     }
 
     private fun getContentLength(url: String): Long {
-        var client = OkHttpClient()
-        var request = Request.Builder().url(url).build()
-        var response = client.newCall(request).execute()
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+        val response = client.newCall(request).execute()
         if (response.body != null) {
-            var length = response.body!!.contentLength()
+            val length = response.body!!.contentLength()
             response.body!!.close()
             return length
         }

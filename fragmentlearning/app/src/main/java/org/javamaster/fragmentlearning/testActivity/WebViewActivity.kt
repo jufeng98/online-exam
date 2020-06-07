@@ -22,7 +22,7 @@ class WebViewActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, WebViewActivity::class.java)
+            val intent = Intent(context, WebViewActivity::class.java)
             context.startActivity(intent)
         }
     }

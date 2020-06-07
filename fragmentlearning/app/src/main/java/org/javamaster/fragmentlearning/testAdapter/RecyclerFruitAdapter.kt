@@ -17,17 +17,18 @@ import org.javamaster.fragmentlearning.data.model.Fruit
 class RecyclerFruitAdapter(val type: Int, private val fruitList: List<Fruit>) :
     RecyclerView.Adapter<RecyclerViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        var view = when (type) {
-            1 -> LayoutInflater.from(parent.context).inflate(R.layout.fruit_item_layout, parent, false)
+        val view = when (type) {
+            1 -> LayoutInflater.from(parent.context)
+                .inflate(R.layout.fruit_item_layout, parent, false)
             2 -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.fruit_item_horizontal_layout, parent, false) // 横向滚动布局
             else -> LayoutInflater.from(parent.context)
                 .inflate(R.layout.fruit_item_staggered_layout, parent, false) // 瀑布流布局
         }
-        var holder = RecyclerViewHolder(view)
+        val holder = RecyclerViewHolder(view)
         holder.view.setOnClickListener {
-            var position = holder.adapterPosition
-            var fruit = fruitList[position]
+            val position = holder.adapterPosition
+            val fruit = fruitList[position]
             Toast.makeText(view.context, "you click the ${fruit.name}", Toast.LENGTH_SHORT).show()
         }
         return holder
@@ -38,7 +39,7 @@ class RecyclerFruitAdapter(val type: Int, private val fruitList: List<Fruit>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        var fruit = fruitList[position]
+        val fruit = fruitList[position]
         holder.fruitImage.setImageResource(fruit.imageId)
         holder.fruitName.text = fruit.name
     }

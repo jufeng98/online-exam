@@ -29,16 +29,12 @@ class CountryAdapter(private var textViewResourcesId: Int, val list: List<Pair<I
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val pair = list[position]
-        val view: View
-        if (convertView == null) {
-            view = convertView ?: LayoutInflater.from(context).inflate(
+        val view: View = convertView
+            ?: (convertView ?: LayoutInflater.from(context).inflate(
                 textViewResourcesId,
                 parent,
                 false
-            )
-        } else {
-            view = convertView
-        }
+            ))
         view.findViewById<ImageView>(R.id.country_image).setImageResource(pair.first)
         view.findViewById<TextView>(R.id.country_text).text = context.getString(pair.second)
         return view

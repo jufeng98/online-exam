@@ -40,9 +40,9 @@ class SmsActivity : BaseAppActivity() {
 
     @OnClick(R.id.button14)
     fun send() {
-        var number = textView17.text.toString()
-        var content = editText3.text.toString()
-        var manager = SmsManager.getDefault()
+        val number = textView17.text.toString()
+        val content = editText3.text.toString()
+        val manager = SmsManager.getDefault()
         val sentIntent = Intent("SENT_SMS_ACTION")
         val pi = PendingIntent.getBroadcast(this@SmsActivity, 0, sentIntent, 0)
         manager.sendTextMessage(number, null, content, pi, null)
@@ -50,7 +50,7 @@ class SmsActivity : BaseAppActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, SmsActivity::class.java)
+            val intent = Intent(context, SmsActivity::class.java)
             context.startActivity(intent)
         }
     }

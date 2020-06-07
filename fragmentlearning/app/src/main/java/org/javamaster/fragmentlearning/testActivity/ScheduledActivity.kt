@@ -2,7 +2,6 @@ package org.javamaster.fragmentlearning.testActivity
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import butterknife.OnClick
 import kotlinx.android.synthetic.main.activity_scheduled.*
 import org.javamaster.fragmentlearning.R
@@ -16,10 +15,6 @@ class ScheduledActivity : BaseAppActivity() {
         return R.layout.activity_scheduled
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     @OnClick(R.id.button15)
     fun start() {
         ScheduledIntentService.startActionFoo(this, object : OperationListener<String> {
@@ -31,13 +26,13 @@ class ScheduledActivity : BaseAppActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        var intent = Intent(this, ScheduledIntentService::class.java)
+        val intent = Intent(this, ScheduledIntentService::class.java)
         stopService(intent)
     }
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, ScheduledActivity::class.java)
+            val intent = Intent(context, ScheduledActivity::class.java)
             context.startActivity(intent)
         }
     }

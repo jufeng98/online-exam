@@ -39,7 +39,7 @@ class MyDatabaseHelper(val context: Context, name: String, factory: SQLiteDataba
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        UpdateHelper.onUpgrade(db, oldVersion, newVersion)
+        UpdateHelper.onUpgrade(db, oldVersion)
         Toast.makeText(context, "upgrade db succeed", Toast.LENGTH_LONG).show()
     }
 }

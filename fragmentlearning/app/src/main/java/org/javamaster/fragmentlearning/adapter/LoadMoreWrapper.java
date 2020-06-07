@@ -6,9 +6,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.IntDef;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import org.javamaster.fragmentlearning.R;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +21,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author yudong
  * @date 2019/9/20
  */
+@SuppressWarnings("ALL")
 public class LoadMoreWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // 正在加载
     public static final int LOADING = 1;
@@ -126,7 +129,7 @@ public class LoadMoreWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @interface Load {
     }
 
-    private class FootViewHolder extends RecyclerView.ViewHolder {
+    private static class FootViewHolder extends RecyclerView.ViewHolder {
         ProgressBar pbLoading;
         TextView tvLoading;
         LinearLayout llEnd;

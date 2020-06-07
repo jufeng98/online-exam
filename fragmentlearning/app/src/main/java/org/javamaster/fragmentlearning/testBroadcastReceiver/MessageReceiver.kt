@@ -11,7 +11,7 @@ class MessageReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val bundle = intent.extras
-        val pdus = bundle.get("pdus") as Array<Any> // 提取短信消息
+        val pdus = bundle?.get("pdus") as Array<*> // 提取短信消息
         val messages = arrayOfNulls<SmsMessage>(pdus.size)
         for (i in messages.indices) {
             messages[i] = SmsMessage.createFromPdu(pdus[i] as ByteArray)

@@ -1,7 +1,6 @@
 package org.javamaster.fragmentlearning.testActivity
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
@@ -21,7 +20,7 @@ class FragmentActivity : AppCompatActivity() {
     }
 
     @OnClick(R.id.left_switch_fragment)
-    fun switchFragment(view: View) {
+    fun switchFragment() {
         switchBool = !switchBool
         if (switchBool) {
             replaceFragment(CenterFragment())
@@ -31,7 +30,7 @@ class FragmentActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        var tran = supportFragmentManager.beginTransaction()
+        val tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.frame_fragment_center, fragment)
         // 添加到调用栈中
         tran.addToBackStack(null)

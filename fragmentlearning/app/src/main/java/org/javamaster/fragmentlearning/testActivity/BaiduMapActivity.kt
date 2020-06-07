@@ -26,17 +26,18 @@ class BaiduMapActivity : AppCompatActivity() {
         client.locOption = LBSActivity.initOption()
         client.registerLocationListener {
             if (firstLocate) {
-                var ll = LatLng(it.latitude, it.longitude)
-                var update = MapStatusUpdateFactory.newLatLng(ll)
+                val ll = LatLng(it.latitude, it.longitude)
+                val update = MapStatusUpdateFactory.newLatLng(ll)
                 map_view.map.animateMapStatus(update)
                 map_view.map.isMyLocationEnabled = true
                 firstLocate = false
             }
-            var myLocationData = MyLocationData.Builder().latitude(it.latitude).longitude(it.longitude).build()
+            val myLocationData =
+                MyLocationData.Builder().latitude(it.latitude).longitude(it.longitude).build()
             map_view.map.setMyLocationData(myLocationData)
         }
         client.start()
-        var update = MapStatusUpdateFactory.zoomTo(12.5F)
+        val update = MapStatusUpdateFactory.zoomTo(12.5F)
         map_view.map.animateMapStatus(update)
 
     }
@@ -61,7 +62,7 @@ class BaiduMapActivity : AppCompatActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, BaiduMapActivity::class.java)
+            val intent = Intent(context, BaiduMapActivity::class.java)
             context.startActivity(intent)
         }
     }

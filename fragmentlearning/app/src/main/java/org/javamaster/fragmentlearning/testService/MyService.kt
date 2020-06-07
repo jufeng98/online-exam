@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  * 服务的代码默认运行在主线程
  */
 class MyService : Service() {
-    var mBinder = DownBinder()
+    private var mBinder = DownBinder()
     private var stopped = false
     private var progress = 0
     override fun onCreate() {

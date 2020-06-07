@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
  * @date 2019/8/30
  */
 public class UpdateHelper {
-    public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public static void onUpgrade(SQLiteDatabase db, int oldVersion) {
         // 使用这种方式来维护数据库的升级，不管版本怎样更新，都可以保证数据库的表结构是
         // 最新的，而且表中的数据也完全不会丢失,注意,没有break,保证跨版本升级也不会出现问题
         switch (oldVersion) {

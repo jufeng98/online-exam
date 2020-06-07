@@ -3,7 +3,6 @@ package org.javamaster.fragmentlearning.testActivity
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import butterknife.ButterKnife
@@ -26,13 +25,13 @@ class LocalBroadcastActivity : AppCompatActivity() {
         ButterKnife.bind(this)
         localBroadcastReceiver = MyLocalReceiver()
         localBroadcastManager = LocalBroadcastManager.getInstance(this)
-        var intentFilter = IntentFilter(ActionConsts.LOCAL_MSG)
+        val intentFilter = IntentFilter(ActionConsts.LOCAL_MSG)
         localBroadcastManager.registerReceiver(localBroadcastReceiver, intentFilter)
     }
 
     @OnClick(R.id.send_local_broadcast)
-    fun sendBroadcast(view: View) {
-        var intent = Intent(ActionConsts.LOCAL_MSG)
+    fun sendBroadcast() {
+        val intent = Intent(ActionConsts.LOCAL_MSG)
         intent.putExtra("myOwnString", "hello world")
         localBroadcastManager.sendBroadcast(intent)
     }

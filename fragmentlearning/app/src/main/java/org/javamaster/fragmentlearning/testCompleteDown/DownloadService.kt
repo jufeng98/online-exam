@@ -56,7 +56,7 @@ class DownloadService : Service() {
                 Toast.makeText(this@DownloadService, "下载中......", Toast.LENGTH_SHORT).show()
                 return
             }
-            var index = url.lastIndexOf("/")
+            val index = url.lastIndexOf("/")
             fileName = url.substring(index + 1)
             downloadTask = DownloadTask(downloadListener, cancel = false, pause = false)
             downloadTask!!.execute(url)
@@ -79,7 +79,7 @@ class DownloadService : Service() {
     fun getNotification(title: String, progress: Int): Notification {
         val intent = Intent(this, SaveAndLoadActivity::class.java)
         val pi = PendingIntent.getActivity(this, 0, intent, 0)
-        var builder = NotificationCompat.Builder(this)
+        val builder = NotificationCompat.Builder(this)
             .setContentTitle(title)
             .setWhen(System.currentTimeMillis())
             .setSmallIcon(R.mipmap.ic_launcher)

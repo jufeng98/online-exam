@@ -19,17 +19,17 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_title)
         initList()
-        var recyclerView: RecyclerView = recycler_view_vertical as RecyclerView
-        var linearLayoutManager = LinearLayoutManager(this)
+        val recyclerView: RecyclerView = recycler_view_vertical as RecyclerView
+        val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayoutManager
-        var adapter = NewsTitleAdapter(newsList)
+        val adapter = NewsTitleAdapter(newsList)
         recyclerView.adapter = adapter
     }
 
     private fun initList() {
         newsList = mutableListOf()
         for (i in 1..100) {
-            var new =
+            val new =
                 News(
                     "$i:新闻标题${RandomStringUtils.randomAlphabetic(20)}",
                     "$i:新闻内容${RandomStringUtils.randomAlphabetic(1000)}"

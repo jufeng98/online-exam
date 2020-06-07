@@ -30,7 +30,7 @@ class KnowledgesActivity : BaseAppActivity() {
 
     @Inject
     lateinit var learnService: LearnService
-    lateinit var sectionsCode: String
+    private lateinit var sectionsCode: String
     private lateinit var sectionsName: String
     private lateinit var knowledgesList: MutableList<Knowledges>
     private lateinit var questionNumVosMap: MutableMap<String, Int>

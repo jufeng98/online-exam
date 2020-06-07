@@ -15,7 +15,7 @@ class RightFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // 获取活动实例
-        var fragmentActivity = activity
+        val fragmentActivity = activity
         fragmentActivity?.title
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_right, container, false)

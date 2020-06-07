@@ -18,7 +18,7 @@ import kotlin.concurrent.thread
 
 class MediaPlayerActivity : BaseAppActivity() {
 
-    var player: MediaPlayer = MediaPlayer()
+    private var player: MediaPlayer = MediaPlayer()
 
     override fun initContentView(): Int? {
         return R.layout.activity_media_player
@@ -35,8 +35,9 @@ class MediaPlayerActivity : BaseAppActivity() {
 
     private fun init() {
         try {
-            var musicFile = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS), "Neon.ogg"
+            val musicFile = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS),
+                "Neon.ogg"
             )
             player.setDataSource(musicFile.path)
         } catch (e: Exception) {
@@ -100,7 +101,7 @@ class MediaPlayerActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, MediaPlayerActivity::class.java)
+            val intent = Intent(context, MediaPlayerActivity::class.java)
             context.startActivity(intent)
         }
     }

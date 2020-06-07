@@ -14,7 +14,8 @@ import org.javamaster.fragmentlearning.data.model.ChatMessage
  */
 class ChatAdapter(private val messageList: List<ChatMessage>) : RecyclerView.Adapter<ChatViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.chat_item_layout, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.chat_item_layout, parent, false)
         return ChatViewHolder(view)
     }
 
@@ -23,7 +24,7 @@ class ChatAdapter(private val messageList: List<ChatMessage>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        var message = messageList[position]
+        val message = messageList[position]
         if (message.type == ChatMessage.Type.RECEIVE_TYPE) {
             holder.messageRight.visibility = View.GONE
             holder.messageLeft.text = message.content

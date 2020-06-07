@@ -32,11 +32,11 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
 
     fun init(context: Context) {
         this.context = context
-        exceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        exceptionHandler = Thread.getDefaultUncaughtExceptionHandler()!!
         Thread.setDefaultUncaughtExceptionHandler(this)
     }
 
-    override fun uncaughtException(t: Thread?, e: Throwable?) {
+    override fun uncaughtException(t: Thread, e: Throwable) {
         try {
             Log.e(this.javaClass.name, "occur error", e)
             logExceptionToSdCard(e)
@@ -68,7 +68,7 @@ class GlobalHandler : Thread.UncaughtExceptionHandler {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.i(this.javaClass.name, response.body?.string())
+                Log.i(this.javaClass.name, response.body!!.string())
             }
 
         })

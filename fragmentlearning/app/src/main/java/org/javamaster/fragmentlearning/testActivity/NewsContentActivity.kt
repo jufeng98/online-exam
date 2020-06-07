@@ -9,7 +9,7 @@ import org.javamaster.fragmentlearning.R
 import org.javamaster.fragmentlearning.data.model.News
 
 class NewsContentActivity : AppCompatActivity() {
-    lateinit var news: News
+    private lateinit var news: News
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_content)
@@ -20,7 +20,7 @@ class NewsContentActivity : AppCompatActivity() {
 
     companion object {
         fun actionStart(context: Context, news: News) {
-            var intent = Intent(context, NewsContentActivity::class.java)
+            val intent = Intent(context, NewsContentActivity::class.java)
             intent.putExtra("news", news)
             context.startActivity(intent)
         }

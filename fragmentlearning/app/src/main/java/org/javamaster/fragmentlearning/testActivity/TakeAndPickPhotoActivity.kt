@@ -24,7 +24,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
 
     @OnClick(R.id.take_photo)
     fun takePhoto() {
-        var file = File(externalCacheDir, "output_image.jpg")
+        val file = File(externalCacheDir, "output_image.jpg")
         if (file.exists()) {
             file.delete()
         }
@@ -33,7 +33,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
         } else {
             Uri.fromFile(file)
         }
-        var intent = Intent("android.media.action.IMAGE_CAPTURE")
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(intent, 1)
         imageView8.setImageBitmap(null)
@@ -41,7 +41,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
 
     @OnClick(R.id.pick_photo)
     fun pickPhoto() {
-        var intent = Intent("android.intent.action.GET_CONTENT")
+        val intent = Intent("android.intent.action.GET_CONTENT")
         intent.type = "image/*"
         startActivityForResult(intent, 2)
     }
@@ -51,7 +51,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
         when (requestCode) {
             1 -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    var map = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
+                    val map = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
                     imageView8.setImageBitmap(map)
                 } else {
                     Toast.makeText(this, "你取消了拍摄", Toast.LENGTH_SHORT).show()
@@ -78,7 +78,7 @@ class TakeAndPickPhotoActivity : BaseAppActivity() {
 
     companion object {
         fun actionStart(context: Activity) {
-            var intent = Intent(context, TakeAndPickPhotoActivity::class.java)
+            val intent = Intent(context, TakeAndPickPhotoActivity::class.java)
             context.startActivity(intent)
         }
     }

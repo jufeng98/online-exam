@@ -24,6 +24,7 @@ import org.javamaster.fragmentlearning.listener.EndlessRecyclerOnScrollListener
 import org.javamaster.fragmentlearning.listener.OperationListener
 import org.javamaster.fragmentlearning.service.MessagesService
 import javax.inject.Inject
+import kotlin.math.ceil
 
 /**
  * @author yudong
@@ -62,7 +63,7 @@ class MessagesActivity : BaseAppActivity() {
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             messages_swipe_refresh.isRefreshing = false
             initAdapter(it.first)
-            pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+            pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
         }, {
             messages_swipe_refresh.isRefreshing = false
             OperationListener.fail(it)
@@ -79,7 +80,7 @@ class MessagesActivity : BaseAppActivity() {
                 messagesList.clear()
                 messagesList.addAll(it.first)
                 loadMoreWrapper.notifyDataSetChanged()
-                pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+                pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
             }, {
                 messages_swipe_refresh.isRefreshing = false
                 OperationListener.fail(it)
@@ -100,7 +101,7 @@ class MessagesActivity : BaseAppActivity() {
                     it.onComplete()
                 }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
                     messagesList.addAll(it.first)
-                    pageTotal = Math.ceil((1.0 * it.second / page.pageSize)).toLong()
+                    pageTotal = ceil((1.0 * it.second / page.pageSize)).toLong()
                     loadMoreWrapper.setLoadState(LoadMoreWrapper.LOADING_COMPLETE)
                 }, {
                     OperationListener.fail(it)

@@ -1,6 +1,7 @@
 package org.javamaster.fragmentlearning.utils;
 
-import javax.net.ssl.*;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,6 +13,12 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.net.ssl.HandshakeCompletedListener;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 public class NoSSLv3SocketFactory extends SSLSocketFactory {
     private final SSLSocketFactory delegate;
@@ -71,7 +78,7 @@ public class NoSSLv3SocketFactory extends SSLSocketFactory {
                 localAddress, localPort));
     }
 
-    private class NoSSLv3SSLSocket extends DelegateSSLSocket {
+    private static class NoSSLv3SSLSocket extends DelegateSSLSocket {
 
         private NoSSLv3SSLSocket(SSLSocket delegate) {
             super(delegate);
@@ -83,25 +90,21 @@ public class NoSSLv3SocketFactory extends SSLSocketFactory {
             if (protocols != null && protocols.length == 1
                     && "SSLv3".equals(protocols[0])) {
 
-                List<String> enabledProtocols = new ArrayList<String>(
+                List<String> enabledProtocols = new ArrayList<>(
                         Arrays.asList(delegate.getEnabledProtocols()));
                 if (enabledProtocols.size() > 1) {
                     enabledProtocols.remove("SSLv3");
                     System.out.println("Removed SSLv3 from enabled protocols");
                 } else {
                     System.out.println("SSL stuck with protocol available for "
-                            + String.valueOf(enabledProtocols));
+                            + enabledProtocols);
                 }
-                protocols = enabledProtocols
-                        .toArray(new String[enabledProtocols.size()]);
             }
-
-//          super.setEnabledProtocols(protocols);
             super.setEnabledProtocols(new String[]{"TLSv1.2"});
         }
     }
 
-    public class DelegateSSLSocket extends SSLSocket {
+    public static class DelegateSSLSocket extends SSLSocket {
 
         protected final SSLSocket delegate;
 
@@ -407,6 +410,7 @@ public class NoSSLv3SocketFactory extends SSLSocketFactory {
             delegate.shutdownOutput();
         }
 
+        @NotNull
         @Override
         public String toString() {
             return delegate.toString();

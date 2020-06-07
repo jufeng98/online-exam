@@ -181,6 +181,7 @@ class MainActivity : BaseAppActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 10 && resultCode == Activity.RESULT_OK) {
             var url = data!!.getStringExtra(Constant.CODED_CONTENT)
             val preferences = App.getLoginSharedPreferences()

@@ -23,7 +23,7 @@ data class Person(var name: String, var age: Int) : Parcelable {
         @JvmField
         val CREATOR: Parcelable.Creator<Person> = object : Parcelable.Creator<Person> {
             override fun createFromParcel(source: Parcel): Person {
-                return Person(source.readString(), source.readInt())
+                return Person(source.readString()!!, source.readInt())
             }
 
             override fun newArray(size: Int): Array<Person?> {

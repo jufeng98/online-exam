@@ -16,7 +16,7 @@ import org.javamaster.fragmentlearning.ui.activities.BaseAppActivity
 
 class ServiceActivity : BaseAppActivity() {
     lateinit var downloadBinder: MyService.DownBinder
-    private var conn = object : ServiceConnection {
+    private val conn = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
         }
 
@@ -36,11 +36,11 @@ class ServiceActivity : BaseAppActivity() {
     fun handler(view: View) {
         when (view.id) {
             R.id.button9 -> {
-                var intent = Intent(this, MyService::class.java)
+                val intent = Intent(this, MyService::class.java)
                 startService(intent)
             }
             R.id.button10 -> {
-                var intent = Intent(this, MyService::class.java)
+                val intent = Intent(this, MyService::class.java)
                 stopService(intent)
             }
         }
@@ -50,7 +50,7 @@ class ServiceActivity : BaseAppActivity() {
     fun binder(view: View) {
         when (view.id) {
             R.id.button11 -> {
-                var intent = Intent(this, MyService::class.java)
+                val intent = Intent(this, MyService::class.java)
                 bindService(intent, conn, Context.BIND_AUTO_CREATE)
             }
             R.id.button12 -> {
@@ -63,7 +63,7 @@ class ServiceActivity : BaseAppActivity() {
     }
 
     @OnClick(R.id.button18)
-    fun startDownload(view: View) {
+    fun startDownload() {
         downloadBinder.startDownload()
     }
 
@@ -78,7 +78,7 @@ class ServiceActivity : BaseAppActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, ServiceActivity::class.java)
+            val intent = Intent(context, ServiceActivity::class.java)
             context.startActivity(intent)
         }
     }

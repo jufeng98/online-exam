@@ -18,12 +18,12 @@ class ExerciseArrayAdapter(
     val list: List<Pair<String, Class<out Any>>>
 ) : ArrayAdapter<String>(context, resourcesId) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var pair = list[position]
-        var view: View
-        var viewHolder: ViewHolder
+        val pair = list[position]
+        val view: View
+        val viewHolder: ViewHolder
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(resourcesId, null, false)
-            var textView = view.findViewById<TextView>(R.id.text_view)
+            val textView = view.findViewById<TextView>(R.id.text_view)
             textView.text = pair.first
             viewHolder = ViewHolder(textView, pair.second)
             view.tag = viewHolder

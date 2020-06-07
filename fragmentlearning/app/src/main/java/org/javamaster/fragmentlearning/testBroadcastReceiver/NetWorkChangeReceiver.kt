@@ -12,8 +12,9 @@ import android.widget.Toast
  */
 class NetWorkChangeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        var connManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var activeNetworkInfo = connManager.activeNetworkInfo
+        val connManager =
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connManager.activeNetworkInfo
         if (activeNetworkInfo != null && activeNetworkInfo.isAvailable) {
             Toast.makeText(context, "net work available", Toast.LENGTH_SHORT).show()
         } else {

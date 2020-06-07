@@ -9,7 +9,7 @@ class ReplaceActionBarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_title)
-        var actionBar = actionBar
+        val actionBar = actionBar
         actionBar?.hide()
     }
 }

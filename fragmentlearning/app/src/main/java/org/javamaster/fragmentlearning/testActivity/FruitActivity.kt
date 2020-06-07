@@ -15,7 +15,7 @@ class FruitActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
-        val fruitName = intent.getStringExtra(FRUIT_NAME)
+        val fruitName = intent.getStringExtra(FRUIT_NAME)!!
         val fruitImageId = intent.getIntExtra(FRUIT_IMAGE_ID, 0)
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar

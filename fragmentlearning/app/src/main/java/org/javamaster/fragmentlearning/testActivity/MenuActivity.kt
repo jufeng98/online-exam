@@ -23,13 +23,13 @@ class MenuActivity : BaseAppActivity(), ActionBar.TabListener {
     }
 
     override fun onTabSelected(tab: ActionBar.Tab?, ft: FragmentTransaction?) {
-        var fragment: Fragment
+        val fragment: Fragment
         when {
             tab?.position == 0 -> fragment = LeftFragment()
             tab?.position == 1 -> fragment = CenterFragment()
             else -> fragment = RightFragment()
         }
-        var transaction = this@MenuActivity.supportFragmentManager.beginTransaction()
+        val transaction = this@MenuActivity.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()
     }
@@ -45,17 +45,17 @@ class MenuActivity : BaseAppActivity(), ActionBar.TabListener {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_mini)
         supportActionBar?.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
-        var tab0 = supportActionBar?.newTab()
+        val tab0 = supportActionBar?.newTab()
             ?.setText("this is tab0")
             ?.setTabListener(this)
         supportActionBar?.addTab(tab0, 0, true)
 
-        var tab1 = supportActionBar?.newTab()
+        val tab1 = supportActionBar?.newTab()
             ?.setText("this is tab1")
             ?.setTabListener(this)
         supportActionBar?.addTab(tab1, 1)
 
-        var tab2 = supportActionBar?.newTab()
+        val tab2 = supportActionBar?.newTab()
             ?.setText("this is tab2")
             ?.setTabListener(this)
         supportActionBar?.addTab(tab2, 2)
@@ -73,7 +73,7 @@ class MenuActivity : BaseAppActivity(), ActionBar.TabListener {
 
     companion object {
         fun actonStart(context: Context) {
-            var intent = Intent(context, MenuActivity::class.java)
+            val intent = Intent(context, MenuActivity::class.java)
             context.startActivity(intent)
         }
     }

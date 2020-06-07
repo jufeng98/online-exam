@@ -18,12 +18,12 @@ class HttpConnectionActivity : BaseAppActivity() {
     @OnClick(R.id.send_request)
     fun send() {
         Thread {
-            var http = URL("https://www.baidu.com").openConnection() as HttpsURLConnection
+            val http = URL("https://www.baidu.com").openConnection() as HttpsURLConnection
             http.requestMethod = "GET"
             http.connectTimeout = 3000
             http.readTimeout = 3000
-            var scanner = Scanner(http.inputStream)
-            var stringBuilder = StringBuilder()
+            val scanner = Scanner(http.inputStream)
+            val stringBuilder = StringBuilder()
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.next())
             }
@@ -36,7 +36,7 @@ class HttpConnectionActivity : BaseAppActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, HttpConnectionActivity::class.java)
+            val intent = Intent(context, HttpConnectionActivity::class.java)
             context.startActivity(intent)
         }
     }

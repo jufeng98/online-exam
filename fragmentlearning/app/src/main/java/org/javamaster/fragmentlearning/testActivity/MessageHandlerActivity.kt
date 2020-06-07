@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 class MessageHandlerActivity : BaseAppActivity() {
-    var handler: Handler = Handler(Handler.Callback {
+    private var handler: Handler = Handler(Handler.Callback {
         when (it.what) {
             1 -> textView14.text = it.obj as CharSequence?
         }
@@ -32,7 +32,7 @@ class MessageHandlerActivity : BaseAppActivity() {
         thread {
             TimeUnit.SECONDS.sleep(2)
             // 模拟从网络得到的数据
-            var message = Message()
+            val message = Message()
             message.what = 1
             message.obj = RandomStringUtils.randomAlphabetic(20)
             handler.sendMessage(message)
@@ -59,14 +59,14 @@ class MessageHandlerActivity : BaseAppActivity() {
 
     companion object {
         fun actonStart(context: Activity) {
-            var intent = Intent(context, MessageHandlerActivity::class.java)
+            val intent = Intent(context, MessageHandlerActivity::class.java)
             context.startActivity(intent)
         }
     }
 
     class DownloadAsyncTask(
-        var onProgressUpdate: (progress: Int) -> Unit,
-        var onPostExecute: (result: Boolean) -> Unit
+        private var onProgressUpdate: (progress: Int) -> Unit,
+        private var onPostExecute: (result: Boolean) -> Unit
     ) : AsyncTask<Void, Int, Boolean>() {
         var progress = 0
         override fun doInBackground(vararg params: Void?): Boolean {

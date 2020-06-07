@@ -16,7 +16,7 @@ class StoragePathActivity : BaseAppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var stringBuilder = StringBuilder()
+        val stringBuilder = StringBuilder()
         stringBuilder.append("方法Environment.getExternalStorageState,状态:" + Environment.getExternalStorageState())
         stringBuilder.append("\r\n")
         // /data

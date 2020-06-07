@@ -49,7 +49,7 @@ class LearnFragment : MainFragment() {
         ButterKnife.bind(this, view)
         val search = view.findViewById<SearchView>(R.id.search)
         search.isIconified = true
-        search.setIconifiedByDefault(false)
+        search.isIconifiedByDefault = false
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(activity, getString(R.string.app_completing), Toast.LENGTH_SHORT).show()
