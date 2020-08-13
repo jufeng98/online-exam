@@ -1,5 +1,6 @@
 package org.javamaster.auto.uitest.utils;
 
+import io.appium.java_client.android.AndroidElement;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -94,6 +95,20 @@ public class SeleniumUtils {
             logger.error("existsElementByClassName:" + className);
             return false;
         }
+    }
+
+    public static boolean existsElementByClassName(RemoteWebDriver driver, AndroidElement element, String className) {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        boolean exists;
+        try {
+            element.findElementByClassName(className);
+            exists = true;
+        } catch (Exception e) {
+            logger.error("existsElementByClassName:" + className);
+            exists = false;
+        }
+        driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+        return exists;
     }
 
 

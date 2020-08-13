@@ -38,6 +38,7 @@ public class OnlineExamService {
     }
 
     public String addUser() {
+        executeAndDoNothing(driver, "window.vue.$message({message: '欢迎来到selenium的世界(本提示由selenium直接执行js弹出)', type: 'success'})");
         clickMenu("系统管理-", true);
         clickMenu("用户管理-/#/usersManage", false);
         // 切换到用户管理的iframe
