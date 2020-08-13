@@ -274,7 +274,7 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
             }
         }
         val response: Response
-        val map1 = mutableMapOf("username" to username)
+        val map1: Map<String, String> = mutableMapOf("username" to username!!)
         response = NetUtils.postForResponse(AppConsts.FIND_TOPICS_PROGRESS, map1)
         val resJsonStr: String = response.body!!.string()
         val resultVo: ResultVo<List<TopicsProgressVo>> =
