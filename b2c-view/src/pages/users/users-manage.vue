@@ -29,7 +29,7 @@
             <el-button type="primary" icon="el-icon-warning" v-on:click="resetForm('usersFormRef')">重置</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-plus" v-on:click="showCreateUsersDialog">新增</el-button>
+            <el-button type="primary" id="addUser" icon="el-icon-plus" v-on:click="showCreateUsersDialog">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -98,9 +98,10 @@
           </el-col>
           <el-col style="text-align: left;">
             <el-form-item label="性别" prop="gender">
-              <el-select v-model="createOrEditUsersForm.gender" clearable>
+              <el-select v-model="createOrEditUsersForm.gender"  id="gender" clearable>
                 <el-option
                   v-for="item in GENDER"
+                  :id="item.value"
                   :key="item.value"
                   :label="item.name"
                   :value="item.value">
@@ -151,7 +152,7 @@
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
-                <img v-if="uploadShowImageUrl" :src="uploadShowImageUrl" class="avatar">
+                <img id="uploadShowImage" v-if="uploadShowImageUrl" :src="uploadShowImageUrl" class="avatar">
                 <i v-else class="el-upload el-icon-plus avatar-uploader-icon"></i>
                 <div slot="tip" style="color: red" class="el-upload__tip">
                   只能上传jpg文件，且不超过3MB
@@ -165,7 +166,7 @@
       </el-form>
       <div slot="footer">
         <el-button @click="cancelCreateOrEditUsers">取消</el-button>
-        <el-button type="primary" @click="submitCreateOrEditUses" :loading="editLoading">保存</el-button>
+        <el-button type="primary" id="saveCreateOrEditUses" @click="submitCreateOrEditUses" :loading="editLoading">保存</el-button>
       </div>
     </el-dialog>
 

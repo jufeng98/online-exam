@@ -32,7 +32,7 @@
                 :width="asideWidth + 'px'">
         <el-menu :default-openeds="defaultOpeneds" class="el-menu-vertical-demo" :unique-opened="true"
                  :collapse="!expanded" background-color="#545c64" text-color="#ffffff" @select="addTab">
-          <el-submenu v-for="(menu, index) in menus" :index="menu.name+'-'+menu.path" :key="Math.random()">
+          <el-submenu v-for="(menu, index) in menus" :index="menu.name+'-'+menu.path" :key="Math.random()" :id="menu.name+'-'+menu.path">
             <template slot="title"><i :class="menu.icon"></i>{{menu.name}}</template>
             <template v-if="menu.hasSubMenu">
               <tree v-for="(subMenu,subIndex) in menu.subMenus" :sub-menu="subMenu" :parent-index="index+1"

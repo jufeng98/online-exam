@@ -21,40 +21,40 @@ public class GlobalHandler {
     private final Logger logger = LoggerFactory.getLogger(GlobalHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result exceptionHandler(MethodArgumentNotValidException e) {
-        Result result = new Result(BizExceptionEnum.INVALID_REQ_PARAM.getErrorCode(),
+    public Result<Void> exceptionHandler(MethodArgumentNotValidException e) {
+        Result<Void> result = new Result<>(BizExceptionEnum.INVALID_REQ_PARAM.getErrorCode(),
                 BizExceptionEnum.INVALID_REQ_PARAM.getErrorMsg());
         logger.error("req params error", e);
         return result;
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result exceptionHandler(ConstraintViolationException e) {
-        Result result = new Result(BizExceptionEnum.INVALID_REQ_PARAM.getErrorCode(),
+    public Result<Void> exceptionHandler(ConstraintViolationException e) {
+        Result<Void> result = new Result<>(BizExceptionEnum.INVALID_REQ_PARAM.getErrorCode(),
                 BizExceptionEnum.INVALID_REQ_PARAM.getErrorMsg());
         logger.error("req params error", e);
         return result;
     }
 
     @ExceptionHandler(BizException.class)
-    public Result exceptionHandler(BizException e) {
+    public Result<Void> exceptionHandler(BizException e) {
         BizExceptionEnum exceptionEnum = e.getBizExceptionEnum();
-        Result result = new Result(exceptionEnum.getErrorCode(), exceptionEnum.getErrorMsg());
+        Result<Void> result = new Result<>(exceptionEnum.getErrorCode(), exceptionEnum.getErrorMsg());
         logger.error("business error", e);
         return result;
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public Result exceptionHandler(AccessDeniedException e) {
-        Result result = new Result(BizExceptionEnum.ACCESS_DENIED.getErrorCode(),
+    public Result<Void> exceptionHandler(AccessDeniedException e) {
+        Result<Void> result = new Result<>(BizExceptionEnum.ACCESS_DENIED.getErrorCode(),
                 BizExceptionEnum.ACCESS_DENIED.getErrorMsg());
         logger.error("access error", e);
         return result;
     }
 
     @ExceptionHandler(Exception.class)
-    public Result exceptionHandler(Exception e) {
-        Result result = new Result(BizExceptionEnum.APPLICATION_ERROR.getErrorCode(),
+    public Result<Void> exceptionHandler(Exception e) {
+        Result<Void> result = new Result<>(BizExceptionEnum.APPLICATION_ERROR.getErrorCode(),
                 BizExceptionEnum.APPLICATION_ERROR.getErrorMsg());
         logger.error("application error", e);
         return result;

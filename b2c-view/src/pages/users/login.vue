@@ -18,7 +18,7 @@
         <el-button style="float: right;color: #606266" type="text" @click="showLoginQrCode">扫码登录</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button style="background-color: #40D4A6;width: 300px;" type="success" @click="login">
+        <el-button id="login" style="background-color: #40D4A6;width: 300px;" type="success" @click="login">
           登录
         </el-button>
       </el-form-item>
