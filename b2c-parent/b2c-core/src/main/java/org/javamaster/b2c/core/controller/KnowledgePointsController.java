@@ -50,8 +50,7 @@ public class KnowledgePointsController {
     @PostMapping("/findKnowledgesQuestionNum")
     public Result<List<KnowledgesQuestionNumVo>> findKnowledgesQuestionNum(@NotBlank String sectionsCode) {
         List<KnowledgesQuestionNumVo> resVo = knowledgePointsService.findKnowledgesQuestionNum(sectionsCode);
-        Result<List<KnowledgesQuestionNumVo>> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
@@ -59,24 +58,21 @@ public class KnowledgePointsController {
     public Result<CreateKnowledgePointsResVo> createKnowledgePoints(@Validated @RequestBody CreateKnowledgePointsReqVo reqVo,
                                                                     @AuthenticationPrincipal UserDetails userDetails) {
         CreateKnowledgePointsResVo resVo = knowledgePointsService.createKnowledgePoints(reqVo, userDetails);
-        Result<CreateKnowledgePointsResVo> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/editKnowledgePoints")
     public Result<Integer> editKnowledgePoints(@Validated @RequestBody EditKnowledgePointsReqVo reqVo) {
         Integer resVo = knowledgePointsService.editKnowledgePoints(reqVo);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
     @Secured(AppConsts.ROLE_ADMIN)
     @PostMapping("/delKnowledgePoints")
     public Result<Integer> delKnowledgePoints(@Validated @RequestBody DelKnowledgePointsReqVo reqVo) {
         Integer resVo = knowledgePointsService.delKnowledgePoints(reqVo);
-        Result<Integer> result = new Result<>(resVo);
-        return result;
+        return new Result<>(resVo);
     }
 
 }

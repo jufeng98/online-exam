@@ -44,7 +44,7 @@ class SectionsActivity : BaseAppActivity() {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
         setSupportActionBar(app_tool_bar)
-        topicsCode = intent.getStringExtra("topicsCode")
+        topicsCode = intent.getStringExtra("topicsCode")!!
         supportActionBar!!.title = intent.getStringExtra("topicsName")
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }

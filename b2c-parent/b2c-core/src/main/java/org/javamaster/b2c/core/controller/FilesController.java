@@ -50,6 +50,7 @@ public class FilesController {
                                            UriComponentsBuilder uriComponentsBuilder) {
         List<String> urls = filesService.uploadFile(multipartFiles, uriComponentsBuilder);
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
         String contextPath = attributes.getRequest().getContextPath();
         Map<String, Object> map = new HashMap<>(3, 1);
         map.put("success", true);

@@ -29,6 +29,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  *     </li>
  *     <li>最好下载Appium.exe的安装包安装,以便利用其GUI界面提供的功能准确定位Android应用的控件元素</li>
  * </ul>
+ * <p>此外,还需先启动后台SpringBoot微服务 b2c-parent/b2c-core CoreApplication</p>
  * <p>注意:如果用的是Android 模拟器,则窗口不能最小化运行,否则会出错</p>
  *
  * @author yudong

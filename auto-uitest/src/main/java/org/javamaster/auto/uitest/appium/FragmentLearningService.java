@@ -35,6 +35,7 @@ public class FragmentLearningService {
         try {
             String appiumServerUrl = String.format("http://%s:%s/wd/hub", APPIUM_SERVER_HOST, APPIUM_SERVER_PORT);
             driver = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
+            // 设置隐式等待时间,调用诸如定位元素等方法,若超过该时间仍未能成功,则抛出异常
             driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
@@ -44,8 +45,11 @@ public class FragmentLearningService {
     public void login() {
         String angelCode = PropertiesUtils.getProp("user.code");
         String password = PropertiesUtils.getProp("user.password");
+        // 点击登录进入登录页面
         tryToClick(driver, findById(driver, "org.javamaster.fragmentlearning:id/start_login_activity"));
+        // 输入用户名
         findById(driver, "org.javamaster.fragmentlearning:id/username").sendKeys(angelCode);
+        // 输入密码
         findById(driver, "org.javamaster.fragmentlearning:id/password").sendKeys(password);
         // 点击登录
         tryToClick(driver, findById(driver, "org.javamaster.fragmentlearning:id/login"));
