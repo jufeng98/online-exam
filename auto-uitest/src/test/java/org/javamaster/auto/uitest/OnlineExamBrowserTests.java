@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
  *     <li>pic.paths:程序用到的图片路径,请修改成本机有效的图片路径</li>
  *     <li>其他配置依据需要修改</li>
  * </ul>
+ * <p>此外,还需先启动后台SpringBoot微服务 b2c-parent/b2c-core CoreApplication, 以及vue前端系统 b2c-view</p>
  * <p>注意:浏览器窗口不能最小化运行,否则会出错</p>
  *
  * @author yudong
@@ -42,6 +43,7 @@ public class OnlineExamBrowserTests {
         File picDir = new File("target", "screenshot");
         assert picDir.exists() || picDir.mkdirs();
         File targetFile = new File(picDir, LocalDateTime.now().format(formatter) + ".png");
+        // 退出前保存浏览器截图
         Files.copy(srcFile.toPath(), targetFile.toPath());
         service.exitBrowser();
     }

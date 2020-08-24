@@ -18,7 +18,9 @@ public class OnlineExamService {
     public OnlineExamService() {
         System.setProperty("webdriver.chrome.driver", PropertiesUtils.getProp("driver.path"));
         driver = new ChromeDriver();
+        // 最大化浏览器窗口
         driver.manage().window().maximize();
+        // 设置隐式等待时间,调用诸如定位元素或执行js的方法,若超过该时间仍未能成功,则抛出异常
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
     }
 
@@ -29,8 +31,11 @@ public class OnlineExamService {
     public void loginToSystem() {
         String username = PropertiesUtils.getProp("user.code");
         String password = PropertiesUtils.getProp("user.password");
+        // 打开系统登录页面
         driver.get(PropertiesUtils.getProp("base.url"));
+        // 输入用户名
         driver.findElementByXPath("//input[@placeholder='用户名']").sendKeys(username);
+        // 输入密码
         driver.findElementByXPath("//input[@placeholder='密码']").sendKeys(password);
         sleep();
         // 点击登录

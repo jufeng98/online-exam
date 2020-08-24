@@ -1,4 +1,7 @@
 # online-exam 在线学习考试管理系统
+## auto-uitest UI自动化测试示例代码
+* Web浏览器UI自动化测试Selenium示例代码: OnlineExamBrowserTests
+* Android应用UI自动化测试Appium示例代码: AppiumTests
 ## b2c-parent/b2c-core Spring Boot微服务后台
 * 项目框架：Spring Boot + SpringMVC + Spring Security + Spring AOP + MyBatis + Java Validation API + lombok + Jackson + Redisson(高性能分布式锁)等等
 * 项目管理工具：maven
