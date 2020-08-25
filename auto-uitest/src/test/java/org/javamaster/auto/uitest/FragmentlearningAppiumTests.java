@@ -35,7 +35,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * @author yudong
  * @date 2020/8/9
  */
-@Ignore
 public class FragmentlearningAppiumTests {
 
     private static AppiumDriverLocalService service;
@@ -76,6 +75,5 @@ public class FragmentlearningAppiumTests {
         sleep(3);
         appiumDeliveryService.quit();
     }
-
 
 }
