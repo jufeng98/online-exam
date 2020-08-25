@@ -36,7 +36,7 @@ abstract class BaseAppActivity : AppCompatActivity() {
         val color = resources.getColor(R.color.colorAppPrimary)
         val drawable = ColorDrawable(color)
         supportActionBar?.setBackgroundDrawable(drawable)
-        Log.i(BaseAppActivity::class.simpleName, this::class.qualifiedName)
+        Log.i(BaseAppActivity::class.simpleName, this.javaClass.name)
         //  这一行一定要在setContentView后面,否则绑定可能会失败
         ButterKnife.bind(this)
         App.addActivity(this)

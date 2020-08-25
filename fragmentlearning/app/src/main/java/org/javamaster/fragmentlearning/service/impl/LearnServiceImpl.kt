@@ -303,7 +303,7 @@ class LearnServiceImpl constructor(private val objectMapper: ObjectMapper) : Lea
                 return map
             }
         }
-        val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")
+        val username = App.getLoginSharedPreferences().getString(LoginService.USERNAME, "")!!
         val map1 = mutableMapOf("username" to username)
         val response = NetUtils.postForResponse(AppConsts.FIND_SECTIONS_PROGRESS, map1)
         val resJsonStr: String = response.body!!.string()

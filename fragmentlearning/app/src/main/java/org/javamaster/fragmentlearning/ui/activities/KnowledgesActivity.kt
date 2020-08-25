@@ -44,21 +44,22 @@ class KnowledgesActivity : BaseAppActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerAppComponent.builder().globalComponent(App.globalComponent).build().inject(this)
-        sectionsName = intent.getStringExtra("sectionsName")
-        sectionsCode = intent.getStringExtra("sectionsCode")
+        sectionsName = intent.getStringExtra("sectionsName")!!
+        sectionsCode = intent.getStringExtra("sectionsCode")!!
         setSupportActionBar(app_tool_bar)
         supportActionBar?.title = sectionsName
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        knowledgesDisposable = Observable.create<Pair<MutableList<Knowledges>, MutableMap<String, Int>>> {
-            val first = learnService.findKnowledgesList(sectionsCode, true)
-            val second = learnService.findKnowledgesQuestionNum(sectionsCode, true)
-            it.onNext(Pair(first, second))
-            it.onComplete()
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            initAdapter(it.first, it.second)
-        }, {
-            OperationListener.fail(it)
-        })
+        knowledgesDisposable =
+            Observable.create<Pair<MutableList<Knowledges>, MutableMap<String, Int>>> {
+                val first = learnService.findKnowledgesList(sectionsCode, true)
+                val second = learnService.findKnowledgesQuestionNum(sectionsCode, true)
+                it.onNext(Pair(first, second))
+                it.onComplete()
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                initAdapter(it.first, it.second)
+            }, {
+                OperationListener.fail(it)
+            })
         swipe_refresh.setOnRefreshListener {
             refreshKnowledgesDisposable =
                 Observable.create<Pair<MutableList<Knowledges>, MutableMap<String, Int>>> {

@@ -129,7 +129,7 @@
     <string name="unknown_question_type">未知题目类型</string>
     <string name="answer_analysis">答案解析:%s</string>
     <string name="mark_all_as_read">所有通知标为已读</string>
-    <string name="loading">正在加载...</string>
+    <string name="loading">正在加载…</string>
     <string name="bottom_of_view">我是有底线的</string>
     <string name="chinese_date_pattern">yyyy年MM月dd日 HH时mm分ss秒</string>
     <string name="wrong_mobile">手机格式不正确</string>
@@ -150,4 +150,5 @@
     <string name="feedback">反馈</string>
     <string name="settings">设置</string>
     <string name="about">关于碎片学习</string>
+    <string name="start_web_view">启动WebView</string>
 </resources>
