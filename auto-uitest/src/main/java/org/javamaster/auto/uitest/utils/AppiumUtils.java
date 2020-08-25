@@ -93,4 +93,21 @@ public class AppiumUtils {
         }
     }
 
+    public static void switchToWebView(AppiumDriver driver, String name) {
+        while (!existsWebView(driver, name)) {
+            sleep();
+        }
+        driver.context(name);
+        sleep(2);
+    }
+
+    public static boolean existsWebView(AppiumDriver driver, String name) {
+        for (Object contextHandle : driver.getContextHandles()) {
+            if (name.equals(contextHandle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

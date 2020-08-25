@@ -36,7 +36,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  * @date 2020/8/9
  */
 @Ignore
-public class AppiumTests {
+public class FragmentlearningAppiumTests {
 
     private static AppiumDriverLocalService service;
 
@@ -57,6 +57,15 @@ public class AppiumTests {
     @AfterClass
     public static void stopAppiumServer() {
         service.stop();
+    }
+
+    @Test
+    public void webViewSearch() {
+        FragmentLearningService appiumDeliveryService = new FragmentLearningService();
+        appiumDeliveryService.login();
+        appiumDeliveryService.webViewSearch();
+        sleep(3);
+        appiumDeliveryService.quit();
     }
 
     @Test

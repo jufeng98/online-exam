@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.apache.commons.lang3.RandomUtils;
 import static org.javamaster.auto.uitest.utils.AppiumUtils.findById;
+import static org.javamaster.auto.uitest.utils.AppiumUtils.switchToWebView;
 import org.javamaster.auto.uitest.utils.PropertiesUtils;
 import static org.javamaster.auto.uitest.utils.SeleniumUtils.*;
 import org.openqa.selenium.By;
@@ -94,21 +95,16 @@ public class FragmentLearningService {
         driver.navigate().back();
     }
 
-    private void switchToWebView(String name) {
-        while (!existsWebView(name)) {
-            sleep();
-        }
-        driver.context(name);
-        sleep();
-    }
-
-    private boolean existsWebView(String name) {
-        for (Object contextHandle : driver.getContextHandles()) {
-            if (name.equals(contextHandle)) {
-                return true;
-            }
-        }
-        return false;
+    public void webViewSearch() {
+        // 点击主页的tab
+        tryToClick(driver, findById(driver, "org.javamaster.fragmentlearning:id/tab2"));
+        // 启动web_view
+        tryToClick(driver, findById(driver, "org.javamaster.fragmentlearning:id/start_web_view"));
+        switchToWebView(driver, "WEBVIEW_org.javamaster.fragmentlearning");
+        // 输入搜索词
+        findById(driver, "index-kw").sendKeys("Appium");
+        // 点击搜索
+        tryToClick(driver, findById(driver, "index-bn"));
     }
 
     public void quit() {
