@@ -1,9 +1,9 @@
 <template>
   <div>
 
-    <v-uploader @done="uploadDone" :preview-width="400" :preview-height="300" button-text="请选择文件"></v-uploader>
+    <v-uploader :preview-height="300" :preview-width="400" @done="uploadDone" button-text="请选择文件"></v-uploader>
 
-    <v-uploader @done="uploadDone" :multiple="true"></v-uploader>
+    <v-uploader :multiple="true" @done="uploadDone"></v-uploader>
 
   </div>
 </template>

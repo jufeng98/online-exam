@@ -5,6 +5,7 @@ import Router from 'vue-router'
  */
 import login from '@/pages/users/login'
 import fileUpload from '@/pages/demo/fileUpload.vue'
+import userInfo from '@/pages/demo/userInfo.vue'
 import usersManage from '@/pages/users/users-manage'
 import helloWorld from '@/components/hello-world'
 import mainMenu from '@/pages/main-menu'
@@ -34,6 +35,7 @@ export default new Router({
     {path: '/', name: 'index', component: mainMenu},
     {path: '/login', name: 'login', component: login},
     {path: '/fileUpload', name: 'fileUpload', component: fileUpload},
+    {path: '/userInfo', name: 'userInfo', component: userInfo},
     {path: '/usersManage', name: 'usersManage', component: usersManage},
     {path: '/helloWorld', name: 'helloWorld', component: helloWorld},
     {path: '/mainMenu', name: 'mainMenu', component: mainMenu},
