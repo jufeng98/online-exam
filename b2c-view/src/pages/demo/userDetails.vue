@@ -31,19 +31,19 @@
           <el-tab-pane label="至尊账户">
             <honorAccount :username="username"/>
           </el-tab-pane>
-          <el-tab-pane label="小屋账户">
-            <smallHouseAccount :username="username" v-if="showSmallHouseAccount"/>
+          <el-tab-pane label="小屋账户" :lazy="true">
+            <smallHouseAccount :username="username"/>
           </el-tab-pane>
-          <el-tab-pane label="用户体系名称">
-            <userAccountSystem :username="username" v-if="showUserAccountSystem"/>
+          <el-tab-pane label="用户体系名称" :lazy="true">
+            <userAccountSystem :username="username"/>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="家庭信息">
-        <homeInfo :username="username" v-if="showHomeInfoTab"/>
+      <el-tab-pane label="家庭信息" :lazy="true">
+        <homeInfo :username="username"/>
       </el-tab-pane>
-      <el-tab-pane label="产品消费记录">
-        <productConsumeRecord :username="username" v-if="showProductConsumeRecordTab"/>
+      <el-tab-pane label="产品消费记录" :lazy="true">
+        <productConsumeRecord :username="username"/>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -82,10 +82,6 @@
           sex: '',
           autoaym: null,
         },
-        showHomeInfoTab: false,
-        showProductConsumeRecordTab: false,
-        showSmallHouseAccount: true,
-        showUserAccountSystem: true,
       }
     },
     methods: {
@@ -99,10 +95,8 @@
       },
       tabClick(tab) {
         if (tab.label === '家庭信息') {
-          this.showHomeInfoTab = true;
         }
         if (tab.label === '产品消费记录') {
-          this.showProductConsumeRecordTab = true;
         }
       },
     },
