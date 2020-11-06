@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core.controller;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.javamaster.b2c.core.model.Result;
 import org.javamaster.b2c.core.service.FilesService;
@@ -68,4 +69,24 @@ public class FilesController {
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
+
+    @SneakyThrows
+    @PostMapping("/checkBigFile")
+    public Result<Object> checkBigFile(String fileMd5, Integer fileSize, Integer chunkSize, String fileName) {
+        return new Result<>(filesService.checkBigFile(fileMd5, fileSize, chunkSize, fileName));
+    }
+
+    @SneakyThrows
+    @PostMapping("/uploadBigFile")
+    public Result<String> uploadBigFile(Integer chunk, String fileMd5, String chunkMd5, MultipartFile file) {
+        filesService.uploadBigFile(chunk, fileMd5, chunkMd5, file);
+        return new Result<>(null);
+    }
+
+    @SneakyThrows
+    @PostMapping("/mergeBigFile")
+    public Result<String> mergeBigFile(String fileMd5, String fileName) {
+        return new Result<>(filesService.mergeBigFile(fileMd5, fileName));
+    }
+
 }

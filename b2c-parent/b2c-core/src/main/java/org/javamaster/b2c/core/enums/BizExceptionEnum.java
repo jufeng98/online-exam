@@ -18,6 +18,8 @@ public enum BizExceptionEnum {
     AUTHORITIES_ASSOCIATE_USER(1010, "角色已授权用户,请先解除授权"),
     EMAIL_EXISTS(1011, "邮箱已被使用,请重新填写"),
     QR_CODE_EXPIRED(1012, "二维码已失效,请重新刷新二维码"),
+    CHUNK_DAMAGE(2001, "分片已损坏,请重新上传"),
+    UPLOAD_FAILED(2002, "上传失败"),
     ;
 
     BizExceptionEnum(Integer errorCode, String errorMsg) {

@@ -15,4 +15,10 @@ public interface FilesService {
     String writeFile(String fileName, String encodeBase64Str);
 
     byte[] downloadFile(String completePath);
+
+    Object checkBigFile(String fileMd5, Integer fileSize, Integer chunkSize, String fileName);
+
+    void uploadBigFile(Integer chunk, String fileMd5, String chunkMd5, MultipartFile file);
+
+    String mergeBigFile(String fileMd5, String fileName);
 }
