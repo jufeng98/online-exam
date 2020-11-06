@@ -5,13 +5,13 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/online_exam?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     url: redis://127.0.0.1:6379
     password: 123456
   servlet:
     multipart:
-      max-file-size: 3MB
+      max-file-size: 300MB
 ftp:
   home-dir: D:\ftp-home\upload
   host-name: 127.0.0.1

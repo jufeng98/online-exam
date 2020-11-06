@@ -1,9 +1,7 @@
 package org.javamaster.b2c.core.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -30,7 +28,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**/*").allowedOrigins("*");
+        registry.addMapping("/**/*")
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .exposedHeaders("Content-Deposition")
+                .allowCredentials(true);
     }
 
     @Override

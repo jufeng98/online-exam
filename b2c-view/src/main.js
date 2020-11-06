@@ -12,6 +12,7 @@ import store from './store/store'
 import vUploader from 'v-uploader'
 import config from "./config"
 
+Vue.prototype.$config = config
 Vue.config.productionTip = false
 Vue.use(ElementUI, {zIndex: 6000})
 Vue.use(Dialog)
