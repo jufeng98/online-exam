@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.DefaultParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 /**
  * @author yudong
@@ -47,6 +51,16 @@ public class RedissonConfig {
     @Bean
     public RedissonClient redissonClient(Config config) {
         return Redisson.create(config);
+    }
+
+    @Bean
+    public ExpressionParser expressionParser() {
+        return new SpelExpressionParser();
+    }
+
+    @Bean
+    public ParameterNameDiscoverer parameterNameDiscoverer() {
+        return new DefaultParameterNameDiscoverer();
     }
 
 }

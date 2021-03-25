@@ -3,6 +3,7 @@ package org.javamaster.b2c.core.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.javamaster.b2c.core.annos.AopLock;
 import org.javamaster.b2c.core.consts.AppConsts;
 import org.javamaster.b2c.core.entity.Authorities;
 import org.javamaster.b2c.core.entity.Users;
@@ -87,6 +88,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @AopLock(spEL = "#reqVo.createOrEditUsersForm.username")
     public Users createUsers(CreateUsersReqVo reqVo, UserDetails userDetails) {
         if (findUsersByUsername(reqVo.getCreateOrEditUsersForm().getUsername()) != null) {
             throw new BizException(BizExceptionEnum.USER_EXISTS);
