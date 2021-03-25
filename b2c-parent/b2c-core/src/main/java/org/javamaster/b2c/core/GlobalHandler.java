@@ -6,6 +6,7 @@ import org.javamaster.b2c.core.model.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -46,6 +47,14 @@ public class GlobalHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public Result<Void> exceptionHandler(AccessDeniedException e) {
+        Result<Void> result = new Result<>(BizExceptionEnum.ACCESS_DENIED.getErrorCode(),
+                BizExceptionEnum.ACCESS_DENIED.getErrorMsg());
+        logger.error("access error", e);
+        return result;
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public Result<Void> exceptionHandler(AuthenticationException e) {
         Result<Void> result = new Result<>(BizExceptionEnum.ACCESS_DENIED.getErrorCode(),
                 BizExceptionEnum.ACCESS_DENIED.getErrorMsg());
         logger.error("access error", e);

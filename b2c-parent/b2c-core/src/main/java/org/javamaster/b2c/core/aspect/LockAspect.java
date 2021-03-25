@@ -1,6 +1,5 @@
 package org.javamaster.b2c.core.aspect;
 
-import static java.util.stream.Collectors.toList;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -15,12 +14,8 @@ import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -47,22 +42,13 @@ public class LockAspect {
 
     @Around("lockPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object[] args = joinPoint.getArgs();
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String cookieValue = Arrays.stream(Objects.requireNonNull(requestAttributes).getRequest().getCookies())
-                .filter(cookie -> {
-                    String sessionKey = "SESSION";
-                    return sessionKey.equals(cookie.getName());
-                })
-                .map(Cookie::getValue)
-                .collect(toList())
-                .get(0);
-
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
         EvaluationContext context = new StandardEvaluationContext();
         String[] parameterNames = parameterNameDiscoverer.getParameterNames(method);
+
+        Object[] args = joinPoint.getArgs();
         for (int i = 0; i < Objects.requireNonNull(parameterNames).length; i++) {
             String paramName = parameterNames[i];
             context.setVariable(paramName, args[i]);
@@ -70,12 +56,7 @@ public class LockAspect {
 
         AopLock aopLock = method.getAnnotation(AopLock.class);
         String spEl = aopLock.spEL();
-        String lockKey;
-        if ("".equals(spEl)) {
-            lockKey = LOCK_KEY_PREFIX + cookieValue;
-        } else {
-            lockKey = (String) parser.parseExpression(spEl).getValue(context);
-        }
+        String lockKey = LOCK_KEY_PREFIX + parser.parseExpression(spEl).getValue(context);
         RLock lock = redisson.getLock(lockKey);
         try {
             boolean getterLock = lock.tryLock(3, TimeUnit.SECONDS);

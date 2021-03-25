@@ -27,7 +27,6 @@ public class ExamsRecordController {
     @Autowired
     private ExamsRecordService examsRecordService;
 
-    @AopLock
     @PostMapping("/submitAnswers")
     public Result<SubmitAnswersResVo> submitAnswers(@Validated @RequestBody SubmitAnswersReqVo reqVo,
                                                     @AuthenticationPrincipal UserDetails userDetails) {

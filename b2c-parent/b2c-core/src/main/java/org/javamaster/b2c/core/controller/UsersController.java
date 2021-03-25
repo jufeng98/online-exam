@@ -36,7 +36,7 @@ public class UsersController {
      */
     @PostMapping("/createUsers")
     public Result<Users> createUsers(@Validated @RequestBody CreateUsersReqVo reqVo,
-                                     @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+                                     @AuthenticationPrincipal UserDetails userDetails) {
         return new Result<>(usersService.createUsers(reqVo, userDetails));
     }
 

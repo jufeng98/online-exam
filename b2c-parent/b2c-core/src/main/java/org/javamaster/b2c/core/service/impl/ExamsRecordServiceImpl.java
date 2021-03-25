@@ -1,6 +1,7 @@
 package org.javamaster.b2c.core.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.javamaster.b2c.core.annos.AopLock;
 import org.javamaster.b2c.core.entity.AnswersRecord;
 import org.javamaster.b2c.core.entity.ExamsRecord;
 import org.javamaster.b2c.core.entity.Messages;
@@ -54,6 +55,7 @@ public class ExamsRecordServiceImpl implements ExamsRecordService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @AopLock(spEL = "#userDetails.username")
     public SubmitAnswersResVo submitAnswers(SubmitAnswersReqVo reqVo, UserDetails userDetails) {
         List<ExamQuestionsVo> examQuestionsVos = questionsService.findQuestionsByExamsCode(reqVo.getExamsCode());
         if (examQuestionsVos.isEmpty()) {

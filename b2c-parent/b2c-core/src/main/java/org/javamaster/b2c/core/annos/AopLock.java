@@ -15,5 +15,5 @@ public @interface AopLock {
     /**
      * SpEL表达式,用于计算lockKey.
      */
-    String spEL() default "";
+    String spEL();
 }
