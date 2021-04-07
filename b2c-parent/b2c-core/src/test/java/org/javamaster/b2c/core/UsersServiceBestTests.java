@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @ContextConfiguration(classes = {
-        DatabaseTestConfig.class,
+        DatasourceTestConfig.class,
         MybatisTestConfig.class,
         RedissonTestConfig.class,
         WebTestConfig.class,

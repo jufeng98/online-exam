@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.NullNode;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.javamaster.b2c.core.model.Result;
+import org.javamaster.b2c.core.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,10 @@ import java.util.stream.Collectors;
 public class TestController {
 
 
-    private static List<Map<String, Object>> userProducts = new ArrayList<>();
+    @Autowired
+    private TestService testService;
+
+    private static final List<Map<String, Object>> USER_PRODUCTS = new ArrayList<>();
 
     static {
         int num = 36;
@@ -32,7 +37,7 @@ public class TestController {
             map.put("orderPayAmt", RandomUtils.nextInt(2000, 80000));
             map.put("platStartTime", System.currentTimeMillis());
             map.put("payTime", System.currentTimeMillis());
-            userProducts.add(map);
+            USER_PRODUCTS.add(map);
         }
     }
 
@@ -72,7 +77,7 @@ public class TestController {
 
     @PostMapping("/findUserProducts")
     public Result<Object> searchUserProducts(@RequestBody JsonNode jsonNode) {
-        List<Map<String, Object>> list = userProducts.stream()
+        List<Map<String, Object>> list = USER_PRODUCTS.stream()
                 .peek(map -> {
                     if (!(jsonNode.get("startTime") instanceof NullNode)) {
                         map.put("platStartTime", jsonNode.get("startTime").asLong());
@@ -84,7 +89,12 @@ public class TestController {
                 .skip(jsonNode.get("pageNum").asInt() - 1)
                 .limit(jsonNode.get("pageSize").asInt())
                 .collect(Collectors.toList());
-        return new Result<>(list, Long.valueOf(userProducts.size()));
+        return new Result<>(list, Long.valueOf(USER_PRODUCTS.size()));
+    }
+
+    @PostMapping("/getOrderInfo")
+    public Result<String> getOrderInfo(@RequestBody JsonNode jsonNode) {
+        return new Result<>(testService.getOrderInfo(jsonNode.get("orderCode").asText()));
     }
 
 }

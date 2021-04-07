@@ -37,6 +37,7 @@ public class UsersControllerNormalTests {
     @Autowired
     protected WebApplicationContext context;
     protected MockMvc mockMvc;
+    @Autowired
     protected ObjectMapper objectMapper;
 
     @Before
@@ -44,8 +45,6 @@ public class UsersControllerNormalTests {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .build();
-
-        objectMapper = new ObjectMapper();
     }
 
     @Test

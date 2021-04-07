@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -73,6 +74,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         return objectMapper;
+    }
+
+    @Bean
+    // @LoadBalanced
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
 }

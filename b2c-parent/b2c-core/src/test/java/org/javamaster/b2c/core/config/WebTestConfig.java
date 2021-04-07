@@ -1,14 +1,10 @@
 package org.javamaster.b2c.core.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.*;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-
-import javax.sql.DataSource;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author yudong
@@ -17,16 +13,20 @@ import javax.sql.DataSource;
 @TestConfiguration
 public class WebTestConfig {
 
-    @Bean("userDetailsService")
-    public UserDetailsService detailsService(DataSource dataSource) {
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        jdbcUserDetailsManager.setEnableGroups(true);
-        return jdbcUserDetailsManager;
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        return objectMapper;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    // @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }

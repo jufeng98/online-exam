@@ -3,11 +3,11 @@ package org.javamaster.b2c.core;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
-import org.javamaster.b2c.core.config.DatasourceTestConfig;
-import org.javamaster.b2c.core.config.SecurityTestConfig;
+import org.javamaster.b2c.core.config.*;
 import org.javamaster.b2c.core.controller.UsersController;
 import org.javamaster.b2c.core.entity.Users;
 import org.javamaster.b2c.core.service.UsersService;
+import org.javamaster.b2c.core.service.impl.UsersServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.doReturn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,31 +27,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * 添加@commit注解则事务不会回滚
- *
  * @author yudong
- * @date 2021/3/25
+ * @date 2021/3/24
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(
-        classes = {
-                DatasourceTestConfig.class,
-                SecurityTestConfig.class,
-                UsersController.class
-        }
-)
+@ContextConfiguration(classes = {
+        MybatisTestConfig.class,
+        WebTestConfig.class,
+        DatasourceTestConfig.class,
+        SecurityTestConfig.class,
+        UsersController.class,
+        UsersServiceImpl.class
+})
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @WebAppConfiguration
-public class UsersControllerBetterTests {
+public class SpyBeanTests extends CommonTestCode {
 
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
     @Autowired
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
-    @MockBean
+    @SpyBean
     private UsersService usersService;
+
 
     @Test
     @SneakyThrows
@@ -63,8 +63,11 @@ public class UsersControllerBetterTests {
     public void createUsersTest() {
         Users users = new Users();
         users.setUsername("jufeng98");
-
+        // @SpyBean可达到部分mock的效果,仅当 doReturn("").when(service).doSomething() 时，doSomething方法才被mock，
+        // 其他的方法仍被真实调用。
+        // 未发生实际调用
         doReturn(users).when(usersService).createUsers(any(), any());
+
 
         ObjectNode reqVo = objectMapper.createObjectNode();
         ObjectNode createOrEditUsersForm = reqVo.putObject("createOrEditUsersForm");
@@ -86,5 +89,4 @@ public class UsersControllerBetterTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.data.username").value("jufeng98"));
     }
-
 }

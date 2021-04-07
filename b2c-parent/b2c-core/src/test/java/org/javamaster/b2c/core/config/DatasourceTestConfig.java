@@ -4,6 +4,10 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
@@ -12,7 +16,7 @@ import javax.sql.DataSource;
  * @date 2021/3/24
  */
 @TestConfiguration
-public class DatabaseTestConfig {
+public class DatasourceTestConfig {
 
     @Value("${spring.test.datasource.url}")
     private String url;
@@ -28,6 +32,19 @@ public class DatabaseTestConfig {
         dataSource.setUser(username);
         dataSource.setPassword(password);
         return dataSource;
+    }
+
+
+    @Bean("userDetailsService")
+    public UserDetailsService detailsService(DataSource dataSource) {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        jdbcUserDetailsManager.setEnableGroups(true);
+        return jdbcUserDetailsManager;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
