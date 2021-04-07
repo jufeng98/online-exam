@@ -13,12 +13,15 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * 添加@commit注解则事务不会回滚
@@ -26,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author yudong
  * @date 2021/3/25
  */
+// 添加事务注解，则默认情况下测试方法执行完后事务会被回滚，结合@commit注解使用可让事务被提交
 @Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -35,10 +39,10 @@ import org.springframework.web.context.WebApplicationContext;
 public class UsersControllerNormalTests {
 
     @Autowired
-    protected WebApplicationContext context;
-    protected MockMvc mockMvc;
+    private WebApplicationContext context;
+    private MockMvc mockMvc;
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Before
     public void setup() {
@@ -49,12 +53,15 @@ public class UsersControllerNormalTests {
 
     @Test
     @SneakyThrows
+    // SpringSecurity的测试注解，用于mock当前登录的用户信息
     @WithMockUser(
             username = "admin",
             password = "admin",
             authorities = "ROLE_ADMIN"
     )
+    // 添加此注解则事务不会回滚
     // @Commit
+    // 指定运行测试方法前要先执行sql脚本
     @Sql("classpath:sql-script/users.sql")
     public void createUsersTest() {
         ObjectNode reqVo = objectMapper.createObjectNode();
@@ -64,7 +71,7 @@ public class UsersControllerNormalTests {
         createOrEditUsersForm.put("password", "admin");
         createOrEditUsersForm.put("email", "jufeng98@qq.com");
         createOrEditUsersForm.put("gender", "M");
-
+        // 发起请求并对结果进行断言
         mockMvc
                 .perform(
                         post("/admin/users/createUsers")

@@ -5,5 +5,5 @@ package org.javamaster.b2c.core.service;
  * @date 2021/4/7
  */
 public interface TestService {
-    String getOrderInfo(String orderCode);
+    String getOrderPayType(String orderCode);
 }

@@ -37,19 +37,19 @@ import org.springframework.transaction.annotation.Transactional;
         RedissonTestConfig.class,
         WebTestConfig.class,
         UsersServiceImpl.class,
-
         SecurityTestConfig.class,
         UsersController.class
 })
+// 下面这三个注解用于配置SpringMVC的测试上下文
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @WebAppConfiguration
 public class UsersControllerBestTests extends CommonTestCode {
 
     @Autowired
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Test
     @SneakyThrows
