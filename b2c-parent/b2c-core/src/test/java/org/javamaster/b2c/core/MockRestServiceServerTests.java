@@ -57,13 +57,14 @@ public class MockRestServiceServerTests extends CommonTestCode {
     @SneakyThrows
     public void test() {
         MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
+        // mock http接口的返回
         server
-                .expect(requestTo("http://b2c-cloud-order-service/getOrderDetails?orderCode=C93847639357"))
+                .expect(requestTo("http://b2c-cloud-order-service/getOrderPayType?orderCode=C93847639357"))
                 .andRespond(withSuccess("{\"orderCode\":\"C93847639357\",\"payType\":\"alipay\"}", MediaType.APPLICATION_JSON_UTF8));
 
         mockMvc
                 .perform(
-                        post("/admin/test/getOrderInfo")
+                        post("/admin/test/getOrderPayType")
                                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                                 .content("{\"orderCode\":\"C93847639357\"}")
                                 .accept(MediaType.APPLICATION_JSON_UTF8)

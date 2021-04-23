@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author yudong
  * @date 2021/3/24
  */
+// 添加事务注解，则默认情况下测试方法执行完后事务会被回滚，结合@commit注解使用可让事务被提交
 @Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -31,7 +32,9 @@ public class UsersServiceNormalTests {
     private UsersService usersService;
 
     @Test
+    // 添加此注解则事务不会回滚
     // @Commit
+    // 指定运行测试方法前要先执行sql脚本
     @Sql("classpath:sql-script/users.sql")
     public void createUsersTest() {
         CreateUsersReqVo reqVo = new CreateUsersReqVo();

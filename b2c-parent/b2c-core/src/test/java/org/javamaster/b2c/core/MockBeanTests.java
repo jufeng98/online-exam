@@ -45,9 +45,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MockBeanTests extends CommonTestCode {
 
     @Autowired
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @MockBean
     private UsersService usersService;
@@ -62,9 +62,9 @@ public class MockBeanTests extends CommonTestCode {
     public void createUsersTest() {
         Users users = new Users();
         users.setUsername("jufeng98");
-        // @MockBean注解会代理bean的所有方法,对于未mock的方法调用均是返回null
+        // @MockBean注解会代理bean的所有方法,对于未mock的方法调用均是返回null,这里的意思是针对调用createUsers方法
+        // 的任意入参，均返回指定的结果
         given(usersService.createUsers(any(), any())).willReturn(users);
-
 
         ObjectNode reqVo = objectMapper.createObjectNode();
         ObjectNode createOrEditUsersForm = reqVo.putObject("createOrEditUsersForm");

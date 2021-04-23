@@ -19,8 +19,8 @@ public class TestServiceImpl implements TestService {
     private RestTemplate restTemplate;
 
     @Override
-    public String getOrderInfo(String orderCode) {
-        JsonNode jsonNode = restTemplate.getForObject("http://b2c-cloud-order-service/getOrderDetails?orderCode={1}", JsonNode.class, orderCode);
+    public String getOrderPayType(String orderCode) {
+        JsonNode jsonNode = restTemplate.getForObject("http://b2c-cloud-order-service/getOrderPayType?orderCode={1}", JsonNode.class, orderCode);
         return Objects.requireNonNull(jsonNode).get("payType").asText();
     }
 }

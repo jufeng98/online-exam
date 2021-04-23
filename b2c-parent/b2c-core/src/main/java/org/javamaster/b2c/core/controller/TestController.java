@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin/test")
 public class TestController {
 
-
     @Autowired
     private TestService testService;
 
@@ -92,9 +91,9 @@ public class TestController {
         return new Result<>(list, Long.valueOf(USER_PRODUCTS.size()));
     }
 
-    @PostMapping("/getOrderInfo")
-    public Result<String> getOrderInfo(@RequestBody JsonNode jsonNode) {
-        return new Result<>(testService.getOrderInfo(jsonNode.get("orderCode").asText()));
+    @PostMapping("/getOrderPayType")
+    public Result<String> getOrderPayType(@RequestBody JsonNode jsonNode) {
+        return new Result<>(testService.getOrderPayType(jsonNode.get("orderCode").asText()));
     }
 
 }

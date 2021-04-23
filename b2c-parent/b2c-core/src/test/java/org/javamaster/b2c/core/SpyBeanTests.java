@@ -48,13 +48,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SpyBeanTests extends CommonTestCode {
 
     @Autowired
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
     @Autowired
-    protected ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @SpyBean
     private UsersService usersService;
-
 
     @Test
     @SneakyThrows
@@ -70,7 +69,6 @@ public class SpyBeanTests extends CommonTestCode {
         // 其他的方法仍被真实调用。
         // 未发生实际调用
         doReturn(users).when(usersService).createUsers(any(), any());
-
 
         ObjectNode reqVo = objectMapper.createObjectNode();
         ObjectNode createOrEditUsersForm = reqVo.putObject("createOrEditUsersForm");
