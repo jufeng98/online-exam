@@ -1,13 +1,14 @@
 package org.javamaster.b2c.core.config;
 
 import lombok.SneakyThrows;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.data.redis.connection.*;
@@ -23,6 +24,7 @@ import java.net.URI;
  * @date 2019/7/11
  */
 @TestConfiguration
+@Profile(PROFILE_UNIT_TEST)
 public class RedissonTestConfig {
 
     @Value("${spring.test.redis.url}")

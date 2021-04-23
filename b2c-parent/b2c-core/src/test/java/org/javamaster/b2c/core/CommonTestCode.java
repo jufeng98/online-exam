@@ -17,4 +17,5 @@ import org.springframework.test.context.junit4.SpringRunner;
         PropertyTestConfig.class
 }, initializers = SetEnvApplicationContextInitializer.class)
 public class CommonTestCode {
+    public static final String PROFILE_UNIT_TEST = "unit-test";
 }

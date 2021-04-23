@@ -1,6 +1,7 @@
 package org.javamaster.b2c.core;
 
 import lombok.SneakyThrows;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.javamaster.b2c.core.config.*;
 import org.javamaster.b2c.core.controller.TestController;
 import org.javamaster.b2c.core.service.impl.TestServiceImpl;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -39,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @WebAppConfiguration
+@ActiveProfiles(PROFILE_UNIT_TEST)
 public class MockRestServiceServerTests extends CommonTestCode {
     @Autowired
     protected MockMvc mockMvc;

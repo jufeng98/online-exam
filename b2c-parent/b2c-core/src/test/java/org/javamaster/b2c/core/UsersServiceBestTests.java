@@ -1,5 +1,6 @@
 package org.javamaster.b2c.core;
 
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.javamaster.b2c.core.config.*;
 import org.javamaster.b2c.core.entity.Users;
 import org.javamaster.b2c.core.model.vo.CreateUsersForm;
@@ -10,6 +11,7 @@ import static org.javamaster.b2c.core.utils.TestUtils.mockUserDetails;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
         WebTestConfig.class,
         UsersServiceImpl.class
 })
+@ActiveProfiles(PROFILE_UNIT_TEST)
 public class UsersServiceBestTests extends CommonTestCode {
 
     @Autowired

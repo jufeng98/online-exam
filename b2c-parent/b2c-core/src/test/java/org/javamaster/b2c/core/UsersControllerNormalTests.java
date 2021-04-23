@@ -29,8 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        classes = CoreApplication.class,
-        properties = "spring.main.allow-bean-definition-overriding=true"
+        classes = CoreApplication.class
 )
 public class UsersControllerNormalTests {
 

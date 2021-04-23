@@ -3,6 +3,7 @@ package org.javamaster.b2c.core;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.SneakyThrows;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.javamaster.b2c.core.config.*;
 import org.javamaster.b2c.core.controller.UsersController;
 import org.javamaster.b2c.core.entity.Users;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebM
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -42,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @WebAppConfiguration
+@ActiveProfiles(PROFILE_UNIT_TEST)
 public class SpyBeanTests extends CommonTestCode {
 
     @Autowired

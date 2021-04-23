@@ -1,9 +1,11 @@
 package org.javamaster.b2c.core.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +18,7 @@ import javax.sql.DataSource;
  * @date 2021/3/24
  */
 @TestConfiguration
+@Profile(PROFILE_UNIT_TEST)
 public class DatasourceTestConfig {
 
     @Value("${spring.test.datasource.url}")

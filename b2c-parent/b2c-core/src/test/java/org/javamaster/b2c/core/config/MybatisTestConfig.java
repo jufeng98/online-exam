@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,6 +24,7 @@ import java.util.Properties;
  */
 @TestConfiguration
 @MapperScan(basePackages = "org.javamaster.b2c.core.mapper")
+@Profile(PROFILE_UNIT_TEST)
 public class MybatisTestConfig {
 
     @Bean

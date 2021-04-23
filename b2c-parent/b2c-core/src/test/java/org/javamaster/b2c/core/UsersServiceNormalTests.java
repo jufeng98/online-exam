@@ -23,8 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        classes = CoreApplication.class,
-        properties = "spring.main.allow-bean-definition-overriding=true"
+        classes = CoreApplication.class
 )
 public class UsersServiceNormalTests {
 

@@ -2,8 +2,10 @@ package org.javamaster.b2c.core.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
+import static org.javamaster.b2c.core.CommonTestCode.PROFILE_UNIT_TEST;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -11,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @date 2019/6/10
  */
 @TestConfiguration
+@Profile(PROFILE_UNIT_TEST)
 public class WebTestConfig {
 
     @Bean
