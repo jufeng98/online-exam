@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @ScanTestedDependencies(UsersController.class)
 @ContextConfiguration(classes = {
-        UsersController.class,
         MybatisTestConfig.class,
         RedisTestConfig.class,
         SecurityTestConfig.class,
